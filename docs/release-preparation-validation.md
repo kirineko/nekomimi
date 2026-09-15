@@ -27,3 +27,7 @@
 - npm whoami 返回 E401，需重新登录并确认 kirinekoneko；包名查询返回 404 不保证发布权限或未来可用性。
 - 首版交互发布、registry 安装与首次后续 OIDC 发布均未执行，不将 dry-run 视作其成功证据。
 - 实际发布按 releasing.md 执行；发布前须确认 CI 绿色，并移除 README 中首版尚未发布的提示。
+
+## 首次公开发布结果
+
+2026-09-15：发布来源 c8de2259863b3ce844f1b994c3c422fc94eea880，标签 v0.1.0。GitHub CI 34956437700 的 Linux/macOS 全部通过。npm nekomimi@0.1.0 发布成功；registry integrity 与已验证 tarball 完全一致。使用隔离 prefix 从 registry 全局安装后的 Web、文件配置、任务写入、shell cwd、工作区隔离与规范化路径恢复再次通过。GitHub Release：https://github.com/kirineko/nekomimi/releases/tag/v0.1.0 。此前未执行项目的描述保留为准备阶段历史。
