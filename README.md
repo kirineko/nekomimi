@@ -65,7 +65,7 @@ npm run web -- --workspace /path/to/project
 
 打开终端打印的本地入口。首次连接交换授权后地址中的令牌会清除；同源 HttpOnly 会话 cookie 支持刷新和新窗口，服务重启后重新打开终端入口即可。服务只监听回环地址，API key 保留在服务端。
 
-界面提供会话列表、任务时间线、流式回复、工具参数/结果与文件 diff。点击“检查调用”可查看 Prompt、Context、Request、Response、Usage；上下文来源支持跳转到原始记录。任务可取消、在终态后继续。浏览器关闭或断线不取消已接受任务；重连只恢复显示。
+界面提供会话列表、任务时间线、流式回复、工具参数/结果与文件 diff。点击调用卡片可查看总览、指令、输入、请求和响应；上下文来源支持跳转到原始记录。任务可取消、在终态后继续。浏览器关闭或断线不取消已接受任务；重连只恢复显示。
 
 单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。会话位于工作区 `.harness/sessions/`；当前版本不自动导入其他目录的历史。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `harness inspect <目录>` 检查。运行中需要等待停止后再导出。
 
@@ -77,3 +77,17 @@ npm run test:web-live  # 显式联网的浏览器合成任务验收
 开发时先以固定端口启动本地服务，再配置 `HARNESS_DEV_ORIGIN` 使用 `npm run dev:web` 的 API 代理；生产验收使用打包静态资源。同一工作区服务崩溃后需等待约 10 秒租约过期。
 
 [Web 验收报告](docs/web-mvp-validation.md) · [源码模块说明](src/README.md)
+
+## 仓库目录
+
+| 路径 | 内容 |
+| --- | --- |
+| `src/` | 核心运行时、服务端、协议、投影和 Web 组件，详见源码模块说明 |
+| `test/` | 单元、集成与浏览器回归测试 |
+| `scripts/` | 显式运行的真实调用及安装包验证脚本 |
+| `docs/` | [文字文档与验收索引](docs/README.md)，含历史协议研究数据 |
+| `openspec/specs/` | 已交付能力契约 |
+| `openspec/changes/` | 活动变更及 `archive/` 历史归档 |
+| `reference/` | 本地参考仓库，不纳入版本控制 |
+
+`dist/`、`node_modules/`、`test-results/`、`playwright-report/` 和 `.harness/` 为本地生成目录。截图放在测试产物或系统临时目录；仓库保留文字验收结论。
