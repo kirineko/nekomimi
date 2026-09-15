@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 export default defineConfig({
   root: "src/web",
-  build: { outDir: "../../dist/web-dist", emptyOutDir: true },
+  build: { assetsInlineLimit: 0, outDir: "../../dist/web-dist", emptyOutDir: true },
   server: {
     host: "127.0.0.1",
     proxy: {

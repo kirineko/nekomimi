@@ -47,6 +47,9 @@ try {
   const page=await fetch(app.origin); if(!page.ok)throw new Error('Homepage rejected');
   const html=await page.text(); const asset=html.match(/src="([^"]+\.js)"/)[1];
   const css=html.match(/href="([^"]+\.css)"/)[1];
+  const iconPath=html.match(/rel="icon"[^>]*href="([^"]+)"/)[1];
+  const icon=await fetch(app.origin+iconPath);
+  if(!icon.ok || icon.headers.get('content-type')!=='image/svg+xml' || !(await icon.text()).includes('fill="#7952ce"'))throw new Error('Missing installed brand favicon');
   if(!(await fetch(app.origin+css)).ok)throw new Error('Missing CSS');
   if(!(await fetch(app.origin+asset)).ok)throw new Error('Missing installed web asset');
   await app.request('/settings',{kind:'auth',revision:0,apiKey:'synthetic-global-key'});

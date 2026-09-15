@@ -14,6 +14,7 @@ export const statusText = (value?: string) =>
 export const toolTitle = (name: string) =>
   ({
     web_search: "搜索网页",
+    web_fetch: "读取网页",
     read: "读取文件",
     write: "写入文件",
     edit: "修改文件",

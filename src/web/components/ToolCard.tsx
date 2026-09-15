@@ -76,6 +76,7 @@ export function ToolCard({
         <p className="panel-muted">修改尚未确认，准备证据可在执行记录中查看</p>
       )}
       {row.title === "web_search" && <SearchSources details={row.details} />}
+      {row.title === "web_fetch" && <FetchSummary details={row.details} />}
     </article>
   );
 }
@@ -127,4 +128,24 @@ function SearchSources({ details }: { details: any }) {
       })}
     </section>
   );
+}
+
+function FetchSummary({ details }: { details: any }) {
+  if (!details || typeof details.finalUrl !== "string") return null;
+  let url: URL;
+  try {
+    url = new URL(details.finalUrl);
+    if (!["http:", "https:"].includes(url.protocol) || url.username || url.password) return null;
+  } catch { return null; }
+  return <section className="search-sources fetch-summary" aria-label="网页读取结果">
+    <a href={url.href} target="_blank" rel="noopener noreferrer">
+      <div><strong>{typeof details.title === "string" && details.title ? details.title : url.hostname}</strong><small>{url.href}</small></div>
+    </a>
+    <p className="panel-muted">{({ complete: "读取完成", partial: "部分内容", empty: "未提取到可读文本", failed: "读取失败", cancelled: "读取已停止" } as Record<string, string>)[details.status] ?? "读取记录"}
+      {typeof details.statusCode === "number" && ` · HTTP ${details.statusCode}`}
+    </p>
+    {details.extraction === "metadata" && <p className="panel-muted">页面摘要（description 回退，非完整正文）</p>}
+    {details.bodyTruncated && <p className="panel-muted">响应体已截断，未下载部分不可恢复。</p>}
+    {details.outputTruncated && <p className="panel-muted">输出已截断，可在详情中查看完整已保存文本。</p>}
+  </section>;
 }

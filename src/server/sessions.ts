@@ -47,6 +47,7 @@ export interface ServiceOptions {
       | "timeoutMs"
       | "tools"
       | "journalOptions"
+      | "toolOptions"
     >
   >;
   lockStaleMs?: number;

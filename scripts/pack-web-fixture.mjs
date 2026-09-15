@@ -38,14 +38,26 @@ const events = [
     },
   },
 ];
+let modelCalls = 0, fetchCalls = 0;
+const fetchItem = { type: "function_call", id: "fetch-item", call_id: "fetch-call", name: "web_fetch", arguments: JSON.stringify({ url: "https://example.com/page" }), status: "completed" };
+const fetchEvents = [
+  { type: "response.created", response: { id: "fetch-response", status: "in_progress" } },
+  { type: "response.output_item.added", output_index: 0, item: fetchItem },
+  { type: "response.output_item.done", output_index: 0, item: fetchItem },
+  { type: "response.completed", response: { id: "fetch-response", status: "completed", output: [fetchItem], usage: { input_tokens: 1, output_tokens: 1 } } },
+];
 const app = await startWeb({
   home: join(process.cwd(),"test-home"), naming:false,
   workspace: process.cwd(),
   apiKey: "synthetic",
   runtime: {
+    toolOptions: { webFetch: { network: {
+      resolve: async () => [{ address: "93.184.216.34", family: 4 }],
+      request: async () => { fetchCalls++; return { response: new Response('<meta name="description" content="pack fetch evidence"><body>Loading</body>', { headers: { "content-type": "text/html" } }), close: async () => {} }; },
+    } } },
     fetch: async () =>
       new Response(
-        events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join(""),
+        (++modelCalls === 1 ? fetchEvents : events).map((e) => `data: ${JSON.stringify(e)}\n\n`).join(""),
         { headers: { "content-type": "text/event-stream" } },
       ),
   },
@@ -82,6 +94,8 @@ try {
   ).json();
   if (snapshot.session.status !== "completed")
     throw new Error("Installed web run failed");
+  if (fetchCalls !== 1 || !JSON.stringify(snapshot).includes('metadata') || !JSON.stringify(snapshot).includes('pack fetch evidence'))
+    throw new Error("Installed web fetch evidence missing");
   const download = await request(`/sessions/${session.id}/export`, {
     version: 1,
     format: "html",

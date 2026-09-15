@@ -6,5 +6,5 @@ export function toolContent(text: string) {
   try {
     args = JSON.parse(input);
   } catch {}
-  return { input, result, target: String(args.path ?? args.command ?? args.query ?? "") };
+  return { input, result, target: String(args.path ?? args.command ?? args.query ?? args.url ?? "") };
 }

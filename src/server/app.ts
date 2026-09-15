@@ -298,6 +298,7 @@ export async function startWeb(
             ".html": "text/html; charset=utf-8",
             ".js": "text/javascript",
             ".css": "text/css",
+            ".svg": "image/svg+xml",
           } as Record<string, string>
         )[extname(file)] ?? "application/octet-stream",
       );

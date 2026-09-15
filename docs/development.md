@@ -114,3 +114,14 @@ CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 
 - `node scripts/search-live-smoke.mjs` 显式联网做最小搜索实测，只写脱敏证据。浏览器回归使用模拟 provider 和打开器，不需要凭证或真实桌面程序。
 
 本次验收见 [工作台升级验收记录](validation/workbench-upgrade/README.md)。Linux/Windows 原生默认程序打开尚待真实桌面环境验证。
+
+
+## 网页抓取
+
+`web_fetch({ url })` 是独立基础工具，主要参考 Deepy 的正文/description 回退，并吸收 dsh 的网络和展示边界。默认网络操作 30 秒超时，解压后正文上限 2 MiB，模型输出上限 30,000 UTF-16 单位。响应体和输出截断分别记录；`read artifact:<sha256>` 可继续读取已保存文本，不能恢复未下载部分。
+
+抓取只访问匿名公开 HTTP(S) 地址，不使用模型密钥、浏览器 Cookie 或环境代理。每次连接固定已验证的 DNS 地址，自动跟随最多五次同源重定向；跨源跳转返回目标供显式再次调用。需要代理才能访问的网络可能无法抓取。HTML 不运行 JavaScript；只剩 Loading 等占位内容时使用标准 description 元数据，并标记为页面摘要。PDF、图片和登录态不在支持范围。
+
+抓取的 `fetch.started`、`fetch.response`、`fetch.finished` 及响应/文本 artifact 由 Journal 保存，不产生模型 usage。Web 卡片、历史和导出读取这些证据，不重新联网。网络/解析测试位于 `test/web-fetch.test.ts`，搜索→抓取→回答的浏览器测试位于 `test/browser/web-fetch.spec.ts`。
+
+响应证据按源 charset 解码、脱敏后统一保存为 UTF-8，元数据保留 `responseCharset`、`responseEncoding` 和接收字节数；保存的 artifact 不是源编码的字节副本。失败和取消采用相同路径。未知 charset 时记录 `responseOmitted`，不保存无法安全脱敏的响应正文。

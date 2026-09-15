@@ -164,6 +164,7 @@ export class SessionProjection {
         "tool.failed",
         "file.change_prepared",
         "shell.finished",
+        "fetch.finished",
       ].includes(e.type)
     ) {
       const r = this.row(
@@ -177,12 +178,18 @@ export class SessionProjection {
         r.title = p.name;
         r.text = clipped(JSON.stringify(p.args, null, 2));
       }
+      if (e.type === "fetch.finished") {
+        r.title = "web_fetch";
+        r.details = p;
+        r.status = p.status === "cancelled" ? "cancelled" : p.status === "failed" ? "failed" : "completed";
+      }
       if (e.type === "file.change_prepared" || e.type === "shell.finished")
         r.details = p;
       if (e.type === "tool.result" || e.type === "tool.failed") {
         r.status = e.type === "tool.failed" ? "failed" : "completed";
         r.text += "\n\n" + clipped(textOf(p.item?.output));
-        if (p.details) r.details = p.details;
+        if (p.details && (r.title !== "web_fetch" || Object.keys(p.details).length)) r.details = p.details;
+        if (r.title === "web_fetch" && (r.details as any)?.status === "cancelled") r.status = "cancelled";
       }
     }
     if (e.type === "run.finished") {
