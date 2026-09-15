@@ -1,4 +1,4 @@
-# 进行中的验收记录
+# 验收记录
 
 ## Windows 路径修复
 
@@ -6,7 +6,7 @@
 - 工作区标题同时识别 Windows/POSIX 分隔符。
 - 6 项资源边界测试通过；与服务测试合计 18 项通过；类型检查通过。
 - macOS 安装包验收通过：首页、JS/CSS、中文空格工作区、全局安装、文件配置、工具运行、项目隔离、规范路径恢复及导出导入。
-- Windows shim、PowerShell 和 junction 分支已加入脚本，尚未在原生 Windows 执行。标签 CI 增加 windows-install，静态解析确认未增加日常 push/PR 触发。
+- Windows shim、PowerShell 和 junction 分支已加入脚本，原生结果见下方发布验收。标签 CI 增加 windows-install，静态解析确认未增加日常 push/PR 触发。
 
 ## UI
 
@@ -14,7 +14,7 @@
 
 ## 未完成边界
 
-Windows 原生验收仍未完成，不归档或发版，不修改 Windows 全面支持声明。
+初始验收时 Windows 原生结果待补；用户随后授权先归档、发布后人工测试，原生自动检查仍作为正式 Release 的前置条件。
 
 ## 本轮 UI 验证
 
@@ -27,10 +27,22 @@ Windows 原生验收仍未完成，不归档或发版，不修改 Windows 全面
 
 - 补充 React 静态展示检查：失败/取消/中断/未完成仍显示原因，完成状态折叠且命名调用入口保留；2 项通过，TSX 测试已纳入类型与测试配置。
 - 补充 180 行历史下 8 次连续 SSE 展示更新：输入及断言 9ms，草稿保留，手动上滚位置没有被拉回；这是合成事件下的一次本机验收，不代表所有机器的吞吐保证。
-- 最终未完成项仅原生 Windows 安装结果及依赖该结果的完整跨平台验收。当前 change 保持活动，不创建发布标签。
+- 当时未完成项为原生 Windows 安装结果及依赖该结果的完整跨平台验收；后续结果见下方发布验收。
 
 ## 用户授权的归档与发布顺序
 
-用户明确要求先归档并发布，再进行 Windows 人工测试。任务 1.2 与 3.3 的未验收部分保持未勾选，不视为已通过；发布标签仍执行 Windows 原生自动安装检查，人工验收待发布后补充。
+用户明确要求先归档并发布，再进行 Windows 人工测试。归档时任务 1.2 与 3.3 的未验收部分保持未勾选，不视为已通过；发布标签仍执行 Windows 原生自动安装检查，人工验收待发布后补充。
 
-标签 CI 首次 Windows 检查发现 tar 清单输出 CRLF 未被规范化，导致允许列表误报；已将行拆分改为同时处理 LF/CRLF，保留完整包内容检查，等待标签复验。
+标签 CI 首次 Windows 检查发现 tar 清单输出 CRLF 未被规范化，导致允许列表误报；已将行拆分改为同时处理 LF/CRLF，保留完整包内容检查，标签复验已通过。
+
+## 0.1.2 发布验收
+
+- 发布提交：`28ef3beed23e37d5fcc767b41780c6ccfcbe17be`。
+- [标签 CI](https://github.com/kirineko/nekomimi/actions/runs/34965883597) 五组全部通过：Linux/macOS × Node.js 22.19.0/24.15.0，以及 Windows Node.js 22.19.0 原生安装检查。
+- Windows 检查覆盖 npm 全局 shim、首页及 JS/CSS、中文空格目录、文件配置、PowerShell 文件操作、工作区隔离、junction 规范路径恢复及导出导入。测试通过合成模型响应执行，不依赖真实 API key。
+- Windows 测试进程强制终止不会执行 SIGTERM 清理，脚本等待 10 秒写入锁过期后重启；该等待不修改应用租约保护。
+- 用户 Windows 人工使用验收仍待发布后进行；自动化通过不等同所有 Windows 环境均已验证。
+
+- [正式 Release](https://github.com/kirineko/nekomimi/releases/tag/v0.1.2) 与 [npm 自动发布](https://github.com/kirineko/nekomimi/actions/runs/34966414711) 完成。
+- 官方 registry 已验证版本 `0.1.2`、`engines.node >=22.19.0`、9 项 keywords 及 SLSA 来源证明。下载包 SHA512 与 registry 一致：`sha512-2kcDquwCPyD2/YSzyQiKf4Z9cO4nJvo8Tz03TnpYJ0NYsPv8Tdq7L1PgBoDOo5uT8O44g1QMr/EMa+PaH0+C/A==`。
+- 下载官方发布包后，使用 Node.js 22.19.0、npm 10.9.3、engine-strict 完成干净本地及全局安装、CLI、Web 资源/命令/导出、文件配置、工作区隔离、规范路径恢复及离线导出导入，全部通过。
