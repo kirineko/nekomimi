@@ -12,7 +12,7 @@
 ## 首版
 
 1. 完成元数据与 LICENSE；运行类型、测试、浏览器、全局安装包验收和 OpenSpec 校验。
-2. 将已确认的仓库推到 GitHub，查看 Linux/macOS CI 的实际结果。设置 remote 和 push 是实际发布操作，应按用户指令执行。
+2. 将已确认的仓库和版本标签推到 GitHub，等待标签的 Linux/macOS CI 全部通过。设置 remote 和 push 是实际发布操作，应按用户指令执行。
 3. 在干净的首版标签提交上构建，使用 `npm pack --json --pack-destination <临时目录>` 生成 tarball。不要在 pack 后修改产物。
 4. 用 `node scripts/pack-smoke.mjs <tarball绝对路径>` 验证同一个包。使用 `npm publish <tarball> --access public --dry-run` 查看清单，不上传。
 5. 交互运行 `npm login`，按 npm 提示完成认证/2FA，然后显式运行 `npm publish <tarball> --access public`。密钥或 OTP 不写入仓库和聊天。
@@ -33,9 +33,9 @@
 
 ## 后续版本
 
-更新 package.json 和 lockfile 版本，提交并通过 CI，创建指向该提交的 `vX.Y.Z` 标签，然后发布正式 GitHub Release。工作流检出标签，检查版本与 main 祖先关系、registry 版本是否存在、测试、构建和打包。对生成的同一 tarball 验证后上传。
+更新 package.json 和 lockfile 版本，提交并推送代码，再创建并推送指向该提交的 `vX.Y.Z` 标签。等待标签 CI 的 Linux/macOS × Node.js 22/24 四组检查通过后，再发布正式 GitHub Release。工作流检出标签，检查版本与 main 祖先关系、registry 版本是否存在、测试、构建和打包。对生成的同一 tarball 验证后上传。
 
-普通 push/PR 不发布；预发布和草稿不会执行正式上传。运行中的发布不会被新一轮自动取消。每次发布记录包版本、完整性信息与提交。
+普通分支 push/PR 不运行 GitHub Actions；仅推送 `v*` 标签触发 CI，正式 Release 触发发布流程。预发布和草稿不会执行正式上传。运行中的发布不会被新一轮自动取消。每次发布记录包版本、完整性信息与提交。
 
 ## 失败处理
 
