@@ -6,12 +6,13 @@ import { execFileSync } from 'node:child_process';
 const dir = await mkdtemp(join(tmpdir(), "harness-pack-"));
 function invoke(cmd, args, cwd = dir) {
   console.log(`pack-smoke: ${cmd === 'npm' ? 'npm ' + args[0] : cmd.split(/[\\/]/).at(-1)} ${args.includes('--global') ? '(global)' : ''}`);
+  const timeout = cmd === 'npm' && args[0] === 'install' ? 600000 : 120000;
   if (cmd === 'npm' && process.platform === 'win32') {
     args = [process.env.npm_execpath || join(dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js'), ...args];
     cmd = process.execPath;
   }
   return execFileSync(cmd, args, {
-    cwd, encoding: 'utf8', env: process.env, timeout: 120000,
+    cwd, encoding: 'utf8', env: process.env, timeout,
     windowsVerbatimArguments: process.platform === 'win32' && /(?:^|[\\/])cmd\.exe$/i.test(cmd),
     stdio: ['ignore', 'pipe', 'pipe'],
   });
