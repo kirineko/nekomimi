@@ -21,7 +21,7 @@ export const toolTitle = (name: string) =>
   })[name] ?? name;
 export function sourceTitle(source: string) {
   if (source === "user") return "你的消息";
-  if (source.startsWith("response:")) return "Deepy 的回复";
+  if (source.startsWith("response:")) return "Nekomimi 的回复";
   if (source.startsWith("tool-guidance:")) return "工具使用规则";
   if (source.startsWith("tool:"))
     return toolTitle(source.split(":")[1] ?? "工具");

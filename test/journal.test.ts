@@ -23,7 +23,7 @@ describe('Journal durability', () => {
   it('records a watermarked streaming batch independently of critical records', async () => {
     const dir = await temporary(); const j = await Journal.open(dir, { flushMs: 15 });
     await j.append('chunk', {}, {}, false); expect(j.durableSeq).toBe(0);
-    await delay(70); expect(j.durableSeq).toBe(1); await j.close();
+    await expect.poll(() => j.durableSeq, { timeout: 2000 }).toBe(1); await j.close();
   });
   it('fails closed after a storage failure', async () => {
     let fail = false; const j = await Journal.open(await temporary(), { beforeIO: async op => { if (fail && op === 'append') throw new Error('disk full'); } });

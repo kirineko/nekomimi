@@ -1,4 +1,4 @@
-# deepy-harness
+# Nekomimi
 
 基于 pi 低层 Agent 的 TypeScript headless 编程 Agent。第一版提供 DeepSeek Responses 调用、文件与 shell 工具、可恢复的 Journal，以及离线 HTML/诊断包。
 
@@ -9,14 +9,16 @@
 ```sh
 npm ci
 npm run build
-# 在环境中设置 DEEPSEEK_API_KEY
-node dist/cli.js run "检查当前项目并总结" --workspace . --session .harness/demo --json
-node dist/cli.js resume .harness/demo "继续处理" --json
-node dist/cli.js replay .harness/demo
-node dist/cli.js export .harness/demo --format html --output session.html
-node dist/cli.js export .harness/demo --format bundle --output session-bundle
+node dist/cli.js config
+node dist/cli.js web --workspace .
+# 安装包的命令为 nekomimi；源码运行使用 node dist/cli.js
+node dist/cli.js run "检查当前项目并总结" --workspace . --json
+# 使用命令输出中的会话目录继续、检查或导出
+node dist/cli.js resume /path/to/session "继续处理" --json
+node dist/cli.js export /path/to/session --format html --output session.html
+node dist/cli.js export /path/to/session --format bundle --output session-bundle
 node dist/cli.js inspect session-bundle
-node dist/cli.js import session-bundle --output .harness/imported
+
 ```
 
 `run/resume` 返回最终结构化结果；Ctrl-C 取消当前调用并等待 shell 停止。重复写入同一会话会返回冲突；进程崩溃后锁租约约 10 秒到期。
@@ -67,14 +69,14 @@ npm run web -- --workspace /path/to/project
 
 界面提供会话列表、任务时间线、流式回复、工具参数/结果与文件 diff。点击调用卡片可查看总览、指令、输入、请求和响应；上下文来源支持跳转到原始记录。任务可取消、在终态后继续。浏览器关闭或断线不取消已接受任务；重连只恢复显示。
 
-单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。会话位于工作区 `.harness/sessions/`；当前版本不自动导入其他目录的历史。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `harness inspect <目录>` 检查。运行中需要等待停止后再导出。
+单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。CLI 与 Web 共用 `~/.nekomimi/workspaces/<工作区摘要>/sessions/`。旧 `.harness/sessions/` 和 `~/.deepy-harness/sessions/` 可通过 `nekomimi migrate --execute` 显式复制迁移，原件保留。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `nekomimi inspect <目录>` 检查。运行中需要等待停止后再导出。
 
 ```sh
 npm run test:browser   # 本机 Chrome 的端到端测试
 npm run test:web-live  # 显式联网的浏览器合成任务验收
 ```
 
-开发时先以固定端口启动本地服务，再配置 `HARNESS_DEV_ORIGIN` 使用 `npm run dev:web` 的 API 代理；生产验收使用打包静态资源。同一工作区服务崩溃后需等待约 10 秒租约过期。
+开发时先以固定端口启动本地服务，端口为 3000，使用 `npm run dev:web` 的 API 代理；生产验收使用打包静态资源。同一工作区服务崩溃后需等待约 10 秒租约过期。
 
 [Web 验收报告](docs/web-mvp-validation.md) · [源码模块说明](src/README.md)
 
@@ -91,3 +93,11 @@ npm run test:web-live  # 显式联网的浏览器合成任务验收
 | `reference/` | 本地参考仓库，不纳入版本控制 |
 
 `dist/`、`node_modules/`、`test-results/`、`playwright-report/` 和 `.harness/` 为本地生成目录。截图放在测试产物或系统临时目录；仓库保留文字验收结论。
+
+## 配置与会话管理
+
+品牌与安装命令已更名为 Nekomimi / `nekomimi`。设置和凭证分别保存在 `~/.nekomimi/settings.json`、`auth.json`，不读取 API key 环境变量或 dotenv。启动后可从侧栏“设置”保存、替换或清除密钥；已保存的密钥不回显。CLI 使用 `nekomimi config`，`--home <目录>` 显式隔离配置和数据。文件凭证使用本地用户权限保护，不提供同用户 shell 隔离。
+
+Enter 发送，Shift+Enter 换行，中文选词不触发发送。首条消息提供临时标题，首轮成功后自动命名一次；命名记录作为辅助调用独立可查。会话右侧删除入口只清理会话日志与附件，保留工作区文件；请先停止运行或命名、等待下载结束。
+
+CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 `--execute`。迁移校验日志和附件，不执行模型或工具，不覆盖冲突。配置变更用于下一次运行，当前运行使用捕获的设置。

@@ -1,15 +1,24 @@
+import { ConfigStore } from "../dist/config/store.js";
+const userSettings = await new ConfigStore().snapshot();
 import { chromium } from "@playwright/test";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { startWeb, readSession } from "../dist/index.js";
-if (!process.env.DEEPSEEK_API_KEY) {
-  console.log("SKIPPED: DEEPSEEK_API_KEY unavailable");
+if (!userSettings.apiKey) {
+  if (!snapshot.events.some((e) => e.type === "session.title" && e.payload.source === "model"))
+    throw new Error("Real model session naming did not complete");
+  console.log("SKIPPED: 请先运行 nekomimi config 或在 Web 保存 API key");
   process.exit(0);
 }
-const workspace = await mkdtemp("/private/tmp/harness-web-live-");
+const workspace = await mkdtemp("/private/tmp/nekomimi-web-live-");
+const testHome = join(workspace,"test-home");
+const testConfig = new ConfigStore(testHome);
+await testConfig.save("settings",{revision:0,model:userSettings.model,baseUrl:userSettings.baseUrl});
+await testConfig.save("auth",{revision:0,apiKey:userSettings.apiKey});
 const app = await startWeb({
+  home:testHome,
   workspace,
-  apiKey: process.env.DEEPSEEK_API_KEY,
+
   runtime: {
     tools: ["write"],
     maxOutputTokens: 2048,
@@ -50,9 +59,12 @@ try {
   await page.locator(".sources button").first().waitFor();
   await page.screenshot({ path: join(workspace, "web.png"), fullPage: true });
   const sessionId = new URL(page.url()).searchParams.get("session");
+  await app.sessions.naming?.done;
   const snapshot = await readSession(
-    join(workspace, ".harness/sessions", sessionId),
+    join(app.sessions.root, sessionId),
   );
+  if (!snapshot.events.some((e) => e.type === "session.title" && e.payload.source === "model"))
+    throw new Error("Real model session naming did not complete");
   console.log(
     JSON.stringify(
       {

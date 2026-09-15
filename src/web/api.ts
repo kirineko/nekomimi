@@ -84,6 +84,7 @@ export async function stream(
           .find((l) => l.startsWith("data:"))
           ?.slice(5);
         if (!data) continue;
+        if (type === "deleted") throw new ClientError("deleted", "会话已删除");
         if (type === "reset") throw new ClientError("reset", "重新同步历史");
         if (type === "stream-error")
           throw new ClientError("stream", JSON.parse(data).message);

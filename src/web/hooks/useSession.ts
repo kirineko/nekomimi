@@ -65,6 +65,7 @@ export function useSession(sessionId: string | undefined) {
           setConnection("disconnected");
         } catch (e) {
           if (abort.signal.aborted) return;
+          if (e instanceof ClientError && ["deleted","not_found"].includes(e.code)) { setSnapshot(undefined); setConnection("deleted"); setError("会话已删除"); return; }
           if (e instanceof ClientError && e.code === "auth") {
             setError(e.message);
             setConnection("unauthorized");

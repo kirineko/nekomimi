@@ -15,6 +15,7 @@ const textOf = (content: unknown): string =>
 /** Disposable display projection. Provider request construction never reads this module. */
 export class SessionProjection {
   rows = new Map<string, TimelineRow>();
+  private auxiliary = new Set<string>();
   private seq = 0;
   private digest = "";
   private frames = new Map<string, { decoder: TextDecoder; buffer: string }>();
@@ -26,6 +27,7 @@ export class SessionProjection {
       (this.seq && events[this.seq - 1]?.hash !== this.digest)
     ) {
       this.rows.clear();
+      this.auxiliary.clear();
       this.frames.clear();
       this.seq = 0;
     }
@@ -87,6 +89,10 @@ export class SessionProjection {
       );
       r.status = "running";
       r.text = p.model;
+      if (p.purpose === "session-title") {
+        r.title = "会话命名";
+        this.auxiliary.add(e.attemptId!);
+      }
     }
     if (
       [
@@ -104,7 +110,7 @@ export class SessionProjection {
         this.frames.delete(e.attemptId!);
       }
     }
-    if (e.type === "response.chunk") {
+    if (e.type === "response.chunk" && !this.auxiliary.has(e.attemptId!)) {
       const key = e.attemptId!;
       let frame = this.frames.get(key);
       if (!frame) {
@@ -186,9 +192,10 @@ export class SessionProjection {
     events: JournalEvent[],
     active?: { runId: string; cancelling: boolean },
   ): SessionInfo {
-    const meta = events.find((e) => e.type === "web.session")?.payload as
-      | { title?: string }
-      | undefined;
+    const meta = [...events]
+      .reverse()
+      .find((e) => e.type === "session.title" || e.type === "web.session")
+      ?.payload as { title?: string } | undefined;
     const started = [...events]
       .reverse()
       .find((e) => e.type === "command.accepted" || e.type === "run.started");

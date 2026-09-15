@@ -30,3 +30,7 @@ Node 的 tsconfig 排除 `web/`，浏览器 tsconfig 只包含 `web/` 与 `share
 新增工具保持核心执行与 Web renderer 分离；新增证据视图通过现有 call/seq/hash 关联读取。修改协议行为时同步 OpenSpec 场景和 server/browser 测试，不能把 UI 缓存当成权威状态。
 
 执行追踪阅读组件：`web/components/ExecutionTrace.tsx` 按运行显示有序记录，`WireContent.tsx` 渲染协议内容；`server/evidence.ts` 的 `tracePage` 和 `contextPage` 提供只读分页投影，均不参与模型请求构造。
+
+## 配置与会话生命周期
+
+`config/` 管理文件配置和交互配置，`storage/` 管理用户根目录、工作区分区和显式迁移，`session/title.ts` 管理可记录的辅助命名。`server/sessions.ts` 统一运行、命名、下载与删除门禁；`presentation/` 提供 Web/离线共用的纯展示组件和工具结果解析，`export/html.ts` 负责无脚本的自包含阅读视图。

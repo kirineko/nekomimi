@@ -6,7 +6,7 @@ export default defineConfig({
     host: "127.0.0.1",
     proxy: {
       "/api": {
-        target: process.env.HARNESS_DEV_ORIGIN ?? "http://127.0.0.1:3000",
+        target: "http://127.0.0.1:3000",
         changeOrigin: true,
         configure(proxy) {
           proxy.on("proxyReq", (request, incoming) => {
@@ -16,7 +16,7 @@ export default defineConfig({
             }
             request.setHeader(
               "origin",
-              process.env.HARNESS_DEV_ORIGIN ?? "http://127.0.0.1:3000",
+              "http://127.0.0.1:3000",
             );
           });
         },

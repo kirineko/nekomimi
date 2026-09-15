@@ -1,3 +1,4 @@
+import { ApiError } from "../shared/protocol.js";
 import type { ServerResponse } from "node:http";
 import { setTimeout as delay } from "node:timers/promises";
 import type { Sessions } from "./sessions.js";
@@ -65,7 +66,7 @@ export async function subscribe(
     }
   } catch (error) {
     if (!signal.aborted && !closed)
-      send("stream-error", { message: String(error) });
+      send(error instanceof ApiError && error.status===404 ? "deleted" : "stream-error", { message: error instanceof ApiError ? error.message : "读取会话失败" });
   } finally {
     res.end();
   }

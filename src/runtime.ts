@@ -91,17 +91,19 @@ export async function run(options: RunOptions): Promise<RunResult> {
     );
     const { realpath } = await import("node:fs/promises");
     const workspace = await realpath(options.workspace);
-    if (
-      existing &&
-      (existing.workspace !== workspace ||
-        existing.model !== model ||
-        existing.baseUrl !== baseUrl)
-    )
-      throw new Error(
-        "Resume requires the original workspace and model route; model migration is not part of this version",
-      );
+    if (existing && existing.workspace !== workspace)
+      throw new Error("Resume requires the original workspace");
     if (!existing)
       await journal.append("session.created", { workspace, model, baseUrl });
+    if (!journal.events.some((e) => e.type === "session.title"))
+      await journal.append(
+        "session.title",
+        {
+          title: options.prompt.replace(/\s+/g, " ").trim().slice(0, 60),
+          source: "first-prompt",
+        },
+        { runId },
+      );
     if (options.command) {
       const command = options.command;
       const prior = journal.events.find(
@@ -156,6 +158,8 @@ export async function run(options: RunOptions): Promise<RunResult> {
       "run.started",
       {
         workspace,
+        model,
+        baseUrl,
         promptManifest: prompt.fragments,
         tools: definitions.map((d) => d.tool.name),
       },

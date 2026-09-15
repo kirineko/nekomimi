@@ -24,6 +24,7 @@ async function setup(
   const workspace = await temporary();
   const app = await startWeb({
     workspace,
+    home: join(workspace,"test-home"), naming: false,
     apiKey,
     staticDir: resolve("dist/web-dist"),
     runtime: {
@@ -253,7 +254,7 @@ it("exports without side effects, checks integrity and rejects workspace symlink
     (await request(`/sessions/${id}/artifacts/${ref.sha256}`)).status,
   ).toBe(409);
   const outside = await temporary();
-  await symlink(outside, join(workspace, ".harness", "sessions", "escape"));
+  await symlink(outside, join(app.sessions.root, "escape"));
   expect((await request("/sessions/escape/snapshot")).status).toBe(404);
 });
 it("does not rerun a persisted accepted command after restart", async () => {
@@ -294,7 +295,7 @@ it("does not rerun a command after an actual killed tool write", async () => {
   const code = `import {startWeb} from ${JSON.stringify(pathToFileURL(resolve("dist/server/app.js")).href)};import {existsSync} from 'node:fs';
  const output=${JSON.stringify(callItem("write", { path: "effect.txt", content: "once" }))};
  const ev=[{type:'response.created',response:{id:'r',status:'in_progress'}},{type:'response.output_item.added',output_index:0,item:output},{type:'response.output_item.done',output_index:0,item:output},{type:'response.completed',response:{id:'r',status:'completed',output:[output],usage:{input_tokens:1,output_tokens:1}}}];
- const app=await startWeb({workspace:${JSON.stringify(workspace)},apiKey:'fixture',lockStaleMs:2000,runtime:{journalOptions:{lockStaleMs:2000,beforeIO:async(op)=>{if(op==='append'&&existsSync(${JSON.stringify(target)}))process.kill(process.pid,'SIGKILL');}},fetch:async()=>new Response(ev.map(e=>'data: '+JSON.stringify(e)+'\\n\\n').join(''),{headers:{'content-type':'text/event-stream'}})}});console.log(JSON.stringify({origin:app.origin,token:app.token}));`;
+ const app=await startWeb({workspace:${JSON.stringify(workspace)},home:${JSON.stringify(join(workspace,"test-home"))},naming:false,apiKey:'fixture',lockStaleMs:2000,runtime:{journalOptions:{lockStaleMs:2000,beforeIO:async(op)=>{if(op==='append'&&existsSync(${JSON.stringify(target)}))process.kill(process.pid,'SIGKILL');}},fetch:async()=>new Response(ev.map(e=>'data: '+JSON.stringify(e)+'\\n\\n').join(''),{headers:{'content-type':'text/event-stream'}})}});console.log(JSON.stringify({origin:app.origin,token:app.token}));`;
   const child = spawn(process.execPath, ["--input-type=module", "-e", code], {
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -337,6 +338,7 @@ it("does not rerun a command after an actual killed tool write", async () => {
     let calls = 0;
     const restored = await startWeb({
       workspace,
+    home: join(workspace,"test-home"), naming: false,
       apiKey: key,
       lockStaleMs: 2000,
       runtime: {
@@ -362,7 +364,7 @@ it("does not rerun a command after an actual killed tool write", async () => {
 it("enforces root lease, recovers managed listing and refuses foreign workspace metadata", async () => {
   const { app, create, workspace, request } = await setup();
   const { id } = await create();
-  await expect(startWeb({ workspace })).rejects.toThrow();
+  await expect(startWeb({ workspace, home: join(workspace,"test-home"), naming:false })).rejects.toThrow();
   const other = join(app.sessions.root, "foreign");
   const j = await Journal.open(other);
   await j.append("session.created", { workspace: "/different-workspace" });
@@ -370,7 +372,7 @@ it("enforces root lease, recovers managed listing and refuses foreign workspace 
   expect((await request("/sessions/foreign/snapshot")).status).toBe(403);
   await app.close();
   apps.splice(apps.indexOf(app), 1);
-  const restarted = await startWeb({ workspace });
+  const restarted = await startWeb({ workspace, home: join(workspace,"test-home"), naming:false });
   apps.push(restarted);
   expect(
     (await restarted.sessions.list(0, 30)).sessions.some((s) => s.id === id),

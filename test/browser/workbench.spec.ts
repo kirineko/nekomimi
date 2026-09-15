@@ -17,6 +17,7 @@ test.beforeEach(async () => {
   calls = 0;
   app = await startWeb({
     workspace: await temporary(),
+    home: await temporary(), naming: false,
     apiKey: key,
     staticDir: resolve("dist/web-dist"),
     runtime: {
@@ -82,7 +83,7 @@ test("submits, observes tool diff, inspects request, reloads, continues and expo
   );
   await expect(page.locator(".markdown img")).toHaveCount(0);
   await expect(page.locator('.markdown a[href^="javascript:"]')).toHaveCount(0);
-  await expect(page).toHaveTitle("Deepy");
+  await expect(page).toHaveTitle("Nekomimi");
   await page
     .getByRole("button", { name: "查看文件 diff", exact: false })
     .click();

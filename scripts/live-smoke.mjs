@@ -1,11 +1,13 @@
+import { ConfigStore } from "../dist/config/store.js";
+const userSettings = await new ConfigStore().snapshot();
 import { png } from './image-fixture.mjs';
 import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { run, readSession, exportSession } from '../dist/index.js';
-if (!process.env.DEEPSEEK_API_KEY) { console.log('SKIPPED: DEEPSEEK_API_KEY unavailable'); process.exit(0); }
-const workspace = await mkdtemp('/private/tmp/harness-live-');
+if (!userSettings.apiKey) { console.log('SKIPPED: 请先运行 nekomimi config 或在 Web 保存 API key'); process.exit(0); }
+const workspace = await mkdtemp('/private/tmp/nekomimi-live-');
 await writeFile(join(workspace, 'source.txt'), 'synthetic violet 42\n');
-const settings = { workspace, session: join(workspace, 'session'), apiKey: process.env.DEEPSEEK_API_KEY, maxOutputTokens: 2048, maxTurns: 5, timeoutMs: 90000, tools: ['read', 'write'] };
+const settings = { workspace, session: join(workspace, 'session'), ...userSettings, apiKey: userSettings.apiKey, maxOutputTokens: 2048, maxTurns: 5, timeoutMs: 90000, tools: ['read', 'write'] };
 const first = await run({ ...settings, prompt: 'Read source.txt using read, then write its exact content to copied.txt using write, then say done. These are synthetic test files.' });
 if (first.status !== 'completed' || await readFile(join(workspace, 'copied.txt'), 'utf8') !== 'synthetic violet 42\n') throw new Error(`Live tool flow failed: ${first.status} ${first.error ?? ''}`);
 const second = await run({ ...settings, prompt: 'Without tools, what exact text did you copy in the previous turn?' });

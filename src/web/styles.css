@@ -1173,3 +1173,46 @@ summary:hover {
 .trace-message .markdown {
   white-space: normal;
 }
+
+
+.modal-backdrop { position:fixed; inset:0; z-index:30; background:#24202e55; backdrop-filter:blur(5px); display:grid; place-items:center; padding:20px; }
+.settings-panel { background:#faf9fc; padding:28px; border:1px solid #fff; border-radius:22px; width:min(480px,100%); max-height:90vh; overflow:auto; box-shadow:0 24px 90px #21183233; }
+.settings-panel header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.settings-eyebrow { font-size:10px; letter-spacing:2px; color:#8b7e9c; }
+.settings-panel h2 { font-size:23px; margin:6px 0 0; font-weight:600; }
+.settings-card { background:#fff; border:1px solid #eae5ef; padding:20px; border-radius:14px; margin-bottom:14px; }
+.settings-panel label { display:grid; gap:10px; margin:0 0 18px; font-size:12px; font-weight:500; color:#655b70; }
+.settings-panel input { background:#faf9fc; font:inherit; font-size:13px; padding:12px; border:1px solid #e5dfed; border-radius:9px; width:100%; color:#39313f; }
+.settings-panel input:focus { outline:2px solid #d7c8ef; outline-offset:2px; }
+.settings-label { display:flex; justify-content:space-between; align-items:center; }
+.credential-status { font-size:10px; padding:3px 8px; border-radius:20px; background:#f0edf4; color:#8b7e9c; }
+.credential-status.configured { background:#edf6f0; color:#4b8164; }
+.settings-actions { display:flex; gap:10px; align-items:center; }
+.settings-panel .settings-primary { background:#786196; color:white; border:1px solid #786196; padding:9px 14px; border-radius:8px; }
+.settings-panel button:disabled { opacity:.45; cursor:not-allowed; }
+.settings-panel [role=status] { font-size:12px; margin:12px 0 0; color:#756583; overflow-wrap:anywhere; }
+.session-item { display:flex; align-items:center; position:relative; }
+.session-item>.session { flex:1; min-width:0; padding-right:34px; }
+.session-options { position:absolute; right:6px; top:12px; z-index:1; }
+.session-options[open] { z-index:3; }
+.session-options>summary { list-style:none; cursor:pointer; padding:4px 7px; border-radius:6px; color:#a496b2; font-size:10px; letter-spacing:1px; opacity:0; }
+.session-options>summary::-webkit-details-marker { display:none; }
+.session-item:hover summary,.session-item:focus-within summary,.session-options[open]>summary { opacity:1; }
+.session-options>summary:hover { background:#eae3f2; color:#675378; }
+.session-menu { position:absolute; right:0; top:30px; background:white; padding:5px; border:1px solid #e8e2ef; border-radius:10px; box-shadow:0 8px 24px #36244318; width:142px; }
+.session-menu button { display:flex; gap:10px; align-items:center; width:100%; padding:10px; border:0; background:transparent; color:#a45864; font-size:12px; }
+.session-menu button:hover { background:#fcf1f2; }
+.settings-entry { margin-top:auto; text-align:left; padding:12px; }
+@media (hover:none) { .session-options>summary { opacity:1; } }
+@media (max-width:700px) { .settings-panel { padding:20px; } .settings-card { padding:16px; } }
+
+.nekomimi-brand { display:inline-flex; align-items:center; gap:9px; color:#8970aa; }
+.cat-mark { width:36px; height:36px; flex-shrink:0; }
+.brand-word { font-family:ui-rounded,"SF Pro Rounded",system-ui,sans-serif; font-size:22px; font-weight:750; letter-spacing:-.8px; color:#665078; }
+.brand-word>span { color:#a38ab9; }
+.nekomimi-brand.compact { gap:7px; }
+.compact .cat-mark { width:27px; height:27px; background:#f1ebf7; border-radius:9px; padding:2px; }
+.compact .brand-word { font-size:14px; letter-spacing:-.3px; }
+
+.api-key-link { display:inline-block; margin:-4px 0 18px; color:#8970aa; font-size:12px; text-decoration:none; }
+.api-key-link:hover { text-decoration:underline; text-underline-offset:3px; }

@@ -1,5 +1,5 @@
 {
-  "name": "deepy-harness",
+  "name": "nekomimi",
   "version": "0.1.0",
   "private": true,
   "description": "Observable local coding agent with a durable request and tool journal",
@@ -8,7 +8,7 @@
     "node": ">=24"
   },
   "bin": {
-    "harness": "dist/cli.js"
+    "nekomimi": "dist/cli.js"
   },
   "exports": {
     ".": {

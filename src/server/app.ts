@@ -51,10 +51,24 @@ export async function startWeb(
         }
         if (req.method === "GET" && path === "/api/v1/config") {
           json(res, {
-            version: 1,
             workspace: sessions.workspace,
-            configured: !!options.apiKey,
+            ...(await sessions.config.describe()),
+            configured: !!(await sessions.settings()).apiKey,
           });
+          return;
+        }
+        if (path === "/api/v1/settings" && req.method === "POST") {
+          const v = object(await body(req));
+          if (v.kind !== "settings" && v.kind !== "auth")
+            throw new ApiError(400, "config", "配置类型无效");
+          json(res, await sessions.config.save(v.kind, v));
+          return;
+        }
+        if (
+          path === "/api/v1/migrations" &&
+          ["GET", "POST"].includes(req.method ?? "")
+        ) {
+          json(res, await sessions.migration(req.method === "POST"));
           return;
         }
         if (path === "/api/v1/sessions") {
@@ -77,7 +91,7 @@ export async function startWeb(
           }
         }
         const match = path.match(
-          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(snapshot|events|submit|cancel|evidence|artifacts|export|context|trace)(?:\/([a-f0-9]+))?$/,
+          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete)(?:\/([a-f0-9]+))?$/,
         );
         if (!match) throw new ApiError(404, "not_found", "接口不存在");
         const sessionId = match[1]!;
@@ -99,6 +113,10 @@ export async function startWeb(
           )
             throw new ApiError(400, "input", "运行 ID 无效");
           json(res, await sessions.cancel(sessionId, v.runId));
+          return;
+        }
+        if (req.method === "POST" && action === "delete") {
+          json(res, await sessions.remove(sessionId));
           return;
         }
         const entry = await sessions.entry(sessionId);
@@ -211,19 +229,24 @@ export async function startWeb(
             v.redact.some((x) => typeof x !== "string")
           )
             throw new ApiError(400, "input", "导出参数无效");
-          const download = await prepareDownload(
-            entry,
-            v.format,
-            v.redact as string[],
-          );
+          const releaseDownload = await sessions.downloadLease(sessionId);
           try {
-            res.writeHead(200, {
-              "content-type": download.type,
-              "content-disposition": `attachment; filename="${download.name}"`,
-            });
-            await pipeline(createReadStream(download.file), res);
+            const download = await prepareDownload(
+              entry,
+              v.format,
+              v.redact as string[],
+            );
+            try {
+              res.writeHead(200, {
+                "content-type": download.type,
+                "content-disposition": `attachment; filename="${download.name}"`,
+              });
+              await pipeline(createReadStream(download.file), res);
+            } finally {
+              await rm(download.directory, { recursive: true, force: true });
+            }
           } finally {
-            await rm(download.directory, { recursive: true, force: true });
+            releaseDownload();
           }
           return;
         }
@@ -264,9 +287,7 @@ export async function startWeb(
             code: known ? error.code : "internal",
             message: known
               ? error.message
-              : String(error)
-                  .split(options.apiKey ?? "\0")
-                  .join("[REDACTED]"),
+              : "操作失败，请检查本地配置和数据完整性",
           },
         },
         known ? error.status : 500,

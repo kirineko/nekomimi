@@ -1,4 +1,8 @@
-import { mkdir, realpath, readdir } from "node:fs/promises";
+import { ConfigStore } from "../config/store.js";
+import { workspacePaths } from "../storage/paths.js";
+import { migrate } from "../storage/migrate.js";
+import { nameSession } from "../session/title.js";
+import { mkdir, realpath, readdir, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
 import lockfile from "proper-lockfile";
 import {
@@ -25,6 +29,9 @@ export interface Entry {
 }
 export interface ServiceOptions {
   workspace: string;
+  home?: string;
+  legacyHome?: string;
+  naming?: boolean;
   apiKey?: string;
   model?: string;
   baseUrl?: string;
@@ -52,6 +59,93 @@ interface Active {
   done: Promise<unknown>;
 }
 export class Sessions {
+  config!: ConfigStore;
+  paths!: Awaited<ReturnType<typeof workspacePaths>>;
+  private gate = Promise.resolve();
+  naming?: {
+    sessionId: string;
+    runId: string;
+    abort: AbortController;
+    done: Promise<void>;
+  };
+  private readers = new Map<string, number>();
+  exclusive<T>(action: () => Promise<T>): Promise<T> {
+    const next = this.gate.then(action);
+    this.gate = next.then(
+      () => {},
+      () => {},
+    );
+    return next;
+  }
+  async settings() {
+    const s = await this.config.snapshot();
+    return {
+      ...s,
+      apiKey: this.options.apiKey ?? s.apiKey,
+      model: this.options.model ?? s.model,
+      baseUrl: this.options.baseUrl ?? s.baseUrl,
+    };
+  }
+  async migration(execute = false) {
+    return this.exclusive(async () => {
+      this.check();
+      if (this.active || this.naming)
+        throw new ApiError(409, "busy", "请先停止活动任务");
+      return migrate(this.paths, execute, this.options.legacyHome);
+    });
+  }
+  async downloadLease(sessionId: string) {
+    return this.exclusive(async () => {
+      this.check();
+      if (
+        this.active?.sessionId === sessionId ||
+        this.naming?.sessionId === sessionId
+      )
+        throw new ApiError(409, "busy", "请等待运行停止");
+      await this.entry(sessionId);
+      this.readers.set(sessionId, (this.readers.get(sessionId) ?? 0) + 1);
+      return () => {
+        this.readers.set(sessionId, (this.readers.get(sessionId) ?? 1) - 1);
+      };
+    });
+  }
+  async remove(sessionId: string) {
+    return this.exclusive(async () => {
+      this.check();
+      if (!validId(sessionId))
+        throw new ApiError(404, "not_found", "会话不存在");
+      if (
+        this.active?.sessionId === sessionId ||
+        this.naming?.sessionId === sessionId ||
+        this.readers.get(sessionId)
+      )
+        throw new ApiError(
+          409,
+          "busy",
+          "会话正在运行或下载，请先停止并稍后重试",
+        );
+      const target = join(this.paths.deleting, sessionId);
+      let entry: Entry;
+      try {
+        entry = await this.entry(sessionId);
+      } catch (e) {
+        if (e instanceof ApiError && e.status === 404) {
+          await rm(target, { recursive: true, force: true });
+          return { status: "deleted" };
+        }
+        throw e;
+      }
+      const release = await lockfile.lock(entry.directory, { retries: 0 });
+      try {
+        await rename(entry.directory, target);
+        this.entries.delete(sessionId);
+        await rm(target, { recursive: true, force: true });
+      } finally {
+        await release();
+      }
+      return { status: "deleted" };
+    });
+  }
   readonly entries = new Map<string, Entry>();
   active?: Active;
   private closing = false;
@@ -63,19 +157,11 @@ export class Sessions {
     readonly options: ServiceOptions,
   ) {}
   static async open(options: ServiceOptions) {
-    const workspace = await realpath(options.workspace);
-    const parent = join(workspace, ".harness");
-    const root = join(parent, "sessions");
-    try {
-      if ((await realpath(parent)) !== parent)
-        throw new Error("Session directory symlink rejected");
-    } catch (e) {
-      if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
-    }
-    await mkdir(root, { recursive: true, mode: 0o700 });
-    if ((await realpath(root)) !== root)
-      throw new Error("Session directory symlink rejected");
+    const paths = await workspacePaths(options.workspace, options.home);
+    const { workspace, sessions: root } = paths;
     const service = new Sessions(workspace, root, options);
+    service.paths = paths;
+    service.config = new ConfigStore(paths.home);
     service.release = await lockfile.lock(root, {
       stale: options.lockStaleMs ?? 10000,
       retries: 0,
@@ -84,6 +170,9 @@ export class Sessions {
         service.active?.abort.abort(e);
       },
     });
+    for (const name of await readdir(paths.deleting))
+      if (validId(name))
+        await rm(join(paths.deleting, name), { recursive: true, force: true });
     return service;
   }
   check() {
@@ -130,25 +219,29 @@ export class Sessions {
     return current;
   }
   info(sessionId: string, entry: Entry) {
-    return entry.projection.info(
-      sessionId,
-      entry.reader.events,
-      this.active?.sessionId === sessionId ? this.active : undefined,
-    );
+    return {
+      ...entry.projection.info(
+        sessionId,
+        entry.reader.events,
+        this.active?.sessionId === sessionId ? this.active : undefined,
+      ),
+      naming: this.naming?.sessionId === sessionId,
+    };
   }
   async create(title: string) {
+    return this.exclusive(() => this.createInner(title));
+  }
+  private async createInner(title: string) {
     this.check();
+    const settings = await this.settings();
     const sessionId = id();
     const directory = join(this.root, sessionId);
     const j = await Journal.open(directory);
     try {
       await j.append("session.created", {
         workspace: this.workspace,
-        model: this.options.model ?? "deepseek-flash",
-        baseUrl: (this.options.baseUrl ?? "https://api.deepseek.com").replace(
-          /\/$/,
-          "",
-        ),
+        model: settings.model,
+        baseUrl: settings.baseUrl.replace(/\/$/, ""),
       });
       await j.append("web.session", {
         title: title.trim().slice(0, 100) || "新会话",
@@ -176,7 +269,17 @@ export class Sessions {
     };
   }
   async submit(sessionId: string, command: Submit): Promise<Receipt> {
+    return this.exclusive(() => this.submitInner(sessionId, command));
+  }
+  private async submitInner(
+    sessionId: string,
+    command: Submit,
+  ): Promise<Receipt> {
     this.check();
+    if (this.naming) {
+      this.naming.abort.abort(new Error("新任务优先"));
+      await this.naming.done;
+    }
     const payloadHash = hash(JSON.stringify({ prompt: command.prompt }));
     const entry = await this.entry(sessionId);
     const prior = entry.reader.events.find(
@@ -210,8 +313,11 @@ export class Sessions {
         return this.active.accepted;
       throw new ApiError(409, "busy", "工作区已有任务运行，请等待完成或取消");
     }
-    if (!this.options.apiKey)
-      throw new ApiError(422, "missing_key", "服务端未配置 DEEPSEEK_API_KEY");
+    const settings = await this.settings();
+    if (!settings.apiKey)
+      throw new ApiError(422, "missing_key", "请在设置中保存 API key");
+    if (this.readers.get(sessionId))
+      throw new ApiError(409, "busy", "会话正在下载");
     let accept!: (r: Receipt) => void;
     let reject!: (e: unknown) => void;
     const accepted = new Promise<Receipt>((resolve, fail) => {
@@ -233,9 +339,9 @@ export class Sessions {
       ...this.options.runtime,
       workspace: this.workspace,
       session: entry.directory,
-      apiKey: this.options.apiKey,
-      model: this.options.model,
-      baseUrl: this.options.baseUrl,
+      apiKey: settings.apiKey,
+      model: settings.model,
+      baseUrl: settings.baseUrl,
       prompt: command.prompt,
       signal: active.abort.signal,
       command: {
@@ -251,6 +357,30 @@ export class Sessions {
           }),
       },
     })
+      .then(async (result) => {
+        if (
+          result.status === "completed" &&
+          !this.closing &&
+          this.options.naming !== false
+        ) {
+          const naming = {
+            sessionId,
+            runId: id(),
+            abort: new AbortController(),
+            done: Promise.resolve(),
+          };
+          this.naming = naming;
+          naming.done = nameSession(
+            entry.directory,
+            { ...this.options.runtime, ...settings, apiKey: settings.apiKey! },
+            naming.abort.signal,
+          )
+            .catch(() => {})
+            .finally(() => {
+              if (this.naming === naming) this.naming = undefined;
+            });
+        }
+      })
       .catch((error) => {
         reject(error);
       })
@@ -262,6 +392,10 @@ export class Sessions {
   async cancel(sessionId: string, runId: string) {
     this.check();
     await this.entry(sessionId);
+    if (this.naming?.sessionId === sessionId) {
+      this.naming.abort.abort(new Error("用户取消命名"));
+      return { status: "cancelling" };
+    }
     if (this.active?.sessionId === sessionId && this.active.runId === runId) {
       this.active.cancelling = true;
       this.active.abort.abort(new Error("用户取消"));
@@ -273,6 +407,8 @@ export class Sessions {
     this.closing = true;
     this.active?.abort.abort(new Error("服务正在停止"));
     await this.active?.done;
+    this.naming?.abort.abort(new Error("服务正在停止"));
+    await this.naming?.done;
     await this.release();
   }
 }

@@ -1,3 +1,4 @@
+import { renderSessionHtml } from "./export/html.js";
 import { readFile, mkdir, realpath } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import {
@@ -55,25 +56,7 @@ export async function exportSession(
   const redact = redactor(options.redact);
   const output = resolve(options.output);
   if (options.format === "html") {
-    const events = snapshot.events
-      .slice(0, snapshot.durableSeq)
-      .map(
-        (e) =>
-          `<details><summary>${e.seq} · ${escape(e.type)} · ${escape(e.timestamp)}</summary><pre>${escape(redact(JSON.stringify(e, null, 2)))}</pre></details>`,
-      )
-      .join("\n");
-    const attachments = [...artifacts]
-      .map(([digest, data]) => {
-        let content: string;
-        try {
-          content = new TextDecoder("utf8", { fatal: true }).decode(data);
-        } catch {
-          content = `[Binary artifact, base64]\n${data.toString("base64")}`;
-        }
-        return `<details id="${digest}"><summary>Artifact ${digest} (${data.length} bytes)</summary><pre>${escape(redact(content))}</pre></details>`;
-      })
-      .join("\n");
-    const html = `<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width"><title>Harness session evidence</title><style>body{max-width:1100px;margin:40px auto;padding:0 20px;font:16px system-ui;color:#18202a}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7fa;padding:16px}summary{padding:12px;cursor:pointer}details{border-bottom:1px solid #ddd}</style><h1>Harness session evidence</h1><p>Offline reading view. Redaction applied; this is not a resumable session.</p><p>Durable sequence: ${snapshot.durableSeq}. Torn bytes: ${snapshot.tornBytes}. Tentative events: ${snapshot.tentativeEvents}.</p><h2>Unfinished operations</h2><pre>${escape(JSON.stringify(snapshot.pending, null, 2))}</pre><h2>Timeline · requests · tools · usage</h2>${events}<h2>Prompt, context, raw protocol and file evidence</h2>${attachments}</html>`;
+    const html = await renderSessionHtml(snapshot, artifacts, redact);
     await atomicFile(output, html);
     return output;
   }

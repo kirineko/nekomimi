@@ -11,6 +11,7 @@ export interface Cursor {
   hash: string;
 }
 export interface SessionInfo {
+  naming?: boolean;
   id: string;
   title: string;
   status: string;

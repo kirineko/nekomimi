@@ -1,3 +1,4 @@
+import { Brand } from "./Brand";
 import type { TimelineRow } from "../../shared/protocol";
 import { Markdown } from "./Markdown";
 import { ToolCard } from "./ToolCard";
@@ -39,8 +40,8 @@ export function Timeline({
               >
                 <span className={`step-dot ${row.status}`} />
                 <span>
-                  {row.status === "running"
-                    ? "Deepy 正在思考"
+                  {row.title === "会话命名" ? "会话命名" : row.status === "running"
+                    ? "Nekomimi 正在思考"
                     : row.status === "failed"
                       ? "本次响应失败"
                       : "思考过程"}
@@ -54,12 +55,9 @@ export function Timeline({
                   {row.kind === "user"
                     ? "你"
                     : row.kind === "assistant"
-                      ? "Deepy"
+                      ? <Brand compact />
                       : statusText(row.status)}
                 </strong>
-                {row.kind === "assistant" && (
-                  <span className="reply-mark">✳</span>
-                )}
               </div>
             )}
             {row.text && row.kind === "assistant" ? (

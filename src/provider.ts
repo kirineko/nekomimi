@@ -10,6 +10,8 @@ import { contextView, type assemblePrompt, type WireItem } from "./context.js";
 
 export interface ProviderOptions {
   apiKey: string;
+  purpose?: "session-title";
+  contextEvents?: import("./journal.js").JournalEvent[];
   model?: string;
   baseUrl?: string;
   maxOutputTokens?: number;
@@ -80,7 +82,10 @@ export class ResponsesProvider {
       try {
         this.journal.check();
         options?.signal?.throwIfAborted();
-        const view = contextView(this.journal.events, this.prompt);
+        const view = contextView(
+          this.settings.contextEvents ?? this.journal.events,
+          this.prompt,
+        );
         await this.journal.append(
           "context.view",
           {
@@ -152,6 +157,7 @@ export class ResponsesProvider {
           await this.journal.append(
             "attempt.started",
             {
+              purpose: this.settings.purpose ?? "task",
               attempt,
               model: this.model.id,
               adapter: "pi-responses-0.85.1/harness-1",
@@ -295,6 +301,9 @@ export class ResponsesProvider {
               tool_choice: "auto",
               stream: true,
               max_output_tokens: this.model.maxTokens,
+              ...(this.settings.purpose === "session-title"
+                ? { reasoning: { effort: "none" } }
+                : {}),
             }),
           });
           for await (const event of inner)
@@ -360,7 +369,7 @@ export class ResponsesProvider {
                 this.callIds.set(call.id, String(source.call_id));
               }
             await this.journal.append(
-              "context.add",
+              this.settings.purpose ? "auxiliary.response" : "context.add",
               { items, source: `response:${attemptId}` },
               links,
             );

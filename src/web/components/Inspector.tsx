@@ -89,7 +89,7 @@ export function Inspector({
     <aside className="inspector">
       <header>
         <div>
-          <span className="trace-kicker">Deepy</span>
+          <span className="trace-kicker">Nekomimi</span>
           <h2>执行追踪</h2>
         </div>
         <button className="icon" onClick={close} aria-label="关闭检查面板">

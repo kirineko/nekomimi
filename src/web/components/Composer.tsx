@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 export function Composer({
   busy,
   configured,
@@ -10,6 +10,8 @@ export function Composer({
   submit: (text: string) => Promise<void>;
   cancel: () => Promise<void>;
 }) {
+  const composing = useRef(false);
+  const ended = useRef(0);
   const [text, setText] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
@@ -39,14 +41,27 @@ export function Composer({
           disabled={!configured || pending}
           aria-label="任务内容"
           placeholder={
-            configured
-              ? "交给 Deepy…"
-              : "在服务端配置 DEEPSEEK_API_KEY 后即可提交任务"
+            configured ? "交给 Nekomimi…" : "打开设置，保存 API key 后即可发送"
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onCompositionStart={() => {
+            composing.current = true;
+          }}
+          onCompositionEnd={() => {
+            composing.current = false;
+            ended.current = performance.now();
+          }}
           onKeyDown={(e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              !composing.current &&
+              !e.nativeEvent.isComposing &&
+              e.nativeEvent.keyCode !== 229 &&
+              performance.now() - ended.current > 50 &&
+              !e.repeat
+            ) {
               e.preventDefault();
               void send();
             }
@@ -68,7 +83,7 @@ export function Composer({
           ) : (
             <button
               className="primary"
-              title="⌘ / Ctrl + Enter"
+              title="Enter 发送 · Shift+Enter 换行"
               type="submit"
               disabled={pending || !configured || !text.trim()}
             >

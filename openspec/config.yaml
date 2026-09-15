@@ -1,7 +1,7 @@
 schema: spec-driven
 context: |
   Language: zh-CN. 保留 OpenSpec 结构标题和 SHALL/MUST 关键字。
-  deepy-harness 是独立的新 TypeScript 项目，需求研究入口为根目录 spec.md。
+  Nekomimi（nekomimi）是独立的新 TypeScript 项目，需求研究入口为根目录 spec.md。
   优先级：可观测性及 pi 风格提示词/工具 > Web/TUI > Skills/Rules/MCP 和上下文缓存 > 子任务及市场。
   目标技术栈：Node.js LTS、TypeScript strict、ESM；pi-agent-core 0.85.1 低层可替换循环；独立 DeepSeek Responses adapter 复用 pi-ai 0.85.1 公开 parser。
   JSONL Journal 是唯一权威事实；ContextView 和 WireRequest 独立且可追溯。

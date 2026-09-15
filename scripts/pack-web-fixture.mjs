@@ -1,5 +1,6 @@
 // Copied into a clean tarball installation by pack-smoke.mjs.
-import { startWeb } from "deepy-harness";
+import { join } from "node:path";
+import { startWeb } from "nekomimi";
 const item = {
   type: "message",
   id: "m",
@@ -38,6 +39,7 @@ const events = [
   },
 ];
 const app = await startWeb({
+  home: join(process.cwd(),"test-home"), naming:false,
   workspace: process.cwd(),
   apiKey: "synthetic",
   runtime: {

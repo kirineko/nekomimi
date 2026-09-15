@@ -1,3 +1,4 @@
+import { toolContent } from "../../presentation/content";
 import { useEffect, useState } from "react";
 import type { EvidenceRef, TimelineRow } from "../../shared/protocol";
 import { api } from "../api";
@@ -104,23 +105,17 @@ function TraceStep({
   selected: boolean;
   select: (row: TimelineRow) => void;
 }) {
-  const parts = step.text.split("\n\n");
-  const input = parts.shift() ?? "";
-  const result = parts.join("\n\n");
-  let args: Record<string, unknown> = {};
-  try {
-    args = JSON.parse(input);
-  } catch {}
+  const { input, result, target } = toolContent(step.text);
   const details = step.details as Record<string, any> | undefined;
   const label =
     step.kind === "user"
       ? "你的任务"
       : step.kind === "assistant"
-        ? "Deepy 的回答"
+        ? "Nekomimi 的回答"
         : step.kind === "tool"
           ? toolTitle(step.title)
           : step.kind === "call"
-            ? "模型调用"
+            ? step.title === "会话命名" ? "会话命名" : "模型调用"
             : "本轮结束";
   return (
     <article>
@@ -144,7 +139,7 @@ function TraceStep({
       ) : step.kind === "tool" ? (
         <>
           <code className="trace-target">
-            {String(args.path ?? args.command ?? step.title)}
+            {target || step.title}
           </code>
           {result ? (
             <details className="trace-output" open={step.status === "failed"}>

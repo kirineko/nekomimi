@@ -1,6 +1,10 @@
 #!/usr/bin/env node
+import lockfile from "proper-lockfile";
 import { parseArgs } from "node:util";
-import { homedir } from "node:os";
+import { ConfigStore } from "./config/store.js";
+import { configure } from "./config/interactive.js";
+import { workspacePaths } from "./storage/paths.js";
+import { migrate } from "./storage/migrate.js";
 import { resolve, join } from "node:path";
 import { readFile } from "node:fs/promises";
 import { run } from "./runtime.js";
@@ -12,6 +16,8 @@ async function main() {
     allowPositionals: true,
     options: {
       port: { type: "string" },
+      home: { type: "string" },
+      execute: { type: "boolean" },
       help: { type: "boolean", short: "h" },
       json: { type: "boolean" },
       workspace: { type: "string" },
@@ -31,8 +37,23 @@ async function main() {
   const [command, arg, ...rest] = positionals;
   if (values.help || !command) {
     console.log(
-      `Harness — inspectable local coding agent\n\nharness web [--workspace <dir>] [--port <port>]\n\nharness run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nharness resume <session> <prompt> [--json]\nharness replay <session>\nharness export <session> --format html|bundle --output <path> [--redact <text>]\nharness inspect <bundle>\nharness import <bundle> --output <new-session-dir>\n\nOptions: --model, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCredentials: DEEPSEEK_API_KEY; default model: deepseek-flash.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
+      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
     );
+    return;
+  }
+  const store = new ConfigStore(values.home);
+  if (command === "config") {
+    await configure(store);
+    return;
+  }
+  if (command === "migrate") {
+    const paths = await workspacePaths(resolve(values.workspace ?? process.cwd()), values.home);
+    const release = await lockfile.lock(paths.sessions, { retries: 0 });
+    try {
+      console.log(JSON.stringify(await migrate(paths, !!values.execute), null, 2));
+    } finally {
+      await release();
+    }
     return;
   }
   if (command === "web") {
@@ -43,7 +64,7 @@ async function main() {
     const app = await startWeb({
       workspace: resolve(values.workspace ?? process.cwd()),
       port,
-      apiKey: process.env.DEEPSEEK_API_KEY,
+      home: values.home,
       model: values.model,
       baseUrl: values["base-url"],
     });
@@ -90,13 +111,24 @@ async function main() {
   }
   if (command !== "run" && command !== "resume")
     throw new Error("Unknown command");
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) throw new Error("DEEPSEEK_API_KEY is required to run a model");
+  const settings = await store.snapshot();
+  const apiKey = settings.apiKey;
+  if (!apiKey)
+    throw new Error("请运行 nekomimi config 或在 Web 设置中保存 API key");
   const session =
     command === "resume"
       ? resolve(arg)
       : resolve(
-          values.session ?? join(homedir(), ".deepy-harness", "sessions", id()),
+          values.session ??
+            join(
+              (
+                await workspacePaths(
+                  resolve(values.workspace ?? process.cwd()),
+                  values.home,
+                )
+              ).sessions,
+              id(),
+            ),
         );
   const prior =
     command === "resume"
@@ -140,6 +172,8 @@ async function main() {
       throw new Error("Limits must be positive integers");
     return n;
   };
+  const workspaceRoot=await workspacePaths(resolve(values.workspace ?? prior?.workspace ?? process.cwd()),values.home);
+  const releaseWorkspace=await lockfile.lock(workspaceRoot.sessions,{retries:0});
   const abort = new AbortController();
   const onInterrupt = () => abort.abort(new Error("User cancelled"));
   process.on("SIGINT", onInterrupt);
@@ -151,8 +185,8 @@ async function main() {
       workspace: resolve(values.workspace ?? prior?.workspace ?? process.cwd()),
       prompt,
       apiKey,
-      model: values.model ?? prior?.model,
-      baseUrl: values["base-url"] ?? prior?.baseUrl,
+      model: values.model ?? settings.model,
+      baseUrl: values["base-url"] ?? settings.baseUrl,
       maxOutputTokens: positive(values["max-output-tokens"], 4096),
       maxTurns: positive(values["max-turns"], 32),
       instructions,
@@ -172,6 +206,7 @@ async function main() {
           ? 130
           : 1;
   } finally {
+    await releaseWorkspace();
     process.removeListener("SIGINT", onInterrupt);
     process.removeListener("SIGTERM", onInterrupt);
   }

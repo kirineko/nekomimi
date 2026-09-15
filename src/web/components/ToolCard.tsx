@@ -1,3 +1,4 @@
+import { toolContent } from "../../presentation/content";
 import { useState } from "react";
 import type { TimelineRow } from "../../shared/protocol";
 import { Artifact } from "./Artifact";
@@ -10,14 +11,7 @@ export function ToolCard({
   sessionId: string;
 }) {
   const [opened, setOpened] = useState<string>();
-  const split = row.text.indexOf("\n\n");
-  const input = split < 0 ? row.text : row.text.slice(0, split);
-  const result = split < 0 ? "" : row.text.slice(split + 2);
-  let args: Record<string, unknown> = {};
-  try {
-    args = JSON.parse(input);
-  } catch {}
-  const target = String(args.path ?? args.command ?? "");
+  const {input,result,target}=toolContent(row.text);
   const patch = (row.details as { patch?: { sha256: string } } | undefined)
     ?.patch?.sha256;
   return (

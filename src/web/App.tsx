@@ -5,12 +5,16 @@ import { useSession } from "./hooks/useSession";
 import { Sidebar } from "./components/Sidebar";
 import { Timeline, statusText } from "./components/Timeline";
 import { Inspector } from "./components/Inspector";
+import { Settings } from "./components/Settings";
 import { Composer } from "./components/Composer";
 export function App() {
   const [config, setConfig] = useState<{
     workspace: string;
     configured: boolean;
   }>();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [deleting, setDeleting] = useState<SessionInfo>();
+  const [deleteBusy, setDeleteBusy] = useState(false);
   const [error, setError] = useState("");
   const [sessions, setSessions] = useState<SessionInfo[]>([]);
   const [next, setNext] = useState<number>();
@@ -60,11 +64,41 @@ export function App() {
       setSessions((old) =>
         old.map((s) => (s.id === snapshot.session.id ? snapshot.session : s)),
       );
-  }, [snapshot?.session.status, snapshot?.session.id]);
+  }, [snapshot?.session.status, snapshot?.session.id, snapshot?.session.title]);
   useEffect(() => {
     if (follow.current && conversation.current)
       conversation.current.scrollTop = conversation.current.scrollHeight;
   }, [snapshot?.cursor.seq]);
+  const clearSelection = () => {
+    setSelected(undefined);
+    setInspection(undefined);
+    pending.current = undefined;
+    history.replaceState(null, "", location.pathname);
+  };
+  useEffect(() => {
+    if (connection === "deleted") {
+      clearSelection();
+      void load();
+    }
+  }, [connection, load]);
+  const refreshConfig = async () => {
+    setConfig(await api("/config"));
+    await load();
+  };
+  const remove = async () => {
+    if (!deleting) return;
+    setDeleteBusy(true);
+    try {
+      await api(`/sessions/${deleting.id}/delete`, {});
+      if (selected === deleting.id) clearSelection();
+      setDeleting(undefined);
+      await load();
+    } catch (e) {
+      setError(String(e));
+    } finally {
+      setDeleteBusy(false);
+    }
+  };
   const choose = (id: string) => {
     follow.current = true;
     setSelected(id);
@@ -78,7 +112,7 @@ export function App() {
     try {
       const session = await api<SessionInfo>("/sessions", {
         version: 1,
-        title: `工作会话 ${new Date().toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
+        title: "新会话",
       });
       setSessions((old) => [session, ...old]);
       choose(session.id);
@@ -135,7 +169,55 @@ export function App() {
   };
   return (
     <div className={`app ${inspection ? "with-inspector" : ""}`}>
+      {settingsOpen && (
+        <Settings
+          close={() => setSettingsOpen(false)}
+          changed={refreshConfig}
+        />
+      )}
+      {deleting && (
+        <div className="modal-backdrop">
+          <section
+            className="settings-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="删除会话"
+          >
+            <h2>删除 {deleting.title}？</h2>
+            <p>删除会话记录与附件，保留工作区文件。</p>
+            {error && <p role="alert">{error}</p>}
+            <button
+              disabled={deleteBusy}
+              onClick={() => setDeleting(undefined)}
+            >
+              保留会话
+            </button>
+            <button disabled={deleteBusy} onClick={() => void remove()}>
+              确认删除
+            </button>
+            {(deleting.status === "running" || deleting.naming) && (
+              <button
+                onClick={() =>
+                  void api(`/sessions/${deleting.id}/cancel`, {
+                    version: 1,
+                    runId: deleting.runId,
+                  })
+                    .then(() => load())
+                    .catch((e) => setError(String(e)))
+                }
+              >
+                停止运行
+              </button>
+            )}
+          </section>
+        </div>
+      )}
       <Sidebar
+        settings={() => setSettingsOpen(true)}
+        remove={(s) => {
+          setError("");
+          setDeleting(s);
+        }}
         sessions={sessions}
         selected={selected}
         choose={choose}
