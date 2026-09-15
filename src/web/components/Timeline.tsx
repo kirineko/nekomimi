@@ -12,7 +12,7 @@ const Message = memo(function Message({row}: {row: TimelineRow}) {
     {row.text && (row.kind === "assistant" ? <Markdown text={row.text}/> : <div className="row-text">{row.text}</div>)}
   </article>;
 });
-function Turn({turn, sessionId, inspect}: {turn: ConversationTurn; sessionId: string; inspect: (row: TimelineRow)=>void}) {
+const Turn = memo(function Turn({turn, sessionId, inspect}: {turn: ConversationTurn; sessionId: string; inspect: (row: TimelineRow)=>void}) {
   const calls = turn.rows.filter(r=>r.kind === "call");
   const primary = calls.find(r=>r.title !== "会话命名") ?? calls[0];
   const tools = turn.rows.filter(r=>r.kind === "tool");
@@ -34,7 +34,7 @@ function Turn({turn, sessionId, inspect}: {turn: ConversationTurn; sessionId: st
       return row.kind === "tool" ? <ToolCard key={row.id} row={row} sessionId={sessionId}/> : <Message key={row.id} row={row}/>;
     })}
   </section>;
-}
+});
 export function Timeline({sessionId,rows,inspect,older,latest,hasOlder}: {sessionId:string;rows:TimelineRow[];inspect:(row:TimelineRow)=>void;older:()=>void;latest:()=>void;hasOlder:boolean}) {
   const turns=useMemo(()=>conversationTurns(rows),[rows]);
   return <div className="timeline" aria-label="任务时间线">

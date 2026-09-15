@@ -79,7 +79,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
       options.workspace,
       journal,
       { runId },
-      options.toolOptions,
+      { ...options.toolOptions, search: { apiKey: options.apiKey, fetch: options.fetch, settings: options.search, ...options.toolOptions?.search } },
     );
     const existing = journal.events.find((e) => e.type === "session.created")
       ?.payload as

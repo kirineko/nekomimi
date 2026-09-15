@@ -10,7 +10,8 @@ it.each(["watermark.open", "watermark.write", "watermark.sync", "watermark.renam
   const stderr = vi.spyOn(process.stderr, "write").mockImplementation(() => true);
   let fail = false;
   const dir = await temporary();
-  const j = await Journal.open(dir, { beforeIO: async stage => { if(fail && stage === operation) throw Object.assign(new Error(`secret ${key} body`), {code:"EPERM",syscall:"rename"}); } });
+  // Keep the periodic flush from racing the explicitly faulted append under parallel test load.
+  const j = await Journal.open(dir, { flushMs: 60000, beforeIO: async stage => { if(fail && stage === operation) throw Object.assign(new Error(`secret ${key} body`), {code:"EPERM",syscall:"rename"}); } });
   try {
     await j.append("run.started", {}, {runId:"r"}); fail = true;
     await expect(j.append("context.add", {}, {runId:"r"})).rejects.toThrow("Operation failed");

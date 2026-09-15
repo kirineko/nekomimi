@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 export function Composer({
   busy,
   configured,
@@ -10,9 +10,17 @@ export function Composer({
   submit: (text: string) => Promise<void>;
   cancel: () => Promise<void>;
 }) {
+  const textarea = useRef<HTMLTextAreaElement>(null);
   const composing = useRef(false);
   const ended = useRef(0);
   const [text, setText] = useState("");
+  useEffect(() => {
+    const el = textarea.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = Math.min(180, Math.max(48, el.scrollHeight)) + "px";
+    }
+  }, [text]);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const send = async () => {
@@ -38,6 +46,7 @@ export function Composer({
         }}
       >
         <textarea
+          ref={textarea}
           disabled={!configured || pending}
           aria-label="任务内容"
           placeholder={
@@ -69,7 +78,10 @@ export function Composer({
           maxLength={32000}
         />
         <div className="composer-bottom">
-          <span>DeepSeek</span>
+          <span className="composer-meta">
+            <span>DeepSeek</span>
+            <span className="composer-hint">Enter 发送 · Shift+Enter 换行</span>
+          </span>
           {busy ? (
             <button
               type="button"
@@ -78,7 +90,7 @@ export function Composer({
                 void cancel().catch((e) => setError(String(e)));
               }}
             >
-              ■ 停止任务
+              停止任务
             </button>
           ) : (
             <button
@@ -87,7 +99,7 @@ export function Composer({
               type="submit"
               disabled={pending || !configured || !text.trim()}
             >
-              {pending ? "确认中…" : "发送任务 ↑"}
+              {pending ? "确认中…" : "发送任务"}
             </button>
           )}
         </div>

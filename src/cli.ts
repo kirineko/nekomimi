@@ -185,6 +185,7 @@ async function main() {
       workspace: resolve(values.workspace ?? prior?.workspace ?? process.cwd()),
       prompt,
       apiKey,
+      search: settings.search,
       model: values.model ?? settings.model,
       baseUrl: values["base-url"] ?? settings.baseUrl,
       maxOutputTokens: positive(values["max-output-tokens"], 4096),

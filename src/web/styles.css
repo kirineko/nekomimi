@@ -6,14 +6,19 @@
     "Segoe UI",
     "PingFang SC",
     sans-serif;
-  color: #272633;
-  background: #fafafa;
+  color: var(--ink);
+  background: var(--canvas);
   font-synthesis: none;
   font-size: 14px;
-  --accent: #7263bd;
-  --line: #eeedf2;
-  --muted: #96939f;
-  --lavender: #f2effa;
+  --accent: #7952ce;
+  --accent-hover: #6840ba;
+  --line: #e7e5ec;
+  --muted: #696273;
+  --lavender: #f1ecfa;
+  --surface: #ffffff;
+  --canvas: #f7f7fa;
+  --ink: #292633;
+  --workbench-gutter: clamp(20px, 3vw, 40px);
 }
 * {
   box-sizing: border-box;
@@ -85,7 +90,7 @@ summary:hover {
   overflow: hidden;
 }
 .app.with-inspector {
-  grid-template-columns: 220px minmax(320px, 1fr) minmax(440px, 38vw);
+  grid-template-columns: 232px minmax(0, 1fr) 360px;
 }
 .sidebar {
   display: flex;

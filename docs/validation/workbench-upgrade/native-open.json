@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-09-15T13:42:54.276Z",
+  "platform": "darwin",
+  "node": "v24.15.0",
+  "filename": "Nekomimi 验收 ' & file.txt",
+  "result": {
+    "status": "requested"
+  },
+  "scope": "macOS /usr/bin/open returned success; Linux and Windows native desktop validation unavailable"
+}

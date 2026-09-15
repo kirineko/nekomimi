@@ -393,6 +393,7 @@ export class Sessions {
       apiKey: settings.apiKey,
       model: settings.model,
       baseUrl: settings.baseUrl,
+      search: settings.search,
       prompt: command.prompt,
       signal: active.abort.signal,
       command: {

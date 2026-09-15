@@ -1,3 +1,4 @@
+import { useInspectorFocus } from "../hooks/useInspectorFocus";
 import { Brand } from "./Brand";
 import type { SessionInfo } from "../../shared/protocol";
 import { statusText } from "./Timeline";
@@ -22,8 +23,9 @@ export function Sidebar({
   settings: () => void;
   remove: (session: SessionInfo) => void;
 }) {
+  const panel = useInspectorFocus(close, open, true);
   return (
-    <aside className={`sidebar ${open ? "is-open" : ""}`}>
+    <aside ref={panel} className={`sidebar ${open ? "is-open" : ""}`}>
       <div className="brand">
         <Brand />
         <button
@@ -72,11 +74,14 @@ export function Sidebar({
         ))}
       </nav>
       {more && <button onClick={more}>更多会话</button>}
-      <button className="settings-entry" onClick={settings}>
-        设置
-      </button>
-      <div className="sidebar-foot">
-        <span className="green-dot" /> 本地
+      <div className="sidebar-bottom">
+        <button className="settings-entry" onClick={settings}>
+          设置
+        </button>
+        <span className="sidebar-foot">
+          <span className="green-dot" />
+          本地
+        </span>
       </div>
     </aside>
   );

@@ -13,3 +13,5 @@ coverage/
 /docs/deepy-*.png
 /docs/web-mvp*.png
 .DS_Store
+
+/output/playwright/

@@ -27,7 +27,9 @@ export function Inspector({
   responseText,
   revision,
   select,
+  embedded = false,
 }: {
+  embedded?: boolean;
   sessionId: string;
   row: TimelineRow;
   close: () => void;
@@ -35,7 +37,7 @@ export function Inspector({
   revision: number;
   select: (row: TimelineRow) => void;
 }) {
-  const panel = useInspectorFocus(close);
+  const panel = useInspectorFocus(close, !embedded);
   const [tab, setTab] = useState("Usage");
   const [events, setEvents] = useState<EventView[]>([]);
   const [ref, setRef] = useState<EvidenceRef>();
@@ -74,7 +76,7 @@ export function Inspector({
       .catch((e) => {
         if (!abort.signal.aborted) setError(String(e));
       });
-    if (!source && row.modelCallId && ["Prompt", "Context"].includes(tab))
+    if (!source && row.title !== "网页搜索调用" && row.modelCallId && ["Prompt", "Context"].includes(tab))
       void api(
         `/sessions/${sessionId}/context?call=${row.modelCallId}&offset=${offset}`,
         undefined,
@@ -88,7 +90,7 @@ export function Inspector({
   }, [sessionId, row.id, row.modelCallId, row.seq, tab, offset, source]);
   const sourceView = source && events[0];
   return (
-    <aside className="inspector" ref={panel} aria-label="执行追踪">
+    <aside className={`inspector ${embedded ? "embedded" : ""}`} ref={panel} aria-label="执行追踪">
       <header>
         <div>
           <span className="trace-kicker">Nekomimi</span>

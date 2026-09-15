@@ -89,6 +89,10 @@ export class SessionProjection {
       );
       r.status = "running";
       r.text = p.model;
+      if (p.purpose === "web-search") {
+        r.title = "网页搜索调用";
+        this.auxiliary.add(e.attemptId!);
+      }
       if (p.purpose === "session-title") {
         r.title = "会话命名";
         this.auxiliary.add(e.attemptId!);

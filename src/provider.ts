@@ -1,3 +1,4 @@
+import { RecordedCall } from "./recorded-call.js";
 import {
   createAssistantMessageEventStream,
   type AssistantMessage,
@@ -5,11 +6,12 @@ import {
 } from "@earendil-works/pi-ai";
 import { stream as responsesStream } from "@earendil-works/pi-ai/api/openai-responses";
 import type { StreamFn } from "@earendil-works/pi-agent-core";
-import { Journal, hash, id, type Links } from "./journal.js";
+import { Journal, type Links } from "./journal.js";
 import { contextView, type assemblePrompt, type WireItem } from "./context.js";
 
 export interface ProviderOptions {
   apiKey: string;
+  search?: import("./web-search.js").SearchSettings;
   purpose?: "session-title";
   contextEvents?: import("./journal.js").JournalEvent[];
   model?: string;
@@ -77,8 +79,8 @@ export class ResponsesProvider {
   readonly stream: StreamFn = (_model, piContext, options) => {
     const output = createAssistantMessageEventStream();
     void (async () => {
-      const modelCallId = id();
-      const callLinks = { ...this.links, modelCallId };
+      const call = new RecordedCall(this.journal, this.links);
+      const callLinks = call.links;
       try {
         this.journal.check();
         options?.signal?.throwIfAborted();
@@ -100,26 +102,9 @@ export class ResponsesProvider {
         for (let attempt = 1; attempt <= attempts; attempt++) {
           this.journal.check();
           options?.signal?.throwIfAborted();
-          const attemptId = id();
-          const links = { ...callLinks, attemptId };
-          const started = Date.now();
-          const abort = new AbortController();
-          const timeout = AbortSignal.timeout(
-            this.settings.timeoutMs ?? 120000,
-          );
-          const signal = AbortSignal.any([
-            abort.signal,
-            timeout,
-            this.journal.failure.signal,
-            ...(options?.signal ? [options.signal] : []),
-          ]);
-          let bytes = 0;
           let eventCount = 0;
-          let status: number | undefined;
-          let firstByteMs: number | undefined;
           let terminal: Record<string, unknown> | undefined;
           let terminalType: string | undefined;
-          let streamError: Error | undefined;
           let buffer = "";
           const decoder = new TextDecoder();
           const parse = (chunk: Uint8Array, final = false) => {
@@ -154,143 +139,16 @@ export class ResponsesProvider {
             if (final && buffer.trim())
               throw new Error("SSE ended with an incomplete frame");
           };
-          await this.journal.append(
-            "attempt.started",
-            {
-              purpose: this.settings.purpose ?? "task",
-              attempt,
-              model: this.model.id,
-              adapter: "pi-responses-0.85.1/harness-1",
-            },
-            links,
-          );
-          const captureFetch: typeof globalThis.fetch = async (url, init) => {
-            this.journal.check();
-            signal.throwIfAborted();
-            if (typeof init?.body !== "string")
-              throw new Error("Transport body must be frozen JSON text");
-            const body = init.body;
-            if (body !== this.journal.clean(body))
-              throw new Error(
-                "Request body contains a configured credential; request not sent",
-              );
-            if (Buffer.byteLength(body) > 32 * 1024 * 1024)
-              throw new Error("Request byte limit exceeded");
-            const request = await this.journal.artifact(body);
-            await this.journal.append(
-              "request.dispatched",
-              {
-                url: String(url),
-                body: request,
-                bodyHash: hash(body),
-                contextRevision: view.revision,
-              },
-              links,
-            );
-            this.journal.check();
-            signal.throwIfAborted();
-            const response = await (this.settings.fetch ?? globalThis.fetch)(
-              url,
-              { ...init, signal },
-            );
-            status = response.status;
-            const headers = Object.fromEntries(
-              ["content-type", "x-request-id", "retry-after"].flatMap((k) =>
-                response.headers.has(k) ? [[k, response.headers.get(k)!]] : [],
-              ),
-            );
-            await this.journal.append(
-              "response.headers",
-              { status, headers },
-              links,
-            );
-            if (!response.body) return response;
-            const reader = response.body.getReader();
-            const redactor = this.journal.streamRedactor();
-            let capturedBytes = 0;
-            const capture = async (chunk: Uint8Array, final = false) => {
-              const safe = redactor.push(chunk, final);
-              if (safe.bytes.length) {
-                const artifact = await this.journal.artifact(safe.bytes);
-                if (safe.redacted) artifact.redacted = true;
-                await this.journal.append(
-                  "response.chunk",
-                  { artifact, offset: capturedBytes },
-                  links,
-                  false,
-                );
-                capturedBytes += safe.bytes.length;
-                if (artifact.redacted)
-                  throw new Error(
-                    "Credential detected in response; evidence redacted and call stopped",
-                  );
-              }
-              return safe.bytes;
-            };
-            const stream = new ReadableStream<Uint8Array>(
-              {
-                pull: async (controller) => {
-                  try {
-                    while (true) {
-                      this.journal.check();
-                      signal.throwIfAborted();
-                      const next = await reader.read();
-                      if (next.done) {
-                        const tail = await capture(new Uint8Array(), true);
-                        if (response.ok) parse(tail, true);
-                        if (tail.length) controller.enqueue(tail);
-                        controller.close();
-                        return;
-                      }
-                      firstByteMs ??= Date.now() - started;
-                      const remaining = Math.max(
-                        0,
-                        (this.settings.maxResponseBytes ?? 16 * 1024 * 1024) -
-                          bytes,
-                      );
-                      const kept = next.value.subarray(0, remaining);
-                      bytes += next.value.byteLength;
-                      const safe = await capture(kept);
-                      if (
-                        bytes >
-                        (this.settings.maxResponseBytes ?? 16 * 1024 * 1024)
-                      )
-                        throw new Error("Response byte limit exceeded");
-                      if (!safe.length) continue;
-                      if (response.ok) parse(safe);
-                      controller.enqueue(safe);
-                      return;
-                    }
-                  } catch (e) {
-                    // Preserve the held suffix on EOF failures/cancellation, too.
-                    try {
-                      await capture(new Uint8Array(), true);
-                    } catch (captureError) {
-                      e = captureError;
-                    }
-                    streamError = e instanceof Error ? e : new Error(String(e));
-                    abort.abort(streamError);
-                    void reader.cancel(streamError).catch(() => {});
-                    controller.error(streamError);
-                  }
-                },
-                cancel: async (reason) => {
-                  await reader.cancel(reason);
-                  await capture(new Uint8Array(), true);
-                },
-              },
-              { highWaterMark: 0 },
-            );
-            return new Response(stream, {
-              status: response.status,
-              statusText: response.statusText,
-              headers: response.headers,
-            });
-          };
+          const recorded = await call.attempt(this.settings, {
+            purpose: this.settings.purpose ?? "task", protocol: "responses", attempt,
+            model: this.model.id, adapter: "pi-responses-0.85.1/harness-1",
+          }, options?.signal, view.revision, parse);
+          const { signal, timeout, links } = recorded;
+          const attemptId = links.attemptId!;
           const inner = responsesStream(this.model, piContext, {
             apiKey: this.settings.apiKey,
             signal,
-            fetch: captureFetch,
+            fetch: recorded.fetch,
             maxRetries: 0,
             maxTokens: this.model.maxTokens,
             onPayload: () => ({
@@ -311,6 +169,7 @@ export class ResponsesProvider {
               output.push(event);
           let result = await inner.result();
           this.journal.check();
+          const { bytes, status, streamError } = recorded;
           const cancelled = options?.signal?.aborted === true;
           const completed =
             terminalType === "response.completed" &&
@@ -335,8 +194,7 @@ export class ResponsesProvider {
                     : (result.errorMessage ?? `Response ${this.lastOutcome}`)),
               ),
             };
-          await this.journal.append(
-            "attempt.finished",
+          await recorded.finish(
             {
               status: this.lastOutcome,
               httpStatus: status,
@@ -347,12 +205,10 @@ export class ResponsesProvider {
               usage: terminal?.usage,
               bytes,
               eventCount,
-              firstByteMs,
-              elapsedMs: Date.now() - started,
+
               error: result.errorMessage,
               costEstimateAvailable: false,
             },
-            links,
           );
           if (completed) {
             const items = (terminal!.output ?? []) as WireItem[];

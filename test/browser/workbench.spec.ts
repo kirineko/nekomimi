@@ -87,7 +87,7 @@ test("submits, observes tool diff, inspects request, reloads, continues and expo
   await page
     .getByRole("button", { name: "查看文件 diff", exact: false })
     .click();
-  await expect(page.locator(".artifact")).toContainText("+hello browser");
+  await expect(page.locator(".diff-line.add")).toContainText("hello browser");
   await page
     .getByRole("button", { name: "检查调用", exact: false })
     .last()
@@ -122,7 +122,7 @@ test("submits, observes tool diff, inspects request, reloads, continues and expo
   await expect(
     page.getByRole("button", { name: "返回调用", exact: false }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "关闭检查面板" }).click();
+  await page.getByRole("button", { name: "关闭工作区面板" }).click();
   await page.reload();
   await expect(
     page.locator(".conversation-heading").getByText("已完成", { exact: true }),
@@ -177,7 +177,7 @@ test("cancels and remains usable on a narrow viewport", async ({ page }) => {
   await expect(page.getByText("连接已断开", { exact: true })).toBeVisible();
   expect(calls).toBe(1);
   await page.context().setOffline(false);
-  await expect(page.getByText("● 已连接", { exact: true })).toBeVisible();
+  await expect(page.getByText("已连接", { exact: true })).toBeVisible();
   await page.reload();
   await expect(
     page.getByRole("button", { name: "停止任务", exact: false }),
@@ -306,7 +306,7 @@ test('compact layout preserves controls and inspector focus at all target sizes'
     await expect(page.getByRole('textbox',{name:'任务内容'})).toBeInViewport();
     const trigger=page.getByRole('button',{name:'检查调用',exact:true}).first();
     await trigger.click();
-    await expect(page.getByRole('button',{name:'关闭检查面板'})).toBeFocused();
+    await expect(page.getByRole('button',{name:'关闭工作区面板'})).toBeFocused();
     await expect(page.locator('.inspector')).toBeInViewport();
     if (process.env.NEKOMIMI_VISUAL_DIR) await page.screenshot({path:join(process.env.NEKOMIMI_VISUAL_DIR,`inspector-${width}.png`)});
     await page.keyboard.press('Escape');

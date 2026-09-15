@@ -23,7 +23,7 @@ node dist/cli.js inspect session-bundle
 
 `run/resume` 返回最终结构化结果；Ctrl-C 取消当前调用并等待 shell 停止。重复写入同一会话会返回冲突；进程崩溃后锁租约约 10 秒到期。
 
-`--instructions <文件>` 显式传入项目指导，可重复；每次运行单独指定。`--tools read,edit,write` 限制启用工具；默认另含本机 shell。`--image <图片>` 提供图片输入。`--max-turns` 默认 32，`--max-output-tokens` 默认 4096；默认模型为 `deepseek-flash`。
+`--instructions <文件>` 显式传入项目指导，可重复；每次运行单独指定。`--tools read,edit,write` 限制启用工具；默认另含本机 shell 和启用的 `web_search`。`--image <图片>` 提供图片输入。`--max-turns` 默认 32，`--max-output-tokens` 默认 4096；默认模型为 `deepseek-flash`。
 
 文件工具限制在工作区内，修改既有文件前必须读取，外部修改后需重读；edit 仅支持精确匹配。Shell 使用本机权限执行，并不提供操作系统沙箱。默认 Unix 使用 bash（缺失时 sh），Windows 分支使用 PowerShell。
 
@@ -101,3 +101,16 @@ npm run test:web-live  # 显式联网的浏览器合成任务验收
 Enter 发送，Shift+Enter 换行，中文选词不触发发送。首条消息提供临时标题，首轮成功后自动命名一次；命名记录作为辅助调用独立可查。会话右侧删除入口只清理会话日志与附件，保留工作区文件；请先停止运行或命名、等待下载结束。
 
 CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 `--execute`。迁移校验日志和附件，不执行模型或工具，不覆盖冲突。配置变更用于下一次运行，当前运行使用捕获的设置。
+
+
+## 工作台升级：搜索、文件与差异
+
+- `src/recorded-call.ts` 是主 Responses、自动命名和搜索 Messages 共用的请求/响应记录入口。搜索调用以 runId/toolCallId/modelCallId/attemptId 关联；搜索内部协议不进入主 Responses 历史。
+- `settings.json` 可选 `search` 字段包含 `enabled`、`model`、`baseUrl`。旧配置缺省启用；默认 `deepseek-flash`、`https://api.deepseek.com/anthropic/v1`。与主模型地址独立，共用服务端凭证；Web 设置只提供启用开关，切换后下一任务生效。
+- 搜索默认 60 秒、4096 输出 token、最多 3 次服务端搜索、2MiB 响应、10 条来源；单次网络尝试，无自动重试。未知 usage 不按零计算。
+- `GET /api/v1/workspace/files` 支持 path、hidden、cursor；`POST /api/v1/workspace/open` 接收 path。沿用授权、来源与 Host 校验，拒绝工作区外路径与特殊文件。默认程序运行于服务端所在机器。
+- `GET /api/v1/sessions/:id/changes` 按 offset 加载已确认 edit/write；`GET /api/v1/sessions/:id/diff/:hash` 按 offset/limit 返回历史 patch 的差异行。单页最多 500 行，单行展示最多 4000 字符，完整内容保留在附件。
+- 浏览文件不注入模型上下文；导入、回放和导出不触发搜索或默认程序打开。文件树展示当前磁盘，diff 展示历史证据，两者独立。
+- `node scripts/search-live-smoke.mjs` 显式联网做最小搜索实测，只写脱敏证据。浏览器回归使用模拟 provider 和打开器，不需要凭证或真实桌面程序。
+
+本次验收见 [工作台升级验收记录](validation/workbench-upgrade/README.md)。Linux/Windows 原生默认程序打开尚待真实桌面环境验证。

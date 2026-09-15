@@ -1,3 +1,5 @@
+import { WorkspaceFiles, listFiles } from "./workspace.js";
+import { fileChangesPage, changeDiff } from "./changes.js";
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 import { readFile, rm } from "node:fs/promises";
@@ -23,9 +25,10 @@ import {
 import { resolveResource } from "./resource-path.js";
 import { subscribe } from "./stream.js";
 export async function startWeb(
-  options: ServiceOptions & { port?: number; staticDir?: string },
+  options: ServiceOptions & { port?: number; staticDir?: string; openFile?: (path: string) => Promise<void> },
 ) {
   const sessions = await Sessions.open(options);
+  const files = new WorkspaceFiles(sessions.workspace, options.openFile);
   const token = randomBytes(32).toString("hex");
   const abort = new AbortController();
   let origin = "";
@@ -49,6 +52,15 @@ export async function startWeb(
           );
           json(res, { version: 1 });
           return;
+        }
+        if (req.method === "GET" && path === "/api/v1/workspace/files") {
+          const reading = new AbortController(); res.once("close", () => reading.abort());
+          json(res, await listFiles(sessions.workspace, url.searchParams.get("path") ?? ".", url.searchParams.get("hidden") === "true", url.searchParams.get("cursor") ?? undefined, reading.signal)); return;
+        }
+        if (req.method === "POST" && path === "/api/v1/workspace/open") {
+          const value = object(await body(req));
+          if (typeof value.path !== "string") throw new ApiError(400, "path", "路径无效");
+          json(res, await files.open(value.path)); return;
         }
         if (req.method === "GET" && path === "/api/v1/config") {
           json(res, {
@@ -92,7 +104,7 @@ export async function startWeb(
           }
         }
         const match = path.match(
-          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete|diagnostics)(?:\/([a-f0-9]+))?$/,
+          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(changes|diff|snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete|diagnostics)(?:\/([a-f0-9]+))?$/,
         );
         if (!match) throw new ApiError(404, "not_found", "接口不存在");
         const sessionId = match[1]!;
@@ -126,6 +138,15 @@ export async function startWeb(
           return;
         }
         const entry = await sessions.entry(sessionId);
+        if (req.method === "GET" && action === "changes") {
+          const before = integer(url.searchParams.get("before"), Number.MAX_SAFE_INTEGER);
+          const after = integer(url.searchParams.get("after"), 0);
+          const offset = integer(url.searchParams.get("offset"), 0);
+          json(res, fileChangesPage(entry.reader.events, before, after, offset)); return;
+        }
+        if (req.method === "GET" && action === "diff" && match[3]) {
+          json(res, await changeDiff(entry, match[3], integer(url.searchParams.get("offset"), 0), Math.max(1, integer(url.searchParams.get("limit"), 120, 500)))); return;
+        }
         if (req.method === "GET" && action === "snapshot") {
           json(res, {
             version: 1,

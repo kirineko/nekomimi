@@ -1,3 +1,4 @@
+import { diffPage } from "../presentation/diff.js";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Markdown } from "../presentation/markdown.js";
@@ -38,9 +39,11 @@ export async function renderSessionHtml(
 ) {
   const projection = new SessionProjection(snapshot.directory);
   await projection.update(snapshot.events.slice(0, snapshot.durableSeq));
-  const rows = [...projection.rows.values()].map(
-    (row) => ({ ...row, text: redact(row.text), title: redact(row.title) }),
-  );
+  const rows = [...projection.rows.values()].map((row) => ({
+    ...row,
+    text: redact(row.text),
+    title: redact(row.title),
+  }));
   const title = redact(
     String(
       (
@@ -81,14 +84,36 @@ export async function renderSessionHtml(
         const { input, result, target } = toolContent(row.text);
         content = `<code>${escape(target)}</code><details><summary>调用参数</summary><pre>${escape(input)}</pre></details><details${row.status === "failed" ? " open" : ""}><summary>返回结果 · ${escape(result.slice(0, 100) || "结果未记录，状态未知")}</summary><pre>${escape(result)}</pre></details>`;
         const patch = (row.details as any)?.patch?.sha256;
-        if (patch && artifacts.has(patch))
-          content += `<details open><summary>文件 diff</summary><pre>${escape(redact(artifacts.get(patch)!.toString("utf8")))}</pre></details>`;
+        if (patch && artifacts.has(patch)) {
+          if (row.status === "completed") {
+            try {
+              const page = diffPage(
+                redact(artifacts.get(patch)!.toString("utf8")),
+                0,
+                Number.MAX_SAFE_INTEGER,
+              );
+              content += `<section><strong>+${page.added} −${page.removed}</strong>${page.lines.map((l) => `<pre style="margin:0;background:${l.kind === "add" ? "#edf7ee" : l.kind === "del" ? "#fff0ef" : "transparent"}">${escape(`${l.old ?? ""} ${l.next ?? ""} ${l.kind === "add" ? "+" : l.kind === "del" ? "-" : " "} ${l.text}${l.truncated ? " … [长行已截断，原文见附件]" : ""}`)}</pre>`).join("")}</section>`;
+            } catch {
+              content += "<p>无法解析 diff，请查看原始证据</p>";
+            }
+          }
+          content += `<details open><summary>${row.status === "completed" ? "文件 diff" : "准备修改证据（未确认）"}</summary><pre>${escape(redact(artifacts.get(patch)!.toString("utf8")))}</pre></details>`;
+        }
       } else content = `<p class="text">${escape(row.text)}</p>`;
       if (row.kind === "call") {
-      const reasoning=snapshot.events.filter(e=>e.attemptId===row.attemptId && e.type==="context.add").flatMap(e=>(e.payload as any).items??[]).filter((item:any)=>item.type==="reasoning").flatMap((item:any)=>item.content??item.summary??[]).map((block:any)=>block.text??"").join("\n");
-      if(reasoning) content+=`<details><summary>推理记录</summary><pre>${escape(redact(reasoning))}</pre></details>`;
-    }
-    if (row.kind === "call")
+        const reasoning = snapshot.events
+          .filter(
+            (e) => e.attemptId === row.attemptId && e.type === "context.add",
+          )
+          .flatMap((e) => (e.payload as any).items ?? [])
+          .filter((item: any) => item.type === "reasoning")
+          .flatMap((item: any) => item.content ?? item.summary ?? [])
+          .map((block: any) => block.text ?? "")
+          .join("\n");
+        if (reasoning)
+          content += `<details><summary>推理记录</summary><pre>${escape(redact(reasoning))}</pre></details>`;
+      }
+      if (row.kind === "call")
         content += `<details><summary>用量与耗时</summary><pre>${escape(redact(JSON.stringify(row.details ?? { status: "统计未提供" }, null, 2)))}</pre></details>`;
       if (row.refs.length)
         content += `<details><summary>原始证据</summary>${row.refs.map((r) => `<a href="#artifact-${r.sha256}">附件 ${r.sha256.slice(0, 10)}</a>`).join(" · ")}</details>`;
