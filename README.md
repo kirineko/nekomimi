@@ -4,7 +4,9 @@
 
 ## 安装
 
-需要 **Node.js 24 或更新版本**（包含 npm）。可从 [Node.js 官网](https://nodejs.org/) 安装。
+需要 **Node.js 22.19.0 或更新版本**（包含 npm）。可从 [Node.js 官网](https://nodejs.org/) 安装。
+
+支持 Node.js 22.19+ 和 24；Node.js 20 及 22.19 之前的版本不满足当前依赖要求。
 
 ```sh
 npm install -g nekomimi

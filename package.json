@@ -1,10 +1,10 @@
 {
   "name": "nekomimi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Observable local coding agent with a durable request and tool journal",
   "type": "module",
   "engines": {
-    "node": ">=24"
+    "node": ">=22.19.0"
   },
   "bin": {
     "nekomimi": "dist/cli.js"
@@ -66,5 +66,16 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
-  }
+  },
+  "keywords": [
+    "nekomimi",
+    "deepseek",
+    "ai",
+    "coding-agent",
+    "coding-assistant",
+    "cli",
+    "web-ui",
+    "local-first",
+    "observability"
+  ]
 }
