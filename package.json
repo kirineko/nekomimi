@@ -1,6 +1,6 @@
 {
   "name": "nekomimi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Observable local coding agent with a durable request and tool journal",
   "type": "module",
   "engines": {
