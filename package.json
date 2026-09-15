@@ -1,0 +1,55 @@
+{
+  "name": "deepy-harness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Observable local coding agent with a durable request and tool journal",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "harness": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "test": "npm run build && vitest run",
+    "test:live": "npm run build && node scripts/live-smoke.mjs",
+    "test:pack": "npm run build && node scripts/pack-smoke.mjs",
+    "dev:web": "vite",
+    "test:browser": "npm run build && playwright test",
+    "web": "node dist/cli.js web",
+    "test:web-live": "npm run build && node scripts/web-live-smoke.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "0.85.1",
+    "@earendil-works/pi-ai": "0.85.1",
+    "diff": "8.0.4",
+    "proper-lockfile": "4.1.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "typebox": "1.3.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.10.1",
+    "@types/proper-lockfile": "4.1.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vite": "8.3.0",
+    "vitest": "4.1.9"
+  }
+}

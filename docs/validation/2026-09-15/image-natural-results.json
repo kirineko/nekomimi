@@ -1,0 +1,65 @@
+[
+  {
+    "test": "live-read-image-call",
+    "status": 200,
+    "elapsed": 0.74,
+    "terminal": "completed",
+    "types": [
+      "response.completed",
+      "response.created",
+      "response.function_call_arguments.delta",
+      "response.function_call_arguments.done",
+      "response.in_progress",
+      "response.output_item.added",
+      "response.output_item.done"
+    ],
+    "outputTypes": [
+      "function_call"
+    ],
+    "usage": {
+      "input_tokens": 301,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 22,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 323
+    }
+  },
+  {
+    "test": "live-read-image-result",
+    "status": 200,
+    "elapsed": 0.87,
+    "terminal": "completed",
+    "types": [
+      "response.completed",
+      "response.content_part.added",
+      "response.content_part.done",
+      "response.created",
+      "response.in_progress",
+      "response.output_item.added",
+      "response.output_item.done",
+      "response.output_text.delta",
+      "response.output_text.done",
+      "response.reasoning_text.delta",
+      "response.reasoning_text.done"
+    ],
+    "outputTypes": [
+      "reasoning",
+      "message"
+    ],
+    "usage": {
+      "input_tokens": 519,
+      "input_tokens_details": {
+        "cached_tokens": 256
+      },
+      "output_tokens": 10,
+      "output_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "total_tokens": 529
+    }
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "version": "0.85.1",
+  "dist.integrity": "sha512-hIXIP3eAWueAYiAl8aMvWCvvZ8Q5gT3Dip5bE5uJyIGh4+YlWRjtMLI4BaeoXoSs93zndjue61u1B/vhefLnuA==",
+  "gitHead": "d981de1229ef899957bbe968bc8dcda02a21f477",
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

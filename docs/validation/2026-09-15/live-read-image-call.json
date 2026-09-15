@@ -1,0 +1,347 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "input": [
+      {
+        "role": "user",
+        "content": "Use read_image, then name the color of the returned image in one word."
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "name": "read_image",
+        "description": "Read a synthetic solid color test image. The result is an image.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "tool_choice": "auto",
+    "max_output_tokens": 512,
+    "stream": true
+  },
+  "response": {
+    "id": "644e7b77-0e3c-456b-a2f1-f411a63da82d",
+    "object": "response",
+    "created_at": 1789445888,
+    "status": "completed",
+    "background": false,
+    "completed_at": 1789445888,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 512,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "function_call",
+        "id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+        "status": "completed",
+        "arguments": "{}",
+        "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+        "name": "read_image"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [
+      {
+        "type": "function",
+        "name": "read_image",
+        "description": "Read a synthetic solid color test image. The result is an image.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 301,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 22,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 323
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "644e7b77-0e3c-456b-a2f1-f411a63da82d",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "644e7b77-0e3c-456b-a2f1-f411a63da82d",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "function_call",
+        "id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+        "status": "in_progress",
+        "arguments": "",
+        "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+        "name": "read_image"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.function_call_arguments.delta",
+      "delta": "{}",
+      "item_id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+      "output_index": 0,
+      "sequence_number": 3
+    },
+    {
+      "type": "response.function_call_arguments.done",
+      "arguments": "{}",
+      "item_id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "function_call",
+        "id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+        "status": "completed",
+        "arguments": "{}",
+        "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+        "name": "read_image"
+      },
+      "output_index": 0,
+      "sequence_number": 5
+    },
+    {
+      "type": "response.completed",
+      "response": {
+        "id": "644e7b77-0e3c-456b-a2f1-f411a63da82d",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "completed",
+        "background": false,
+        "completed_at": 1789445888,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "function_call",
+            "id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+            "status": "completed",
+            "arguments": "{}",
+            "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+            "name": "read_image"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 301,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 22,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 323
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 6
+    }
+  ]
+}

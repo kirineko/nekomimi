@@ -1,0 +1,805 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "input": [
+      {
+        "role": "user",
+        "content": "For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls."
+      },
+      {
+        "type": "reasoning",
+        "id": "3d807bc2-1506-4349-bf80-556b7b201045",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The user wants two echo_value calls, one with \"alpha\" and one with \"beta\", in the same block since independent."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "3f11fe33-7587-46e8-9829-a5d6e303f8bc-0"
+      },
+      {
+        "type": "function_call",
+        "id": "df70dc8b-61e8-405c-aab6-0f157da3c5a0",
+        "status": "completed",
+        "arguments": "{\"value\": \"alpha\"}",
+        "call_id": "call_00_N7y1kMDmwLuVqsuY1qnj3087",
+        "name": "echo_value"
+      },
+      {
+        "type": "function_call",
+        "id": "7188d99c-5134-4150-a5f6-d9d3370148c1",
+        "status": "completed",
+        "arguments": "{\"value\": \"beta\"}",
+        "call_id": "call_01_i8E1saQBoqBupceZfAFP4181",
+        "name": "echo_value"
+      },
+      {
+        "type": "function_call_output",
+        "call_id": "call_00_N7y1kMDmwLuVqsuY1qnj3087",
+        "output": "{\"echo\": \"alpha\"}"
+      },
+      {
+        "type": "function_call_output",
+        "call_id": "call_01_i8E1saQBoqBupceZfAFP4181",
+        "output": "{\"echo\": \"beta\"}"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "name": "echo_value",
+        "description": "Echo the supplied value.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "tool_choice": "auto",
+    "max_output_tokens": 512,
+    "stream": true
+  },
+  "response": {
+    "id": "df1f76c9-64b5-444a-b3ba-d46fa6e0c133",
+    "object": "response",
+    "created_at": 1789445514,
+    "status": "completed",
+    "background": false,
+    "completed_at": 1789445514,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 512,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "message",
+        "id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "Both calls completed:\n\n- `echo_value(\"alpha\")` \u2192 `{\"echo\": \"alpha\"}`\n- `echo_value(\"beta\")` \u2192 `{\"echo\": \"beta\"}`"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [
+      {
+        "type": "function",
+        "name": "echo_value",
+        "description": "Echo the supplied value.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 443,
+      "input_tokens_details": {
+        "cached_tokens": 256
+      },
+      "output_tokens": 39,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 482
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "df1f76c9-64b5-444a-b3ba-d46fa6e0c133",
+        "object": "response",
+        "created_at": 1789445514,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "echo_value",
+            "description": "Echo the supplied value.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "df1f76c9-64b5-444a-b3ba-d46fa6e0c133",
+        "object": "response",
+        "created_at": 1789445514,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "echo_value",
+            "description": "Echo the supplied value.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "message",
+        "id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+        "status": "in_progress",
+        "content": [],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "output_index": 0,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": ""
+      },
+      "sequence_number": 3
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "Both",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " calls",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 5
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " completed",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 6
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": ":\n\n",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 7
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "-",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 8
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " `",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 9
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "echo",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 10
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 11
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "(\"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 12
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "alpha",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 13
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\")",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 14
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "`",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 15
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " \u2192",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 16
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " `",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 17
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "{\"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 18
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "echo",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 19
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\":",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 20
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 21
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "alpha",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 22
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\"}",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 23
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "`\n",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 24
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "-",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 25
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " `",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 26
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "echo",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 27
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 28
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "(\"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 29
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "beta",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 30
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\")",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 31
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "`",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 32
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " \u2192",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 33
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " `",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 34
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "{\"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 35
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "echo",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 36
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\":",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 37
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 38
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "beta",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 39
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "\"",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 40
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "}`",
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 41
+    },
+    {
+      "type": "response.output_text.done",
+      "content_index": 0,
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "logprobs": [],
+      "output_index": 0,
+      "sequence_number": 42,
+      "text": "Both calls completed:\n\n- `echo_value(\"alpha\")` \u2192 `{\"echo\": \"alpha\"}`\n- `echo_value(\"beta\")` \u2192 `{\"echo\": \"beta\"}`"
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+      "output_index": 0,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": "Both calls completed:\n\n- `echo_value(\"alpha\")` \u2192 `{\"echo\": \"alpha\"}`\n- `echo_value(\"beta\")` \u2192 `{\"echo\": \"beta\"}`"
+      },
+      "sequence_number": 43
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "message",
+        "id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "Both calls completed:\n\n- `echo_value(\"alpha\")` \u2192 `{\"echo\": \"alpha\"}`\n- `echo_value(\"beta\")` \u2192 `{\"echo\": \"beta\"}`"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 0,
+      "sequence_number": 44
+    },
+    {
+      "type": "response.completed",
+      "response": {
+        "id": "df1f76c9-64b5-444a-b3ba-d46fa6e0c133",
+        "object": "response",
+        "created_at": 1789445514,
+        "status": "completed",
+        "background": false,
+        "completed_at": 1789445514,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "message",
+            "id": "89f14f7d-acc7-4074-9ce9-c458212a4a3e",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "Both calls completed:\n\n- `echo_value(\"alpha\")` \u2192 `{\"echo\": \"alpha\"}`\n- `echo_value(\"beta\")` \u2192 `{\"echo\": \"beta\"}`"
+              }
+            ],
+            "phase": "final_answer",
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "echo_value",
+            "description": "Echo the supplied value.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 443,
+          "input_tokens_details": {
+            "cached_tokens": 256
+          },
+          "output_tokens": 39,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 482
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 45
+    }
+  ]
+}

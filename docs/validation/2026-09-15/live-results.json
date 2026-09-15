@@ -1,0 +1,81 @@
+[
+  {
+    "test": "live-text",
+    "status": 200,
+    "elapsed": 1.31,
+    "terminal": "completed",
+    "types": [
+      "response.completed",
+      "response.content_part.added",
+      "response.content_part.done",
+      "response.created",
+      "response.in_progress",
+      "response.output_item.added",
+      "response.output_item.done",
+      "response.output_text.delta",
+      "response.output_text.done",
+      "response.reasoning_text.delta",
+      "response.reasoning_text.done"
+    ],
+    "outputTypes": [
+      "reasoning",
+      "message"
+    ],
+    "usage": {
+      "input_tokens": 40,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 94,
+      "output_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "total_tokens": 134
+    }
+  },
+  {
+    "test": "live-tool",
+    "status": 400,
+    "error": "{\"error\":{\"message\":\"Thinking mode does not support this tool_choice\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":\"invalid_request_error\"}}"
+  },
+  {
+    "test": "credential-availability",
+    "available": true
+  },
+  {
+    "test": "market-list",
+    "status": 200,
+    "count": 19,
+    "fields": [
+      "compatibility",
+      "description",
+      "license",
+      "metadata",
+      "name",
+      "sha256",
+      "size_bytes",
+      "uploaded_at",
+      "version"
+    ]
+  },
+  {
+    "test": "market-detail-download",
+    "name": "brainstorming",
+    "detailFields": [
+      "compatibility",
+      "description",
+      "license",
+      "metadata",
+      "name",
+      "sha256",
+      "size_bytes",
+      "uploaded_at",
+      "version"
+    ],
+    "zipBytes": 20600,
+    "skillFiles": [
+      "brainstorming/SKILL.md"
+    ],
+    "hashMatches": true
+  }
+]

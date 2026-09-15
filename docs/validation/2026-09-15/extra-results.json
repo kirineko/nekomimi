@@ -1,0 +1,54 @@
+[
+  {
+    "name": "responses-compat-system-role",
+    "status": "passed",
+    "detail": {
+      "role": "system"
+    }
+  },
+  {
+    "name": "responses-retry-disabled",
+    "status": "passed",
+    "detail": {
+      "calls": 1,
+      "reason": "error"
+    }
+  },
+  {
+    "name": "responses-retry-two-attempts-visible-to-fetch",
+    "status": "passed",
+    "detail": {
+      "calls": 2
+    }
+  },
+  {
+    "name": "responses-abort-propagates-to-transport",
+    "status": "passed",
+    "detail": {
+      "aborted": true
+    }
+  },
+  {
+    "name": "published-edit-original-matching-and-diff",
+    "status": "passed",
+    "detail": {
+      "originalMatching": true,
+      "bomCrlfPreserved": true,
+      "ambiguousRejected": true,
+      "diffSeparate": true,
+      "readBeforeEditRequired": false
+    }
+  },
+  {
+    "name": "published-edit-fuzzy-fallback",
+    "status": "passed",
+    "detail": {
+      "nonExactMatchAccepted": true,
+      "detailsKeys": [
+        "diff",
+        "patch",
+        "firstChangedLine"
+      ]
+    }
+  }
+]

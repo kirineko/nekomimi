@@ -1,0 +1,323 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "input": "Explain prime numbers in detail.",
+    "max_output_tokens": 1,
+    "stream": true
+  },
+  "response": {
+    "id": "a5c338e3-1f81-4735-a76f-502b15c4ab36",
+    "object": "response",
+    "created_at": 1789445515,
+    "status": "incomplete",
+    "background": false,
+    "completed_at": 1789445515,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": {
+      "reason": "max_output_tokens"
+    },
+    "instructions": null,
+    "max_output_tokens": 1,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "reasoning",
+        "id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+        "status": "incomplete",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "We"
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "a5c338e3-1f81-4735-a76f-502b15c4ab36-0"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 36,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 1,
+      "output_tokens_details": {
+        "reasoning_tokens": 1
+      },
+      "total_tokens": 37
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "a5c338e3-1f81-4735-a76f-502b15c4ab36",
+        "object": "response",
+        "created_at": 1789445515,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 1,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "a5c338e3-1f81-4735-a76f-502b15c4ab36",
+        "object": "response",
+        "created_at": 1789445515,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 1,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "reasoning",
+        "id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+        "status": "in_progress",
+        "content": [],
+        "summary": [],
+        "encrypted_content": "a5c338e3-1f81-4735-a76f-502b15c4ab36-0"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": ""
+      },
+      "sequence_number": 3
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "We",
+      "item_id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "content_index": 0,
+      "item_id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+      "output_index": 0,
+      "sequence_number": 5,
+      "text": "We"
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": "We"
+      },
+      "sequence_number": 6
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "reasoning",
+        "id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+        "status": "incomplete",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "We"
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "a5c338e3-1f81-4735-a76f-502b15c4ab36-0"
+      },
+      "output_index": 0,
+      "sequence_number": 7
+    },
+    {
+      "type": "response.incomplete",
+      "response": {
+        "id": "a5c338e3-1f81-4735-a76f-502b15c4ab36",
+        "object": "response",
+        "created_at": 1789445515,
+        "status": "incomplete",
+        "background": false,
+        "completed_at": 1789445515,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": {
+          "reason": "max_output_tokens"
+        },
+        "instructions": null,
+        "max_output_tokens": 1,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "reasoning",
+            "id": "793e84aa-8499-46f2-9337-da864c6bbb62",
+            "status": "incomplete",
+            "content": [
+              {
+                "type": "reasoning_text",
+                "text": "We"
+              }
+            ],
+            "summary": [],
+            "encrypted_content": "a5c338e3-1f81-4735-a76f-502b15c4ab36-0"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 36,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 1,
+          "output_tokens_details": {
+            "reasoning_tokens": 1
+          },
+          "total_tokens": 37
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 8
+    }
+  ]
+}

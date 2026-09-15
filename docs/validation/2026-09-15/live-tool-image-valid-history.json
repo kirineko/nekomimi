@@ -1,0 +1,4469 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "input": [
+      {
+        "role": "user",
+        "content": "For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls."
+      },
+      {
+        "type": "reasoning",
+        "id": "3d807bc2-1506-4349-bf80-556b7b201045",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The user wants two echo_value calls, one with \"alpha\" and one with \"beta\", in the same block since independent."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "3f11fe33-7587-46e8-9829-a5d6e303f8bc-0"
+      },
+      {
+        "type": "function_call",
+        "id": "df70dc8b-61e8-405c-aab6-0f157da3c5a0",
+        "status": "completed",
+        "arguments": "{\"value\": \"alpha\"}",
+        "call_id": "call_00_N7y1kMDmwLuVqsuY1qnj3087",
+        "name": "echo_value"
+      },
+      {
+        "type": "function_call",
+        "id": "7188d99c-5134-4150-a5f6-d9d3370148c1",
+        "status": "completed",
+        "arguments": "{\"value\": \"beta\"}",
+        "call_id": "call_01_i8E1saQBoqBupceZfAFP4181",
+        "name": "echo_value"
+      },
+      {
+        "type": "function_call_output",
+        "call_id": "call_00_N7y1kMDmwLuVqsuY1qnj3087",
+        "output": [
+          {
+            "type": "input_image",
+            "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKElEQVR4nO3NsQ0AAAzCMP5/un0CNkuZ41wybXsHAAAAAAAAAAAAxR4yw/wuPL6QkAAAAABJRU5ErkJggg=="
+          }
+        ]
+      },
+      {
+        "type": "function_call_output",
+        "call_id": "call_01_i8E1saQBoqBupceZfAFP4181",
+        "output": [
+          {
+            "type": "input_image",
+            "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKElEQVR4nO3NsQ0AAAzCMP5/un0CNkuZ41wybXsHAAAAAAAAAAAAxR4yw/wuPL6QkAAAAABJRU5ErkJggg=="
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "content": "The tool returned a solid color image. Name its color in one word."
+      }
+    ],
+    "max_output_tokens": 512,
+    "stream": true
+  },
+  "response": {
+    "id": "e49f8368-7826-4b28-a9d0-9daee0d9106f",
+    "object": "response",
+    "created_at": 1789445817,
+    "status": "incomplete",
+    "background": false,
+    "completed_at": 1789445820,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": {
+      "reason": "max_output_tokens"
+    },
+    "instructions": null,
+    "max_output_tokens": 512,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "reasoning",
+        "id": "ef84886c-7641-493b-9cc6-1693e6407491",
+        "status": "incomplete",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "We need answer based on tool returned solid color image. Need name its color in one word. We need infer from images. The tool results are images, probably solid color. Need identify color. I cannot see image? As AI text, I have image content? The result shows two images: one with maybe red? Let's inspect mentally: The tool output includes images. It says \"The tool returned a solid color image. Name its color in one word.\" We need answer. We need know color from images. The images in the conversation: first tool result image, second tool result image. They appear as small colored squares? In the text, I see markdown image links? Actually in the prompt, after tool call, there are two `<tool_result>` blocks each containing an image. In the UI, they might be solid color swatches. I as model may not see actual pixels, but maybe the image alt or metadata? The rendering in the conversation shows a small icon? In the provided content, the images are represented by `![...](...)`? Let's look: The message content after tool result:\n\n```\n<tool_result>\n[image]\n</tool_result>\n<tool_result>\n[image]\n</tool_result>\n```\n\nNo textual color. The image might be visible to model? In this environment, images are passed as image inputs? The model might have visual capabilities. I need answer color in one word. The tool returned a solid color image. Which color? It could be a test: call echo_value with alpha and beta. The returned images are solid colors. We need name its color. Maybe both images are same color. The tool output shows two images: one appears as a solid colored square. What color? I need infer from the image. Since I cannot access visual, maybe there's hidden meaning: echo_value returns an image of a solid color. The value alpha or beta might correspond to colors? Alpha and beta? Maybe alpha is first letter of alphabet, beta second. But color? The tool \"echo_value\" likely returns an image with a solid color based on value? Or it just returns a solid color image. The user asks: \"For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls.\" Then after tool results: \"The tool returned a solid color image. Name its color in one word.\" So the images are solid color. We need name the color. In the conversation, the images are shown. As"
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "e49f8368-7826-4b28-a9d0-9daee0d9106f-0"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 525,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 512,
+      "output_tokens_details": {
+        "reasoning_tokens": 512
+      },
+      "total_tokens": 1037
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "e49f8368-7826-4b28-a9d0-9daee0d9106f",
+        "object": "response",
+        "created_at": 1789445817,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "e49f8368-7826-4b28-a9d0-9daee0d9106f",
+        "object": "response",
+        "created_at": 1789445817,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "reasoning",
+        "id": "ef84886c-7641-493b-9cc6-1693e6407491",
+        "status": "in_progress",
+        "content": [],
+        "summary": [],
+        "encrypted_content": "e49f8368-7826-4b28-a9d0-9daee0d9106f-0"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": ""
+      },
+      "sequence_number": 3
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 5
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " answer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 6
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " based",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 7
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " on",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 8
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 9
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returned",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 10
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 11
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 12
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 13
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 14
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 15
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " name",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 16
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " its",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 17
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 18
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 19
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 20
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " word",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 21
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 22
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 23
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 24
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " infer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 25
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " from",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 26
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 27
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 28
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 29
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 30
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " results",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 31
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 32
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 33
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 34
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " probably",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 35
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 36
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 37
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 38
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 39
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " identify",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 40
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 41
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 42
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 43
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " cannot",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 44
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " see",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 45
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 46
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 47
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " As",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 48
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " AI",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 49
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " text",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 50
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 51
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 52
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " have",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 53
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 54
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " content",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 55
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 56
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 57
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 58
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " shows",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 59
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " two",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 60
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 61
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 62
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 63
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 64
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " maybe",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 65
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " red",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 66
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 67
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Let",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 68
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'s",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 69
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " inspect",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 70
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " mentally",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 71
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 72
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 73
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 74
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " output",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 75
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " includes",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 76
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 77
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 78
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " It",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 79
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " says",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 80
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 81
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 82
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 83
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returned",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 84
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 85
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 86
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 87
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 88
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 89
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Name",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 90
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " its",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 91
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 92
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 93
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 94
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " word",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 95
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 96
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 97
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 98
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " answer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 99
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 100
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 101
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 102
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " know",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 103
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 104
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " from",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 105
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 106
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 107
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 108
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 109
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 110
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 111
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " conversation",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 112
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 113
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " first",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 114
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 115
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 116
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 117
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 118
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " second",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 119
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 120
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 121
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 122
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 123
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " They",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 124
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " appear",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 125
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " as",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 126
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " small",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 127
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " colored",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 128
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " squares",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 129
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 130
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " In",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 131
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 132
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " text",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 133
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 134
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 135
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " see",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 136
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " mark",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 137
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "down",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 138
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 139
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " links",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 140
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 141
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Actually",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 142
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 143
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 144
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " prompt",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 145
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 146
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " after",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 147
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 148
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " call",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 149
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 150
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " there",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 151
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 152
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " two",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 153
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " `<",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 154
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 155
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 156
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ">`",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 157
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " blocks",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 158
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " each",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 159
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " containing",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 160
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " an",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 161
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 162
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 163
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " In",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 164
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 165
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " UI",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 166
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 167
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " they",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 168
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " might",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 169
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " be",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 170
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 171
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 172
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " sw",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 173
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "atches",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 174
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 175
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 176
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " as",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 177
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " model",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 178
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " may",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 179
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " not",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 180
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " see",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 181
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " actual",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 182
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " pixels",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 183
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 184
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " but",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 185
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " maybe",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 186
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 187
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 188
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alt",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 189
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " or",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 190
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " metadata",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 191
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 192
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 193
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " rendering",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 194
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 195
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 196
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " conversation",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 197
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " shows",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 198
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 199
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " small",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 200
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " icon",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 201
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 202
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " In",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 203
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 204
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " provided",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 205
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " content",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 206
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 207
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 208
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 209
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 210
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " represented",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 211
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " by",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 212
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " `",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 213
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "![",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 214
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "...",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 215
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "](",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 216
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "...)",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 217
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "`",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 218
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 219
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Let",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 220
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'s",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 221
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " look",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 222
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 223
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 224
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " message",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 225
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " content",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 226
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " after",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 227
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 228
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 229
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":\n\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 230
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "```\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 231
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "<",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 232
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 233
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 234
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ">\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 235
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "[",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 236
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 237
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "]\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 238
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "</",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 239
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 240
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 241
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ">\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 242
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "<",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 243
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 244
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 245
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ">\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 246
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "[",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 247
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 248
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "]\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 249
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "</",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 250
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 251
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_result",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 252
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ">\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 253
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "```\n\n",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 254
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "No",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 255
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " textual",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 256
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 257
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 258
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 259
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 260
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " might",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 261
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " be",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 262
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " visible",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 263
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " to",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 264
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " model",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 265
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 266
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " In",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 267
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " this",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 268
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " environment",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 269
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 270
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 271
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 272
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " passed",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 273
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " as",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 274
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 275
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " inputs",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 276
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 277
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 278
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " model",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 279
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " might",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 280
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " have",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 281
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " visual",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 282
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " capabilities",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 283
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 284
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 285
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 286
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " answer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 287
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 288
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 289
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 290
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " word",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 291
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 292
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 293
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 294
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returned",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 295
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 296
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 297
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 298
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 299
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 300
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Which",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 301
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 302
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 303
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " It",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 304
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " could",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 305
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " be",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 306
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 307
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " test",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 308
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 309
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " call",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 310
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " echo",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 311
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 312
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 313
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alpha",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 314
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " and",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 315
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " beta",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 316
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 317
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 318
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returned",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 319
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 320
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 321
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 322
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " colors",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 323
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 324
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 325
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 326
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " name",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 327
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " its",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 328
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 329
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 330
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Maybe",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 331
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " both",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 332
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 333
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 334
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " same",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 335
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 336
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 337
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 338
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 339
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " output",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 340
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " shows",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 341
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " two",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 342
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 343
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 344
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 345
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " appears",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 346
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " as",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 347
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 348
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 349
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " colored",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 350
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " square",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 351
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 352
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " What",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 353
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 354
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 355
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 356
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 357
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " infer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 358
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " from",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 359
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 360
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 361
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 362
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Since",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 363
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 364
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " cannot",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 365
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " access",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 366
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " visual",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 367
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 368
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " maybe",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 369
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " there",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 370
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'s",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 371
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " hidden",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 372
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " meaning",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 373
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 374
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " echo",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 375
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 376
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returns",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 377
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " an",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 378
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 379
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " of",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 380
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 381
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 382
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 383
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 384
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 385
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 386
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alpha",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 387
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " or",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 388
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " beta",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 389
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " might",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 390
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " correspond",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 391
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " to",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 392
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " colors",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 393
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 394
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Alpha",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 395
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " and",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 396
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " beta",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 397
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 398
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Maybe",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 399
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alpha",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 400
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " is",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 401
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " first",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 402
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " letter",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 403
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " of",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 404
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alphabet",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 405
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 406
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " beta",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 407
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " second",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 408
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 409
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " But",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 410
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 411
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 412
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 413
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 414
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 415
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "echo",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 416
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 417
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "\"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 418
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " likely",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 419
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returns",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 420
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " an",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 421
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 422
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 423
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 424
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 425
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 426
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " based",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 427
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " on",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 428
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 429
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 430
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Or",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 431
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " it",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 432
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " just",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 433
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returns",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 434
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 435
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 436
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 437
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 438
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 439
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 440
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " user",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 441
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " asks",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 442
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 443
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 444
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "For",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 445
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " this",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 446
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " synthetic",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 447
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " compatibility",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 448
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " test",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 449
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " call",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 450
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " echo",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 451
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "_value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 452
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " twice",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 453
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 454
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " once",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 455
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 456
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 457
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " alpha",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 458
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " and",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 459
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " once",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 460
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 461
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " value",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 462
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " beta",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 463
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 464
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Do",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 465
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " not",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 466
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " answer",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 467
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " before",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 468
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " both",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 469
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " calls",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 470
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 471
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Then",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 472
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " after",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 473
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 474
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " results",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 475
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ":",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 476
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 477
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "The",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 478
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " tool",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 479
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " returned",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 480
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 481
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 482
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 483
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 484
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 485
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " Name",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 486
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " its",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 487
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 488
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " in",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 489
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " one",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 490
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " word",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 491
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 492
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " So",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 493
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 494
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 495
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 496
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 497
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 498
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 499
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " We",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 500
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " need",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 501
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " name",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 502
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 503
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 504
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 505
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " In",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 506
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 507
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " conversation",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 508
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 509
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 510
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " images",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 511
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " are",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 512
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " shown",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 513
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 514
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " As",
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 515
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "content_index": 0,
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "sequence_number": 516,
+      "text": "We need answer based on tool returned solid color image. Need name its color in one word. We need infer from images. The tool results are images, probably solid color. Need identify color. I cannot see image? As AI text, I have image content? The result shows two images: one with maybe red? Let's inspect mentally: The tool output includes images. It says \"The tool returned a solid color image. Name its color in one word.\" We need answer. We need know color from images. The images in the conversation: first tool result image, second tool result image. They appear as small colored squares? In the text, I see markdown image links? Actually in the prompt, after tool call, there are two `<tool_result>` blocks each containing an image. In the UI, they might be solid color swatches. I as model may not see actual pixels, but maybe the image alt or metadata? The rendering in the conversation shows a small icon? In the provided content, the images are represented by `![...](...)`? Let's look: The message content after tool result:\n\n```\n<tool_result>\n[image]\n</tool_result>\n<tool_result>\n[image]\n</tool_result>\n```\n\nNo textual color. The image might be visible to model? In this environment, images are passed as image inputs? The model might have visual capabilities. I need answer color in one word. The tool returned a solid color image. Which color? It could be a test: call echo_value with alpha and beta. The returned images are solid colors. We need name its color. Maybe both images are same color. The tool output shows two images: one appears as a solid colored square. What color? I need infer from the image. Since I cannot access visual, maybe there's hidden meaning: echo_value returns an image of a solid color. The value alpha or beta might correspond to colors? Alpha and beta? Maybe alpha is first letter of alphabet, beta second. But color? The tool \"echo_value\" likely returns an image with a solid color based on value? Or it just returns a solid color image. The user asks: \"For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls.\" Then after tool results: \"The tool returned a solid color image. Name its color in one word.\" So the images are solid color. We need name the color. In the conversation, the images are shown. As"
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "ef84886c-7641-493b-9cc6-1693e6407491",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": "We need answer based on tool returned solid color image. Need name its color in one word. We need infer from images. The tool results are images, probably solid color. Need identify color. I cannot see image? As AI text, I have image content? The result shows two images: one with maybe red? Let's inspect mentally: The tool output includes images. It says \"The tool returned a solid color image. Name its color in one word.\" We need answer. We need know color from images. The images in the conversation: first tool result image, second tool result image. They appear as small colored squares? In the text, I see markdown image links? Actually in the prompt, after tool call, there are two `<tool_result>` blocks each containing an image. In the UI, they might be solid color swatches. I as model may not see actual pixels, but maybe the image alt or metadata? The rendering in the conversation shows a small icon? In the provided content, the images are represented by `![...](...)`? Let's look: The message content after tool result:\n\n```\n<tool_result>\n[image]\n</tool_result>\n<tool_result>\n[image]\n</tool_result>\n```\n\nNo textual color. The image might be visible to model? In this environment, images are passed as image inputs? The model might have visual capabilities. I need answer color in one word. The tool returned a solid color image. Which color? It could be a test: call echo_value with alpha and beta. The returned images are solid colors. We need name its color. Maybe both images are same color. The tool output shows two images: one appears as a solid colored square. What color? I need infer from the image. Since I cannot access visual, maybe there's hidden meaning: echo_value returns an image of a solid color. The value alpha or beta might correspond to colors? Alpha and beta? Maybe alpha is first letter of alphabet, beta second. But color? The tool \"echo_value\" likely returns an image with a solid color based on value? Or it just returns a solid color image. The user asks: \"For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls.\" Then after tool results: \"The tool returned a solid color image. Name its color in one word.\" So the images are solid color. We need name the color. In the conversation, the images are shown. As"
+      },
+      "sequence_number": 517
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "reasoning",
+        "id": "ef84886c-7641-493b-9cc6-1693e6407491",
+        "status": "incomplete",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "We need answer based on tool returned solid color image. Need name its color in one word. We need infer from images. The tool results are images, probably solid color. Need identify color. I cannot see image? As AI text, I have image content? The result shows two images: one with maybe red? Let's inspect mentally: The tool output includes images. It says \"The tool returned a solid color image. Name its color in one word.\" We need answer. We need know color from images. The images in the conversation: first tool result image, second tool result image. They appear as small colored squares? In the text, I see markdown image links? Actually in the prompt, after tool call, there are two `<tool_result>` blocks each containing an image. In the UI, they might be solid color swatches. I as model may not see actual pixels, but maybe the image alt or metadata? The rendering in the conversation shows a small icon? In the provided content, the images are represented by `![...](...)`? Let's look: The message content after tool result:\n\n```\n<tool_result>\n[image]\n</tool_result>\n<tool_result>\n[image]\n</tool_result>\n```\n\nNo textual color. The image might be visible to model? In this environment, images are passed as image inputs? The model might have visual capabilities. I need answer color in one word. The tool returned a solid color image. Which color? It could be a test: call echo_value with alpha and beta. The returned images are solid colors. We need name its color. Maybe both images are same color. The tool output shows two images: one appears as a solid colored square. What color? I need infer from the image. Since I cannot access visual, maybe there's hidden meaning: echo_value returns an image of a solid color. The value alpha or beta might correspond to colors? Alpha and beta? Maybe alpha is first letter of alphabet, beta second. But color? The tool \"echo_value\" likely returns an image with a solid color based on value? Or it just returns a solid color image. The user asks: \"For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls.\" Then after tool results: \"The tool returned a solid color image. Name its color in one word.\" So the images are solid color. We need name the color. In the conversation, the images are shown. As"
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "e49f8368-7826-4b28-a9d0-9daee0d9106f-0"
+      },
+      "output_index": 0,
+      "sequence_number": 518
+    },
+    {
+      "type": "response.incomplete",
+      "response": {
+        "id": "e49f8368-7826-4b28-a9d0-9daee0d9106f",
+        "object": "response",
+        "created_at": 1789445817,
+        "status": "incomplete",
+        "background": false,
+        "completed_at": 1789445820,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": {
+          "reason": "max_output_tokens"
+        },
+        "instructions": null,
+        "max_output_tokens": 512,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "reasoning",
+            "id": "ef84886c-7641-493b-9cc6-1693e6407491",
+            "status": "incomplete",
+            "content": [
+              {
+                "type": "reasoning_text",
+                "text": "We need answer based on tool returned solid color image. Need name its color in one word. We need infer from images. The tool results are images, probably solid color. Need identify color. I cannot see image? As AI text, I have image content? The result shows two images: one with maybe red? Let's inspect mentally: The tool output includes images. It says \"The tool returned a solid color image. Name its color in one word.\" We need answer. We need know color from images. The images in the conversation: first tool result image, second tool result image. They appear as small colored squares? In the text, I see markdown image links? Actually in the prompt, after tool call, there are two `<tool_result>` blocks each containing an image. In the UI, they might be solid color swatches. I as model may not see actual pixels, but maybe the image alt or metadata? The rendering in the conversation shows a small icon? In the provided content, the images are represented by `![...](...)`? Let's look: The message content after tool result:\n\n```\n<tool_result>\n[image]\n</tool_result>\n<tool_result>\n[image]\n</tool_result>\n```\n\nNo textual color. The image might be visible to model? In this environment, images are passed as image inputs? The model might have visual capabilities. I need answer color in one word. The tool returned a solid color image. Which color? It could be a test: call echo_value with alpha and beta. The returned images are solid colors. We need name its color. Maybe both images are same color. The tool output shows two images: one appears as a solid colored square. What color? I need infer from the image. Since I cannot access visual, maybe there's hidden meaning: echo_value returns an image of a solid color. The value alpha or beta might correspond to colors? Alpha and beta? Maybe alpha is first letter of alphabet, beta second. But color? The tool \"echo_value\" likely returns an image with a solid color based on value? Or it just returns a solid color image. The user asks: \"For this synthetic compatibility test call echo_value twice, once with value alpha and once with value beta. Do not answer before both calls.\" Then after tool results: \"The tool returned a solid color image. Name its color in one word.\" So the images are solid color. We need name the color. In the conversation, the images are shown. As"
+              }
+            ],
+            "summary": [],
+            "encrypted_content": "e49f8368-7826-4b28-a9d0-9daee0d9106f-0"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 525,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 512,
+          "output_tokens_details": {
+            "reasoning_tokens": 512
+          },
+          "total_tokens": 1037
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 519
+    }
+  ]
+}

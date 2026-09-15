@@ -1,0 +1,59 @@
+{
+  "test": "pi-live-responses-history",
+  "reason": "stop",
+  "types": [
+    "start",
+    "text_start",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_delta",
+    "text_end",
+    "done"
+  ],
+  "contentTypes": [
+    "text"
+  ],
+  "usage": {
+    "input": 394,
+    "output": 29,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "reasoning": 0,
+    "totalTokens": 423,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "rawBytes": 11520,
+  "wireInputCount": 6
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "published-imports",
+    "status": "passed",
+    "detail": {
+      "Agent": true,
+      "AgentHarness": true,
+      "TuiMainScreen": true,
+      "TUIIsTypeOnly": true,
+      "node": "v24.15.0"
+    }
+  },
+  {
+    "name": "low-loop-awaits-journal-and-context",
+    "status": "passed",
+    "detail": {
+      "order": [
+        "journal-start",
+        "journal-done",
+        "before",
+        "execute"
+      ],
+      "modelCalls": 2,
+      "transformed": 2
+    }
+  },
+  {
+    "name": "low-loop-journal-failure-stops-tool",
+    "status": "passed",
+    "detail": {
+      "executions": 0,
+      "error": "synthetic disk failure"
+    }
+  },
+  {
+    "name": "low-loop-explicit-restored-history",
+    "status": "passed",
+    "detail": {
+      "inputMessages": 3
+    }
+  },
+  {
+    "name": "high-harness-public-session-and-provider",
+    "status": "passed",
+    "detail": {
+      "providerCalls": 1,
+      "entries": 2,
+      "eventFailuresIsolated": 2,
+      "result": {
+        "ok": true,
+        "value": {
+          "operationId": "01a0a350-732a-7590-88be-74bcfec733ab",
+          "kind": "run",
+          "status": "completed",
+          "fromTipId": null,
+          "tipId": "01a0a350-732b-7590-88be-74c24ee66242",
+          "startedAt": 1789446353706,
+          "endedAt": 1789446353709
+        }
+      }
+    }
+  },
+  {
+    "name": "responses-real-fixture-reasoning-and-unknown",
+    "status": "passed",
+    "detail": {
+      "reason": "stop",
+      "thinkingPreserved": true,
+      "unknownRawCaptured": true,
+      "unknownExposedByPi": false,
+      "sentRole": "developer"
+    }
+  },
+  {
+    "name": "responses-disconnect-detected",
+    "status": "passed",
+    "detail": {
+      "reason": "error",
+      "error": "OpenAI Responses stream ended before a terminal response event"
+    }
+  },
+  {
+    "name": "responses-failed-detected",
+    "status": "passed",
+    "detail": {
+      "error": "probe: synthetic failure"
+    }
+  },
+  {
+    "name": "responses-incomplete-detected",
+    "status": "passed",
+    "detail": {
+      "reason": "length",
+      "raw": "incomplete.max_output_tokens"
+    }
+  },
+  {
+    "name": "deepseek-provider-is-completions",
+    "status": "passed",
+    "detail": {
+      "apis": [
+        "openai-completions"
+      ]
+    }
+  }
+]

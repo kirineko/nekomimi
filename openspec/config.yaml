@@ -1,0 +1,20 @@
+schema: spec-driven
+context: |
+  Language: zh-CN. 保留 OpenSpec 结构标题和 SHALL/MUST 关键字。
+  deepy-harness 是独立的新 TypeScript 项目，需求研究入口为根目录 spec.md。
+  优先级：可观测性及 pi 风格提示词/工具 > Web/TUI > Skills/Rules/MCP 和上下文缓存 > 子任务及市场。
+  目标技术栈：Node.js LTS、TypeScript strict、ESM；pi-agent-core 0.85.1 低层可替换循环；独立 DeepSeek Responses adapter 复用 pi-ai 0.85.1 公开 parser。
+  JSONL Journal 是唯一权威事实；ContextView 和 WireRequest 独立且可追溯。
+  浏览器 React/Vite 优先，pi-tui 后续共享命令/事件协议；初期 npm 单主包。
+  选型证据见 docs/validation/2026-09-15/README.md；应用验收与本机持久化测量见 docs/implementation-validation.md，平台限制仍需保留。
+  新项目不照搬 Deepy 的 Python 实现或全部旧规格；按用户可见行为建立契约。
+rules:
+  proposal:
+    - 明确范围、非目标及与 spec.md 的章节对应关系。
+  specs:
+    - 使用可测试的行为契约，覆盖失败、取消、持久化和证据边界。
+    - 新能力包含 Purpose；不要将未实现能力作为已交付规格。
+  design:
+    - 明确权威状态、协议保真、公开依赖边界和未验证风险。
+  tasks:
+    - 每项任务附验证方法，只有实际完成并验证后才勾选。

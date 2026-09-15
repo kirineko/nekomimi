@@ -1,0 +1,567 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "input": [
+      {
+        "role": "user",
+        "content": "Use read_image, then name the color of the returned image in one word."
+      },
+      {
+        "type": "function_call",
+        "id": "dda8677f-f1ee-4c9b-8ed9-1c21ed7a31a9",
+        "status": "completed",
+        "arguments": "{}",
+        "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+        "name": "read_image"
+      },
+      {
+        "type": "function_call_output",
+        "call_id": "call_00_ET_JGwMGYyq2cjOaJRECUg23883",
+        "output": [
+          {
+            "type": "input_image",
+            "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKElEQVR4nO3NsQ0AAAzCMP5/un0CNkuZ41wybXsHAAAAAAAAAAAAxR4yw/wuPL6QkAAAAABJRU5ErkJggg=="
+          }
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "name": "read_image",
+        "description": "Read a synthetic solid color test image. The result is an image.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "tool_choice": "auto",
+    "max_output_tokens": 1024,
+    "stream": true
+  },
+  "response": {
+    "id": "cf6af509-5e7a-420d-835e-851bd3c30b74",
+    "object": "response",
+    "created_at": 1789445888,
+    "status": "completed",
+    "background": false,
+    "completed_at": 1789445889,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 1024,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "reasoning",
+        "id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The image is a solid red color."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "cf6af509-5e7a-420d-835e-851bd3c30b74-0"
+      },
+      {
+        "type": "message",
+        "id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "Red"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [
+      {
+        "type": "function",
+        "name": "read_image",
+        "description": "Read a synthetic solid color test image. The result is an image.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    ],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 519,
+      "input_tokens_details": {
+        "cached_tokens": 256
+      },
+      "output_tokens": 10,
+      "output_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "total_tokens": 529
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "cf6af509-5e7a-420d-835e-851bd3c30b74",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 1024,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "cf6af509-5e7a-420d-835e-851bd3c30b74",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 1024,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "reasoning",
+        "id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+        "status": "in_progress",
+        "content": [],
+        "summary": [],
+        "encrypted_content": "cf6af509-5e7a-420d-835e-851bd3c30b74-0"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": ""
+      },
+      "sequence_number": 3
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "The",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " image",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 5
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " is",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 6
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 7
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " solid",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 8
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " red",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 9
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " color",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 10
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 11
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "content_index": 0,
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "sequence_number": 12,
+      "text": "The image is a solid red color."
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": "The image is a solid red color."
+      },
+      "sequence_number": 13
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "reasoning",
+        "id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The image is a solid red color."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "cf6af509-5e7a-420d-835e-851bd3c30b74-0"
+      },
+      "output_index": 0,
+      "sequence_number": 14
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "message",
+        "id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+        "status": "in_progress",
+        "content": [],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 1,
+      "sequence_number": 15
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+      "output_index": 1,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": ""
+      },
+      "sequence_number": 16
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "Red",
+      "item_id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+      "logprobs": [],
+      "output_index": 1,
+      "sequence_number": 17
+    },
+    {
+      "type": "response.output_text.done",
+      "content_index": 0,
+      "item_id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+      "logprobs": [],
+      "output_index": 1,
+      "sequence_number": 18,
+      "text": "Red"
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+      "output_index": 1,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": "Red"
+      },
+      "sequence_number": 19
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "message",
+        "id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "Red"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 1,
+      "sequence_number": 20
+    },
+    {
+      "type": "response.completed",
+      "response": {
+        "id": "cf6af509-5e7a-420d-835e-851bd3c30b74",
+        "object": "response",
+        "created_at": 1789445888,
+        "status": "completed",
+        "background": false,
+        "completed_at": 1789445889,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": null,
+        "max_output_tokens": 1024,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "reasoning",
+            "id": "58275392-39fa-45d1-8a9c-ea3fe8d305d0",
+            "status": "completed",
+            "content": [
+              {
+                "type": "reasoning_text",
+                "text": "The image is a solid red color."
+              }
+            ],
+            "summary": [],
+            "encrypted_content": "cf6af509-5e7a-420d-835e-851bd3c30b74-0"
+          },
+          {
+            "type": "message",
+            "id": "b20ffbc5-53b2-44c0-a483-347039ffb5c0",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "Red"
+              }
+            ],
+            "phase": "final_answer",
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "name": "read_image",
+            "description": "Read a synthetic solid color test image. The result is an image.",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 519,
+          "input_tokens_details": {
+            "cached_tokens": 256
+          },
+          "output_tokens": 10,
+          "output_tokens_details": {
+            "reasoning_tokens": 8
+          },
+          "total_tokens": 529
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 21
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+/reference/
+node_modules/
+dist/
+coverage/
+*.tgz
+.harness/
+.env
+/test-results/
+/playwright-report/

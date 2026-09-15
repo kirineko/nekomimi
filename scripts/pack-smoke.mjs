@@ -1,0 +1,16 @@
+import { mkdtemp, writeFile, readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+const dir = await mkdtemp('/private/tmp/harness-pack-');
+const invoke = (cmd, args, cwd = dir) => execFileSync(cmd, args, { cwd, encoding: 'utf8', env: { ...process.env, DEEPSEEK_API_KEY: '' }, stdio: ['ignore','pipe','pipe'] });
+const packed = JSON.parse(invoke('npm', ['pack', '--json', '--pack-destination', dir], process.cwd()))[0];
+await writeFile(join(dir, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
+invoke('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--registry=https://registry.npmjs.org', join(dir, packed.filename)]);
+const cli = join(dir, 'node_modules/.bin/harness');
+if (!invoke(cli, ['--help']).includes('Harness')) throw new Error('Missing CLI');
+await writeFile(join(dir, 'smoke.mjs'), `import {Journal, exportSession, inspectBundle, importBundle} from 'deepy-harness'; const j=await Journal.open('./session'); await j.append('fixture',{artifact:await j.artifact('offline pack fixture')}); await j.close(); await exportSession('./session',{format:'html',output:'./view.html'}); await exportSession('./session',{format:'bundle',output:'./bundle'}); await inspectBundle('./bundle'); await importBundle('./bundle','./imported');`);
+invoke(process.execPath, ['smoke.mjs']);
+JSON.parse(invoke(cli, ['replay', join(dir, 'imported')]));
+await writeFile(join(dir, 'web-smoke.mjs'), await readFile(new URL('./pack-web-fixture.mjs', import.meta.url)));
+invoke(process.execPath, ['web-smoke.mjs']);
+console.log(JSON.stringify({ directory: dir, tarball: packed.filename, installed: true, cli: true, offlineExportImport: true, webStaticCommandExport: true }));

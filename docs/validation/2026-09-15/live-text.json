@@ -1,0 +1,1155 @@
+{
+  "request": {
+    "model": "deepseek-flash",
+    "instructions": "Return a brief answer.",
+    "input": "Reply with OK only.",
+    "max_output_tokens": 256,
+    "stream": true
+  },
+  "response": {
+    "id": "fadfc9ff-b025-4017-895c-16aca1972b0d",
+    "object": "response",
+    "created_at": 1789445407,
+    "status": "completed",
+    "background": false,
+    "completed_at": 1789445408,
+    "content_filters": null,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "incomplete_details": null,
+    "instructions": "Return a brief answer.",
+    "max_output_tokens": 256,
+    "max_tool_calls": null,
+    "model": "deepseek-flash",
+    "moderation": null,
+    "output": [
+      {
+        "type": "reasoning",
+        "id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The user asks me to reply with \"OK\" only. But there's a system instruction about copyrighted material. The user wants just \"OK\". I should comply with the user request. However, the instruction says \"Reply with OK only.\" So I should reply \"OK\".\n\nBut wait, maybe there's a trick? The user says \"Return a brief answer.\" and \"Reply with OK only.\" So I should just say OK.\n\nI'll do that."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "fadfc9ff-b025-4017-895c-16aca1972b0d-0"
+      },
+      {
+        "type": "message",
+        "id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "OK"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_retention": null,
+    "reasoning": {
+      "effort": null,
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "text"
+      },
+      "verbosity": null
+    },
+    "tool_choice": "auto",
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 1.0,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 40,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 94,
+      "output_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "total_tokens": 134
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "events": [
+    {
+      "type": "response.created",
+      "response": {
+        "id": "fadfc9ff-b025-4017-895c-16aca1972b0d",
+        "object": "response",
+        "created_at": 1789445407,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": "Return a brief answer.",
+        "max_output_tokens": 256,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 0
+    },
+    {
+      "type": "response.in_progress",
+      "response": {
+        "id": "fadfc9ff-b025-4017-895c-16aca1972b0d",
+        "object": "response",
+        "created_at": 1789445407,
+        "status": "in_progress",
+        "background": false,
+        "completed_at": null,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": "Return a brief answer.",
+        "max_output_tokens": 256,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": null,
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 1
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "reasoning",
+        "id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+        "status": "in_progress",
+        "content": [],
+        "summary": [],
+        "encrypted_content": "fadfc9ff-b025-4017-895c-16aca1972b0d-0"
+      },
+      "output_index": 0,
+      "sequence_number": 2
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": ""
+      },
+      "sequence_number": 3
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "The",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 4
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " user",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 5
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " asks",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 6
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " me",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 7
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " to",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 8
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " reply",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 9
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 10
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 11
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 12
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "\"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 13
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " only",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 14
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 15
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " But",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 16
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " there",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 17
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'s",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 18
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 19
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " system",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 20
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " instruction",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 21
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " about",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 22
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " copyrighted",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 23
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " material",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 24
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 25
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 26
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " user",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 27
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " wants",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 28
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " just",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 29
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 30
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 31
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "\".",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 32
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 33
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " should",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 34
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " comply",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 35
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 36
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 37
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " user",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 38
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " request",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 39
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 40
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " However",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 41
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 42
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " the",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 43
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " instruction",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 44
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " says",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 45
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 46
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "Reply",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 47
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 48
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 49
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " only",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 50
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 51
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " So",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 52
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 53
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " should",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 54
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " reply",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 55
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 56
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 57
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "\".\n\n",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 58
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "But",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 59
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " wait",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 60
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ",",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 61
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " maybe",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 62
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " there",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 63
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'s",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 64
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 65
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " trick",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 66
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "?",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 67
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " The",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 68
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " user",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 69
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " says",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 70
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 71
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "Return",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 72
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " a",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 73
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " brief",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 74
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " answer",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 75
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 76
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " and",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 77
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " \"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 78
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "Reply",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 79
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " with",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 80
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 81
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " only",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 82
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\"",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 83
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " So",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 84
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " I",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 85
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " should",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 86
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " just",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 87
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " say",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 88
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " OK",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 89
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".\n\n",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 90
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "I",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 91
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": "'ll",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 92
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " do",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 93
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": " that",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 94
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "content_index": 0,
+      "delta": ".",
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 95
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "content_index": 0,
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "sequence_number": 96,
+      "text": "The user asks me to reply with \"OK\" only. But there's a system instruction about copyrighted material. The user wants just \"OK\". I should comply with the user request. However, the instruction says \"Reply with OK only.\" So I should reply \"OK\".\n\nBut wait, maybe there's a trick? The user says \"Return a brief answer.\" and \"Reply with OK only.\" So I should just say OK.\n\nI'll do that."
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+      "output_index": 0,
+      "part": {
+        "type": "reasoning_text",
+        "text": "The user asks me to reply with \"OK\" only. But there's a system instruction about copyrighted material. The user wants just \"OK\". I should comply with the user request. However, the instruction says \"Reply with OK only.\" So I should reply \"OK\".\n\nBut wait, maybe there's a trick? The user says \"Return a brief answer.\" and \"Reply with OK only.\" So I should just say OK.\n\nI'll do that."
+      },
+      "sequence_number": 97
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "reasoning",
+        "id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+        "status": "completed",
+        "content": [
+          {
+            "type": "reasoning_text",
+            "text": "The user asks me to reply with \"OK\" only. But there's a system instruction about copyrighted material. The user wants just \"OK\". I should comply with the user request. However, the instruction says \"Reply with OK only.\" So I should reply \"OK\".\n\nBut wait, maybe there's a trick? The user says \"Return a brief answer.\" and \"Reply with OK only.\" So I should just say OK.\n\nI'll do that."
+          }
+        ],
+        "summary": [],
+        "encrypted_content": "fadfc9ff-b025-4017-895c-16aca1972b0d-0"
+      },
+      "output_index": 0,
+      "sequence_number": 98
+    },
+    {
+      "type": "response.output_item.added",
+      "item": {
+        "type": "message",
+        "id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+        "status": "in_progress",
+        "content": [],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 1,
+      "sequence_number": 99
+    },
+    {
+      "type": "response.content_part.added",
+      "content_index": 0,
+      "item_id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+      "output_index": 1,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": ""
+      },
+      "sequence_number": 100
+    },
+    {
+      "type": "response.output_text.delta",
+      "content_index": 0,
+      "delta": "OK",
+      "item_id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+      "logprobs": [],
+      "output_index": 1,
+      "sequence_number": 101
+    },
+    {
+      "type": "response.output_text.done",
+      "content_index": 0,
+      "item_id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+      "logprobs": [],
+      "output_index": 1,
+      "sequence_number": 102,
+      "text": "OK"
+    },
+    {
+      "type": "response.content_part.done",
+      "content_index": 0,
+      "item_id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+      "output_index": 1,
+      "part": {
+        "type": "output_text",
+        "annotations": [],
+        "logprobs": [],
+        "text": "OK"
+      },
+      "sequence_number": 103
+    },
+    {
+      "type": "response.output_item.done",
+      "item": {
+        "type": "message",
+        "id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "OK"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      },
+      "output_index": 1,
+      "sequence_number": 104
+    },
+    {
+      "type": "response.completed",
+      "response": {
+        "id": "fadfc9ff-b025-4017-895c-16aca1972b0d",
+        "object": "response",
+        "created_at": 1789445407,
+        "status": "completed",
+        "background": false,
+        "completed_at": 1789445408,
+        "content_filters": null,
+        "error": null,
+        "frequency_penalty": 0.0,
+        "incomplete_details": null,
+        "instructions": "Return a brief answer.",
+        "max_output_tokens": 256,
+        "max_tool_calls": null,
+        "model": "deepseek-flash",
+        "moderation": null,
+        "output": [
+          {
+            "type": "reasoning",
+            "id": "3d53eedc-b846-4a60-beac-e91f7eeeaa94",
+            "status": "completed",
+            "content": [
+              {
+                "type": "reasoning_text",
+                "text": "The user asks me to reply with \"OK\" only. But there's a system instruction about copyrighted material. The user wants just \"OK\". I should comply with the user request. However, the instruction says \"Reply with OK only.\" So I should reply \"OK\".\n\nBut wait, maybe there's a trick? The user says \"Return a brief answer.\" and \"Reply with OK only.\" So I should just say OK.\n\nI'll do that."
+              }
+            ],
+            "summary": [],
+            "encrypted_content": "fadfc9ff-b025-4017-895c-16aca1972b0d-0"
+          },
+          {
+            "type": "message",
+            "id": "cbac1b20-58c2-4a9b-a4fb-156a531f2300",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "OK"
+              }
+            ],
+            "phase": "final_answer",
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "presence_penalty": 0.0,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "prompt_cache_retention": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1.0,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 40,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 94,
+          "output_tokens_details": {
+            "reasoning_tokens": 92
+          },
+          "total_tokens": 134
+        },
+        "user": null,
+        "metadata": {}
+      },
+      "sequence_number": 105
+    }
+  ]
+}

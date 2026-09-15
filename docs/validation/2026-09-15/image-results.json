@@ -1,0 +1,41 @@
+[
+  {
+    "test": "live-image-input",
+    "status": 200,
+    "elapsed": 0.89,
+    "terminal": "completed",
+    "types": [
+      "response.completed",
+      "response.content_part.added",
+      "response.content_part.done",
+      "response.created",
+      "response.in_progress",
+      "response.output_item.added",
+      "response.output_item.done",
+      "response.output_text.delta",
+      "response.output_text.done",
+      "response.reasoning_text.delta",
+      "response.reasoning_text.done"
+    ],
+    "outputTypes": [
+      "reasoning",
+      "message"
+    ],
+    "usage": {
+      "input_tokens": 222,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 53,
+      "output_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "total_tokens": 275
+    }
+  },
+  {
+    "test": "live-tool-image",
+    "status": 400,
+    "error": "{\"error\":{\"message\":\"The `reasoning_text` in the thinking mode must be passed back to the API.\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":\"invalid_request_error\"}}"
+  }
+]

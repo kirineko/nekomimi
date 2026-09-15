@@ -1,0 +1,15 @@
+{
+  "name": "deepy-harness-validation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node probe.mjs && node extra-probe.mjs",
+    "test:live": "node pi-live.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "0.85.1",
+    "@earendil-works/pi-ai": "0.85.1",
+    "@earendil-works/pi-tui": "0.85.1"
+  }
+}
