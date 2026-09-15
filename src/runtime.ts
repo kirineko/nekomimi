@@ -41,11 +41,12 @@ export interface RunResult {
 }
 export async function run(options: RunOptions): Promise<RunResult> {
   if (!options.prompt.trim()) throw new Error("Prompt must not be empty");
+  const runId = options.command?.runId ?? id();
   const journal = await Journal.open(options.session, {
     ...options.journalOptions,
+    diagnosticRunId: runId,
     secrets: [...(options.journalOptions?.secrets ?? []), options.apiKey],
   });
-  const runId = options.command?.runId ?? id();
   let agent: Agent | undefined;
   const notify = (() => {
     let pending: { type: string; seq: number; durableSeq: number } | undefined;

@@ -1,3 +1,5 @@
+import { diagnostic, saveDiagnostic, observeIO, OperationError } from "./diagnostics.js";
+import type { Diagnostic } from "./shared/protocol.js";
 import { createHash, randomUUID } from "node:crypto";
 import {
   mkdir,
@@ -49,6 +51,8 @@ export interface SessionSnapshot {
 }
 export interface JournalOptions {
   secrets?: string[];
+  onDiagnostic?: (value: Diagnostic) => void;
+  diagnosticRunId?: string;
   flushMs?: number;
   flushBytes?: number;
   lockStaleMs?: number;
@@ -91,17 +95,20 @@ export async function syncDirectory(directory: string): Promise<void> {
 export async function atomicFile(
   file: string,
   data: string | Uint8Array,
+  role = "atomic-file",
+  beforeIO?: (operation: string) => Promise<void>,
 ): Promise<void> {
   const temp = `${file}.${id()}.tmp`;
-  const handle = await open(temp, "wx", 0o600);
+  const step = <T>(name: string, action: () => Promise<T>) => observeIO(`${role}.${name}`, async () => { await beforeIO?.(`${role}.${name}`); return action(); });
+  const handle = await step("open", () => open(temp, "wx", 0o600));
   try {
-    await handle.writeFile(data);
-    await handle.sync();
+    await step("write", () => handle.writeFile(data));
+    await step("sync", () => handle.sync());
   } finally {
     await handle.close();
   }
-  await rename(temp, file);
-  await syncDirectory(join(file, ".."));
+  await step("rename", () => rename(temp, file));
+  await step("directory-sync", () => syncDirectory(join(file, "..")));
 }
 function pendingOperations(events: JournalEvent[]): SessionSnapshot["pending"] {
   const pending = new Map<
@@ -238,20 +245,20 @@ export class Journal {
         retries: 0,
         onCompromised: (e) => {
           compromised = e;
-          instance?.fail(e);
+          instance?.fail(new OperationError("journal.lock", e));
         },
       });
-    } catch {
-      throw new Error(
-        "Session is busy; after a crashed process allow the writer lease to expire (10 seconds).",
-      );
+    } catch (error) {
+      const failure = new OperationError("journal.lock-acquire", error);
+      failure.message = "Session is busy; after a crashed process allow the writer lease to expire (10 seconds). " + failure.message;
+      throw failure;
     }
     try {
       await mkdir(join(directory, "artifacts"), {
         recursive: true,
         mode: 0o700,
       });
-      const snapshot = await readSession(directory);
+      const snapshot = await observeIO("journal.recovery-read", () => readSession(directory));
       let quarantined: Buffer | undefined;
       if (snapshot.tornBytes || snapshot.tentativeEvents) {
         const raw = await readFile(join(directory, "journal.jsonl"));
@@ -270,9 +277,9 @@ export class Journal {
           Buffer.byteLength(kept),
         );
       }
-      const handle = await open(join(directory, "journal.jsonl"), "a", 0o600);
+      const handle = await observeIO("journal.open", () => open(join(directory, "journal.jsonl"), "a", 0o600));
       instance = new Journal(directory, handle, release, snapshot, options);
-      if (compromised) instance.fail(compromised);
+      if (compromised) instance.fail(new OperationError("journal.lock", compromised));
       if (quarantined)
         await instance.append("journal.recovered", {
           artifact: await instance.artifact(quarantined),
@@ -292,8 +299,14 @@ export class Journal {
     if (this.fault) throw this.fault;
     if (this.closed) throw new Error("Journal is closed");
   }
+  private diagnosticDone: Promise<void> = Promise.resolve();
   fail(error: unknown): void {
-    this.fault ??= error instanceof Error ? error : new Error(String(error));
+    if (this.fault) return;
+    this.fault = error instanceof Error ? error : new Error(String(error));
+    const last = this.events.at(-1);
+    const value = diagnostic(error, { sessionId: this.sessionId, runId: this.options.diagnosticRunId ?? last?.runId, attemptId: last?.attemptId, seq: last?.seq ?? 0, durableSeq: this.durableSeq }, "journal.failure");
+    try { this.options.onDiagnostic?.(value); } catch { /* observer cannot affect recovery */ }
+    this.diagnosticDone = saveDiagnostic(this.directory, value);
     this.failure.abort(this.fault);
   }
   clean(value: string): string {
@@ -318,12 +331,12 @@ export class Journal {
     return task;
   }
   private async sync(): Promise<void> {
-    await this.options.beforeIO?.("sync");
-    await this.handle.sync();
+    await observeIO("journal.sync", async () => { await this.options.beforeIO?.("sync"); await this.handle.sync(); });
     const last = this.events.at(-1);
     await atomicFile(
       join(this.directory, "durable.json"),
       JSON.stringify({ seq: last?.seq ?? 0, hash: last?.hash ?? "" }),
+      "watermark", this.options.beforeIO,
     );
     this.durableSeq = last?.seq ?? 0;
     this.pendingBytes = 0;
@@ -348,8 +361,7 @@ export class Journal {
       };
       const event = { ...body, hash: hash(JSON.stringify(body)) };
       const line = JSON.stringify(event) + "\n";
-      await this.options.beforeIO?.("append");
-      await this.handle.writeFile(line);
+      await observeIO("journal.append", async () => { await this.options.beforeIO?.("append"); await this.handle.writeFile(line); });
       this.events.push(event);
       this.pendingBytes += Buffer.byteLength(line);
       if (durable || this.pendingBytes >= (this.options.flushBytes ?? 65536))
@@ -372,7 +384,7 @@ export class Journal {
       }
       const sha256 = hash(bytes);
       const file = join(this.directory, "artifacts", sha256);
-      await this.options.beforeIO?.("artifact");
+      await observeIO("artifact.prepare", async () => { await this.options.beforeIO?.("artifact"); });
       try {
         await stat(file);
         await readArtifact(this.directory, {
@@ -382,7 +394,7 @@ export class Journal {
         });
       } catch (e) {
         if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
-        await atomicFile(file, bytes);
+        await atomicFile(file, bytes, "artifact", this.options.beforeIO);
       }
       return {
         kind: "artifact",
@@ -404,6 +416,7 @@ export class Journal {
       await this.tail;
       if (!this.fault) await this.flush();
     } finally {
+      await this.diagnosticDone;
       this.closed = true;
       await this.handle.close();
       await this.release();

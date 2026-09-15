@@ -1,8 +1,10 @@
+import { diagnostic, readDiagnostics, saveDiagnostic } from "../diagnostics.js";
+import type { Diagnostic } from "../shared/protocol.js";
 import { ConfigStore } from "../config/store.js";
 import { workspacePaths } from "../storage/paths.js";
 import { migrate } from "../storage/migrate.js";
 import { nameSession } from "../session/title.js";
-import { mkdir, realpath, readdir, rename, rm } from "node:fs/promises";
+import { mkdir, realpath, readdir, rename, rm, open } from "node:fs/promises";
 import { join } from "node:path";
 import lockfile from "proper-lockfile";
 import {
@@ -26,6 +28,7 @@ export interface Entry {
   reader: JournalReader;
   projection: SessionProjection;
   tail: Promise<unknown>;
+  diagnostics: Diagnostic[];
 }
 export interface ServiceOptions {
   workspace: string;
@@ -180,7 +183,7 @@ export class Sessions {
       throw new ApiError(503, "lease_lost", "服务写入租约已失效");
     if (this.closing) throw new ApiError(503, "closing", "服务正在停止");
   }
-  async entry(sessionId: string): Promise<Entry> {
+  private async sessionDirectory(sessionId: string): Promise<string> {
     if (!validId(sessionId)) throw new ApiError(404, "not_found", "会话不存在");
     const directory = join(this.root, sessionId);
     try {
@@ -188,6 +191,40 @@ export class Sessions {
     } catch {
       throw new ApiError(404, "not_found", "会话不存在");
     }
+    return directory;
+  }
+  async diagnostics(sessionId: string): Promise<Diagnostic[]> {
+    const directory = await this.sessionDirectory(sessionId);
+    // Verify identity from the first journal record, without reading the watermark
+    // or requiring the rest of a damaged journal to be readable.
+    const file = await open(join(directory, "journal.jsonl"), "r");
+    let first: JournalEvent;
+    try {
+      if ((await realpath(join(directory, "journal.jsonl"))) !== join(directory, "journal.jsonl"))
+        throw new ApiError(403, "workspace", "会话身份无法验证");
+      const buffer = Buffer.alloc(65536);
+      let size = 0;
+      while (size < buffer.length && buffer.subarray(0, size).indexOf(10) < 0) {
+        const { bytesRead } = await file.read(buffer, size, buffer.length - size, size);
+        if (!bytesRead) break;
+        size += bytesRead;
+      }
+      const end = buffer.subarray(0, size).indexOf(10);
+      if (end < 0) throw new ApiError(403, "workspace", "会话身份无法验证");
+      first = JSON.parse(buffer.subarray(0, end).toString("utf8"));
+    } finally { await file.close(); }
+    const { hash: digest, ...body } = first;
+    if (first.type !== "session.created" || first.seq !== 1 || first.schemaVersion !== 1 ||
+        first.previousHash !== "" || hash(JSON.stringify(body)) !== digest ||
+        (first.payload as {workspace?: string})?.workspace !== this.workspace)
+      throw new ApiError(403, "workspace", "会话不属于当前工作区");
+    const saved = await readDiagnostics(directory);
+    const merged = new Map(saved.map(value => [value.id, value]));
+    for (const value of this.entries.get(sessionId)?.diagnostics ?? []) merged.set(value.id, value);
+    return [...merged.values()].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  }
+  async entry(sessionId: string): Promise<Entry> {
+    const directory = await this.sessionDirectory(sessionId);
     let entry = this.entries.get(sessionId);
     if (!entry) {
       if (this.entries.size >= 32) {
@@ -201,7 +238,10 @@ export class Sessions {
         reader: new JournalReader(directory),
         projection: new SessionProjection(directory),
         tail: Promise.resolve(),
+        diagnostics: [],
       };
+      const initialized = entry;
+      initialized.tail = readDiagnostics(directory).then(values => { initialized.diagnostics = values; });
       this.entries.set(sessionId, entry);
     }
     const current = entry;
@@ -226,6 +266,7 @@ export class Sessions {
         this.active?.sessionId === sessionId ? this.active : undefined,
       ),
       naming: this.naming?.sessionId === sessionId,
+      diagnostic: entry.diagnostics.at(-1),
     };
   }
   async create(title: string) {
@@ -335,9 +376,19 @@ export class Sessions {
       done: Promise.resolve(),
     };
     this.active = active;
+    const receiveDiagnostic = (value: Diagnostic) => {
+      if (!entry.diagnostics.some(item => item.id === value.id)) entry.diagnostics.push(value);
+    };
+    const reportBackground = async (error: unknown, runId: string, operation: string) => {
+      if (entry.diagnostics.some(value => value.runId === runId)) return;
+      const value = diagnostic(error, { sessionId, runId, seq: entry.reader.cursor.seq, durableSeq: entry.reader.cursor.seq }, operation);
+      receiveDiagnostic(value);
+      await saveDiagnostic(entry.directory, value);
+    };
     active.done = run({
       ...this.options.runtime,
       workspace: this.workspace,
+      journalOptions: { ...this.options.runtime?.journalOptions, onDiagnostic: receiveDiagnostic },
       session: entry.directory,
       apiKey: settings.apiKey,
       model: settings.model,
@@ -374,15 +425,17 @@ export class Sessions {
             entry.directory,
             { ...this.options.runtime, ...settings, apiKey: settings.apiKey! },
             naming.abort.signal,
+            { onDiagnostic: receiveDiagnostic, diagnosticRunId: naming.runId },
           )
-            .catch(() => {})
+            .catch(async error => { if (!naming.abort.signal.aborted) await reportBackground(error, naming.runId, "background.naming"); })
             .finally(() => {
               if (this.naming === naming) this.naming = undefined;
             });
         }
       })
-      .catch((error) => {
+      .catch(async (error) => {
         reject(error);
+        if (!active.abort.signal.aborted) await reportBackground(error, active.runId, "background.run");
       })
       .finally(() => {
         if (this.active === active) this.active = undefined;

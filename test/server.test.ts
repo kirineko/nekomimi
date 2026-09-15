@@ -172,6 +172,7 @@ it("keeps work alive across reader disconnect, isolates cancel IDs and rejects c
   expect(
     (await (await request(`/sessions/${id}/snapshot`)).json()).session.status,
   ).toBe("cancelled");
+  expect((await app.sessions.entry(id)).diagnostics).toEqual([]);
 });
 it("rejects unavailable credentials before accepting work", async () => {
   const { request, create } = await setup(undefined, "");

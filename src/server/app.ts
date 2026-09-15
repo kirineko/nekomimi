@@ -92,7 +92,7 @@ export async function startWeb(
           }
         }
         const match = path.match(
-          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete)(?:\/([a-f0-9]+))?$/,
+          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete|diagnostics)(?:\/([a-f0-9]+))?$/,
         );
         if (!match) throw new ApiError(404, "not_found", "接口不存在");
         const sessionId = match[1]!;
@@ -118,6 +118,11 @@ export async function startWeb(
         }
         if (req.method === "POST" && action === "delete") {
           json(res, await sessions.remove(sessionId));
+          return;
+        }
+        if (req.method === "GET" && action === "diagnostics") {
+          res.setHeader("Content-Disposition", 'attachment; filename="nekomimi-diagnostics.json"');
+          json(res, { version: 1, authoritative: false, diagnostics: await sessions.diagnostics(sessionId) });
           return;
         }
         const entry = await sessions.entry(sessionId);

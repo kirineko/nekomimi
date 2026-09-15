@@ -1,3 +1,4 @@
+import { DiagnosticNotice } from "./components/DiagnosticNotice";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Receipt, SessionInfo, TimelineRow } from "../shared/protocol";
 import { api, connect, request } from "./api";
@@ -269,6 +270,7 @@ export function App() {
             {error || streamError}
           </div>
         )}
+        {snapshot?.session.diagnostic && <DiagnosticNotice key={snapshot.session.diagnostic.id} value={snapshot.session.diagnostic} sessionId={snapshot.session.id} />}
         {exportOpen && (
           <section className="export-panel">
             <strong>离线导出</strong>

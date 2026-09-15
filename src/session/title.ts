@@ -1,13 +1,14 @@
-import { Journal, id } from "../journal.js";
+import { Journal, id, type JournalOptions } from "../journal.js";
 import { ResponsesProvider, type ProviderOptions } from "../provider.js";
 import { hash } from "../journal.js";
 export async function nameSession(
   directory: string,
   settings: ProviderOptions,
   signal: AbortSignal,
+  journalOptions: JournalOptions = {},
 ) {
-  const journal = await Journal.open(directory, { secrets: [settings.apiKey] });
-  const runId = id();
+  const journal = await Journal.open(directory, { ...journalOptions, secrets: [settings.apiKey] });
+  const runId = journalOptions.diagnosticRunId ?? id();
   try {
     if (journal.events.some((e) => e.type === "session.naming.started")) return;
     const runs = journal.events.filter((e) => e.type === "run.finished");

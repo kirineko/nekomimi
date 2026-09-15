@@ -10,7 +10,24 @@ export interface Cursor {
   seq: number;
   hash: string;
 }
+export interface Diagnostic {
+  version: 1;
+  id: string;
+  timestamp: string;
+  sessionId?: string;
+  runId?: string;
+  attemptId?: string;
+  seq?: number;
+  durableSeq?: number;
+  operation: string;
+  category: "storage" | "background";
+  code?: string;
+  syscall?: string;
+  platform: string;
+  nodeVersion: string;
+}
 export interface SessionInfo {
+  diagnostic?: Diagnostic;
   naming?: boolean;
   id: string;
   title: string;

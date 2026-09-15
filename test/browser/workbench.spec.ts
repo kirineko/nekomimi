@@ -314,3 +314,24 @@ test('compact layout preserves controls and inspector focus at all target sizes'
     if (process.env.NEKOMIMI_VISUAL_DIR) await page.screenshot({path:join(process.env.NEKOMIMI_VISUAL_DIR,`conversation-${width}.png`)});
   }
 });
+
+test("shows and downloads diagnostics even when durable cursor and status do not change", async ({page}) => {
+  const session = await app.sessions.create("诊断测试");
+  await page.goto(app.url);
+  await page.getByRole("button", { name: /诊断测试/ }).click();
+  await expect(page.getByText("已连接", { exact:false })).toBeVisible();
+  await page.waitForTimeout(400);
+  const entry = await app.sessions.entry(session.id);
+  const before = entry.reader.cursor.seq;
+  entry.diagnostics.push({version:1,id:"diagnostic-test",timestamp:new Date().toISOString(),sessionId:session.id,operation:"watermark.rename",code:"EPERM",category:"storage",platform:"win32",nodeVersion:"v22.19.0",seq:before+1,durableSeq:before});
+  const notice=page.locator("details.error");
+  await expect(notice.locator("summary")).toContainText("watermark.rename");
+  await notice.locator("summary").click();
+  const downloaded=page.waitForEvent("download");
+  await notice.getByRole("button",{name:"下载诊断"}).click();
+  const file=await downloaded;
+  const data=JSON.parse(await readFile((await file.path())!,"utf8"));
+  expect(data.authoritative).toBe(false);
+  expect(data.diagnostics[0].code).toBe("EPERM");
+  expect(entry.reader.cursor.seq).toBe(before);
+});

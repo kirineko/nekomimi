@@ -22,6 +22,7 @@ export async function subscribe(
     closed = true;
   });
   let lastStatus = "";
+  let lastDiagnostic = "";
   let heartbeats = 0;
   const send = (event: string, value: unknown, id?: number) => {
     const message = `${id === undefined ? "" : `id: ${id}\n`}event: ${event}\ndata: ${JSON.stringify(value)}\n\n`;
@@ -47,7 +48,7 @@ export async function subscribe(
       }
       const cursor = entry.reader.cursor;
       const session = sessions.info(sessionId, entry);
-      if (cursor.seq !== seq || session.status !== lastStatus) {
+      if (cursor.seq !== seq || session.status !== lastStatus || (session.diagnostic?.id ?? "") !== lastDiagnostic) {
         const rows = [...entry.projection.rows.values()].filter(
           (r) => r.seq > seq,
         );
@@ -60,6 +61,7 @@ export async function subscribe(
         seq = cursor.seq;
         hash = cursor.hash;
         lastStatus = session.status;
+        lastDiagnostic = session.diagnostic?.id ?? "";
       }
       if (++heartbeats % 40 === 0 && !send("heartbeat", {})) break;
       await delay(250, undefined, { signal });
