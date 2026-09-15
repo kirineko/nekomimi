@@ -116,35 +116,6 @@ CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 
 本次验收见 [工作台升级验收记录](validation/workbench-upgrade/README.md)。Linux/Windows 原生默认程序打开尚待真实桌面环境验证。
 
 
-## 网页抓取
+## 历史网页读取记录
 
-`web_fetch({ url })` 是独立基础工具，主要参考 Deepy 的正文/description 回退，并吸收 dsh 的网络和展示边界。默认网络操作 30 秒超时，解压后正文上限 2 MiB，模型输出上限 30,000 UTF-16 单位。响应体和输出截断分别记录；`read artifact:<sha256>` 可继续读取已保存文本，不能恢复未下载部分。
-
-抓取读取匿名 HTTP(S) 页面，不向目标发送模型密钥或浏览器 Cookie。直连时固定已校验的公开 DNS 地址；采用用户的可信代理时由代理解析域名并负责最终目标访问控制，本机仍拒绝非公开 IP 字面量、localhost、本地域名。自动跟随最多五次同源重定向，每跳重判路由；跨源跳转返回目标供显式再次调用。HTML 不运行 JavaScript；只剩 Loading 等占位内容时使用标准 description 元数据，并标记为页面摘要。PDF、图片和登录态不在支持范围。
-
-抓取的 `fetch.started`、`fetch.response`、`fetch.finished` 及响应/文本 artifact 由 Journal 保存，不产生模型 usage。Web 卡片、历史和导出读取这些证据，不重新联网。网络/解析测试位于 `test/web-fetch.test.ts`，搜索→抓取→回答的浏览器测试位于 `test/browser/web-fetch.spec.ts`。
-
-响应证据按源 charset 解码、脱敏后统一保存为 UTF-8，元数据保留 `responseCharset`、`responseEncoding` 和接收字节数；保存的 artifact 不是源编码的字节副本。失败和取消采用相同路径。未知 charset 时记录 `responseOmitted`，不保存无法安全脱敏的响应正文。
-
-
-### web_fetch 代理与网站验证
-
-无需代理的用户无需配置。仅影响 web_fetch，不修改模型请求、其他工具或全局 dispatcher。
-
-1. `NEKOMIMI_WEB_FETCH_PROXY=direct` 强制直连；设为 HTTP(S) URL 则显式使用该代理，`auto` 或未设置进入自动检测。
-2. 环境变量小写优先于大写。HTTP 目标依次使用 `HTTP_PROXY`、`ALL_PROXY`；HTTPS 目标依次使用 `HTTPS_PROXY`、`HTTP_PROXY`、`ALL_PROXY`。支持这些变量中的 HTTP(S) 代理地址。
-3. 未配置环境代理时，macOS 读取 `scutil --proxy` 的启用状态和静态地址，Windows 读取当前用户 Internet Settings 的启用状态、静态代理和绕过项；Linux 使用环境变量。仅打开“自动发现”但无具体代理/PAC 地址不视为启用代理，本版不执行 WPAD。
-4. `NO_PROXY` 与系统绕过列表可让指定目标直连；支持逗号/空白/分号分隔、完整域名及其子域、`.example.com` / `*.example.com`、端口、IPv6（带端口时用方括号）和 `*`。不支持 CIDR；系统 `<local>` 匹配单标签名称。绕过代理不绕过公开地址校验。
-
-```sh
-# 仅为这次启动指定抓取代理
-NEKOMIMI_WEB_FETCH_PROXY=http://127.0.0.1:1082 nekomimi web
-# 即使环境或系统有代理，也强制抓取直连
-NEKOMIMI_WEB_FETCH_PROXY=direct nekomimi web
-```
-
-代理模式使用 CONNECT，由用户信任的代理负责远端 DNS 和最终目标访问控制；不使用本机 Fake-IP 地址进行直连。代理配置错误、认证失败或连接失败不会静默回退直连。系统检测限时 2 秒并受抓取总超时/取消约束；配置在每次抓取开始时读取，当前调用中的重定向复用同一快照。PAC 脚本、SOCKS 传输不支持；仅配置这些代理时明确报错，请使用代理软件提供的 HTTP(S) 或 mixed 端口。
-
-Journal 的 `fetch.route` 保存每跳 mode/source，`fetch.finished` 保存最终路由与 errorCode；不保存代理 URL 或认证信息。认证只发送给代理，反射到响应中的已知代理凭证也会脱敏。回放、导入和导出不会重新检测代理或联网。
-
-请求头参考 Deepy 的浏览器式 HTTP 基线，不保证绕过网站验证。明确收到 `cf-mitigated: challenge` 时返回 `BROWSER_CHALLENGE`，保留 HTTP 状态与失败证据；普通 403 仍为 `HTTP_ERROR`，不将验证页或错误页作为正常正文，不自动重试。所有站点使用相同处理，不改写域名或调用站点专用接口。
+当前版本已移除 web_fetch 工具及其抓取和代理配置。网页搜索仍由 web_search 提供。旧会话中的 fetch 事件、来源、状态和已保存 artifact 继续只读展示、导出和导入；不会重新抓取或检测系统代理。

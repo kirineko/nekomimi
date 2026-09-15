@@ -130,6 +130,7 @@ function SearchSources({ details }: { details: any }) {
   );
 }
 
+// Historical evidence only; web_fetch is no longer an executable tool.
 function FetchSummary({ details }: { details: any }) {
   if (!details || typeof details.finalUrl !== "string") return null;
   let url: URL;

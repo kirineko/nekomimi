@@ -21,6 +21,7 @@ const packed = process.argv[2] ? { filename: resolve(process.argv[2]) } : JSON.p
 const archive = resolve(dir, packed.filename);
 const listing = invoke('tar', ['-tzf', archive]).trim().split(/\r?\n/);
 if (listing.some(p => !/^package\/(dist\/|README.md$|LICENSE$|package.json$)/.test(p))) throw new Error('Unexpected file in release archive');
+if (listing.some(p => /^package\/dist\/web-fetch(?:[/.])/.test(p))) throw new Error('Retired web fetch resources in release archive');
 if (!listing.includes('package/dist/cli.js') || !listing.includes('package/dist/web-dist/index.html')) throw new Error('Missing release resources');
 if (!listing.includes('package/dist/presentation/syntax/node-worker.js') || !listing.some(p => /web-dist\/assets\/syntax-worker-.*\.js$/.test(p))) throw new Error('Missing syntax workers');
 await writeFile(join(dir, 'package.json'), JSON.stringify({ private: true, type: 'module' }));

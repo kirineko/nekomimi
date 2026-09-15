@@ -178,6 +178,7 @@ export class SessionProjection {
         r.title = p.name;
         r.text = clipped(JSON.stringify(p.args, null, 2));
       }
+      // Read-only compatibility for sessions saved before web_fetch was retired.
       if (e.type === "fetch.finished") {
         r.title = "web_fetch";
         r.details = p;
