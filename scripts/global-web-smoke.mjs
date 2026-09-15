@@ -8,14 +8,14 @@ const home = join(root, 'isolated-home');
 const installedCli = await readFile(cli);
 const installedRoot = dirname(dirname(await realpath(cli)));
 const indexBefore = await readFile(join(installedRoot,'dist/web-dist/index.html'));
-const a = join(root, 'project-a'), b = join(root, 'project-b');
+const a = join(root, '项目 project-a'), b = join(root, 'project-b');
 await mkdir(a); await mkdir(b);
 const item = (text) => ({ type:'message', id:'message', role:'assistant', status:'completed', content:[{type:'output_text', text, annotations:[]}] });
 let calls = 0;
 const model = createServer(async (req, res) => {
   let raw=''; for await (const chunk of req) raw += chunk;
   const body=JSON.parse(raw); calls++;
-  const output = body.instructions.includes('Name this conversation') ? [item('项目任务')] : body.input.some(i=>i.type==='function_call_output') ? [item('done')] : [{type:'function_call', id:'tool',call_id:'write-one',name:'write',arguments:JSON.stringify({path:'hello.txt',content:'installed package\n'}),status:'completed'}, {type:'function_call',id:'shell',call_id:'shell-one',name:'bash',arguments:JSON.stringify({command:'pwd > cwd.txt'}),status:'completed'}];
+  const output = body.instructions.includes('Name this conversation') ? [item('项目任务')] : body.input.some(i=>i.type==='function_call_output') ? [item('done')] : [{type:'function_call', id:'tool',call_id:'write-one',name:'write',arguments:JSON.stringify({path:'hello.txt',content:'installed package\n'}),status:'completed'}, {type:'function_call',id:'shell',call_id:'shell-one',name:process.platform === 'win32' ? 'powershell' : 'bash',arguments:JSON.stringify({command:process.platform === 'win32' ? '[System.IO.File]::WriteAllText((Join-Path (Get-Location).Path \"cwd.txt\"), (Get-Location).Path)' : 'pwd > cwd.txt'}),status:'completed'}];
   const events=[{type:'response.created',response:{id:'r',status:'in_progress'}}];
   for (const [index,i] of output.entries()) { events.push({type:'response.output_item.added',output_index:index,item:i},{type:'response.output_item.done',output_index:index,item:i}); }
   events.push({type:'response.completed',response:{id:'r',status:'completed',output,usage:{input_tokens:1,output_tokens:1}}});
@@ -23,7 +23,7 @@ const model = createServer(async (req, res) => {
 });
 model.listen(0,'127.0.0.1'); await once(model,'listening');
 async function start(cwd) {
-  const child=spawn(cli,['web','--home',home,'--port','0'],{cwd,stdio:['ignore','pipe','pipe']});
+  const child=spawn(process.execPath,[cli,'web','--home',home,'--port','0'],{cwd,stdio:['ignore','pipe','pipe']});
   let output='';
   const url=await new Promise((resolve,reject)=>{
     const timer=setTimeout(()=>{child.kill();reject(new Error('Web startup timeout '+output));},15000);
@@ -40,7 +40,10 @@ async function start(cwd) {
 let app;
 try {
   app=await start(a);
-  const html=await (await fetch(app.origin)).text(); const asset=html.match(/src="([^"]+\.js)"/)[1];
+  const page=await fetch(app.origin); if(!page.ok)throw new Error('Homepage rejected');
+  const html=await page.text(); const asset=html.match(/src="([^"]+\.js)"/)[1];
+  const css=html.match(/href="([^"]+\.css)"/)[1];
+  if(!(await fetch(app.origin+css)).ok)throw new Error('Missing CSS');
   if(!(await fetch(app.origin+asset)).ok)throw new Error('Missing installed web asset');
   await app.request('/settings',{kind:'auth',revision:0,apiKey:'synthetic-global-key'});
   await app.request('/settings',{kind:'settings',revision:0,model:'fixture',baseUrl:`http://127.0.0.1:${model.address().port}`});
@@ -52,7 +55,7 @@ try {
   if(!(await readFile(cli)).equals(installedCli)||!(await readFile(join(installedRoot,'dist/web-dist/index.html'))).equals(indexBefore))throw new Error('Installation was modified');
   await app.stop();app=await start(b);
   if((await app.request('/sessions')).sessions.length)throw new Error('Workspace history leaked');
-  await app.stop();const alias=join(root,'alias-a');await symlink(await realpath(a),alias);app=await start(alias);
+  await app.stop();const alias=join(root,'alias-a');await symlink(await realpath(a),alias,process.platform === 'win32' ? 'junction' : 'dir');app=await start(alias);
   if(!(await app.request('/sessions')).sessions.some(x=>x.id===s.id))throw new Error('History not restored');
   if(!(await app.request('/config')).configured)throw new Error('Credentials not persisted');
   console.log(JSON.stringify({globalCli:true,webAssets:true,fileConfiguration:true,workspaceIsolation:true,canonicalPath:true,calls}));

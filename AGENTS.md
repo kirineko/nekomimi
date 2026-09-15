@@ -34,7 +34,7 @@ Journal 是唯一权威历史；模型上下文与最终请求为带来源的投
 1. 更新 `package.json` 和 `package-lock.json` 的版本，确认版本未在官方 npm registry 发布；检查 README、keywords、engines 和发布说明与实际行为一致。
 2. 完成变更相关验证及 `openspec validate --all --strict`，同步主规格并归档已完成变更。运行类型检查、单元测试、浏览器测试、发布检查和安装包验收；凭证及真实模型调用不作为 CI 前提。
 3. 提交并推送代码到 `main`，创建指向该提交的 `vX.Y.Z` 标签并推送。标签必须与包版本一致。
-4. 等待该标签对应的 Linux/macOS × Node.js 22.19.0/24.15.0 四组 CI 全部通过。**Publish 不会自动等待 CI，禁止在确认标签 CI 通过前创建正式 Release。**
+4. 等待该标签对应的 Linux/macOS × Node.js 22.19.0/24.15.0 四组 CI 及 Windows 原生安装检查全部通过。**Publish 不会自动等待 CI，禁止在确认标签 CI 通过前创建正式 Release。**
 5. 创建正式 GitHub Release，等待 `Publish npm` 工作流完成。它检出标签、检查版本与 main 关系、执行测试，并验证和上传同一 tarball；使用 npm Trusted Publishing，不回退长期 NPM_TOKEN。发布工具链使用 Node.js 24，用户最低运行时为 22.19.0。
 6. 从官方 registry 核验版本、keywords、engines、integrity 和来源证明；下载发布包核对完整性，在最低支持的 Node.js 版本完成全局安装与 Web 闭环验收，再记录结果。
 

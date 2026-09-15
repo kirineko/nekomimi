@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
-import { readFile, realpath, rm } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
@@ -20,6 +20,7 @@ import {
   contextPage,
   tracePage,
 } from "./evidence.js";
+import { resolveResource } from "./resource-path.js";
 import { subscribe } from "./stream.js";
 export async function startWeb(
   options: ServiceOptions & { port?: number; staticDir?: string },
@@ -257,7 +258,8 @@ export async function startWeb(
       if (path !== "/" && !/^\/assets\/[a-zA-Z0-9_.-]+$/.test(path))
         throw new ApiError(404, "not_found", "页面不存在");
       const file = join(staticDir, path === "/" ? "index.html" : path.slice(1));
-      if (!(await realpath(file)).startsWith((await realpath(staticDir)) + "/"))
+      const resource = await resolveResource(staticDir, file);
+      if (!resource)
         throw new ApiError(403, "path", "资源路径无效");
       res.setHeader(
         "content-security-policy",
@@ -273,7 +275,7 @@ export async function startWeb(
           } as Record<string, string>
         )[extname(file)] ?? "application/octet-stream",
       );
-      res.end(await readFile(file));
+      res.end(await readFile(resource));
     })().catch((error) => {
       if (res.headersSent) {
         res.destroy();

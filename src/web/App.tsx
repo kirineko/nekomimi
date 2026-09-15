@@ -245,7 +245,7 @@ export function App() {
           </button>
           <div>
             <div className="workspace-name">
-              {config?.workspace.split("/").at(-1) ?? "连接本地服务…"}
+              {config?.workspace.split(/[\\/]/).filter(Boolean).at(-1) ?? "连接本地服务…"}
             </div>
           </div>
           <div className="topbar-actions">

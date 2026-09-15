@@ -261,6 +261,25 @@ test("windows long history and pages context sources beyond a raw artifact page"
     await page.getByRole("button", { name: "加载更早记录" }).click();
     await expect(page.locator(".row")).toHaveCount(count);
   }
+  await page.locator('.conversation').evaluate(el=>{el.scrollTop=50;el.dispatchEvent(new Event('scroll'));});
+  const live = await Journal.open(entry.directory);
+  const updates = (async()=>{
+    try {
+      for(let i=0;i<8;i++) {
+        await live.append('context.add',{items:[{type:'message',role:'assistant',content:[{type:'output_text',text:`持续输出 ${i}`}]}]},{runId:'stream-fixture',attemptId:'stream-fixture'});
+        await delay(60);
+      }
+    } finally { await live.close(); }
+  })();
+  const inputStart = Date.now();
+  await page.getByRole('textbox', {name:'任务内容'}).fill('长历史下的输入响应测试');
+  await expect(page.getByRole('textbox', {name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
+  console.log(`180-row input fill and assertion: ${Date.now()-inputStart}ms`);
+  await updates;
+  await expect(page.locator('.row-assistant')).toContainText('持续输出 7');
+  const distanceFromBottom=await page.locator('.conversation').evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight);
+  expect(distanceFromBottom).toBeGreaterThan(100);
+  await expect(page.getByRole('textbox',{name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
   await page.getByRole("button", { name: "回到最新记录" }).click();
   await expect(page.locator(".row")).toHaveCount(60);
   await page.getByRole("button", { name: "检查调用", exact: false }).click();
@@ -274,4 +293,24 @@ test("windows long history and pages context sources beyond a raw artifact page"
   await expect(
     page.getByRole("button", { name: "返回调用", exact: false }),
   ).toBeVisible();
+});
+
+test('compact layout preserves controls and inspector focus at all target sizes', async ({ page }) => {
+  await page.goto(app.url);
+  await page.getByRole('textbox', {name:'任务内容'}).fill('整理项目结构');
+  await page.getByRole('button', {name:'发送任务'}).click();
+  await expect(page.locator('.conversation-heading')).toContainText('已完成');
+  for (const [width,height] of [[1440,900],[1920,1080],[1280,720],[390,844]]) {
+    await page.setViewportSize({width:width!,height:height!});
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(page.getByRole('textbox',{name:'任务内容'})).toBeInViewport();
+    const trigger=page.getByRole('button',{name:'检查调用',exact:true}).first();
+    await trigger.click();
+    await expect(page.getByRole('button',{name:'关闭检查面板'})).toBeFocused();
+    await expect(page.locator('.inspector')).toBeInViewport();
+    if (process.env.NEKOMIMI_VISUAL_DIR) await page.screenshot({path:join(process.env.NEKOMIMI_VISUAL_DIR,`inspector-${width}.png`)});
+    await page.keyboard.press('Escape');
+    await expect(trigger).toBeFocused();
+    if (process.env.NEKOMIMI_VISUAL_DIR) await page.screenshot({path:join(process.env.NEKOMIMI_VISUAL_DIR,`conversation-${width}.png`)});
+  }
 });

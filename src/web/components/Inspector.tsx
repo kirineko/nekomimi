@@ -1,3 +1,4 @@
+import { useInspectorFocus } from "../hooks/useInspectorFocus";
 import { useEffect, useState } from "react";
 import type { EvidenceRef, TimelineRow } from "../../shared/protocol";
 import { api } from "../api";
@@ -34,6 +35,7 @@ export function Inspector({
   revision: number;
   select: (row: TimelineRow) => void;
 }) {
+  const panel = useInspectorFocus(close);
   const [tab, setTab] = useState("Usage");
   const [events, setEvents] = useState<EventView[]>([]);
   const [ref, setRef] = useState<EvidenceRef>();
@@ -86,7 +88,7 @@ export function Inspector({
   }, [sessionId, row.id, row.modelCallId, row.seq, tab, offset, source]);
   const sourceView = source && events[0];
   return (
-    <aside className="inspector">
+    <aside className="inspector" ref={panel} aria-label="执行追踪">
       <header>
         <div>
           <span className="trace-kicker">Nekomimi</span>
