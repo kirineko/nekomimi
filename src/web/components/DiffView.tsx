@@ -1,3 +1,4 @@
+import { TokenSpans } from "../../presentation/syntax/view";
 import { useEffect, useState } from "react";
 import type { DiffPage } from "../../presentation/diff";
 import { api } from "../api";
@@ -32,7 +33,7 @@ export function DiffView({
       undefined,
       abort.signal,
     )
-      .then(setPage)
+      .then(value => { if (!abort.signal.aborted) setPage(value); })
       .catch((e) => {
         if (!abort.signal.aborted) setError(String(e));
       });
@@ -75,9 +76,9 @@ export function DiffView({
                 <div className={`diff-line ${line.kind}`} key={offset + i}>
                   <span>{line.old}</span>
                   <span>{line.next}</span>
-                  <code>
+                  <code className="syntax">
                     {line.kind === "add" ? "+" : line.kind === "del" ? "−" : " "}{" "}
-                    {line.text}
+                    {line.tokens ? <TokenSpans tokens={line.tokens}/> : line.text}
                     {line.truncated ? " … [长行已截断，原文见附件]" : ""}
                   </code>
                 </div>

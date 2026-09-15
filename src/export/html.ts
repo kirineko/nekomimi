@@ -1,7 +1,14 @@
 import { diffPage } from "../presentation/diff.js";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Markdown } from "../presentation/markdown.js";
+import { markdownHtml } from "../presentation/syntax/markdown.js";
+import { nodeSyntax } from "../presentation/syntax/node.js";
+import { colorDiff } from "../presentation/syntax/diff.js";
+import { fileLanguage, maxSyntaxBytes } from "../presentation/syntax/types.js";
+import { syntaxCss } from "../presentation/syntax/palette.js";
+import { TokenSpans } from "../presentation/syntax/view.js";
+import { randomUUID } from "node:crypto";
+import type { Artifact } from "../journal.js";
 import { toolContent } from "../presentation/content.js";
 import { SessionProjection } from "../projection/session.js";
 import type { SessionSnapshot } from "../journal.js";
@@ -55,8 +62,10 @@ export async function renderSessionHtml(
   );
   let round = 0;
   const navigation: string[] = [];
-  const body = rows
-    .map((row) => {
+  const scope = `export:${randomUUID()}`;
+  const bodies: string[] = [];
+  try {
+  for (const row of rows) {
       let anchor = "";
       if (row.kind === "user") {
         round++;
@@ -79,7 +88,7 @@ export async function renderSessionHtml(
                 : "本轮结束";
       let content = "";
       if (row.kind === "assistant")
-        content = renderToStaticMarkup(h(Markdown, { text: row.text }));
+        content = await markdownHtml(row.text, scope);
       else if (row.kind === "tool") {
         const { input, result, target } = toolContent(row.text);
         content = `<code>${escape(target)}</code><details><summary>调用参数</summary><pre>${escape(input)}</pre></details><details${row.status === "failed" ? " open" : ""}><summary>返回结果 · ${escape(result.slice(0, 100) || "结果未记录，状态未知")}</summary><pre>${escape(result)}</pre></details>`;
@@ -87,12 +96,24 @@ export async function renderSessionHtml(
         if (patch && artifacts.has(patch)) {
           if (row.status === "completed") {
             try {
-              const page = diffPage(
+              let page = diffPage(
                 redact(artifacts.get(patch)!.toString("utf8")),
                 0,
                 Number.MAX_SAFE_INTEGER,
               );
-              content += `<section><strong>+${page.added} −${page.removed}</strong>${page.lines.map((l) => `<pre style="margin:0;background:${l.kind === "add" ? "#edf7ee" : l.kind === "del" ? "#fff0ef" : "transparent"}">${escape(`${l.old ?? ""} ${l.next ?? ""} ${l.kind === "add" ? "+" : l.kind === "del" ? "-" : " "} ${l.text}${l.truncated ? " … [长行已截断，原文见附件]" : ""}`)}</pre>`).join("")}</section>`;
+              const details = row.details as {path?:string;before?:Artifact;after?:Artifact;patch?:Artifact};
+              const language = fileLanguage(details.path ?? target);
+              const source = async (ref?:Artifact) => {
+                if (!ref || ref.redacted || !language || ref.bytes > maxSyntaxBytes) return;
+                const bytes = artifacts.get(ref.sha256);
+                if (!bytes || bytes.length > maxSyntaxBytes) return;
+                try {
+                  const text = redact(new TextDecoder("utf8", {fatal:true,ignoreBOM:true}).decode(bytes));
+                  return await nodeSyntax.run(text,language,scope);
+                } catch { return; }
+              };
+              if (!details.patch?.redacted) page = colorDiff(page, await source(details.before), await source(details.after));
+              content += `<section><strong>+${page.added} −${page.removed}</strong>${page.lines.map((l) => `<pre style="margin:0;background:${l.kind === "add" ? "#edf7ee" : l.kind === "del" ? "#fff0ef" : "transparent"}">${escape(`${l.old ?? ""} ${l.next ?? ""} ${l.kind === "add" ? "+" : l.kind === "del" ? "-" : " "} `)}<code class="syntax">${l.tokens ? renderToStaticMarkup(h(TokenSpans,{tokens:l.tokens})) : escape(l.text)}</code>${l.truncated ? " … [长行已截断，原文见附件]" : ""}</pre>`).join("")}</section>`;
             } catch {
               content += "<p>无法解析 diff，请查看原始证据</p>";
             }
@@ -117,9 +138,10 @@ export async function renderSessionHtml(
         content += `<details><summary>用量与耗时</summary><pre>${escape(redact(JSON.stringify(row.details ?? { status: "统计未提供" }, null, 2)))}</pre></details>`;
       if (row.refs.length)
         content += `<details><summary>原始证据</summary>${row.refs.map((r) => `<a href="#artifact-${r.sha256}">附件 ${r.sha256.slice(0, 10)}</a>`).join(" · ")}</details>`;
-      return `<article class="${row.kind}"${anchor}><header><strong>${escape(label)}</strong><span>${escape(status(row.status))}</span></header>${content}</article>`;
-    })
-    .join("");
+      bodies.push(`<article class="${row.kind}"${anchor}><header><strong>${escape(label)}</strong><span>${escape(status(row.status))}</span></header>${content}</article>`);
+  }
+  } finally { nodeSyntax.clearScope(scope); }
+  const body=bodies.join("");
   const events = snapshot.events
     .slice(0, snapshot.durableSeq)
     .map(
@@ -138,6 +160,6 @@ export async function renderSessionHtml(
       return `<section id="artifact-${digest}"><details><summary>附件 ${digest.slice(0, 12)} · ${bytes.length} bytes</summary><pre>${escape(redact(text))}</pre></details></section>`;
     })
     .join("");
-  return `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${escape(title)} · Nekomimi</title><style>${styles}</style><body><aside><h2>Nekomimi</h2><nav>${navigation.join("")}</nav><a href="#evidence">原始记录与附件</a></aside><main><h1>${escape(title)}</h1><p class="muted">离线阅读副本 · 已脱敏 · 不可用于继续会话</p><p class="muted">持久化水位 ${snapshot.durableSeq} · 尾部异常 ${snapshot.tornBytes} bytes · 未确认事件 ${snapshot.tentativeEvents}</p>${snapshot.pending.length ? `<section class="warning"><h2>未完成操作</h2><pre>${escape(redact(JSON.stringify(snapshot.pending, null, 2)))}</pre></section>` : ""}${body}<section id="evidence"><h2>原始记录与附件</h2><details><summary>Journal 事件</summary>${events}</details>${attachments}</section></main></body></html>`;
+  return `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>${escape(title)} · Nekomimi</title><style>${styles}\n${syntaxCss}</style><body><aside><h2>Nekomimi</h2><nav>${navigation.join("")}</nav><a href="#evidence">原始记录与附件</a></aside><main><h1>${escape(title)}</h1><p class="muted">离线阅读副本 · 已脱敏 · 不可用于继续会话</p><p class="muted">持久化水位 ${snapshot.durableSeq} · 尾部异常 ${snapshot.tornBytes} bytes · 未确认事件 ${snapshot.tentativeEvents}</p>${snapshot.pending.length ? `<section class="warning"><h2>未完成操作</h2><pre>${escape(redact(JSON.stringify(snapshot.pending, null, 2)))}</pre></section>` : ""}${body}<section id="evidence"><h2>原始记录与附件</h2><details><summary>Journal 事件</summary>${events}</details>${attachments}</section></main></body></html>`;
 }
 const styles = `*{box-sizing:border-box}body{margin:0;background:#faf9fc;color:#292532;font:15px/1.7 system-ui;display:grid;grid-template-columns:240px minmax(0,900px);justify-content:center}aside{padding:32px 24px;position:sticky;top:0;height:100vh;overflow:auto;border-right:1px solid #e8e4ee}main{padding:36px;min-width:0}h1{font-size:26px}nav a{display:block;margin:12px 0}a{color:#7054ac;overflow-wrap:anywhere}article{padding:22px;margin:20px 0;border:1px solid #e7e2ed;background:white;border-radius:12px}article header{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}header span,.muted{font-size:12px;color:#797180}.user{background:#f0edf6}.call{font-size:13px;background:transparent}.text,pre{white-space:pre-wrap;overflow-wrap:anywhere}pre{background:#f4f2f7;padding:16px;border-radius:8px;font-size:12px;max-height:600px;overflow:auto}code{overflow-wrap:anywhere}summary{cursor:pointer;padding:8px 0;overflow-wrap:anywhere}.table-scroll{overflow:auto}table{border-collapse:collapse;width:100%}th,td{border:1px solid #e7e2ed;padding:8px;text-align:left}.warning{background:#fff4db;padding:16px}section[id],article[id]{scroll-margin-top:20px}@media(max-width:700px){body{display:block}aside{position:static;height:auto;border-bottom:1px solid #e8e4ee}main{padding:18px}article{padding:16px}}`;

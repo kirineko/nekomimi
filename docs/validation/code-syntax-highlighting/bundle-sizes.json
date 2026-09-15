@@ -1,0 +1,47 @@
+[
+  {
+    "file": "bash-CLZ0U2zV.js",
+    "bytes": 41472,
+    "gzipBytes": 6085
+  },
+  {
+    "file": "diff-woXpYk--.js",
+    "bytes": 2562,
+    "gzipBytes": 687
+  },
+  {
+    "file": "index-0XRBPNZw.js",
+    "bytes": 429445,
+    "gzipBytes": 130090
+  },
+  {
+    "file": "javascript-BgS3c2Ky.js",
+    "bytes": 174820,
+    "gzipBytes": 16505
+  },
+  {
+    "file": "json-qhed-kSA.js",
+    "bytes": 2817,
+    "gzipBytes": 772
+  },
+  {
+    "file": "python-gzcpVVnB.js",
+    "bytes": 69945,
+    "gzipBytes": 9124
+  },
+  {
+    "file": "syntax-worker-BYves5tC.js",
+    "bytes": 175303,
+    "gzipBytes": 56254
+  },
+  {
+    "file": "tsx-udAQXfEw.js",
+    "bytes": 175529,
+    "gzipBytes": 16499
+  },
+  {
+    "file": "typescript-bsJCZSQ-.js",
+    "bytes": 181073,
+    "gzipBytes": 16032
+  }
+]

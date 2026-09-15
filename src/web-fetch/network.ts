@@ -3,7 +3,8 @@ import type { LookupAddress } from "node:dns";
 import type { LookupFunction } from "node:net";
 import { isIP } from "node:net";
 import ipaddr from "ipaddr.js";
-import { Agent, fetch as httpFetch } from "undici";
+import { Agent, ProxyAgent, fetch as httpFetch, type Dispatcher } from "undici";
+import { FetchPolicyError } from "./proxy.js";
 
 export interface FetchResponse {
   status: number;
@@ -52,14 +53,20 @@ export function withSignal<T>(promise: Promise<T>, signal: AbortSignal): Promise
     promise.then(resolve, reject).finally(() => signal.removeEventListener("abort", abort));
   });
 }
+export function validateTargetName(url: URL) {
+  const host = url.hostname.replace(/^\[|\]$/g, "").replace(/\.$/, "").toLowerCase();
+  if (isIP(host) ? !publicAddress(host) : !host.includes(".") || host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local"))
+    throw new FetchPolicyError("NON_PUBLIC_ADDRESS", "禁止抓取非公开网络地址");
+}
 export async function resolveTarget(url: URL, network: FetchNetwork, signal: AbortSignal) {
   signal.throwIfAborted();
+  validateTargetName(url);
   const hostname = url.hostname.replace(/^\[|\]$/g, "");
   const family = isIP(hostname);
   const addresses = family ? [{ address: hostname, family }] : await withSignal(network.resolve(hostname), signal);
   signal.throwIfAborted();
   if (!addresses.length || addresses.some(a => isIP(a.address) !== a.family || !publicAddress(a.address)))
-    throw new Error("禁止抓取非公开网络地址");
+    throw new FetchPolicyError("NON_PUBLIC_ADDRESS", "禁止抓取非公开网络地址；域名可能被 Fake-IP DNS 映射，请检查已启用的 HTTP(S) 代理");
   return addresses;
 }
 export function pinnedLookup(addresses: LookupAddress[]): LookupFunction {
@@ -71,22 +78,39 @@ export function pinnedLookup(addresses: LookupAddress[]): LookupFunction {
     else callback(null, eligible[0]!.address, eligible[0]!.family);
   };
 }
+export const browserHeaders = {
+  "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+  accept: "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
+  "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
+  "accept-encoding": "gzip, deflate",
+  "sec-fetch-site": "none", "sec-fetch-mode": "navigate", "sec-fetch-dest": "document",
+};
+async function requestWith(dispatcher: Dispatcher, url: URL, signal: AbortSignal): Promise<FetchConnection> {
+  try {
+    // Fetch rewrites Sec-Fetch-Mode to cors. Apply the anonymous navigation
+    // headers at the public dispatcher boundary, after Fetch normalization.
+    const transport = dispatcher.compose(dispatch => (opts, handler) => dispatch({ ...opts, headers: browserHeaders }, handler));
+    const response = await httpFetch(url, { method: "GET", redirect: "manual", dispatcher: transport, signal, headers: browserHeaders });
+    return { response, close: async () => { await dispatcher.destroy(); } };
+  } catch (error) { await dispatcher.destroy(); throw error; }
+}
+export async function requestViaProxy(url: URL, proxy: string, signal: AbortSignal): Promise<FetchConnection> {
+  validateTargetName(url);
+  signal.throwIfAborted();
+  try {
+    const address = new URL(proxy);
+    const token = address.username || address.password
+      ? `Basic ${Buffer.from(`${decodeURIComponent(address.username)}:${decodeURIComponent(address.password)}`).toString("base64")}` : undefined;
+    address.username = ""; address.password = "";
+    return await requestWith(new ProxyAgent({ uri: address.href, token }), url, signal);
+  }
+  catch {
+    signal.throwIfAborted();
+    // Never serialize undici causes: they may contain the proxy URI or authentication.
+    throw new FetchPolicyError("PROXY_CONNECTION", "经代理抓取失败，请检查代理连接、认证及目标可达性；未回退直连");
+  }
+}
 export const fetchNetwork: FetchNetwork = {
   resolve: hostname => lookup(hostname, { all: true, verbatim: true }),
-  async request(url, addresses, signal) {
-    // Per-call dispatcher: never inherit proxy credentials or a global DNS override.
-    const dispatcher = new Agent({ connect: { lookup: pinnedLookup(addresses) }, autoSelectFamily: true });
-    try {
-      const response = await httpFetch(url, {
-        method: "GET", redirect: "manual", dispatcher, signal,
-        headers: {
-          "user-agent": "Mozilla/5.0 (compatible; Nekomimi/0.1; web_fetch)",
-          accept: "text/html,application/xhtml+xml,text/plain;q=0.9,application/json;q=0.8,application/xml;q=0.8",
-          "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-          "accept-encoding": "gzip, deflate",
-        },
-      });
-      return { response, close: async () => { await dispatcher.destroy(); } };
-    } catch (error) { await dispatcher.destroy(); throw error; }
-  },
+  request: (url, addresses, signal) => requestWith(new Agent({ connect: { lookup: pinnedLookup(addresses) }, autoSelectFamily: true }), url, signal),
 };

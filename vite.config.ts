@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 export default defineConfig({
   root: "src/web",
+  worker: { format: "es" },
   build: { assetsInlineLimit: 0, outDir: "../../dist/web-dist", emptyOutDir: true },
   server: {
     host: "127.0.0.1",

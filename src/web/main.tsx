@@ -4,3 +4,5 @@ import "./styles.css";
 createRoot(document.getElementById("root")!).render(<App />);
 
 import "./styles/workbench.css";
+
+import "./styles/syntax.css";

@@ -1,5 +1,7 @@
 import { parsePatch } from "diff";
+import type { SyntaxToken } from "./syntax/types.js";
 export interface DiffLine {
+  tokens?: SyntaxToken[];
   kind: "add" | "del" | "context" | "header";
   text: string;
   truncated?: boolean;

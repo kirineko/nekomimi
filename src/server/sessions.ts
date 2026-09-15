@@ -1,3 +1,4 @@
+import { nodeSyntax } from "../presentation/syntax/node.js";
 import { diagnostic, readDiagnostics, saveDiagnostic } from "../diagnostics.js";
 import type { Diagnostic } from "../shared/protocol.js";
 import { ConfigStore } from "../config/store.js";
@@ -143,6 +144,7 @@ export class Sessions {
       try {
         await rename(entry.directory, target);
         this.entries.delete(sessionId);
+        nodeSyntax.clearScope(entry.directory);
         await rm(target, { recursive: true, force: true });
       } finally {
         await release();

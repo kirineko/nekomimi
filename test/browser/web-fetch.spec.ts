@@ -7,8 +7,9 @@ let app: Awaited<ReturnType<typeof startWeb>>;
 let fetches: number;
 let searches: number;
 let inputs: string[];
+let challenge: boolean;
 test.beforeEach(async () => {
-  fetches = 0; searches = 0; inputs = [];
+  fetches = 0; searches = 0; inputs = []; challenge = false;
   let turns = 0;
   app = await startWeb({
     workspace: await temporary(), home: await temporary(), apiKey: key, naming: false,
@@ -18,6 +19,7 @@ test.beforeEach(async () => {
         resolve: async () => [{ address: "93.184.216.34", family: 4 }],
         request: async () => {
           fetches++;
+          if (challenge) return { response: new Response("<html>Just a moment...</html>", { status: 403, headers: { "content-type": "text/html", "cf-mitigated": "challenge" } }), close: async () => {} };
           return { response: new Response('<html><head><title>抓取示例</title><meta name="description" content="这里是网页提供的题目摘要。"></head><body>Loading<script>window.fetchAttack=true</script></body></html>', { headers: { "content-type": "text/html" } }), close: async () => {} };
         },
       } } },
@@ -75,4 +77,22 @@ test("favicon shares the brand resource and search→fetch evidence survives rel
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: "output/playwright/web-fetch-mobile.png", fullPage: true });
   expect(errors).toEqual([]);
+});
+
+test("browser challenge remains a failed fetch after reload", async ({ page }) => {
+  challenge = true;
+  await page.goto(app.url);
+  await page.getByRole("textbox", { name: "任务内容" }).fill("读取网页");
+  await page.getByRole("button", { name: "发送任务" }).click();
+  await expect(page.locator(".conversation-heading")).toContainText("已完成");
+  const summary = page.getByRole("region", { name: "网页读取结果" });
+  await expect(summary).toContainText("读取失败");
+  await expect(summary).toContainText("HTTP 403");
+  const card = page.locator(".row-tool").filter({ has: summary });
+  await expect(card).toContainText("网站要求浏览器验证");
+  expect(inputs.at(-1)).toContain("网站要求浏览器验证");
+  expect(inputs.at(-1)).not.toContain("Just a moment");
+  await page.reload();
+  await expect(card).toContainText("网站要求浏览器验证");
+  expect(fetches).toBe(1);
 });

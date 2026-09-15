@@ -1,3 +1,4 @@
+import { SyntaxScope } from "./components/Markdown";
 import {
   WorkspacePanel,
   LocateFile,
@@ -193,7 +194,7 @@ export function App() {
     }
   };
   return (
-    <LocateFile.Provider value={locateFile}>
+    <SyntaxScope id={selected ?? ""}><LocateFile.Provider value={locateFile}>
       <div className={`app ${panelOpen ? "with-inspector" : ""}`}>
         {settingsOpen && (
           <Settings
@@ -460,6 +461,6 @@ export function App() {
           </WorkspacePanel>
         )}
       </div>
-    </LocateFile.Provider>
+    </LocateFile.Provider></SyntaxScope>
   );
 }

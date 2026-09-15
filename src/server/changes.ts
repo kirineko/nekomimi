@@ -1,3 +1,6 @@
+import { artifactSyntax } from "../presentation/syntax/artifact.js";
+import { fileLanguage } from "../presentation/syntax/types.js";
+import { colorDiff } from "../presentation/syntax/diff.js";
 import { readArtifact, type JournalEvent } from "../journal.js";
 import { diffPage } from "../presentation/diff.js";
 import { ApiError } from "../shared/protocol.js";
@@ -18,6 +21,8 @@ export function fileChanges(events: JournalEvent[]) {
         toolCallId: e.toolCallId,
         path: typeof d?.path === "string" ? d.path : "路径未记录",
         patch: d?.patch,
+        before: d?.before,
+        after: d?.after,
         created: !d?.before,
       };
     });
@@ -53,7 +58,13 @@ export async function changeDiff(
     const text = new TextDecoder("utf8", { fatal: true }).decode(
       await readArtifact(entry.directory, change.patch),
     );
-    return diffPage(text, offset, limit);
+    const page=diffPage(text, offset, limit);
+    const language=fileLanguage(change.path);
+    const [before,after]=await Promise.all([
+      artifactSyntax(entry.directory,change.before,language),
+      artifactSyntax(entry.directory,change.after,language),
+    ]);
+    return colorDiff(page,before,after);
   } catch (e) {
     return {
       lines: [],
