@@ -17,7 +17,7 @@ function invoke(cmd, args, cwd = dir) {
 }
 const packed = process.argv[2] ? { filename: resolve(process.argv[2]) } : JSON.parse(invoke('npm', ['pack', '--json', '--pack-destination', dir], process.cwd()))[0];
 const archive = resolve(dir, packed.filename);
-const listing = invoke('tar', ['-tzf', archive]).trim().split('\n');
+const listing = invoke('tar', ['-tzf', archive]).trim().split(/\r?\n/);
 if (listing.some(p => !/^package\/(dist\/|README.md$|LICENSE$|package.json$)/.test(p))) throw new Error('Unexpected file in release archive');
 if (!listing.includes('package/dist/cli.js') || !listing.includes('package/dist/web-dist/index.html')) throw new Error('Missing release resources');
 await writeFile(join(dir, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
