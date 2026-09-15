@@ -1,3 +1,4 @@
+import { tmpdir } from "node:os";
 import { ConfigStore } from "../dist/config/store.js";
 const userSettings = await new ConfigStore().snapshot();
 import { chromium } from "@playwright/test";
@@ -10,7 +11,7 @@ if (!userSettings.apiKey) {
   console.log("SKIPPED: 请先运行 nekomimi config 或在 Web 保存 API key");
   process.exit(0);
 }
-const workspace = await mkdtemp("/private/tmp/nekomimi-web-live-");
+const workspace = await mkdtemp(join(tmpdir(), "nekomimi-web-live-"));
 const testHome = join(workspace,"test-home");
 const testConfig = new ConfigStore(testHome);
 await testConfig.save("settings",{revision:0,model:userSettings.model,baseUrl:userSettings.baseUrl});

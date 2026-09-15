@@ -1,3 +1,4 @@
+import { tmpdir } from "node:os";
 import { ConfigStore } from "../dist/config/store.js";
 const userSettings = await new ConfigStore().snapshot();
 import { png } from './image-fixture.mjs';
@@ -5,7 +6,7 @@ import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { run, readSession, exportSession } from '../dist/index.js';
 if (!userSettings.apiKey) { console.log('SKIPPED: 请先运行 nekomimi config 或在 Web 保存 API key'); process.exit(0); }
-const workspace = await mkdtemp('/private/tmp/nekomimi-live-');
+const workspace = await mkdtemp(join(tmpdir(), "nekomimi-live-"));
 await writeFile(join(workspace, 'source.txt'), 'synthetic violet 42\n');
 const settings = { workspace, session: join(workspace, 'session'), ...userSettings, apiKey: userSettings.apiKey, maxOutputTokens: 2048, maxTurns: 5, timeoutMs: 90000, tools: ['read', 'write'] };
 const first = await run({ ...settings, prompt: 'Read source.txt using read, then write its exact content to copied.txt using write, then say done. These are synthetic test files.' });

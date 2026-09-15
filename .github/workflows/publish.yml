@@ -1,0 +1,48 @@
+name: Publish npm
+on:
+  release:
+    types: [published]
+permissions:
+  contents: read
+concurrency:
+  group: npm-nekomimi-publish
+  cancel-in-progress: false
+jobs:
+  bootstrap:
+    if: vars.NPM_TRUSTED_PUBLISHING_READY != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Automatic upload disabled. Complete the first interactive publication and npm trusted publisher setup.' >> "$GITHUB_STEP_SUMMARY"
+  publish:
+    if: vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && !github.event.release.prerelease && !github.event.release.draft
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.15.0'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm install -g npm@11.12.1
+      - run: node scripts/release-check.mjs
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+      - run: npm ci
+      - run: npm run test:release
+      - run: npx playwright install --with-deps chrome
+      - run: npm run typecheck && npm test && npm run test:browser
+      - run: npx --yes @fission-ai/openspec@1.12.0 validate --all --strict
+      - name: Build the release archive once
+        run: npm pack --json --pack-destination "$RUNNER_TEMP" > "$RUNNER_TEMP/pack.json"
+      - name: Verify and publish the same archive
+        run: |
+          archive=$(node -e 'const fs=require("fs"); const p=JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP+"/pack.json")); process.stdout.write(process.env.RUNNER_TEMP+"/"+p[0].filename)')
+          node scripts/pack-smoke.mjs "$archive"
+          npm publish "$archive" --access public
+          node -e 'const fs=require("fs"); const p=JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP+"/pack.json")); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, JSON.stringify({commit:require("child_process").execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim(),package:p[0].id,integrity:p[0].integrity})+"\n")'

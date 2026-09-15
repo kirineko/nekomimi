@@ -1,103 +1,77 @@
 # Nekomimi
 
-基于 pi 低层 Agent 的 TypeScript headless 编程 Agent。第一版提供 DeepSeek Responses 调用、文件与 shell 工具、可恢复的 Journal，以及离线 HTML/诊断包。
+一只住在项目里的编程小助手。用 DeepSeek 阅读代码、修改文件、运行命令，在浏览器中查看回答、文件差异和执行过程。
+
+## 安装
+
+需要 **Node.js 24 或更新版本**（包含 npm）。可从 [Node.js 官网](https://nodejs.org/) 安装。
+
+```sh
+npm install -g nekomimi
+```
 
 ## 开始使用
 
-要求 Node.js 24 或更新版本；当前实测 macOS arm64 + Node 24。
+进入你想处理的项目目录，启动 Nekomimi：
 
 ```sh
-npm ci
-npm run build
-node dist/cli.js config
-node dist/cli.js web --workspace .
-# 安装包的命令为 nekomimi；源码运行使用 node dist/cli.js
-node dist/cli.js run "检查当前项目并总结" --workspace . --json
-# 使用命令输出中的会话目录继续、检查或导出
-node dist/cli.js resume /path/to/session "继续处理" --json
-node dist/cli.js export /path/to/session --format html --output session.html
-node dist/cli.js export /path/to/session --format bundle --output session-bundle
-node dist/cli.js inspect session-bundle
-
+cd /path/to/your-project
+nekomimi web
 ```
 
-`run/resume` 返回最终结构化结果；Ctrl-C 取消当前调用并等待 shell 停止。重复写入同一会话会返回冲突；进程崩溃后锁租约约 10 秒到期。
+打开终端显示的本地链接，在左侧 **设置** 中保存 DeepSeek API key：
 
-`--instructions <文件>` 显式传入项目指导，可重复；每次运行单独指定。`--tools read,edit,write` 限制启用工具；默认另含本机 shell。`--image <图片>` 提供图片输入。`--max-turns` 默认 32，`--max-output-tokens` 默认 4096；默认模型为 `deepseek-flash`。
+1. 登录 [DeepSeek 开放平台](https://platform.deepseek.com/api_keys)，创建 API key。
+2. 将密钥填入 Nekomimi 设置中的输入框，点击 **保存 API key**。
+3. 回到会话，输入任务。例如：`阅读这个项目，介绍它的结构，先不要修改文件。`
 
-文件工具限制在工作区内，修改既有文件前必须读取，外部修改后需重读；edit 仅支持精确匹配。Shell 使用本机权限执行，并不提供操作系统沙箱。默认 Unix 使用 bash（缺失时 sh），Windows 分支使用 PowerShell。
+无需克隆 Nekomimi 源码，也无需配置环境变量。当前版本使用 DeepSeek，Web 暂不提供模型或服务地址切换。
 
-## 证据与恢复
+## 日常使用
 
-- Journal 是唯一权威历史。上下文 revision、原始 response items、实际请求字节/hash、逐次 attempt、原始 SSE、工具参数与结果分别留存。
-- 工具和请求启动前强制落盘；流事件按 100ms 或 64KiB 批量刷盘，附件先于引用落盘。`durableSeq` 表示确认持久化范围，定时阈值不等于延迟保证。
-- 文件附件默认上限 32MiB、shell 输出 64MiB；响应上限 16MiB/10,000 个 SSE 事件，请求上限 32MiB。超限显式失败。慢存储对流读取施加背压，显示订阅只保留最新进度。
-- 恢复隔离尾部不完整记录，报告未知工具结果，不自动重做操作；仅显式 `resume` 发出新请求。回放、导入、导出均不调用模型或执行工具。
-- 完整诊断包包含任务内容，可校验后导入。`--redact <文本>` 生成不可继续的删减包；HTML 默认是转义后的离线阅读视图。脱敏并非自动发现所有隐私内容，分享前应指定需要删除的文本并检查副本。
+- **发送任务**：Enter 发送，Shift+Enter 换行；中文输入法 Enter 选词不会发送。
+- **继续对话**：在同一会话中发送后续要求。首轮完成后，会话会自动命名。
+- **查看改动**：展开工具结果与文件 diff；执行追踪可查看调用详情。
+- **停止任务**：点击“停止任务”。关闭浏览器不会自动取消任务。
+- **删除会话**：侧栏“•••”中选择删除，再确认。只删除会话记录，保留项目文件。
+- **导出**：可导出离线 HTML；分享前检查内容，并按需填写脱敏文本。
 
-## 验证
+停止服务请回到终端按 Ctrl+C。下次在同一项目目录运行 `nekomimi web`，即可查看此前会话。服务重启后请使用终端新输出的链接。
+
+## 项目与数据
+
+**在哪个目录启动，就处理哪个项目。** 页面只显示当前工作区的会话，切换到另一个项目目录启动时，两边历史分别管理。
+
+文件工具在当前项目范围内读写，命令的初始工作目录也是当前项目。Shell 使用你的系统权限执行，并不是系统沙箱；执行修改任务前，建议先提交或备份重要文件。
+
+配置和会话保存在 `~/.nekomimi/`，按项目路径区分，不写入 Nekomimi 安装目录。API key 保存在本机配置文件中，设置不会回显已保存密钥；无需设置 `DEEPSEEK_API_KEY`。移动项目目录后，会被视为新的工作区。
+
+## 更新与卸载
 
 ```sh
-npm run typecheck
-npm test
-npm run test:live  # 显式联网；有凭证时仅处理临时合成文件
-npm run test:pack  # 临时目录安装本地 tarball，不发布
-openspec validate --all --strict
+npm install -g nekomimi@latest
 ```
 
-实测结果、capability 对照及限制见 [应用验收报告](docs/implementation-validation.md)。Windows 的终止/目录持久化行为尚未实机验收；跨进程恶意文件替换不具备内核级原子 compare-and-swap 保证。长会话回放目前一次读取 Journal，不提供无限历史的常数内存保证。
-
-## OpenSpec 与研究
-
-- [原始研究](spec.md)
-- [依赖与协议选型验证](docs/validation/2026-09-15/README.md)
-- [核心提案（已归档）](openspec/changes/archive/2026-09-15-establish-observable-headless-core/proposal.md)
-- [设计](openspec/changes/archive/2026-09-15-establish-observable-headless-core/design.md)
-- [任务清单](openspec/changes/archive/2026-09-15-establish-observable-headless-core/tasks.md)
-
-参考仓库保存在 gitignored 的 `reference/`。本版包含 headless 核心、本地 Web MVP 和可读执行追踪。TUI、MCP、Skills、压缩、子代理仍属后续范围。三个已完成变更已归档，能力契约见 `openspec/specs/`。
-
-## Web MVP
+更新前先停止正在运行的服务。
 
 ```sh
-npm ci
-npm run build
-npm run web -- --workspace /path/to/project
+npm uninstall -g nekomimi
 ```
 
-打开终端打印的本地入口。首次连接交换授权后地址中的令牌会清除；同源 HttpOnly 会话 cookie 支持刷新和新窗口，服务重启后重新打开终端入口即可。服务只监听回环地址，API key 保留在服务端。
+卸载不会删除项目文件或 `~/.nekomimi/` 中的配置和历史。
 
-界面提供会话列表、任务时间线、流式回复、工具参数/结果与文件 diff。点击调用卡片可查看总览、指令、输入、请求和响应；上下文来源支持跳转到原始记录。任务可取消、在终态后继续。浏览器关闭或断线不取消已接受任务；重连只恢复显示。
+## 常见问题
 
-单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。CLI 与 Web 共用 `~/.nekomimi/workspaces/<工作区摘要>/sessions/`。旧 `.harness/sessions/` 和 `~/.deepy-harness/sessions/` 可通过 `nekomimi migrate --execute` 显式复制迁移，原件保留。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `nekomimi inspect <目录>` 检查。运行中需要等待停止后再导出。
+**找不到 nekomimi 命令？** 检查 `node --version` 和 `npm --version`，重新打开终端，并确认 npm 全局可执行目录已加入 PATH。安装权限问题可参考 [npm 官方说明](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally/)。
 
-```sh
-npm run test:browser   # 本机 Chrome 的端到端测试
-npm run test:web-live  # 显式联网的浏览器合成任务验收
-```
+**提示未配置或认证失败？** 在设置中保存或替换有效的 DeepSeek API key，并检查开放平台账户状态。
 
-开发时先以固定端口启动本地服务，端口为 3000，使用 `npm run dev:web` 的 API 代理；生产验收使用打包静态资源。同一工作区服务崩溃后需等待约 10 秒租约过期。
+**无法打开页面或提示未授权？** 使用终端打印的完整链接。需要换端口时运行 `nekomimi web --port 3001`。
 
-[Web 验收报告](docs/web-mvp-validation.md) · [源码模块说明](src/README.md)
+**提示工作区正在使用？** 同一工作区只运行一个服务或任务实例。停止旧实例后重试；异常退出后可能需要等待锁租约过期。
 
-## 仓库目录
+**支持哪些系统？** 当前已在 macOS 验收；Linux 验收由发布 CI 执行，发布前需确认结果。Windows 尚未完成完整验收。
 
-| 路径 | 内容 |
-| --- | --- |
-| `src/` | 核心运行时、服务端、协议、投影和 Web 组件，详见源码模块说明 |
-| `test/` | 单元、集成与浏览器回归测试 |
-| `scripts/` | 显式运行的真实调用及安装包验证脚本 |
-| `docs/` | [文字文档与验收索引](docs/README.md)，含历史协议研究数据 |
-| `openspec/specs/` | 已交付能力契约 |
-| `openspec/changes/` | 活动变更及 `archive/` 历史归档 |
-| `reference/` | 本地参考仓库，不纳入版本控制 |
+## 开发与文档
 
-`dist/`、`node_modules/`、`test-results/`、`playwright-report/` 和 `.harness/` 为本地生成目录。截图放在测试产物或系统临时目录；仓库保留文字验收结论。
-
-## 配置与会话管理
-
-品牌与安装命令已更名为 Nekomimi / `nekomimi`。设置和凭证分别保存在 `~/.nekomimi/settings.json`、`auth.json`，不读取 API key 环境变量或 dotenv。启动后可从侧栏“设置”保存、替换或清除密钥；已保存的密钥不回显。CLI 使用 `nekomimi config`，`--home <目录>` 显式隔离配置和数据。文件凭证使用本地用户权限保护，不提供同用户 shell 隔离。
-
-Enter 发送，Shift+Enter 换行，中文选词不触发发送。首条消息提供临时标题，首轮成功后自动命名一次；命名记录作为辅助调用独立可查。会话右侧删除入口只清理会话日志与附件，保留工作区文件；请先停止运行或命名、等待下载结束。
-
-CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 `--execute`。迁移校验日志和附件，不执行模型或工具，不覆盖冲突。配置变更用于下一次运行，当前运行使用捕获的设置。
+开发说明、CLI 高级用法和验收记录见[开发指南](https://github.com/kirineko/nekomimi/blob/main/docs/development.md)与[文档索引](https://github.com/kirineko/nekomimi/blob/main/docs/README.md)。

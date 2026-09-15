@@ -1,7 +1,6 @@
 {
   "name": "nekomimi",
   "version": "0.1.0",
-  "private": true,
   "description": "Observable local coding agent with a durable request and tool journal",
   "type": "module",
   "engines": {
@@ -18,7 +17,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && vite build",
@@ -29,7 +29,8 @@
     "dev:web": "vite",
     "test:browser": "npm run build && playwright test",
     "web": "node dist/cli.js web",
-    "test:web-live": "npm run build && node scripts/web-live-smoke.mjs"
+    "test:web-live": "npm run build && node scripts/web-live-smoke.mjs",
+    "test:release": "node --test scripts/release-check.test.mjs"
   },
   "dependencies": {
     "@earendil-works/pi-agent-core": "0.85.1",
@@ -51,5 +52,19 @@
     "typescript": "5.9.3",
     "vite": "8.3.0",
     "vitest": "4.1.9"
+  },
+  "license": "MIT",
+  "author": "kirineko",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kirineko/nekomimi.git"
+  },
+  "homepage": "https://github.com/kirineko/nekomimi#readme",
+  "bugs": {
+    "url": "https://github.com/kirineko/nekomimi/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

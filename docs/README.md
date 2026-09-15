@@ -1,5 +1,11 @@
 # 文档索引
 
+## 使用与维护
+
+- [开发与高级用法](development.md)
+- [npm 发布手册](releasing.md)
+- [首版发布准备验收](release-preparation-validation.md)
+
 ## 实现与验收
 
 - [Nekomimi 本地会话体验验收](local-experience-validation.md)：文件配置、迁移、命名、删除、输入和离线导出。
