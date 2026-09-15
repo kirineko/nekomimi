@@ -35,7 +35,11 @@ async function start(cwd) {
   return { async request(path,body) {
     const r=await fetch(endpoint.origin+'/api/v1'+path,{method:body===undefined?'GET':'POST',headers:{authorization:`Bearer ${token}`,origin:endpoint.origin,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});
     if(!r.ok)throw new Error(await r.text()); return r.json();
-  }, async stop(){if(child.exitCode!==null||child.signalCode!==null)return;const done=once(child,'exit');child.kill('SIGTERM');await done;}, origin:endpoint.origin };
+  }, async stop(){if(child.exitCode!==null||child.signalCode!==null)return;const done=once(child,'exit');child.kill('SIGTERM');await done;
+    // Windows kill forcibly terminates Node without running SIGTERM cleanup.
+    // Allow the service's 10-second writer lease to expire before reopening it.
+    if(process.platform === 'win32')await new Promise(resolve=>setTimeout(resolve,11000));
+  }, origin:endpoint.origin };
 }
 let app;
 try {
