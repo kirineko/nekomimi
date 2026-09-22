@@ -12,7 +12,7 @@ import type { BuiltPanel } from "./panel-build.js";
 import { Workflows } from "./workflows.js";
 import ts from "typescript";
 import { createRequire } from "node:module";
-import { join, dirname } from "node:path";
+import { join, dirname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hash, id } from "../journal.js";
 import {
@@ -119,7 +119,7 @@ export async function validateExtension(r: Resource): Promise<string[]> {
               rel + ".ts",
               rel.replace(/\.js$/, ".ts"),
               join(rel, "index.ts"),
-            ].some((p) => r.files![p] !== undefined)
+            ].some((p) => r.files![p.split(sep).join("/")] !== undefined)
           )
             throw new Error("Local import missing");
         } else require.resolve(imp.fileName);
@@ -354,7 +354,7 @@ export class CustomizationHost {
         failures.push(err);
       }
     if (failures.length)
-      throw new Error("Extension cleanup failed; restart required");
+      throw new AggregateError(failures, `Extension cleanup failed; restart required: ${failures.map(String).join("; ")}`);
   }
   async trial(resourceId: string, candidate?: Resource) {
     if (this.busy || this.active)

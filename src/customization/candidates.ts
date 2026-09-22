@@ -24,6 +24,7 @@ export interface ActiveCandidate {
 interface Pointer { version: 1; revision: number; entries: Record<string, ActiveCandidate> }
 const validName = (name: string) => /^[a-z][a-z0-9-]{0,47}$/.test(name);
 export async function snapshotFiles(root: string): Promise<Record<string, string>> {
+  root = realpathSync.native(root);
   const files: Record<string, string> = {};
   let bytes = 0;
   const walk = async (directory: string, depth: number) => {
@@ -39,7 +40,7 @@ export async function snapshotFiles(root: string): Promise<Record<string, string
         const text = await readFile(path, "utf8");
         bytes += Buffer.byteLength(text);
         if (bytes > LIMITS.package || Object.keys(files).length >= 256) throw new Error("Candidate package limit");
-        files[relative(root, path)] = text;
+        files[relative(root, path).split('\\').join('/')] = text;
       }
     }
   };
@@ -51,7 +52,7 @@ export async function snapshotFiles(root: string): Promise<Record<string, string
 export class Candidates {
   readonly base: string;
   constructor(readonly workspace: string, private fault?: (phase: string) => Promise<void>) {
-    this.workspace = realpathSync(workspace);
+    this.workspace = realpathSync.native(workspace);
     this.base = join(this.workspace, ".nekomimi");
   }
   private resource(name: string, root: string, files: Record<string, string>): Resource {

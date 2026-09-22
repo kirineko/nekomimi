@@ -105,10 +105,10 @@ export class Resources {
     readonly workspace: string,
     home?: string,
   ) {
-    this.workspace = realpathSync(workspace);
+    this.workspace = realpathSync.native(workspace);
     const configuredHome = userHome(home);
     this.home = existsSync(configuredHome)
-      ? realpathSync(configuredHome)
+      ? realpathSync.native(configuredHome)
       : configuredHome;
     this.decisionsPath = join(
       this.home,
@@ -275,7 +275,7 @@ export class Resources {
                     Object.keys(files).length >= 256
                   )
                     throw new Error("Extension package limit");
-                  files[relative(directory, target)] = value;
+                  files[relative(directory, target).split(sep).join("/")] = value;
                 }
               }
             };

@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { execFileSync } from "node:child_process";
 import { CustomizationHost } from "../src/customization/host.js";
 import { run } from "../src/runtime.js";
 import { readSession } from "../src/journal.js";
@@ -124,6 +125,12 @@ it('kills and confirms a native process tree including a descendant that ignores
     await expect.poll(()=>readFile(join(f.workspace,'descendant.pid'),'utf8').catch(()=>''),{timeout:5000}).not.toBe('');
     const descendant=Number(await readFile(join(f.workspace,'descendant.pid'),'utf8'));controller.abort();
     expect((await task).status).toBe('cancelled');
-    expect(()=>process.kill(descendant,0)).toThrow();
+    if (process.platform === 'win32') expect(()=>process.kill(descendant,0)).toThrow();
+    else {
+      let state='';
+      try {state=execFileSync('ps',['-p',String(descendant),'-o','stat='],{encoding:'utf8'}).trim();}
+      catch(error) {if((error as {status?:number}).status!==1)throw error;}
+      expect(state === '' || state.startsWith('Z')).toBe(true);
+    }
   }finally{controller.abort();await f.host.close();}
 },15000);

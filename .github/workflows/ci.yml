@@ -25,6 +25,11 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run test:browser
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: browser-${{ matrix.os }}-${{ matrix.node }}
+          path: test-results
       - run: npm run test:pack
       - run: npx --yes @fission-ai/openspec@1.12.0 validate --all --strict
 
@@ -45,3 +50,8 @@ jobs:
       - run: npx vitest run test/customization-process.test.ts test/customization-mcp.test.ts test/customization-package-source.test.ts
       - run: npx playwright install chrome
       - run: npx playwright test test/browser/customization.spec.ts
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: browser-windows
+          path: test-results

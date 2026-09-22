@@ -251,6 +251,7 @@ test('isolates custom panels, preserves host controls, and rejects conflicting w
       const flow=await tab.getByLabel('关联工作流').locator('option').nth(1).getAttribute('value');await tab.getByLabel('关联工作流').selectOption(flow!);await tab.getByRole('button',{name:'打开面板',exact:true}).click();
       await expect(tab.frameLocator('iframe').getByText('Alpha',{exact:true})).toBeVisible();
     }
+    await page.bringToFront();
     await page.getByLabel('面板主题').selectOption('dark');
     await expect(page.frameLocator('iframe').getByText('Alpha',{exact:true})).toBeVisible();
     await expect.poll(async()=>page.frames().find(f=>f.parentFrame())?.evaluate(()=>getComputedStyle(document.body).backgroundColor)).toBe('rgb(17, 17, 17)');
@@ -260,12 +261,14 @@ test('isolates custom panels, preserves host controls, and rejects conflicting w
     expect(await frame.evaluate(async()=>{try{await fetch('/api/v1/config');return 'allowed';}catch{return 'blocked';}})).toBe('blocked');
     await page.frameLocator('iframe').getByLabel('筛选审查项').fill('Beta');await expect(page.frameLocator('iframe').getByText('Alpha',{exact:true})).toHaveCount(0);
     await page.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(page.frameLocator('iframe').locator('p')).toContainText('ready');
+    await other.bringToFront();
     await other.frameLocator('iframe').getByLabel('审查决定').selectOption('reject');
     await other.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(other.frameLocator('iframe').locator('p')).toContainText('冲突');
     await other.frameLocator('iframe').getByLabel('审查决定').selectOption('approve');
     // Same answer from the stale second window is idempotent and does not advance the step.
     await other.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(other.frameLocator('iframe').locator('p')).toContainText('ready');
     await expect(page.getByRole('article',{name:'工作流 panel-review'})).toContainText('可继续');
+    await page.bringToFront();
     await frame.evaluate(()=>window.dispatchEvent(new ErrorEvent('error',{message:'fixture crash'})));
     await expect(page.getByRole('region',{name:'自定义面板 review-panel'})).toContainText('组件运行失败');await expect(page.locator('iframe')).toHaveCount(0);
     await expect(page.getByRole('button',{name:'关闭定制能力'})).toBeVisible();await expect(page.getByRole('button',{name:'取消工作流'})).toBeVisible();
@@ -276,6 +279,7 @@ test('isolates custom panels, preserves host controls, and rejects conflicting w
     await previewFrame.evaluate(url=>{location.href=url;},app.origin+'/api/v1/config');
     await expect(page.locator('iframe')).toHaveCount(0);expect(configResponses).toBe(0);expect(page.url()).toBe(app.origin+'/');
     await page.getByRole('button',{name:'取消工作流'}).click();await expect(page.getByRole('article',{name:'工作流 panel-review'})).toContainText('已取消');
+    await other.bringToFront();
     await other.frameLocator('iframe').getByRole('button',{name:'确认审查'}).evaluate(button=>(button as HTMLButtonElement).disabled=false);
     await other.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(other.getByRole('article',{name:'工作流 panel-review'})).toContainText('已取消');
     const stale=other.frames().find(f=>f.parentFrame())!;await stale.evaluate(()=>{(window as any).fixturePort.postMessage({kind:'request',version:1,instanceId:(window as any).fixtureInstance,id:999,action:'workflow.state',value:'x'.repeat(40000)});});

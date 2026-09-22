@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { temporary } from "./helpers.js";
 import { Resources } from "../src/customization/resources.js";
 import { checkTypes } from "../src/customization/validation.js";
+import { validateExtension } from "../src/customization/host.js";
 async function resource(source: string) {
   const workspace = await temporary(), home = await temporary();
   const root = join(workspace, ".nekomimi/extensions/check");
@@ -29,4 +30,15 @@ it("checks SDK calls and missing dependencies, and compiles the shipped SDK 1 ex
   expect(missing.diagnostics.some(d => d.stage === "dependency")).toBe(true);
   const example = checkTypes(await resource(await readFile(new URL('../extension-docs/example.ts', import.meta.url), 'utf8')));
   expect(example.diagnostics).toEqual([]);
+});
+it("uses portable snapshot keys for nested extension entries and imports", async () => {
+  const r = await resource("export default api=>{};");
+  await mkdir(join(r.root, "nested"));
+  await writeFile(join(r.root, "extension.json"), JSON.stringify({...r.manifest, entry:"nested/main.ts"}));
+  await writeFile(join(r.root, "nested/main.ts"), "import {value} from './value.js'; export default api=>{void value;};");
+  await writeFile(join(r.root, "nested/value.ts"), "export const value=1;");
+  const discovered = (await new Resources(join(r.root, "../../.."), await temporary()).discover()).find(item=>item.kind === "extension")!;
+  expect(discovered.error).toBeUndefined();
+  expect(discovered.files).toHaveProperty("nested/main.ts");
+  expect(await validateExtension(discovered)).toEqual([]);
 });

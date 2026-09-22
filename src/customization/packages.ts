@@ -15,6 +15,7 @@ import { checkTypes } from "./validation.js";
 export interface PackageCandidate extends PackageLock {}
 interface PackagePointer { version: 1; revision: number; entries: Record<string, PackageCandidate> }
 async function treeFiles(root: string): Promise<Record<string, string>> {
+  root = await realpath(root);
   const files: Record<string, string> = {};
   let size = 0;
   const walk = async (directory: string, depth: number) => {
@@ -40,8 +41,8 @@ function sourceIdentity(source: PackageSource) {
 }
 export class Packages {
   constructor(readonly workspace: string, readonly home = userHome()) {
-    this.workspace = realpathSync(workspace);
-    this.home = existsSync(home) ? realpathSync(home) : resolve(home);
+    this.workspace = realpathSync.native(workspace);
+    this.home = existsSync(home) ? realpathSync.native(home) : resolve(home);
   }
   private base(scope: "project" | "user") { return scope === "project" ? join(this.workspace, ".nekomimi") : this.home; }
   private identity(candidate: Pick<PackageCandidate, "scope" | "manifest" | "source">, resource: string, revision: string) {

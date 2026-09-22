@@ -229,6 +229,15 @@ export class ExtensionProcess {
         try { process.kill(-this.child.pid, 0); }
         catch (error) { if ((error as NodeJS.ErrnoException).code === "ESRCH") alive = false; else throw error; }
         if (!alive) break;
+        // kill(0) also sees zombies awaiting reaping by the OS. They have exited
+        // and cannot execute; only a non-zombie member leaves cleanup unfinished.
+        const states = await new Promise<string>((resolve, reject) => {
+          execFile("ps", ["-axo", "pgid=,stat="], { timeout: PROCESS_LIMITS.exitMs, maxBuffer: 1024 * 1024 }, (error, stdout) => error ? reject(error) : resolve(stdout));
+        });
+        if (!states.split("\n").some(line => {
+          const [group, state] = line.trim().split(/\s+/);
+          return Number(group) === this.child.pid && state && !state.startsWith("Z");
+        })) break;
         if (Date.now() >= deadline) throw new Error("Extension cleanup failed; process group exit unconfirmed");
         await new Promise(resolve => setTimeout(resolve, 25));
       }
