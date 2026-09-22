@@ -53,11 +53,9 @@ await writeFile(
 let host = new CustomizationHost(workspace, home);
 try {
   const resources = await host.catalog.discover();
-  if (
-    (await validateExtension(resources.find((r) => r.kind === "extension")))
-      .length !== 0
-  )
-    throw Error("Invalid installed fixture");
+  const diagnostics = await validateExtension(resources.find((r) => r.kind === "extension"));
+  if (diagnostics.length !== 0)
+    throw Error(`Invalid installed fixture:\n${diagnostics.join("\n")}`);
   for (const r of resources.filter((r) =>
     ["extension", "mcp"].includes(r.kind),
   ))
