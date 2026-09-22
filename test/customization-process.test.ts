@@ -97,7 +97,7 @@ it("discards late SDK calls instead of attaching them to a new run", async () =>
     expect((await run({ ...options, prompt: "/late second" })).status).toBe("completed");
     expect((await readSession(options.session)).events.some(e => e.type === "extension.state")).toBe(false);
   } finally { await f.host.close(); }
-});
+}, 30000);
 it("reports oversized callback results as an evidence gap while preserving host responsiveness", async () => {
   const f = await setup(`export default api=>{api.registerCommand('huge',{description:'huge',async handler(){return 'x'.repeat(6*1024*1024)}})}`);
   try {

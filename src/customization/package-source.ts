@@ -47,7 +47,9 @@ export async function unpack(bytes: Buffer, destination: string, signal?: AbortS
     const parser = list({ strict: true, onReadEntry(entry) {
       const path = entry.path.replace(/\/$/, "");
       const parts = path.split("/");
-      if (!path || path.includes("\\") || isAbsolute(path) || parts[0] !== "package" || parts.some(p => !p || p === "." || p === ".." || /[:\x00-\x1f]/.test(p) || /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(p))) invalid = "Unsafe archive path";
+      // tar normalizes backslashes on Windows before exposing entry.path.
+      // Check its unnormalized header too, so rejection is platform independent.
+      if (entry.header.path?.includes("\\") || !path || path.includes("\\") || isAbsolute(path) || parts[0] !== "package" || parts.some(p => !p || p === "." || p === ".." || /[:\x00-\x1f]/.test(p) || /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(p))) invalid = "Unsafe archive path";
       if (!["File", "Directory", "OldFile"].includes(entry.type)) invalid = "Archive links and special files are not supported";
       if (entry.size > PACKAGE_LIMITS.file || ++count > PACKAGE_LIMITS.files || (size += entry.size) > PACKAGE_LIMITS.expanded) invalid = "Archive content limit";
       const key = path.normalize("NFC").toLowerCase();

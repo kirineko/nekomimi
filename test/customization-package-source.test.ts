@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { mkdir, writeFile, readFile, symlink, rm } from "node:fs/promises";
+import { mkdir, writeFile, readFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { createHash, randomBytes } from "node:crypto";
 import { createServer } from "node:http";
@@ -26,11 +26,10 @@ it("rejects traversal, absolute paths and links before extracting any files", as
   for (const path of ["package/../../escape", "/package/escape", "package/C:evil", "package/a\\b"]) {
     const header = new Header({ path, type: "File", size: 0 }); header.encode();
     const bytes = Buffer.concat([header.block!, Buffer.alloc(1024)]);
-    await expect(unpack(bytes, join(await temporary(), "out"))).rejects.toThrow("Unsafe archive path");
+    await expect(unpack(bytes, join(await temporary(), "out")), path).rejects.toThrow("Unsafe archive path");
   }
-  const root = await temporary(); await mkdir(join(root, "package")); await symlink("../../elsewhere", join(root, "package/link"));
-  const path = join(root, "links.tgz"); await create({ cwd: root, file: path, gzip: true }, ["package"]);
-  await expect(unpack(await readFile(path), join(root, "out"))).rejects.toThrow("links");
+  const link = new Header({path:"package/link", type:"SymbolicLink", linkpath:"../../elsewhere", size:0}); link.encode();
+  await expect(unpack(Buffer.concat([link.block!, Buffer.alloc(1024)]), join(await temporary(), "out"))).rejects.toThrow("links");
 });
 it("resolves a registry tag to a fixed version and verifies bytes without running lifecycle scripts", async () => {
   const bytes = await archive({ "package.json": JSON.stringify({ name: "fixture", version: "1.0.0", scripts: { postinstall: "node -e \"throw Error('must not execute')\"" } }), "nekomimi.json": "{}" });
