@@ -125,11 +125,12 @@ it('keeps auxiliary and naming profiles separate from the main provider and give
  }finally{await f.host.close();}
 });
 it('cancels an incomplete parser stream without executing tool calls and disposes parser state before the next run',async()=>{
- const f=await fixture('responses'),abort=new AbortController();let dispatched=false;
+ const f=await fixture('responses'),abort=new AbortController();let notifyDispatch!:()=>void;
+ const dispatched=new Promise<void>(resolve=>{notifyDispatch=resolve;});
  try{
   const session=join(f.workspace,'cancel');
-  const pending=run({...f,customization:f.host,apiKey:key,session,prompt:'go',signal:abort.signal,fetch:async()=>{dispatched=true;return new Response(new ReadableStream({start(controller){controller.enqueue(new TextEncoder().encode(JSON.stringify({status:'completed',output:[callItem('write',{path:'must-not-exist',content:'bad'})]})));}}),{headers:{'content-type':'application/json'}});}});
-  await expect.poll(()=>dispatched).toBe(true);abort.abort();const result=await pending;expect(result.status).toBe('cancelled');
+  const pending=run({...f,customization:f.host,apiKey:key,session,prompt:'go',signal:abort.signal,fetch:async()=>{notifyDispatch();return new Response(new ReadableStream({start(controller){controller.enqueue(new TextEncoder().encode(JSON.stringify({status:'completed',output:[callItem('write',{path:'must-not-exist',content:'bad'})]})));}}),{headers:{'content-type':'application/json'}});}});
+  await Promise.race([dispatched,pending.then(result=>{throw new Error(`Run ended before transport dispatch: ${result.status} ${result.error??''}`);})]);abort.abort();const result=await pending;expect(result.status).toBe('cancelled');
   expect((await readSession(session)).events.some(e=>e.type==='tool.intent')).toBe(false);
   const next=await run({...f,customization:f.host,apiKey:key,session:join(f.workspace,'next'),prompt:'retry explicitly',fetch:async()=>response([textItem('Clean parser')])});expect(next.text).toBe('Clean parser');
  }finally{abort.abort();await f.host.close();}
