@@ -9,6 +9,7 @@ export interface ToolDefinition {
   tool: AgentTool;
   snippet: string;
   guidance: string[];
+  source?: string;
 }
 export function assemblePrompt(
   tools: ToolDefinition[],
@@ -23,7 +24,7 @@ export function assemblePrompt(
       text: "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
     },
     ...ordered.map((d) => ({
-      source: `tool:${d.tool.name}:v1`,
+      source: d.source ?? `tool:${d.tool.name}:v1`,
       text: `${d.tool.name}: ${d.snippet}`,
     })),
     ...[...new Set(ordered.flatMap((d) => d.guidance))].map((text) => ({

@@ -1,3 +1,11 @@
+import { CustomizationHost, validateExtension } from "../customization/host.js";
+import { Candidates } from "../customization/candidates.js";
+import { packageAction } from "../customization/package-management.js";
+import { ProviderProfiles, type ProviderProfile } from "../customization/provider-profiles.js";
+import { branchHistory } from "../customization/history-branch.js";
+import { checkTypes } from "../customization/validation.js";
+import { Interactions } from "../customization/interactions.js";
+import type { Json } from "../customization/types.js";
 import { nodeSyntax } from "../presentation/syntax/node.js";
 import { diagnostic, readDiagnostics, saveDiagnostic } from "../diagnostics.js";
 import type { Diagnostic } from "../shared/protocol.js";
@@ -64,7 +72,10 @@ interface Active {
   done: Promise<unknown>;
 }
 export class Sessions {
+  private workflowTask?: { id: string; done: Promise<unknown>; error?: string };
   config!: ConfigStore;
+  customization!: CustomizationHost;
+  readonly interactions = new Interactions();
   paths!: Awaited<ReturnType<typeof workspacePaths>>;
   private gate = Promise.resolve();
   naming?: {
@@ -168,6 +179,7 @@ export class Sessions {
     const service = new Sessions(workspace, root, options);
     service.paths = paths;
     service.config = new ConfigStore(paths.home);
+    service.customization = new CustomizationHost(workspace, paths.home);
     service.release = await lockfile.lock(root, {
       stale: options.lockStaleMs ?? 10000,
       retries: 0,
@@ -320,6 +332,7 @@ export class Sessions {
     command: Submit,
   ): Promise<Receipt> {
     this.check();
+    if (this.workflowTask || this.customization.workflows.busy) throw new ApiError(409, 'busy', '工作区已有工作流步骤运行');
     if (this.naming) {
       this.naming.abort.abort(new Error("新任务优先"));
       await this.naming.done;
@@ -358,7 +371,7 @@ export class Sessions {
       throw new ApiError(409, "busy", "工作区已有任务运行，请等待完成或取消");
     }
     const settings = await this.settings();
-    if (!settings.apiKey)
+    if (!settings.apiKey && !(await new ProviderProfiles(this.paths.home).resolve("main")))
       throw new ApiError(422, "missing_key", "请在设置中保存 API key");
     if (this.readers.get(sessionId))
       throw new ApiError(409, "busy", "会话正在下载");
@@ -391,9 +404,12 @@ export class Sessions {
     active.done = run({
       ...this.options.runtime,
       workspace: this.workspace,
+      home: this.paths.home,
+      customization: this.customization,
+      interactions: this.interactions,
       journalOptions: { ...this.options.runtime?.journalOptions, onDiagnostic: receiveDiagnostic },
       session: entry.directory,
-      apiKey: settings.apiKey,
+      apiKey: settings.apiKey ?? "",
       model: settings.model,
       baseUrl: settings.baseUrl,
       search: settings.search,
@@ -427,9 +443,10 @@ export class Sessions {
           this.naming = naming;
           naming.done = nameSession(
             entry.directory,
-            { ...this.options.runtime, ...settings, apiKey: settings.apiKey! },
+            { ...this.options.runtime, ...settings, apiKey: settings.apiKey ?? "" },
             naming.abort.signal,
             { onDiagnostic: receiveDiagnostic, diagnosticRunId: naming.runId },
+            this.customization,
           )
             .catch(async error => { if (!naming.abort.signal.aborted) await reportBackground(error, naming.runId, "background.naming"); })
             .finally(() => {
@@ -460,12 +477,116 @@ export class Sessions {
     }
     return { status: "not_running" };
   }
+  async customizationAction(value: Record<string, unknown>) {
+    return this.exclusive(async () => {
+      this.check();
+      if (value.action === 'user-writes' && typeof value.enabled === 'boolean' && typeof value.revision === 'number') { await this.customization.catalog.allowUserWrites(value.enabled,value.revision); return { status: 'saved' }; }
+      if (value.action === 'candidate-panel-preview') return this.customization.panels.previewCandidate(String(value.id),String(value.contentHash),typeof value.panelId === 'string'?value.panelId:undefined,(value.props ?? {}) as Json,value.authorize===true);
+      if (value.action === 'panel-mount') return this.customization.panels.mount(String(value.resourceId), String(value.panelId), String(value.revision), (value.props ?? {}) as Json, typeof value.workflowId === 'string' ? value.workflowId : undefined, value.preview === true, typeof value.theme === 'string' ? value.theme : undefined);
+      if (value.action === 'panel-action') {
+        try {return await this.customization.panels.action(String(value.instanceId), Number(value.sequence), String(value.method), (value.value ?? null) as Json);}
+        catch(error) {
+          if(/Workflow (revision conflict|answer identity conflict|interaction is not waiting)/.test(String(error))) throw new ApiError(409,'panel_conflict','工作流回答冲突，请刷新权威状态');
+          if(/Panel (authorization revoked|revision no longer active|instance expired|action not authorized)/.test(String(error))) throw new ApiError(403,'panel_permission','面板授权、版本或交互已失效');
+          throw error;
+        }
+      }
+      if (value.action === 'panel-unmount') return this.customization.panels.unmount(String(value.instanceId));
+      if (value.action === 'reload') return this.customization.requestReload();
+      if (typeof value.action === 'string' && value.action.startsWith('workflow-')) {
+        const flows = this.customization.workflows, workflowId = String(value.id ?? '');
+        if (value.action === 'workflow-recover') return flows.recoverWorkflow(workflowId);
+        if (value.action === 'workflow-inspect') return flows.inspect(workflowId);
+        if (value.action === 'workflow-evidence') return flows.evidence(workflowId, Number(value.offset ?? 0));
+        if (value.action === 'workflow-artifact') return flows.artifact(workflowId, String(value.hash ?? ''));
+        if (value.action === 'workflow-cancel') return flows.cancel(workflowId, Number(value.revision));
+        if (this.active || this.naming || this.workflowTask) throw new ApiError(409, 'busy', '请等待当前任务完成或取消');
+        flows.configure({ ...this.options.runtime, ...await this.settings(), apiKey: (await this.settings()).apiKey ?? '' });
+        const start = (workflowId: string, revision: number) => {
+          const task = { id: workflowId, done: Promise.resolve() as Promise<unknown>, error: undefined as string | undefined };
+          this.workflowTask = task;
+          task.done = flows.advance(workflowId, { expectedRevision: revision }).catch(error => { task.error = String(error); }).finally(() => { if (this.workflowTask === task) this.workflowTask = undefined; });
+          return { id: workflowId, status: 'running' };
+        };
+        if (value.action === 'workflow-start') {
+          const activation = await this.customization.acquire();
+          let created;
+          try { created = await flows.create(String(value.resourceId), String(value.definitionId), (value.input ?? {}) as Json, activation, String(value.commandId)); }
+          finally { await this.customization.release(); }
+          return ['queued', 'ready'].includes(created.status) ? start(created.id, created.revision) : created;
+        }
+        if (value.action === 'workflow-resume') return start(workflowId, Number(value.revision));
+        if (value.action === 'workflow-answer') {
+          const ready = await flows.answer(workflowId, String(value.waitId), String(value.commandId), value.answer as Json, Number(value.revision));
+          return value.resume === true && ready.status === 'ready' ? start(workflowId, ready.revision) : ready;
+        }
+        if (value.action === 'workflow-resolve') return flows.resolveUnknown(workflowId, Number(value.revision), value.choice as Parameters<typeof flows.resolveUnknown>[2]);
+        if (value.action === 'workflow-migrate') {
+          const activation = await this.customization.acquire();
+          try { return await flows.migrate(workflowId, Number(value.revision), value.target as Parameters<typeof flows.migrate>[2], activation); }
+          finally { await this.customization.release(); }
+        }
+        throw new ApiError(400, 'workflow', '工作流操作无效');
+      }
+      if (value.action === 'history-branch' && typeof value.sessionId === 'string') {
+        if (this.active || this.naming) throw new ApiError(409, 'busy', '请等待任务完成后创建历史分支');
+        const source = await this.entry(value.sessionId), sessionId = id();
+        await branchHistory(source.directory, join(this.root, sessionId), this.workspace, value.omitReasoning === true);
+        return { sessionId };
+      }
+      if (typeof value.action === 'string' && value.action.startsWith('provider-')) {
+        const profiles = new ProviderProfiles(this.paths.home);
+        if (value.action === 'provider-save' && typeof value.revision === 'number') return profiles.save(value.profile as ProviderProfile, value.revision);
+        if (value.action === 'provider-select' && typeof value.revision === 'number' && ['main', 'auxiliary', 'naming'].includes(String(value.purpose))) return profiles.select(value.purpose as 'main' | 'auxiliary' | 'naming', typeof value.id === 'string' ? value.id : undefined, value.revision);
+        if (value.action === 'provider-credential' && typeof value.ref === 'string' && (typeof value.secret === 'string' || value.secret === null)) { await profiles.saveCredential(value.ref, value.secret); return { status: 'saved' }; }
+        if (value.action === 'provider-migrate' && typeof value.revision === 'number') return profiles.migrateLegacy(value.revision);
+        throw new ApiError(400, 'provider', 'Provider 操作无效');
+      }
+      if (['mcp-authorize', 'mcp-disconnect'].includes(String(value.action))) {
+        const resource = (await this.customization.catalog.discover()).find(r => r.kind === 'mcp' && r.id === value.id);
+        if (!resource) throw new ApiError(400, 'mcp', 'MCP 连接不存在');
+        if (value.action === 'mcp-authorize') return this.customization.oauth.begin(resource);
+        await this.customization.oauth.disconnect(resource);
+        return { status: 'disconnected' };
+      }
+      if (typeof value.action === 'string' && ['package-collect', 'package-list', 'package-inspect', 'package-activate', 'package-rollback', 'package-export', 'package-uninstall'].includes(value.action)) return packageAction(this.customization, { ...value, action: value.action.slice(8) }, { user: true });
+      if (value.action === 'candidate-inspect' && typeof value.id === 'string') return new Candidates(this.customization.catalog.workspace).preview(value.id);
+      if (value.action === 'candidate-activate' && typeof value.id === 'string' && typeof value.contentHash === 'string') return this.customization.requestCandidate(value.id, value.contentHash, value.authorize === true);
+      if (value.action === 'candidate-rollback' && typeof value.name === 'string') return this.customization.requestRollback(value.name, value.authorize === true);
+      if (value.action === 'validate') {
+        const r = (await this.customization.catalog.discover()).find(r => r.id === value.id);
+        if (!r || r.kind !== 'extension') throw new ApiError(400, 'resource', '扩展不存在');
+        return { errors: await validateExtension(r), report: checkTypes(r) };
+      }
+      if (value.action === 'set' && typeof value.id === 'string' && typeof value.enabled === 'boolean' && typeof value.trusted === 'boolean' && typeof value.revision === 'number') {
+        await this.customization.catalog.decide(value.id, value.enabled, value.trusted, value.revision);
+        return this.customization.requestReload();
+      }
+      throw new ApiError(400, 'resource', '资源操作无效');
+    });
+  }
+  async answerInteraction(sessionId: string, value: Record<string, unknown>) {
+    return this.exclusive(async () => {
+      if (typeof value.id !== 'string' || typeof value.commandId !== 'string' || !validId(value.commandId) || value.answer === undefined) throw new ApiError(400,'answer','回答无效');
+      const entry = await this.entry(sessionId);
+      const prior = entry.reader.events.find(e => e.type === 'interaction.answered' && ((e.payload as any).id === value.id || (e.payload as any).commandId === value.commandId));
+      if (prior) {
+        const p = prior.payload as any;
+        if (p.id !== value.id || p.commandId !== value.commandId || p.payloadHash !== hash(JSON.stringify(value.answer))) throw new ApiError(409,'answer_conflict','回答与原提交不同');
+        return { status: 'answered' };
+      }
+      return this.interactions.answer(sessionId,value.id,value.commandId,value.answer as Json);
+    });
+  }
   async close() {
     this.closing = true;
     this.active?.abort.abort(new Error("服务正在停止"));
     await this.active?.done;
     this.naming?.abort.abort(new Error("服务正在停止"));
     await this.naming?.done;
+    const workflowTask = this.workflowTask;
+    if (workflowTask) { await this.customization.workflows.cancel(workflowTask.id, 0); await workflowTask.done; }
+    await this.customization.close();
     await this.release();
   }
 }

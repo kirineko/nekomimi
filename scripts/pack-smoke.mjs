@@ -3,6 +3,7 @@ import { mkdtemp, writeFile, readFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import ts from 'typescript';
 const dir = await mkdtemp(join(tmpdir(), "harness-pack-"));
 function invoke(cmd, args, cwd = dir) {
   console.log(`pack-smoke: ${cmd === 'npm' ? 'npm ' + args[0] : cmd.split(/[\\/]/).at(-1)} ${args.includes('--global') ? '(global)' : ''}`);
@@ -20,7 +21,7 @@ function invoke(cmd, args, cwd = dir) {
 const packed = process.argv[2] ? { filename: resolve(process.argv[2]) } : JSON.parse(invoke('npm', ['pack', '--json', '--pack-destination', dir], process.cwd()))[0];
 const archive = resolve(dir, packed.filename);
 const listing = invoke('tar', ['-tzf', archive]).trim().split(/\r?\n/);
-if (listing.some(p => !/^package\/(dist\/|README.md$|LICENSE$|package.json$)/.test(p))) throw new Error('Unexpected file in release archive');
+if (listing.some(p => !/^package\/(dist\/|extension-docs\/|README.md$|LICENSE$|package.json$)/.test(p))) throw new Error('Unexpected file in release archive');
 if (listing.some(p => /^package\/dist\/web-fetch(?:[/.])/.test(p))) throw new Error('Retired web fetch resources in release archive');
 if (!listing.includes('package/dist/cli.js') || !listing.includes('package/dist/web-dist/index.html')) throw new Error('Missing release resources');
 if (!listing.includes('package/dist/presentation/syntax/node-worker.js') || !listing.some(p => /web-dist\/assets\/syntax-worker-.*\.js$/.test(p))) throw new Error('Missing syntax workers');
@@ -42,4 +43,7 @@ invoke(process.execPath, ['smoke.mjs']);
 JSON.parse(runCli(['replay', join(dir, 'imported')]));
 await writeFile(join(dir, 'web-smoke.mjs'), await readFile(new URL('./pack-web-fixture.mjs', import.meta.url)));
 invoke(process.execPath, ['web-smoke.mjs']);
+await writeFile(join(dir, 'customization-smoke.mjs'), await readFile(new URL('./pack-customization-fixture.mjs', import.meta.url)));
+for(const [source,target] of [['oauth-server','oauth-fixture'],['review-package','review-package-fixture']])await writeFile(join(dir,target+'.mjs'),ts.transpileModule(await readFile(new URL('../test/fixtures/'+source+'.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2023,module:ts.ModuleKind.ESNext}}).outputText);
+console.log(invoke(process.execPath, ['customization-smoke.mjs']).trim());
 console.log(JSON.stringify({ directory: dir, tarball: packed.filename, installed: true, cli: true, offlineExportImport: true, webStaticCommandExport: true }));

@@ -1,5 +1,7 @@
 # Harness 架构与技术选型研究
 
+> **定制能力更新（2026-09-22）**：本地 TS 扩展、Skills、Rules、MCP 工具和声明式 Web UI 已进入 V1 实现与验收，见 [V1 归档](openspec/changes/archive/2026-09-22-enable-user-customization-mvp/proposal.md) 与 [验收记录](docs/customization-v1-validation.md)。V2 已实现 Provider、持久工作流、静态组件 UI、包分发、MCP 内容/OAuth 与进程隔离，并通过部分组合验收；V1 已验收归档，V2 在 `deliver-customization-v2` 中实施，0.2.0 尚未通过完整候选门槛。下文为历史研究，不代表这些未来能力已经交付。
+
 > **验证更新（2026-09-15）**：下文保留原研究，落地以 [验证报告](docs/validation/2026-09-15/README.md) 和 [首阶段 OpenSpec proposal](openspec/changes/establish-observable-headless-core/proposal.md) 为准。已验证 pi 0.85.1 公开低层循环及 Responses 扩展点，首版复用 parser、自有证据层；实测补充 thinking/tool_choice、developer 指令和 reasoning 回传限制。pi edit 的隐式模糊回退不作为本项目默认行为。提示词胜率、产品持久化和跨平台验收仍需后续实现与实验。
 
 ## 1. 决策摘要
@@ -491,3 +493,7 @@ flowchart TB
 - Deepy 压缩与预算
 - Deepy Skill 市场客户端
 - Deepy 子代理定义
+
+## V2 本轮交付状态（2026-09-22）
+
+0.2.0 本地候选已完成 macOS / Node 22.19.0、24.15.0 的安装和完整定制闭环验收。独立扩展进程、能力包、SDK 2、Provider、MCP 内容/OAuth、持久工作流和隔离面板已实现；V1 保持兼容。用户明确暂不验证 Linux、Windows，跨平台门槛和最终归档保留待办，未公开发布。实际范围、完整性和证据见 `docs/customization-v2-validation.md`，不从 macOS 推断其他平台支持已验证。

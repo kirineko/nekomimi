@@ -1,12 +1,19 @@
+import { CustomizationHost } from "./customization/host.js";
+import { CustomRun } from "./customization/run.js";
+import type { Interactions } from "./customization/interactions.js";
 import { Agent } from "@earendil-works/pi-agent-core";
 import type { AssistantMessage, ImageContent } from "@earendil-works/pi-ai";
 import { Journal, id, type JournalOptions } from "./journal.js";
 import { CoreTools, type ToolOptions } from "./tools.js";
-import { ResponsesProvider, type ProviderOptions } from "./provider.js";
+import type { ProviderOptions } from "./provider.js";
+import { createProvider } from "./customization/adapter-provider.js";
 import { assemblePrompt, unpairedCalls, type Instruction } from "./context.js";
 
 export interface RunOptions extends ProviderOptions {
   workspace: string;
+  home?: string;
+  customization?: CustomizationHost;
+  interactions?: Interactions;
   session: string;
   prompt: string;
   instructions?: Instruction[];
@@ -42,11 +49,17 @@ export interface RunResult {
 export async function run(options: RunOptions): Promise<RunResult> {
   if (!options.prompt.trim()) throw new Error("Prompt must not be empty");
   const runId = options.command?.runId ?? id();
-  const journal = await Journal.open(options.session, {
+  const host = options.customization ?? new CustomizationHost(options.workspace, options.home);
+  const activation = await host.acquire();
+  let journal: Journal;
+  try { journal = await Journal.open(options.session, {
     ...options.journalOptions,
     diagnosticRunId: runId,
-    secrets: [...(options.journalOptions?.secrets ?? []), options.apiKey],
-  });
+    secrets: [...(options.journalOptions?.secrets ?? []), options.apiKey, ...activation.mcp.flatMap(m => m.secrets)],
+  }); } catch (e) { await host.release(); if (!options.customization) await host.close(); throw e; }
+  const controller = new AbortController();
+  const runSignal = AbortSignal.any([controller.signal, journal.failure.signal, ...(options.signal ? [options.signal] : [])]);
+  const custom = new CustomRun(host, activation, journal, runId, runSignal, options, options.interactions);
   let agent: Agent | undefined;
   const notify = (() => {
     let pending: { type: string; seq: number; durableSeq: number } | undefined;
@@ -75,6 +88,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
     };
   })();
   try {
+    await host.workflows.recover(journal);
     const tools = await CoreTools.create(
       options.workspace,
       journal,
@@ -145,23 +159,27 @@ export async function run(options: RunOptions): Promise<RunResult> {
         { runId },
       );
     }
-    const definitions = tools
-      .definitions()
-      .filter((d) => !options.tools || options.tools.includes(d.tool.name));
+    await custom.initialize(tools.definitions());
+    const definitions = custom.definitions.filter((d) => !options.tools || options.tools.includes(d.tool.name));
+    custom.definitions.splice(0, custom.definitions.length, ...definitions);
     if (
       options.tools?.some(
         (name) => !definitions.some((d) => d.tool.name === name),
       )
     )
       throw new Error("Unknown tool name");
-    const prompt = assemblePrompt(definitions, options.instructions);
+    const prompt = assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]);
+    const refreshPrompt = () => Object.assign(prompt, assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]));
+    const provider = await createProvider(host, activation, journal, { runId }, prompt, options);
     await journal.append(
       "run.started",
       {
         workspace,
-        model,
-        baseUrl,
+        model: provider.model.id,
+        baseUrl: provider.model.baseUrl,
+        provider: provider.model.provider,
         promptManifest: prompt.fragments,
+        resourceRevision: activation.revision,
         tools: definitions.map((d) => d.tool.name),
       },
       { runId },
@@ -178,7 +196,6 @@ export async function run(options: RunOptions): Promise<RunResult> {
       { source: "user", item: { role: "user", content: input } },
       { runId },
     );
-    const provider = new ResponsesProvider(journal, { runId }, prompt, options);
     let turns = 1;
     agent = new Agent({
       initialState: {
@@ -188,7 +205,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
       },
       streamFn: provider.stream,
       toolExecution: "sequential",
-      beforeToolCall: async ({ assistantMessage }) => {
+      beforeToolCall: async ({ assistantMessage, toolCall }) => {
         journal.check();
         options.signal?.throwIfAborted();
         if (
@@ -200,11 +217,19 @@ export async function run(options: RunOptions): Promise<RunResult> {
             reason: "The response was not completed; tool execution is blocked",
             terminate: true,
           };
+        const reason = await custom.checkRules(toolCall.name, toolCall.arguments) ?? await custom.hook('beforeTool', { tool: toolCall.name, args: toolCall.arguments });
+        refreshPrompt();
+        if (reason) return { block: true, reason };
+      },
+      afterToolCall: async ({ toolCall, result }) => {
+        await custom.hook('afterTool', { tool: toolCall.name, args: toolCall.arguments, result: result as import('./customization/types.js').ToolResult });
+        refreshPrompt(); return undefined;
       },
       prepareNextTurn: async () => {
         journal.check();
         if (++turns > (options.maxTurns ?? 32))
           throw new Error("Run turn limit exceeded");
+        refreshPrompt();
         return undefined;
       },
     });
@@ -251,9 +276,25 @@ export async function run(options: RunOptions): Promise<RunResult> {
         notify(event.type);
     });
     let error: string | undefined;
+    let commandText: string | undefined;
     try {
       options.signal?.throwIfAborted();
-      await agent.prompt(options.prompt, options.images);
+      const reason = await custom.hook('beforeRun');
+      if (reason) throw new Error(reason);
+      const command = await custom.command(options.prompt);
+      refreshPrompt();
+      if (command.handled) {
+        await journal.append('extension.command_result', { text: command.text }, { runId });
+        commandText = command.text;
+      } else await agent.prompt(command.text, options.images);
+      while (custom.followups.length) {
+        runSignal.throwIfAborted();
+        const followup = custom.followups.shift()!;
+        if (++turns > (options.maxTurns ?? 32)) throw new Error('Run turn limit exceeded');
+        await journal.append('context.add', { source: 'extension:follow-up', item: { role: 'user', content: [{ type: 'input_text', text: followup }] } }, { runId });
+        refreshPrompt(); await agent.prompt(followup);
+      }
+      await custom.hook('afterRun');
     } catch (e) {
       error = journal.clean(String(e));
     } finally {
@@ -271,7 +312,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
           ? "incomplete"
           : "failed"
         : provider.lastOutcome;
-    const text =
+    const text = commandText ??
       final?.content
         .filter((c) => c.type === "text")
         .map((c) => c.text)
@@ -283,6 +324,8 @@ export async function run(options: RunOptions): Promise<RunResult> {
         { runId },
       );
     notify("run.finished");
+    if (status === "completed" && !journal.failure.signal.aborted)
+      await host.workflows.observe(journal, activation, "run-completed", undefined, options);
     return {
       session: journal.directory,
       sessionId: journal.sessionId,
@@ -293,6 +336,11 @@ export async function run(options: RunOptions): Promise<RunResult> {
       durableSeq: journal.durableSeq,
     };
   } finally {
-    await journal.close();
+    controller.abort(new Error('Run ended'));
+    try { await journal.close(); }
+    finally {
+      try { await host.release(); }
+      finally { if (!options.customization) await host.close(); }
+    }
   }
 }

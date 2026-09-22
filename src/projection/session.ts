@@ -67,6 +67,8 @@ export class SessionProjection {
   }
   private async apply(e: JournalEvent) {
     const p = e.payload as Record<string, any>;
+    if (e.type === "branch.created") this.row(e, e.eventId, "status", "显式历史分支").text = `保留原始证据；新请求省略 ${p.omittedReasoning} 项供应商 reasoning。未重放工具。`;
+    if (e.type === "context.add" && String(p.source).startsWith("branch:")) this.row(e, e.eventId, p.item?.role === "user" ? "user" : p.item?.role === "assistant" ? "assistant" : "status", "分支历史").text = clipped(textOf(p.item?.content) || JSON.stringify(p.item));
     if (e.type === "context.add" && p.source === "user")
       this.row(e, e.eventId, "user", "你").text = clipped(
         textOf(p.item?.content),
@@ -79,6 +81,12 @@ export class SessionProjection {
       if (text)
         this.row(e, `${e.attemptId}:text`, "assistant", "助手").text =
           clipped(text);
+    }
+    if (e.type === 'workflow.reference') { const r=this.row(e,e.eventId,'status','持久工作流');r.text=`工作流 ${p.definitionId} · ${p.workflowId}。结果与交互以独立工作流 Journal 为准。`;r.details=p; }
+    if (['extension.ui', 'extension.command_result', 'extension.error', 'interaction.opened', 'interaction.answered', 'interaction.cancelled', 'tool.evidence_gap', 'tool.execution_error'].includes(e.type)) {
+      const r = this.row(e, String(p.instanceId ?? p.id ?? e.eventId), 'status', p.title ?? p.value?.title ?? (e.type === 'extension.command_result' ? '命令结果' : e.type));
+      r.text = clipped(p.text ?? p.message ?? JSON.stringify(p.answer ?? p.value ?? p));
+      r.details = p; r.status = e.type === 'interaction.opened' ? 'waiting' : e.type === 'interaction.cancelled' ? 'cancelled' : 'completed';
     }
     if (e.type === "attempt.started") {
       const r = this.row(
@@ -93,6 +101,7 @@ export class SessionProjection {
         r.title = "网页搜索调用";
         this.auxiliary.add(e.attemptId!);
       }
+      if (p.purpose === 'extension') { r.title = '扩展模型调用'; this.auxiliary.add(e.attemptId!); }
       if (p.purpose === "session-title") {
         r.title = "会话命名";
         this.auxiliary.add(e.attemptId!);

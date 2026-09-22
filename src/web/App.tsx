@@ -1,3 +1,4 @@
+import { Customization, ExtensionInteractions } from "./components/Customization";
 import { SyntaxScope } from "./components/Markdown";
 import {
   WorkspacePanel,
@@ -22,6 +23,7 @@ export function App() {
     configured: boolean;
   }>();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [customizationOpen, setCustomizationOpen] = useState(false);
   const [deleting, setDeleting] = useState<SessionInfo>();
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [error, setError] = useState("");
@@ -196,6 +198,7 @@ export function App() {
   return (
     <SyntaxScope id={selected ?? ""}><LocateFile.Provider value={locateFile}>
       <div className={`app ${panelOpen ? "with-inspector" : ""}`}>
+        {customizationOpen && <Customization sessionId={selected} close={() => { setCustomizationOpen(false); void refreshConfig().catch(e => setError(String(e))); }} branched={id => { setSelected(id); setInspection(undefined); setCustomizationOpen(false); history.replaceState(null, "", `${location.pathname}?session=${id}`); void refreshConfig().catch(e => setError(String(e))); }} />}
         {settingsOpen && (
           <Settings
             close={() => setSettingsOpen(false)}
@@ -287,6 +290,7 @@ export function App() {
               </div>
             </div>
             <div className="topbar-actions">
+              <button onClick={() => setCustomizationOpen(true)}>定制能力</button>
               <button
                 className={`panel-toggle ${panelOpen ? "is-open" : ""}`}
                 aria-label="打开工作区面板"
@@ -397,6 +401,7 @@ export function App() {
               </div>
             )}
           </section>
+          {selected && <ExtensionInteractions key={selected} sessionId={selected} />}
           <Composer
             key={selected ?? "new"}
             busy={busy}

@@ -23,6 +23,9 @@ async function main() {
       workspace: { type: "string" },
       session: { type: "string" },
       model: { type: "string" },
+      provider: { type: "string" },
+      "credential-file": { type: "string" },
+      "omit-reasoning": { type: "boolean" },
       "base-url": { type: "string" },
       "max-output-tokens": { type: "string" },
       "max-turns": { type: "string" },
@@ -37,7 +40,7 @@ async function main() {
   const [command, arg, ...rest] = positionals;
   if (values.help || !command) {
     console.log(
-      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
+      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --provider <profile>, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCustomization: nekomimi extensions list|validate|trial|enable|disable|reload [resource-id].\nCandidates: nekomimi candidates create|inspect|trial|activate|rollback|sdk.\nPackages: nekomimi packages prepare|inspect|activate|list|rollback|export|uninstall|collect <JSON-options>.\nModels: nekomimi providers list|save|select|credential|migrate; nekomimi branch <session> --output <new-directory> [--omit-reasoning].\nMCP OAuth: nekomimi mcp-auth status|authorize|disconnect <resource-id>.\nWorkflows: nekomimi workflows list|inspect|start|resume|answer|resolve|cancel|migrate|evidence|artifact|recover|state-get|state-migrate <JSON-options>.\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
     );
     return;
   }
@@ -83,6 +86,145 @@ async function main() {
     process.once("SIGTERM", stop);
     return;
   }
+  if (command === 'workflows') {
+    const input = rest[0] ? JSON.parse(rest[0]) : {};
+    const { CustomizationHost } = await import('./customization/host.js');
+    const host = new CustomizationHost(resolve(values.workspace ?? process.cwd()), values.home);
+    const settings = await store.snapshot(); host.workflows.configure({ ...settings, apiKey: settings.apiKey ?? '' });
+    const paths = await workspacePaths(host.catalog.workspace, values.home);
+    const readonly = !arg || ['list', 'inspect', 'evidence', 'artifact', 'state-get'].includes(arg);
+    const release = readonly ? undefined : await lockfile.lock(paths.sessions, { retries: 0 });
+    const abort = new AbortController(), stop = () => abort.abort(new Error('Workflow interrupted'));
+    process.once('SIGINT', stop); process.once('SIGTERM', stop);
+    try {
+      const flows = host.workflows;
+      let result: unknown;
+      if (!arg || arg === 'list') result = await flows.list();
+      else if (arg === 'recover') result = await flows.recoverWorkflow(String(input.id));
+      else if (arg === 'state-get') result = await flows.stateGet(String(input.resourceId),String(input.key),Number(input.schemaVersion));
+      else if (arg === 'state-migrate') result = await flows.stateMigrate(input);
+      else if (arg === 'inspect') result = await flows.inspect(String(input.id));
+      else if (arg === 'evidence') result = await flows.evidence(String(input.id), input.offset);
+      else if (arg === 'artifact') result = await flows.artifact(String(input.id), String(input.hash));
+      else if (arg === 'start' || arg === 'migrate') {
+        const activation = await host.acquire(); let state;
+        try { state = arg === 'start' ? await flows.create(String(input.resourceId), String(input.definitionId), input.input ?? {}, activation, input.commandId) : await flows.migrate(String(input.id), Number(input.revision), input.target, activation); }
+        finally { await host.release(); }
+        result = arg === 'start' && state.status === 'queued' ? await flows.advance(state.id, { signal: abort.signal, expectedRevision: state.revision }) : state;
+      } else if (arg === 'resume') result = await flows.advance(String(input.id), { signal: abort.signal, expectedRevision: Number(input.revision) });
+      else if (arg === 'answer') result = await flows.answer(String(input.id), String(input.waitId), String(input.commandId), input.answer, Number(input.revision));
+      else if (arg === 'resolve') result = await flows.resolveUnknown(String(input.id), Number(input.revision), input.choice);
+      else if (arg === 'cancel') result = await flows.cancel(String(input.id), Number(input.revision));
+      else throw new Error('Unknown workflows action');
+      console.log(JSON.stringify(result, null, 2));
+    } finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); await host.close(); await release?.(); }
+    return;
+  }
+  if (command === 'branch') {
+    if (!arg || !values.output) throw new Error('Use branch <session> --output <new-session-directory>');
+    const { branchHistory } = await import('./customization/history-branch.js');
+    const original = await readSession(resolve(arg));
+    console.log(JSON.stringify(await branchHistory(resolve(arg), resolve(values.output), resolve(values.workspace ?? String((original.events[0]?.payload as any)?.workspace)), values['omit-reasoning'] === true)));
+    return;
+  }
+  if (command === 'providers') {
+    const { ProviderProfiles } = await import('./customization/provider-profiles.js');
+    const profiles = new ProviderProfiles(store.home), current = await profiles.list();
+    if (arg === 'credential') {
+      if (!values['credential-file']) throw new Error('Use --credential-file with a private file; credentials are not accepted as command arguments');
+      await profiles.saveCredential(rest[0] ?? '', (await readFile(resolve(values['credential-file']), 'utf8')).trim()); console.log('Saved server-side credential reference.');
+    } else if (arg === 'save') console.log(JSON.stringify(await profiles.save(JSON.parse(rest[0] ?? '{}'), current.revision)));
+    else if (arg === 'select') console.log(JSON.stringify(await profiles.select(rest[0] as 'main' | 'auxiliary' | 'naming', rest[1], current.revision)));
+    else if (arg === 'migrate') console.log(JSON.stringify(await profiles.migrateLegacy(current.revision)));
+    else if (!arg || arg === 'list') console.log(JSON.stringify(current, null, 2));
+    else throw new Error('Unknown providers action');
+    return;
+  }
+  if (command === 'mcp-auth') {
+    const { CustomizationHost } = await import('./customization/host.js');
+    const host = new CustomizationHost(resolve(values.workspace ?? process.cwd()), values.home);
+    const controller = new AbortController();
+    const stop = () => controller.abort(); process.once('SIGINT', stop); process.once('SIGTERM', stop);
+    try {
+      const resource = (await host.catalog.discover()).find(r => r.id === rest[0] && r.kind === 'mcp');
+      if (!resource) throw new Error('Specify an MCP resource ID from extensions list');
+      if (arg === 'authorize') {
+        const started = await host.oauth.begin(resource); console.log(JSON.stringify(started));
+        while (!controller.signal.aborted && Date.now() < started.expiresAt) {
+          const state = await host.oauth.describe(resource);
+          if (state.status !== 'authorizing') { console.log(JSON.stringify(state)); if (state.status !== 'authorized') process.exitCode = 1; break; }
+          await new Promise(resolve => setTimeout(resolve, 250));
+        }
+      } else if (arg === 'disconnect') { await host.oauth.disconnect(resource); console.log(JSON.stringify(await host.oauth.describe(resource))); }
+      else if (!arg || arg === 'status') console.log(JSON.stringify(await host.oauth.describe(resource)));
+      else throw new Error('Unknown mcp-auth action');
+    } finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); await host.close(); }
+    return;
+  }
+  if (command === 'packages') {
+    const { CustomizationHost } = await import('./customization/host.js');
+    const { packageAction } = await import('./customization/package-management.js');
+    const host = new CustomizationHost(resolve(values.workspace ?? process.cwd()), values.home);
+    const controller = new AbortController();
+    const stop = () => controller.abort(new Error('Package operation cancelled'));
+    process.once('SIGINT', stop); process.once('SIGTERM', stop);
+    try {
+      const input = rest[0] ? JSON.parse(rest[0]) : {};
+      const result = await packageAction(host, { ...input, action: arg ?? 'list', authorize: true }, { user: true, signal: controller.signal });
+      if (result && typeof result === 'object' && 'status' in result && result.status === 'pending' && 'id' in result) await host.reload(result as import('./customization/host.js').ReloadReceipt);
+      console.log(JSON.stringify(result, null, 2));
+      if (result && typeof result === 'object' && 'status' in result && result.status === 'failed') process.exitCode = 1;
+    } finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); await host.close(); }
+    return;
+  }
+  if (command === 'candidates') {
+    const { Candidates } = await import('./customization/candidates.js');
+    const { sdkCatalog } = await import('./customization/sdk.js');
+    const store = new Candidates(resolve(values.workspace ?? process.cwd()));
+    if (arg === 'sdk') console.log(JSON.stringify(await sdkCatalog(rest[0]), null, 2));
+    else if (arg === 'create') console.log(JSON.stringify(await store.scaffold(rest[0] ?? ''), null, 2));
+    else if (arg === 'inspect') {
+      const { candidate } = await store.inspect(rest[0] ?? '');
+      console.log(JSON.stringify(candidate, null, 2));
+      if (!candidate.report.passed) process.exitCode = 1;
+    } else if (arg === 'trial') {
+      const { trialCandidate } = await import('./customization/trial.js');
+      const controller = new AbortController();
+      const stop = () => controller.abort(new Error('Trial cancelled'));
+      process.once('SIGINT', stop); process.once('SIGTERM', stop);
+      try { console.log(JSON.stringify(await trialCandidate(store.workspace, values.home, rest[0] ?? '', rest[1] ?? '', rest[2] ?? '', true, { signal: controller.signal }), null, 2)); }
+      finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); }
+
+    } else if (arg === 'activate' || arg === 'rollback') {
+      const { CustomizationHost } = await import('./customization/host.js');
+      const host = new CustomizationHost(store.workspace, values.home);
+      try {
+        const receipt = arg === 'activate' ? await host.requestCandidate(rest[0] ?? '', rest[1] ?? '', true) : await host.requestRollback(rest[0] ?? '', true);
+        await host.reload(receipt);
+        console.log(JSON.stringify(receipt));
+        if (receipt.status === 'failed') process.exitCode = 1;
+      } finally { await host.close(); }
+    } else if (!arg || arg === 'list') console.log(JSON.stringify(await store.list(), null, 2));
+    else throw new Error('Unknown candidates action');
+    return;
+  }
+  if (command === 'extensions') {
+    const { CustomizationHost, validateExtension } = await import('./customization/host.js');
+    const host = new CustomizationHost(resolve(values.workspace ?? process.cwd()), values.home);
+    try {
+      if (!arg || arg === 'list') console.log(JSON.stringify(await host.describe(), null, 2));
+      else if (arg === 'reload') { const receipt = host.requestReload(); await host.reload(receipt); console.log(JSON.stringify(receipt)); if (receipt.status === 'failed') process.exitCode = 1; }
+      else {
+        const resource = (await host.catalog.discover()).find(r => r.id === rest[0]);
+        if (!resource) throw new Error('Specify a resource ID from extensions list');
+        if (arg === 'trial') { const { trialExtension } = await import('./customization/trial.js'); console.log(JSON.stringify(await trialExtension(host.catalog.workspace, values.home, resource.id, rest[1] ?? ''))); }
+        else if (arg === 'validate') { const errors = await validateExtension(resource); console.log(JSON.stringify({ errors })); if (errors.length) process.exitCode = 1; }
+        else if (arg === 'enable' || arg === 'disable') { await host.catalog.decide(resource.id, arg === 'enable', arg === 'enable', (await host.catalog.decisions()).revision); console.log('Saved. Reload active Web service to apply.'); }
+        else throw new Error('Unknown extensions action');
+      }
+    } finally { await host.close(); }
+    return;
+  }
   if (!arg) throw new Error("Missing prompt or session path");
   if (command === "replay") {
     console.log(JSON.stringify(await readSession(arg), null, 2));
@@ -112,8 +254,9 @@ async function main() {
   if (command !== "run" && command !== "resume")
     throw new Error("Unknown command");
   const settings = await store.snapshot();
-  const apiKey = settings.apiKey;
-  if (!apiKey)
+  const apiKey = settings.apiKey ?? '';
+  const { ProviderProfiles } = await import('./customization/provider-profiles.js');
+  if (!apiKey && !(await new ProviderProfiles(store.home).resolve('main', values.provider)))
     throw new Error("请运行 nekomimi config 或在 Web 设置中保存 API key");
   const session =
     command === "resume"
@@ -182,9 +325,11 @@ async function main() {
     if (!values.json) console.error(`Session: ${session}`);
     const result = await run({
       session,
+      home: values.home,
       workspace: resolve(values.workspace ?? prior?.workspace ?? process.cwd()),
       prompt,
       apiKey,
+      providerProfile: values.provider,
       search: settings.search,
       model: values.model ?? settings.model,
       baseUrl: values["base-url"] ?? settings.baseUrl,

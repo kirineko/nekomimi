@@ -1,3 +1,4 @@
+import { recordedTool } from "./customization/execution.js";
 import { webSearch, type SearchOptions } from "./web-search.js";
 import {
   readFile,
@@ -216,6 +217,9 @@ export class CoreTools {
     signal?: AbortSignal,
   ) {
     const path = await this.path(input.path);
+    const managed = relative(this.workspace, path).split("\\").join("/");
+    if (/^\.nekomimi\/(?:content|package-content|package-candidates|customization-journal|package-journal|workflow-content|workflows|workspace-state|panel-history|state-management)(?:\/|$)/.test(managed) || /^\.nekomimi\/(?:active-customizations|packages)\.json(?:$|\.)/.test(managed))
+      throw new Error("Managed customization content is read-only; edit a candidate and use activation tools");
     const previous = this.writes.get(path) ?? Promise.resolve();
     const task = previous
       .catch(() => {})
@@ -522,35 +526,10 @@ export class CoreTools {
     ): ToolDefinition => ({
       snippet: description,
       guidance,
-      tool: {
-        name,
-        label: name,
-        description,
-        parameters,
-        execute: async (toolCallId, args, signal) => {
-          const links = { ...this.links, toolCallId };
-          signal?.throwIfAborted();
-          this.journal.check();
-          await this.journal.append(
-            "tool.intent",
-            { name, args, cwd: this.workspace },
-            links,
-          );
-          this.journal.check();
-          signal?.throwIfAborted();
-          try {
-            return await run(args, links, signal);
-          } catch (e) {
-            this.journal.check();
-            await this.journal.append(
-              "tool.execution_error",
-              { name, message: this.journal.clean(String(e)) },
-              links,
-            );
-            throw e;
-          }
-        },
-      },
+      tool: recordedTool({
+        name, label: name, description, parameters,
+        execute: async (toolCallId, args, signal) => run(args, { ...this.links, toolCallId }, signal),
+      }, this.journal, this.links, { cwd: this.workspace }),
     });
     return [
       ...(this.options.search && this.options.search.settings?.enabled !== false ? [build(

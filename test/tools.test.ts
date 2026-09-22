@@ -10,6 +10,14 @@ async function setup() {
   return { dir, j, call };
 }
 describe('core tools', () => {
+  it('keeps managed customization revisions read-only while allowing candidate edits', async () => {
+    const { j, call } = await setup();
+    try {
+      await expect(call('write', { path: '.nekomimi/content/revision/index.ts', content: 'tampered' })).rejects.toThrow('read-only');
+      await expect(call('write', { path: '.nekomimi/packages.json', content: '{}' })).rejects.toThrow('read-only');
+      await expect(call('write', { path: '.nekomimi/candidates/example/index.ts', content: 'export default () => {}' })).resolves.toBeDefined();
+    } finally { await j.close(); }
+  });
   it('requires fresh reads and matches edits against the original with BOM and CRLF preserved', async () => {
     const { dir, j, call } = await setup();
     try {

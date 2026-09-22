@@ -1,0 +1,70 @@
+{
+  "workspace": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-v2-live-RYSPO3",
+  "node": "v24.15.0",
+  "model": "deepseek-flash",
+  "attempts": 22,
+  "toolErrors": 1,
+  "verified": [
+    "generated command",
+    "generated tool",
+    "generated provider",
+    "durable workflow restart/answer",
+    "generated browser panel/filter"
+  ],
+  "injectedFailure": "One explicit TypeScript type mismatch after successful generation",
+  "mockBoundary": "Generation/repair use configured real model. Generated provider receives a synthetic JSON transport response. All workspace data is synthetic; no CI credentials.",
+  "recordedRuns": [
+    {
+      "phase": "generation",
+      "runId": "6744f01b-8505-449f-a122-dfecd2dd8028",
+      "started": "2026-09-22T14:01:34.635Z",
+      "finished": "2026-09-22T14:02:10.032Z",
+      "status": "completed",
+      "elapsedMs": 35397,
+      "attempts": 12
+    },
+    {
+      "phase": "injected-type-error-repair",
+      "runId": "56d53cdb-952c-4021-9448-6854920d2389",
+      "started": "2026-09-22T14:02:10.412Z",
+      "finished": "2026-09-22T14:02:15.940Z",
+      "status": "completed",
+      "elapsedMs": 5528,
+      "attempts": 4
+    },
+    {
+      "phase": "runtime-schema-repair",
+      "runId": "6e34466f-f5af-4183-8802-7bc98aa000c2",
+      "started": "2026-09-22T14:04:48.314Z",
+      "finished": "2026-09-22T14:04:53.347Z",
+      "status": "completed",
+      "elapsedMs": 5033,
+      "attempts": 3
+    },
+    {
+      "phase": "qualified-tool-name-repair",
+      "runId": "107bf9b7-b351-4e04-9241-d1e9951a2e0d",
+      "started": "2026-09-22T14:06:02.968Z",
+      "finished": "2026-09-22T14:06:07.123Z",
+      "status": "completed",
+      "elapsedMs": 4155,
+      "attempts": 3
+    }
+  ],
+  "realModelRunMs": 50113,
+  "finalUseElapsedMs": 7049,
+  "harnessFailures": [
+    "Missing initial extension entry before first request (separate discarded workspace)",
+    "Missing explicit reload after grant",
+    "Generation prompt incorrectly prescribed empty tool schema and short tool name; both repaired by real model",
+    "Use inherited generation-only tool whitelist",
+    "Unavailable bundled Chromium; used installed Chrome",
+    "Waited for invisible option; changed to attached",
+    "Web restart needed explicit resource reload"
+  ],
+  "naturalModelFailure": "No unbiased generation success-rate claim: the prompt prescribed two invalid API details. One recorded tool error occurred during generation; one type error was explicitly injected.",
+  "sourceHashes": {
+    "index.ts": "259b588c81907bfc6a989c70362de5a56cac20daad4975b6f52b27131accebdd",
+    "panel.ts": "86b04cd6663aa4bb033df22d094a98519d508b7109df998a54fa41091b3bc5bb"
+  }
+}

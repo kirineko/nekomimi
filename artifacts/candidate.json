@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "candidateOnly": true,
+  "published": false,
+  "baseCommit": "2e20c4beda4f2fd74057619712389f0607a5b089",
+  "dirtyWorktree": true,
+  "sourceManifestSha256": "3888d8f3010d2ee25972575b8cd219a4285705716ab319539655441da98dad4f",
+  "sourceManifestScope": "src, extension-docs, scripts, test, .github, package/lock, TypeScript/Vite/Playwright config, README; excludes generated dist, artifacts and validation reports",
+  "tarball": "artifacts/nekomimi-0.2.0.tgz",
+  "bytes": 532275,
+  "sha256": "41f658ade40b7024d56b2508e3cc25efb1a6868c72d7183579bf5ceb14caf015",
+  "integrity": "sha512-pxqKHnspDc593tW+eXKzCOusaz41qxyI7dilbLPpOz4wSei9jmiCGpgSxULfqDU13rwN8EQAfdGgZJdqHt5YIA==",
+  "verifiedPlatforms": [
+    {
+      "os": "macOS",
+      "arch": "arm64",
+      "node": "22.19.0",
+      "unitTests": 219,
+      "installedPack": true,
+      "completeReviewKit": true
+    },
+    {
+      "os": "macOS",
+      "arch": "arm64",
+      "node": "24.15.0",
+      "unitTests": 219,
+      "browserTests": 22,
+      "installedPack": true,
+      "completeReviewKit": true
+    }
+  ],
+  "deferredPlatforms": {
+    "Linux": "User deferred on 2026-09-22",
+    "Windows": "User deferred on 2026-09-22; native process-tree cleanup remains unverified"
+  },
+  "registryCheck": "Official npm registry returned E404 for 0.2.0 on 2026-09-22; no publication performed"
+}

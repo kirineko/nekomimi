@@ -1,4 +1,5 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
+import { CustomPanel, type PanelView } from "./CustomPanel";
 import { Brand } from "./Brand";
 import type { TimelineRow } from "../../shared/protocol";
 import { Markdown } from "./Markdown";
@@ -7,8 +8,12 @@ import { statusText } from "../presentation";
 import { conversationTurns, type ConversationTurn } from "../turns";
 export { statusText } from "../presentation";
 const Message = memo(function Message({row}: {row: TimelineRow}) {
+  const [showPanel,setShowPanel]=useState(false);
+  const contribution=row.details as {kind?:string;resourceId?:string;resourceRevision?:string;panelId?:string;fallback?:string;bundleHash?:string;props?:unknown;slot?:'sidebar'|'result';themes?:Record<string,unknown>}|undefined;
+  const panel:PanelView|undefined=contribution?.kind==='panel' && contribution.resourceId && contribution.resourceRevision && contribution.panelId ? {id:contribution.panelId,resourceId:contribution.resourceId,revision:contribution.resourceRevision,fallback:contribution.fallback ?? row.text,bundleHash:contribution.bundleHash ?? '',slot:contribution.slot ?? 'result',themes:contribution.themes} : undefined;
   return <article className={`row row-${row.kind}`}>
-    <div className="row-head"><strong>{row.kind === "user" ? "你" : row.kind === "assistant" ? <Brand compact /> : statusText(row.status)}</strong></div>
+    <div className="row-head"><strong>{row.kind === "user" ? "你" : row.kind === "assistant" ? <Brand compact /> : row.title !== "任务结束" ? row.title : statusText(row.status)}</strong></div>
+    {panel&&<><p>{panel.fallback}</p>{showPanel?<CustomPanel panel={panel} propsJson={JSON.stringify(contribution?.props ?? {})}/>:<button onClick={()=>setShowPanel(true)}>打开已授权结果面板</button>}</>}
     {row.text && (row.kind === "assistant" ? <Markdown text={row.text}/> : <div className="row-text">{row.text}</div>)}
   </article>;
 });
@@ -36,9 +41,10 @@ const Turn = memo(function Turn({turn, sessionId, inspect}: {turn: ConversationT
   </section>;
 });
 export function Timeline({sessionId,rows,inspect,older,latest,hasOlder}: {sessionId:string;rows:TimelineRow[];inspect:(row:TimelineRow)=>void;older:()=>void;latest:()=>void;hasOlder:boolean}) {
-  const turns=useMemo(()=>conversationTurns(rows),[rows]);
+  const sidebar=useMemo(()=>rows.filter(row=>(row.details as any)?.kind==='panel'&&(row.details as any)?.slot==='sidebar'),[rows]);
+  const turns=useMemo(()=>conversationTurns(rows.filter(row=>!sidebar.includes(row))),[rows,sidebar]);
   return <div className="timeline" aria-label="任务时间线">
     {hasOlder && <div className="history-actions"><button onClick={older}>加载更早记录</button><button onClick={latest}>回到最新记录</button></div>}
-    {turns.map(turn=><Turn key={turn.id} turn={turn} sessionId={sessionId} inspect={inspect}/>)}
+    <div className={sidebar.length?"timeline-panels":undefined}><div>{turns.map(turn=><Turn key={turn.id} turn={turn} sessionId={sessionId} inspect={inspect}/>)}</div>{!!sidebar.length&&<aside aria-label="扩展侧栏">{sidebar.map(row=><Message key={row.id} row={row}/>)}</aside>}</div>
   </div>;
 }

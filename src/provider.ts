@@ -11,8 +11,11 @@ import { contextView, type assemblePrompt, type WireItem } from "./context.js";
 
 export interface ProviderOptions {
   apiKey: string;
+  providerProfile?: string;
+  auxiliaryProfile?: string;
+  namingProfile?: string;
   search?: import("./web-search.js").SearchSettings;
-  purpose?: "session-title";
+  purpose?: "session-title" | "extension";
   contextEvents?: import("./journal.js").JournalEvent[];
   model?: string;
   baseUrl?: string;

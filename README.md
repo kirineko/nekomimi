@@ -29,6 +29,12 @@ nekomimi web
 
 无需克隆 Nekomimi 源码，也无需配置环境变量。当前版本使用 DeepSeek。主对话模型与地址可通过 CLI 配置；网页搜索可在设置中开关。
 
+## 定制你的助手
+
+可以让 Nekomimi 为项目编写工具、命令或工作流程，例如：“创建一个 /review 命令，按项目规范审查改动，并显示结果卡片。”它可以读取随包 SDK 资料、生成扩展、校验并修复。首次生成后，在顶部 **定制能力** 中信任并启用，再重载使用；后续修改在当前任务结束后生效。
+
+V1 支持本地 TypeScript 扩展、Skills、分层 AGENTS.md 规则、MCP 工具，以及状态、卡片和表单。0.2.0 的 V2 实现增加能力包、Provider、MCP 内容/OAuth、持久工作流和隔离面板，支持通过对话生成、校验、修复并启用定制能力。扩展作为可信 Node 代码运行，进程隔离不是 OS 沙箱。详细目录、授权和示例见 [定制开发文档](extension-docs/README.md) 与 [V2 实施记录](docs/customization-v2-validation.md)。
+
 ## 日常使用
 
 - **发送任务**：Enter 发送，Shift+Enter 换行；中文输入法 Enter 选词不会发送。
@@ -77,7 +83,7 @@ npm uninstall -g nekomimi
 
 **文件无法打开？** 打开的是运行 Nekomimi 服务的机器上的当前文件。请检查文件是否存在、系统默认程序关联及桌面环境；界面“已提交”表示打开请求已交给系统。文件打开仅对当前项目普通文件可用。
 
-**支持哪些系统？** macOS 和 Linux 已通过发布 CI 验收。Windows 尚未完成完整验收。
+**支持哪些系统？** 既有正式版的 macOS 和 Linux 已通过发布 CI 验收。0.2.0 的发布门禁包括 Linux/macOS × Node 22.19.0/24.15.0，以及 Windows 原生安装、扩展/MCP 清理和 Web 冒烟；具体运行结果见 [版本发布记录](https://github.com/kirineko/nekomimi/blob/main/docs/releases/0.2.0.md)。
 
 ## 开发与文档
 

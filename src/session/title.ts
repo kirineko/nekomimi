@@ -1,14 +1,18 @@
 import { Journal, id, type JournalOptions } from "../journal.js";
 import { ResponsesProvider, type ProviderOptions } from "../provider.js";
 import { hash } from "../journal.js";
+import type { CustomizationHost, Activation } from "../customization/host.js";
+import { createProvider } from "../customization/adapter-provider.js";
 export async function nameSession(
   directory: string,
   settings: ProviderOptions,
   signal: AbortSignal,
   journalOptions: JournalOptions = {},
+  customization?: CustomizationHost,
 ) {
   const journal = await Journal.open(directory, { ...journalOptions, secrets: [settings.apiKey] });
   const runId = journalOptions.diagnosticRunId ?? id();
+  let activation: Activation | undefined;
   try {
     if (journal.events.some((e) => e.type === "session.naming.started")) return;
     const runs = journal.events.filter((e) => e.type === "run.finished");
@@ -35,7 +39,9 @@ export async function nameSession(
       source: "nekomimi:session-title:v1",
       text: "Name this conversation in the language of the user. Return only a short title, at most 16 CJK characters or 8 words. No quotes, explanation, or tools.",
     };
-    const provider = new ResponsesProvider(
+    if (customization) activation = await customization.acquire();
+    const build = (...args: ConstructorParameters<typeof ResponsesProvider>) => customization && activation ? createProvider(customization, activation, ...args) : new ResponsesProvider(...args);
+    const provider = await build(
       journal,
       { runId },
       {
@@ -99,6 +105,6 @@ export async function nameSession(
       { runId },
     );
   } finally {
-    await journal.close();
+    try { await journal.close(); } finally { if (activation) await customization!.release(); }
   }
 }

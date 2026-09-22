@@ -34,3 +34,9 @@ Node 的 tsconfig 排除 `web/`，浏览器 tsconfig 只包含 `web/` 与 `share
 ## 配置与会话生命周期
 
 `config/` 管理文件配置和交互配置，`storage/` 管理用户根目录、工作区分区和显式迁移，`session/title.ts` 管理可记录的辅助命名。`server/sessions.ts` 统一运行、命名、下载与删除门禁；`presentation/` 提供 Web/离线共用的纯展示组件和工具结果解析，`export/html.ts` 负责无脚本的自包含阅读视图。
+
+## 定制运行域
+
+`extensions.ts` 是公开 SDK 子路径；`customization/types.ts` 保持 JSON 契约，不暴露 pi 内部对象。`resources.ts` 管理发现、授权、摘要和用户资源写入；`host.ts` 负责候选加载、注册和切换；`run.ts` 负责固定运行快照、规则/技能、嵌套 SDK 服务和命令。`execution.ts` 是内置、扩展、MCP 共用的落盘边界；`mcp.ts` 负责官方 MCP transport；`interactions.ts` 管理实时表单，`trial.ts` 提供独立显式试运行。
+
+Web 只导入定制类型，扩展源代码和凭证不发送至客户端。所有新历史事件和 artifact 仍由 Journal 保存；回放与导出不创建宿主。

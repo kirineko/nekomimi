@@ -85,7 +85,7 @@ export async function renderSessionHtml(
                 ? row.title === "会话命名"
                   ? "会话命名"
                   : "模型调用"
-                : "本轮结束";
+                : row.title === "任务结束" ? "本轮结束" : row.title;
       let content = "";
       if (row.kind === "assistant")
         content = await markdownHtml(row.text, scope);

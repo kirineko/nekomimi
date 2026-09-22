@@ -29,6 +29,14 @@ export interface Links {
   modelCallId?: string;
   attemptId?: string;
   toolCallId?: string;
+  resourceId?: string;
+  resourceRevision?: string;
+  packageId?: string;
+  instanceId?: string;
+  rpcCallId?: string;
+  workflowId?: string;
+  stepId?: string;
+  definitionRevision?: string;
 }
 export interface JournalEvent extends Links {
   schemaVersion: 1;
@@ -126,6 +134,7 @@ function pendingOperations(events: JournalEvent[]): SessionSnapshot["pending"] {
       });
     if (
       [
+        "tool.completed",
         "tool.result",
         "tool.failed",
         "attempt.finished",
@@ -313,6 +322,11 @@ export class Journal {
     for (const secret of this.options.secrets ?? [])
       if (secret) value = value.split(secret).join("[REDACTED]");
     return value;
+  }
+  registerSecret(secret: string) {
+    if (!secret) return;
+    const secrets = this.options.secrets ?? [];
+    if (!secrets.includes(secret)) this.options.secrets = [...secrets, secret];
   }
   streamRedactor(): StreamRedactor {
     return new StreamRedactor(this.options.secrets ?? []);

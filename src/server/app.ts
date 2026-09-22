@@ -23,6 +23,7 @@ import {
   tracePage,
 } from "./evidence.js";
 import { resolveResource } from "./resource-path.js";
+import { ProviderProfiles } from "../customization/provider-profiles.js";
 import { subscribe } from "./stream.js";
 export async function startWeb(
   options: ServiceOptions & { port?: number; staticDir?: string; openFile?: (path: string) => Promise<void> },
@@ -62,11 +63,22 @@ export async function startWeb(
           if (typeof value.path !== "string") throw new ApiError(400, "path", "路径无效");
           json(res, await files.open(value.path)); return;
         }
+        const panelFrame = /^\/api\/v1\/panels\/([a-f0-9-]{36})\/frame$/.exec(path);
+        if (panelFrame && req.method === 'GET') {
+          const document = await sessions.customization.panels.document(panelFrame[1]!);
+          res.setHeader('content-type', 'text/html; charset=utf-8');
+          res.setHeader('content-security-policy', `sandbox allow-scripts; default-src 'none'; script-src 'nonce-${document.nonce}'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-src 'none'; object-src 'none'; frame-ancestors 'self'`);
+          res.end(document.html); return;
+        }
+        if (path === '/api/v1/customization') {
+          if (req.method === 'GET') { json(res, await sessions.customization.describe()); return; }
+          if (req.method === 'POST') { json(res, await sessions.customizationAction(object(await body(req)))); return; }
+        }
         if (req.method === "GET" && path === "/api/v1/config") {
           json(res, {
             workspace: sessions.workspace,
             ...(await sessions.config.describe()),
-            configured: !!(await sessions.settings()).apiKey,
+            configured: !!(await sessions.settings()).apiKey || !!(await new ProviderProfiles(sessions.paths.home).list()).selection.main,
           });
           return;
         }
@@ -104,11 +116,17 @@ export async function startWeb(
           }
         }
         const match = path.match(
-          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(changes|diff|snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete|diagnostics)(?:\/([a-f0-9]+))?$/,
+          /^\/api\/v1\/sessions\/([a-zA-Z0-9_-]+)\/(interactions|answer|changes|diff|snapshot|events|submit|cancel|evidence|artifacts|export|context|trace|delete|diagnostics)(?:\/([a-f0-9]+))?$/,
         );
         if (!match) throw new ApiError(404, "not_found", "接口不存在");
         const sessionId = match[1]!;
         const action = match[2]!;
+        if (req.method === 'GET' && action === 'interactions') {
+          await sessions.entry(sessionId); json(res, { items: sessions.interactions.list(sessionId) }); return;
+        }
+        if (req.method === 'POST' && action === 'answer') {
+          json(res, await sessions.answerInteraction(sessionId, object(await body(req)))); return;
+        }
         if (req.method === "POST" && action === "submit") {
           json(
             res,
@@ -289,7 +307,7 @@ export async function startWeb(
         throw new ApiError(403, "path", "资源路径无效");
       res.setHeader(
         "content-security-policy",
-        "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+        `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src ${origin}/api/v1/panels/; base-uri 'none'; frame-ancestors 'none'; form-action 'self'`,
       );
       res.setHeader(
         "content-type",

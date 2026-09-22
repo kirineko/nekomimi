@@ -7,7 +7,7 @@
 ## Requirements
 
 ### Requirement: 最终请求保真
-系统 SHALL 通过 DeepSeek Responses 路径发送主代理请求，通过独立 DeepSeek Messages 路径发送内置搜索请求；所有模型调用 SHALL 使用统一可记录入口，保存与实际发送 body 一致的序列化证据、hash 和输入来源引用，排除认证凭证，标明用途和协议。
+系统 SHALL 通过选定且已验证的 Provider adapter 发送主代理请求，默认保留 DeepSeek Responses 路径；内置搜索继续通过独立 DeepSeek Messages 路径发送请求；所有宿主管理的模型调用（包括扩展通过 SDK 发起的辅助调用）SHALL 使用统一可记录入口，保存与实际发送 body 一致的序列化证据、hash 和输入来源引用，排除认证凭证，标明用途、协议、Provider/模型及 adapter revision。扩展辅助调用 SHALL 关联资源版本、所属运行及存在时的外层工具调用，使用独立上下文，不直接混入主代理协议历史。可信扩展绕过宿主直接发出的网络请求 MUST NOT 被宣称已受此入口记录。
 
 #### Scenario: 最终请求保真验收
 - **WHEN** 最后一次请求转换改变了工具 schema
@@ -16,6 +16,14 @@
 #### Scenario: 工具内模型调用
 - **WHEN** web_search 内部发送 Messages 请求
 - **THEN** 请求及每次 attempt 关联外层工具调用，可检查 query 来源、响应和 usage；搜索内部消息不被混入主代理 Responses 历史。
+
+#### Scenario: 扩展辅助调用重试和取消
+- **WHEN** 自定义审查命令通过 SDK 请求模型，遇到限流后重试并被用户取消
+- **THEN** 各 attempt 可追溯到命令与扩展版本，取消后不继续调度，不泄露密钥，主对话历史不混入辅助协议消息。
+
+#### Scenario: 自定义 Provider 请求
+- **WHEN** 自定义 adapter 序列化请求并发起重试
+- **THEN** 每次实际发送的请求字节与证据一致，保留 adapter、模型、上下文及外层工作流/调用关联；重试不绕过宿主凭证和取消策略。
 
 ### Requirement: 流和终态证据
 
@@ -46,12 +54,16 @@
 
 ### Requirement: Provider 指令和能力语义
 
-系统 SHALL 将系统级指导按 DeepSeek 支持的 instructions/system 语义发送，避免重复注入；thinking 路径默认采用 auto 工具选择，不发送已知不兼容的指定函数组合。
+系统 SHALL 按所选 Provider 经验证的能力配置投影系统指导、工具选择、推理及多模态输入，避免重复注入，不发送已知不兼容组合。DeepSeek adapter SHALL 保持已验证的 instructions/system 语义，thinking 路径默认使用 auto 工具选择且不发送不兼容的指定函数组合。
 
 #### Scenario: Thinking 请求使用项目指令和工具
 
-- **WHEN** 启用 thinking 且本轮包含系统指导与工具定义
+- **WHEN** 启用 DeepSeek thinking 且本轮包含系统指导与工具定义
 - **THEN** 最终请求不以 developer 承载系统指导，不重复系统内容，工具选择使用经过验证的组合。
+
+#### Scenario: 不支持的能力组合
+- **WHEN** 自定义模型不支持当前推理、工具或图片组合
+- **THEN** 系统在网络发送前报告能力冲突，不静默删除输入或伪造该组合已经受支持。
 
 ### Requirement: 缺失历史与图片输入
 
