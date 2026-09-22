@@ -65,8 +65,14 @@ export class ExtensionProcess {
     const bootstrap = `import {createRequire} from 'node:module';const require=createRequire(${JSON.stringify(import.meta.url)});const {createJiti}=require(${JSON.stringify(jiti)});await createJiti(import.meta.url,{fsCache:false}).import(${JSON.stringify(worker)});`;
     // A trusted Node process, not an OS sandbox. Do not inherit host credentials.
     const env = Object.fromEntries(["PATH", "Path", "HOME", "USERPROFILE", "SystemRoot", "WINDIR", "TEMP", "TMP", "TMPDIR"].flatMap(k => process.env[k] ? [[k, process.env[k]!]] : []));
+    // fd 3 is a duplex RPC channel read and written by the child through libuv.
+    // On Windows a plain "pipe" hands the child a synchronous named-pipe handle,
+    // and the kernel serializes I/O on it: a write issued while the child's
+    // background read is blocked waits until the host sends something, so any
+    // response or service call made after a delay deadlocks both sides.
+    // "overlapped" opens the child end asynchronously; elsewhere it equals "pipe".
     this.child = spawn(process.execPath, ["--input-type=module", "-e", bootstrap, JSON.stringify({ identity, resourceIds })], {
-      cwd: this.catalog.workspace, env, detached: process.platform !== "win32", stdio: ["ignore", "pipe", "pipe", "pipe"],
+      cwd: this.catalog.workspace, env, detached: process.platform !== "win32", stdio: ["ignore", "pipe", "pipe", "overlapped"],
     });
     this.exitPromise = new Promise(resolve => {
       this.child.once("exit", () => { this.exited = true; resolve(); this.peer?.fail(new Error("Extension process exited; result unknown")); });
@@ -227,7 +233,13 @@ export class ExtensionProcess {
       for (;;) {
         let alive = true;
         try { process.kill(-this.child.pid, 0); }
-        catch (error) { if ((error as NodeJS.ErrnoException).code === "ESRCH") alive = false; else throw error; }
+        catch (error) {
+          const code = (error as NodeJS.ErrnoException).code;
+          if (code === "ESRCH") alive = false;
+          // macOS reports EPERM for a group whose members are mid-exit and not yet
+          // signalable. Only ESRCH confirms disappearance; otherwise inspect below.
+          else if (code !== "EPERM") throw error;
+        }
         if (!alive) break;
         // kill(0) also sees zombies awaiting reaping by the OS. They have exited
         // and cannot execute; only a non-zombie member leaves cleanup unfinished.
