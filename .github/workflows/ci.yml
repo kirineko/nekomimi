@@ -47,7 +47,7 @@ jobs:
       - run: npm run test:pack
         env:
           npm_config_engine_strict: 'true'
-      - run: npx vitest run test/customization-process.test.ts test/customization-mcp.test.ts test/customization-package-source.test.ts
+      - run: npx vitest run test/atomic-rename.test.ts test/journal.test.ts test/customization-process.test.ts test/customization-mcp.test.ts test/customization-package-source.test.ts
       - run: npx playwright install chrome
       - run: npx playwright test test/browser/customization.spec.ts
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

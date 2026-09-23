@@ -9,6 +9,7 @@ v0.2.0 最新标签 CI（35754385924）在 Windows 候选更新浏览器测试�
 - 拆分语法高亮分页与长行截断测试，给 CPU 密集的长行场景单独预算。
 - 为包含多次进程切换的重试/迁移集成测试设置独立总预算。
 - 统一定制浏览器文件的有限异步等待与总预算，覆盖进程启动/清理、面板构建和页面轮询。
+- 修复 Windows `watermark.rename` 短暂 EPERM 导致会话中断：有界重试同一原子替换，不删除目标或重跑业务操作。
 - 记录提交历史、失败证据和本地验证，远端复验保持独立。
 
 ## Capabilities
@@ -19,8 +20,8 @@ v0.2.0 最新标签 CI（35754385924）在 Windows 候选更新浏览器测试�
 
 ### Modified Capabilities
 
-无。仅修复测试和验证记录，使用 skip_specs，不改变产品契约。对应 spec.md 的可观测性、Web 与自定制验收范围。
+- `execution-journal`: Windows 原子替换遇到短暂占用时有界重试，保留失败关闭和水位权威语义。对应 spec.md 的可观测性、Web 与自定制验收范围。
 
 ## Impact
 
-影响 test/browser/customization.spec.ts、test/syntax.test.ts 和验证文档。保留标签 CI 与正式 Release 触发规则；不创建版本、标签或 Release。
+影响 Journal 原子替换、相关单元/浏览器测试和验证文档。保留标签 CI 与正式 Release 触发规则。用户随后明确要求重新发布尚未上传 npm 的 0.2.0，按仓库发版门禁更新候选标签并在 CI 全通过后发布。

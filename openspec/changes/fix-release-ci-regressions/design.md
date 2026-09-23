@@ -19,6 +19,8 @@
 
 - 同轮 Windows 的面板工作流启动在 5 秒时仍处于 pinned activation，候选回退已通过；结合本地 Provider/持久表单的同类超时，将 customization 浏览器文件统一为 20 秒断言、90 秒用例总预算。其它浏览器文件不变，不添加重试，不放宽产品生命周期预算。
 
+- 最终候选 b531e08 的 Windows trace 在两个失败页面都明确显示 `EPERM · watermark.rename`。此前默认 5 秒时只看到旧轮次，完整诊断证明存在产品持久化故障。为共享 atomicFile 引入同目录 rename 的 Windows 专用有界退避：只重试 EPERM/EACCES/EBUSY，最多 20 次退避、总等待不超过约 2 秒；使用同一已经 fsync 的临时文件，不 unlink 目标、不重写内容，也不重跑工具。非 Windows 或其它错误立即上抛，持续占用维持原有 OperationError、诊断和停止派发语义。测试模拟占用释放及持续占用，验证旧目标保持、最终替换、其它错误立即失败。
+
 ## Risks / Trade-offs
 
 - 本机 macOS 无法证明 Windows 修复通过 → 明确记录需要新提交的远端 CI 复验。

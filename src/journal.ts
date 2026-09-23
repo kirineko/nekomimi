@@ -1,11 +1,11 @@
 import { diagnostic, saveDiagnostic, observeIO, OperationError } from "./diagnostics.js";
+import { atomicRename } from "./atomic-rename.js";
 import type { Diagnostic } from "./shared/protocol.js";
 import { createHash, randomUUID } from "node:crypto";
 import {
   mkdir,
   open,
   readFile,
-  rename,
   stat,
   truncate,
   readdir,
@@ -115,7 +115,7 @@ export async function atomicFile(
   } finally {
     await handle.close();
   }
-  await step("rename", () => rename(temp, file));
+  await step("rename", () => atomicRename(temp, file));
   await step("directory-sync", () => syncDirectory(join(file, "..")));
 }
 function pendingOperations(events: JournalEvent[]): SessionSnapshot["pending"] {
