@@ -42,3 +42,7 @@
 ## 尚未验证的边界
 
 用户随后明确要求重发 0.2.0；官方 registry 未发现该版本，GitHub 无对应 Release。已授权提交、推送及更新未发布候选标签。远端 Windows 与 Linux/macOS Node 22/24 矩阵通过前，任务 2.2 保留未完成，change 不归档。工作流触发规则、包版本与发布流程保持不变。
+
+## 重新发布期间的追加修复
+
+提交 `870e335` 的 [CI 35882756788](https://github.com/kirineko/nekomimi/actions/runs/35882756788) 中 Linux 两组通过，macOS 22 单元 220/221 通过，唯一失败为 `customization-durable-workflows` 的显式重试/迁移综合用例超过 15 秒总预算。该用例串行包含多次 pinned extension 启动、释放与重载，现仅将该用例总预算设为 60 秒，所有产品内部预算和语义断言保持不变。使用官方 Node 22.19.0 运行完整 durable-workflows 文件：14/14 通过（27.85 秒）；类型及严格规格校验通过。新提交仍须完整标签 CI 通过。

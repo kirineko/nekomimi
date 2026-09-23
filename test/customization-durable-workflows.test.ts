@@ -77,6 +77,8 @@ it.each(["outbox-written", "state-written", "outbox-delivered"])("recovers state
     expect((await states.get("fixture", "value", 2))?.revision).toBe(2);
   } finally { await source.close(); }
 });
+// This scenario starts/replaces pinned extension processes across retry and migration.
+// Its aggregate budget must cover multiple startup and cleanup cycles on hosted runners.
 it("requires an explicit retry attempt, validates transitions and preserves the old state when migration fails", async () => {
   const f = await fixture();
   try {
@@ -100,7 +102,7 @@ it("requires an explicit retry attempt, validates transitions and preserves the 
     } finally { await f.host.release(); }
     expect((await normal.advance(created.id)).status).toBe("completed"); expect(await readFile(join(f.workspace, "finished.txt"), "utf8")).toBe("migrated revision");
   } finally { await f.host.close(); }
-});
+}, 60_000);
 
 const triggered = `import type {ExtensionFactory2} from 'nekomimi/extensions'; export default ((api)=>{api.registerWorkflow({id:'observer',schemaVersion:1,inputSchema:{type:'object'},triggers:[{kind:'tool-completed',name:'read'},{kind:'run-completed'}],entry:'finish',steps:{finish:{transitions:[],async execute(input,ctx){await ctx.callTool('write',{path:'triggered.txt',content:'ran'});return {kind:'complete',output:input};}}}});}) satisfies ExtensionFactory2;`;
 it('bounds pending workflows and refuses a trigger beyond the causal depth without running its effects',async()=>{
