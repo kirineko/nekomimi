@@ -1,0 +1,24 @@
+## Why
+
+v0.2.0 最新标签 CI（35754385924）在 Windows 候选更新浏览器测试、macOS 工作流浏览器测试与语法高亮测试失败。需要修复验收同步与预算问题，保留现有行为断言及平台门禁。
+
+## What Changes
+
+- 候选激活和回退等待对应回执完成，命令断言绑定新增加的轮次，避免匹配历史结果。
+- 工作流未知结果等待覆盖子进程切换、退出确认与管理页面轮询，并继续断言副作用仅执行一次。
+- 拆分语法高亮分页与长行截断测试，给 CPU 密集的长行场景单独预算。
+- 记录提交历史、失败证据和本地验证，远端复验保持独立。
+
+## Capabilities
+
+### New Capabilities
+
+无。
+
+### Modified Capabilities
+
+无。仅修复测试和验证记录，使用 skip_specs，不改变产品契约。对应 spec.md 的可观测性、Web 与自定制验收范围。
+
+## Impact
+
+影响 test/browser/customization.spec.ts、test/syntax.test.ts 和验证文档。保留标签 CI 与正式 Release 触发规则；不创建版本、标签或 Release。

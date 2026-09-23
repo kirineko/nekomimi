@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Locator } from "@playwright/test";
 import { mkdir, writeFile, copyFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startWeb } from "../../src/server/app.js";
@@ -22,8 +22,9 @@ test('reconciles an unknown workflow result in the browser without repeating its
  const options={workspace,home,naming:false,staticDir:resolve('dist/web-dist')};let app=await startWeb(options);
  try{
   await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('button',{name:'信任并启用 unknown'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');
-  const value=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(value!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible();
-  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible();
+  // The pinned process must finish cleanup/reload before the next 1.5s management poll can expose unknown.
+  const value=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(value!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
+  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
   await page.getByLabel('核对记录').fill('外部文件已核验，只执行过一次');await page.getByLabel('核对后的结果 JSON').fill('{"kind":"complete","output":{"verified":true}}');await page.getByRole('button',{name:'提交已核对结果'}).click();await expect(page.getByRole('article',{name:'工作流 unknown-review'})).toContainText('已完成');
   await page.getByRole('button',{name:'查看工作流证据'}).click();await expect(page.getByRole('region',{name:'工作流证据'})).toContainText('workflow.unknown.resolved');
   const {readdir,readFile}=await import('node:fs/promises'),{readSession}=await import('../../src/journal.js');const [flow]=await readdir(join(workspace,'.nekomimi/workflows'));const journal=await readSession(join(workspace,'.nekomimi/workflows',flow!));expect(journal.events.filter(e=>e.type==='tool.intent'&&(e.payload as any).name==='write')).toHaveLength(1);expect(await readFile(join(workspace,'external.txt'),'utf8')).toBe('one recorded effect');
@@ -123,6 +124,7 @@ test("reviews a package, installs its command and uninstalls without erasing his
   } finally { await app.close(); }
 });
 test("checks candidate diagnostics, activates an approved hash and rolls back without losing history", async ({ page }) => {
+  test.setTimeout(90_000);
   const workspace = await temporary(), home = await temporary();
   const store = new Candidates(workspace);
   const candidate = await store.scaffold("candidate-review");
@@ -132,18 +134,40 @@ test("checks candidate diagnostics, activates an approved hash and rolls back wi
     await page.goto(app.url);
     const open = async () => page.getByRole("button", { name: "定制能力", exact: true }).click();
     const inspect = async () => page.getByRole("button", { name: `检查候选 ${candidate.id}`, exact: true }).click();
+    const activate = async (button: Locator, action: string) => {
+      const response = page.waitForResponse(r => r.request().method() === "POST" &&
+        r.url().endsWith("/customization") && r.request().postDataJSON()?.action === action);
+      await button.click();
+      const accepted = await response;
+      expect(accepted.ok()).toBe(true);
+      const receipt = await accepted.json() as { id: string };
+      // A managed directory pointer or an older receipt is not the runtime switch.
+      await expect.poll(async () => {
+        const management = await page.request.get(new URL("/api/v1/customization", app.url).href);
+        expect(management.ok()).toBe(true);
+        const data = await management.json() as { receipts: Array<{ id: string; status: string; error?: string }> };
+        const current = data.receipts.find(r => r.id === receipt.id);
+        return current?.status === "failed" ? current.error : current?.status;
+      }, { timeout: 20_000 }).toBe("activated");
+    };
     await open(); await inspect();
     await expect(page.getByRole("dialog")).toContainText("完整类型检查通过");
     await expect(page.getByRole("dialog")).toContainText("新增授权：commands");
-    await page.getByRole("button", { name: "授权并启用此版本" }).click();
+    await activate(page.getByRole("button", { name: "授权并启用此版本" }), "candidate-activate");
     await expect(page.getByRole("dialog")).toContainText("已生效");
-    const command = async () => {
+    const command = async (expected: string) => {
+      const turns = page.getByRole("region", { name: "任务轮次", exact: true });
+      const previous = await turns.count();
       await page.getByRole("button", { name: "关闭定制能力" }).click();
       await page.getByRole("textbox", { name: "任务内容" }).fill("/candidate-review");
+      const response = page.waitForResponse(r => r.request().method() === "POST" && r.url().endsWith("/submit"));
       await page.getByRole("button", { name: "发送任务" }).click();
-      await expect(page.locator(".conversation-heading")).toContainText("已完成");
+      expect((await response).status()).toBe(202);
+      await expect(turns).toHaveCount(previous + 1, { timeout: 20_000 });
+      await expect(turns.nth(previous)).toContainText(expected, { timeout: 20_000 });
+      await expect(turns.nth(previous).locator(".row-status").last()).toHaveText("已完成", { timeout: 20_000 });
     };
-    await command(); await expect(page.locator(".timeline")).toContainText("Ready");
+    await command("Ready");
     await writeFile(join(candidate.path, "index.ts"), "const wrong: number = 'string'; export default () => {}; ");
     await open(); await inspect();
     await expect(page.getByRole("dialog")).toContainText("类型检查未通过");
@@ -151,12 +175,12 @@ test("checks candidate diagnostics, activates an approved hash and rolls back wi
     await expect(page.getByRole("button", { name: "授权并启用此版本" })).toBeDisabled();
     await writeFile(join(candidate.path, "index.ts"), `import type { ExtensionFactory } from 'nekomimi/extensions'; export default ((api)=>{api.registerCommand('candidate-review',{description:'review',async handler(){return 'Candidate second version'}})}) satisfies ExtensionFactory;`);
     await inspect(); await expect(page.getByRole("dialog")).toContainText("完整类型检查通过");
-    await page.getByRole("button", { name: "授权并启用此版本" }).click();
+    await activate(page.getByRole("button", { name: "授权并启用此版本" }), "candidate-activate");
     await expect(page.getByRole("button", { name: /^回退 candidate-review 到/ })).toBeVisible();
-    await command(); await expect(page.locator(".timeline")).toContainText("Candidate second version");
-    await open(); await page.getByRole("button", { name: /^回退 candidate-review 到/ }).click();
+    await command("Candidate second version");
+    await open(); await activate(page.getByRole("button", { name: /^回退 candidate-review 到/ }), "candidate-rollback");
     await expect.poll(async () => (await store.active())[0]?.revision).toBe(originalHash);
-    await command();
+    await command("Ready");
     await expect(page.locator(".timeline")).toContainText("Ready");
     await expect(page.locator(".timeline")).toContainText("Candidate second version");
   } finally { await app.close(); }

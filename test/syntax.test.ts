@@ -31,7 +31,7 @@ test('fixed palette and supported languages preserve exact code including line e
   expect(await highlight('x\n'.repeat(5001),'ts')).toBeUndefined();
   expect(languageName('diff-ts')).toBe('diff-typescript');expect(fileLanguage('C:\\a\\x.ts')).toBe('typescript');
 });
-test('old/new grammar states survive hunks and 8/120 pagination, with exact truncated text',async()=>{
+test('old/new grammar states survive hunks and 8/120 pagination',async()=>{
   const old='/*\n'+Array.from({length:140},(_,i)=>`line ${i}`).join('\n')+'\n*/\nconst x = 1;\n';
   const next=old.replace('line 3','changed 3').replace('line 125','changed 125').replace('const x = 1','const x = 2');
   const a=await highlight(old,'ts'),b=await highlight(next,'ts');
@@ -47,10 +47,14 @@ test('old/new grammar states survive hunks and 8/120 pagination, with exact trun
   const added=different.lines.find(l=>l.kind==='add' && l.text.startsWith('const'))!;
   expect(new Set(removed.tokens!.map(t=>t.className)).size).toBe(1);
   expect(new Set(added.tokens!.map(t=>t.className)).size).toBeGreaterThan(1);
+});
+// Long-line JavaScript regex tokenization is CPU-bound and substantially slower on CI.
+// Keep its budget separate from the pagination/state assertions above.
+test('long-line diff tokens preserve exact truncated text',async()=>{
   const text='\uFEFFconst x="猫😺'+ 'x'.repeat(5000)+'";\r\n';
   const page=colorDiff(diffPage(createPatch('a.ts','',text)),undefined,await highlight(text,'ts'));
   expect(page.lines[1]!.truncated).toBe(true);expect(tokenText(page.lines[1]!.tokens!)).toBe(page.lines[1]!.text);
-});
+},30_000);
 test('extended diff keeps prefixes and distinct sides; malformed and unknown source fall back',async()=>{
   for(const text of ['@@ -1,2 +1,2 @@\n-const x = 1;\n+const x = "cat";\n // end\n','garbage\n+still readable','@@ -1 +1 @@\n-a\n+b\n@@ -8 +8 @@\n-x\n+y'])expect(plain(await highlight(text,'diff-ts'))).toBe(text);
   const result=await highlight('@@ -1 +1 @@\n-const a = 1;\n+const a = "x";','diff-ts');
