@@ -1,10 +1,14 @@
-import { test, expect, type Locator } from "@playwright/test";
+import { test, expect as baseExpect, type Locator } from "@playwright/test";
 import { mkdir, writeFile, copyFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startWeb } from "../../src/server/app.js";
 import { temporary, key } from "../helpers.js";
 import { Candidates } from "../../src/customization/candidates.js";
 import { Packages } from "../../src/customization/packages.js";
+// These scenarios include extension startup/cleanup, compilation, and management polling.
+// Keep a finite integration budget without retrying any side effects.
+const expect = baseExpect.configure({ timeout: 20_000 });
+test.describe.configure({ timeout: 90_000 });
 test('previews an unactivated candidate panel and places its recorded contribution in the sidebar',async({page})=>{
  const workspace=await temporary(),home=await temporary(),store=new Candidates(workspace),draft=await store.scaffold('sidebar-panel');const {readFile}=await import('node:fs/promises');
  await writeFile(join(draft.path,'extension.json'),JSON.stringify({name:'sidebar-panel',sdkVersion:2,entry:'index.ts',requiredCapabilities:['panels','commands','ui']}));
@@ -124,7 +128,6 @@ test("reviews a package, installs its command and uninstalls without erasing his
   } finally { await app.close(); }
 });
 test("checks candidate diagnostics, activates an approved hash and rolls back without losing history", async ({ page }) => {
-  test.setTimeout(90_000);
   const workspace = await temporary(), home = await temporary();
   const store = new Candidates(workspace);
   const candidate = await store.scaffold("candidate-review");

@@ -46,3 +46,5 @@
 ## 重新发布期间的追加修复
 
 提交 `870e335` 的 [CI 35882756788](https://github.com/kirineko/nekomimi/actions/runs/35882756788) 中 Linux 两组通过，macOS 22 单元 220/221 通过，唯一失败为 `customization-durable-workflows` 的显式重试/迁移综合用例超过 15 秒总预算。该用例串行包含多次 pinned extension 启动、释放与重载，现仅将该用例总预算设为 60 秒，所有产品内部预算和语义断言保持不变。使用官方 Node 22.19.0 运行完整 durable-workflows 文件：14/14 通过（27.85 秒）；类型及严格规格校验通过。新提交仍须完整标签 CI 通过。
+
+同轮 Windows 的安装包、进程、MCP、package-source 与候选更新/回退均通过，最后在面板工作流启动等待表单时超过默认 5 秒。trace 显示仍在 pinned activation，没有错误结果。结合本地 Provider/持久工作流同类超时，统一定制浏览器文件为 20 秒断言与 90 秒场景预算，无重试且保留所有语义断言。官方 Node 22.19.0 下完整定制浏览器测试 9/9 通过（47.6 秒），类型和严格规格校验通过。
