@@ -13,4 +13,6 @@
 ## 2. 综合验证
 
 - [x] 2.1 运行类型检查、发布检查、浏览器测试、安装包验收及 openspec validate --all --strict，记录实际结果。
-- [ ] 2.2 新提交在远端 Linux/macOS × Node 22/24 与 Windows CI 全部通过后记录结果；本机不能代替远端验收。
+- [x] 2.2 新提交在远端 Linux/macOS × Node 22/24 与 Windows CI 全部通过后记录结果；本机不能代替远端验收。
+
+远端验收：提交 `84f539031140f022b45b56ddf2a98a0dac9a3a8c` 的 [CI 35887485245](https://github.com/kirineko/nekomimi/actions/runs/35887485245) 五组全部成功，包含 Windows 原生安装、持久化回归及完整定制浏览器测试。
