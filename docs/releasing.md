@@ -33,9 +33,13 @@
 
 ## 后续版本
 
-更新 package.json 和 lockfile 版本，提交并推送代码，再创建并推送指向该提交的 `vX.Y.Z` 标签。等待标签 CI 的 Linux/macOS × Node.js 22/24 四组检查及 Windows 原生安装检查通过后，再发布正式 GitHub Release。工作流检出标签，检查版本与 main 祖先关系、registry 版本是否存在、测试、构建和打包。对生成的同一 tarball 验证后上传。
+更新 package.json 和 lockfile 版本，提交并推送代码，再创建并推送指向该提交的 `vX.Y.Z` 标签。等待标签 CI 的 Linux/macOS × Node.js 22/24 四组检查通过后，再发布正式 GitHub Release。工作流检出标签，检查版本与 main 祖先关系、registry 版本是否存在、测试、构建和打包。对生成的同一 tarball 验证后上传。
 
 普通分支 push/PR 不运行 GitHub Actions；仅推送 `v*` 标签触发 CI，正式 Release 触发发布流程。预发布和草稿不会执行正式上传。运行中的发布不会被新一轮自动取消。每次发布记录包版本、完整性信息与提交。
+
+## 当前平台范围
+
+当前仅执行 macOS/Linux 发布验证，Windows CI/CD 检查暂时移出，不作为发布门禁。待 macOS/Linux 稳定后，再统一优化 Windows 并恢复原生验收。已有 Windows 兼容实现和测试文件保留，历史发布记录不改写；本阶段不宣称 Windows 已通过当前版本验证。
 
 ## 失败处理
 

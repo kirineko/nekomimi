@@ -83,7 +83,7 @@ npm uninstall -g nekomimi
 
 **文件无法打开？** 打开的是运行 Nekomimi 服务的机器上的当前文件。请检查文件是否存在、系统默认程序关联及桌面环境；界面“已提交”表示打开请求已交给系统。文件打开仅对当前项目普通文件可用。
 
-**支持哪些系统？** 既有正式版的 macOS 和 Linux 已通过发布 CI 验收。0.2.0 的发布门禁包括 Linux/macOS × Node 22.19.0/24.15.0，以及 Windows 原生安装、扩展/MCP 清理和 Web 冒烟；具体运行结果见 [版本发布记录](https://github.com/kirineko/nekomimi/blob/main/docs/releases/0.2.0.md)。
+**支持哪些系统？** 当前重点支持和验证 macOS、Linux，发布检查覆盖这两个平台的 Node.js 22.19.0/24.15.0。Windows 暂不执行 CI/CD 检查，待 macOS/Linux 稳定后再统一优化和恢复原生验证；暂不保证当前版本在 Windows 上的完整体验。历史结果见 [版本发布记录](https://github.com/kirineko/nekomimi/blob/main/docs/releases/0.2.0.md)。
 
 ## 开发与文档
 
