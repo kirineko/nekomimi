@@ -8,3 +8,5 @@ import "./styles/workbench.css";
 import "./styles/syntax.css";
 
 import "./styles/customization.css";
+
+import "./styles/navigation.css";

@@ -1,3 +1,4 @@
+import { matchCommands, matchSkills } from "./commands.js";
 import { Value } from "typebox/value";
 import type { ProcessContext } from "./process.js";
 import { checkTypes } from "./validation.js";
@@ -674,16 +675,11 @@ export class CustomRun {
     };
   }
   async command(input: string): Promise<{ handled: boolean; text: string }> {
-    if (input === "/reload")
+    if (input.trimEnd() === "/reload")
       return { handled: true, text: JSON.stringify(this.host.requestReload()) };
     const skill = /^\/skill:([^\s]+)(?:\s+([\s\S]*))?$/.exec(input);
     if (skill) {
-      const candidates = this.activation.resources.filter(
-        (r) =>
-          r.kind === "skill" &&
-          r.status === "enabled" &&
-          (r.name === skill[1] || r.id === skill[1]),
-      );
+      const candidates = matchSkills(this.activation, skill[1]!);
       if (candidates.length !== 1)
         throw new Error("Skill missing or ambiguous");
       await this.load(candidates[0]!.id);
@@ -694,16 +690,7 @@ export class CustomRun {
     }
     const command = /^\/([^\s]+)(?:\s+([\s\S]*))?$/.exec(input);
     if (!command) return { handled: false, text: input };
-    const candidates = this.activation.extensions.flatMap((ext) =>
-      [...ext.commands]
-        .filter(
-          ([name]) =>
-            command[1] === name ||
-            command[1] === `${ext.resource.name}:${name}`,
-        )
-        .map(([, cmd]) => ({ ext, cmd })),
-    );
-    const workflows = this.activation.extensions.flatMap(ext => ext.workflows.filter(w => (w.triggers ?? []).some(t => t.kind === "command" && (command[1] === (t.name ?? w.id) || command[1] === `${ext.resource.name}:${t.name ?? w.id}`))));
+    const { candidates, workflows } = matchCommands(this.activation, command[1]!);
     if (workflows.length && candidates.length || workflows.length > 1) throw new Error("Command and workflow ambiguous; use /extension:command");
     if (workflows.length === 1) {
       if (this.trial || this.evidenceLinks.workflowId) throw new Error("Workflow starts require an explicit real run, without recursive step invocation");

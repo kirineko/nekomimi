@@ -70,6 +70,9 @@ export async function startWeb(
           res.setHeader('content-security-policy', `sandbox allow-scripts; default-src 'none'; script-src 'nonce-${document.nonce}'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-src 'none'; object-src 'none'; frame-ancestors 'self'`);
           res.end(document.html); return;
         }
+        if (req.method === "GET" && path === "/api/v1/commands") {
+          json(res, sessions.customization.commands()); return;
+        }
         if (path === '/api/v1/customization') {
           if (req.method === 'GET') { json(res, await sessions.customization.describe()); return; }
           if (req.method === 'POST') { json(res, await sessions.customizationAction(object(await body(req)))); return; }
@@ -103,6 +106,7 @@ export async function startWeb(
               await sessions.list(
                 integer(url.searchParams.get("offset"), 0),
                 Math.max(1, integer(url.searchParams.get("limit"), 30, 100)),
+                url.searchParams.get("revision") ?? undefined,
               ),
             );
             return;

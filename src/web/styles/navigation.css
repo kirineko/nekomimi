@@ -1,0 +1,49 @@
+/* Compact two-line navigation and command discovery. */
+/* All rows share the same left edge and right action/status edge. */
+.sidebar .section-label { margin: 16px 0 4px; padding: 0 12px; font-size: 11px; color: #796987; }
+.sidebar .section-label > span { min-width: 20px; padding: 1px 5px; border-radius: 6px; text-align: center; background: #ebe4f5; color: #705195; font-size: 10px; }
+.session-group { display: flex; align-items: center; gap: 6px; margin: 12px 12px 4px; color: #786287; font-size: 10px; font-weight: 600; line-height: 16px; }
+.session-group::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: #b098ce; }
+.session-group::after { content: ""; flex: 1; height: 1px; margin-left: 3px; background: linear-gradient(90deg, #e0d6eb, transparent); }
+.session-item { display: block; position: relative; border-radius: 9px; margin: 2px 0; }
+.session-item > .session { position: relative; display: block; width: 100%; height: 52px; min-height: 52px; padding: 6px 42px 25px 12px; margin: 0; border: 1px solid transparent; border-radius: 9px; background: transparent; }
+.session-item > .session:hover { background: #f0ebf7; }
+.session-item > .session.selected { background: linear-gradient(110deg, #ece2fa, #f4eefb); border-color: #dac9ed; box-shadow: inset 3px 0 #9062d1; }
+.session-item .session-title { font-size: 12px; font-weight: 500; line-height: 19px; }
+.session-item.is-selected .session-title { color: #593781; font-weight: 600; }
+.session-item .session-meta { position: absolute; right: 9px; bottom: 7px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; margin: 0; padding: 0 5px; border-radius: 4px; font-size: 10px; line-height: 16px; height: 16px; min-height: 0; color: #756b80; background: #eeebf2; }
+.session-item .session-meta i { width: 3px; height: 3px; background: currentColor; flex: none; }
+.session-item .session-meta.status-completed { color: #4b7262; background: #e8f2ed; }
+.session-item .session-meta.status-running { color: #7040ad; background: #eadefa; }
+.session-item .session-meta.status-cancelling { color: #896121; background: #faf0d9; }
+.session-item .session-meta.status-failed, .session-item .session-meta.status-interrupted { color: #a34861; background: #f9e9ef; }
+.session-item .session-options { top: 4px; right: 10px; }
+.session-options:has(.session-menu) { z-index: 5; }
+.session-menu-trigger { display: grid; place-items: center; width: 24px; height: 24px; min-height: 24px; padding: 0; border: 0; border-radius: 6px; color: #9483a6; background: transparent; font-size: 11px; letter-spacing: 1px; }
+.session-item.is-selected .session-menu-trigger { color: #80609f; }
+.session-menu-trigger:hover, .session-menu-trigger[aria-expanded=true] { background: #e5d8f3; color: #633890; }
+.session-menu { z-index: 6; right: 30px; top: 0; }
+.session-item .session-time { position: absolute; left: 13px; bottom: 8px; }
+.session-time-trigger { display: block; border: 0; padding: 0; height: 16px; background: transparent; color: #756480; font-size: 10px; line-height: 16px; font-variant-numeric: tabular-nums; }
+.session-item.is-selected .session-time-trigger { color: #755689; }
+.session-time-full { display: none; position: absolute; left: 0; bottom: 24px; z-index: 7; width: 176px; max-width: 70vw; padding: 8px; border: 1px solid #c8b8df; background: #fff; color: #49395d; border-radius: 8px; font-size: 11px; white-space: normal; overflow-wrap: anywhere; box-shadow: 0 6px 18px #36244318; pointer-events: none; }
+.session-time:hover .session-time-full, .session-time-trigger:focus-visible + .session-time-full, .session-time-full.is-visible { display: block; }
+.session-item:has(.session-time-full.is-visible), .session-item:focus-within { z-index: 2; }
+.session-more { margin: 12px; font-size: 12px; }
+.session-list-error { font-size: 12px; color: #a43650; overflow-wrap: anywhere; }
+.confirm-dialog header { display: flex; align-items: start; gap: 12px; justify-content: space-between; }
+.confirm-dialog header h2 { margin: 0; overflow-wrap: anywhere; font-size: 20px; }
+.confirm-dialog header button { flex: none; border: 0; background: #f1ebfa; color: #6840b3; font-size: 20px; padding: 2px 10px; }
+.confirm-dialog .error { color: #a43650; }
+.delete-backdrop { z-index: 100; }
+.command-popup { position: fixed; z-index: 25; border: 1px solid #c6b5e0; border-radius: 14px; background: #fff; color: #30263f; box-shadow: 0 8px 30px #40246620; overflow: auto; overscroll-behavior: contain; padding: 6px; }
+.command-popup-heading { position: sticky; top: -6px; z-index: 1; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; font-size: 11px; color: #6f6080; }
+.command-popup-heading button { padding: 0 6px; border: 0; background: transparent; font-size: 16px; }
+.command-option { scroll-margin-block: 36px 8px; display: grid; gap: 3px; width: 100%; text-align: left; border: 1px solid transparent; background: transparent; padding: 8px 10px; border-radius: 9px; color: #30263f; }
+.command-option[aria-selected=true] { background: #eee5fa; border-color: #b79cd8; }
+.command-option-name { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; overflow-wrap: anywhere; }
+.command-option-name small { color: #695779; font-weight: normal; font-size: 11px; }
+.command-option-description { font-size: 12px; color: #695779; overflow-wrap: anywhere; }
+.command-empty { padding: 8px 12px; font-size: 12px; color: #695779; }
+.command-empty button { margin-left: 8px; font-size: 12px; }
+@media(max-width: 600px) { .session-menu-trigger { width: 30px; } .command-option { padding: 9px; } }

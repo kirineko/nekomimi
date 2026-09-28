@@ -33,6 +33,7 @@ export interface SessionInfo {
   title: string;
   status: string;
   updatedAt: string;
+  activityAt?: string | null;
   runId?: string;
   error?: string;
 }
@@ -114,4 +115,23 @@ export function integer(
   if (!/^\d+$/.test(value) || !Number.isSafeInteger(n) || n < 0 || n > max)
     throw new ApiError(400, "invalid_input", "分页参数无效");
   return n;
+}
+
+export interface SessionPage {
+  sessions: SessionInfo[];
+  next?: number;
+  listRevision: string;
+}
+export interface CommandSuggestion {
+  id: string;
+  kind: "builtin" | "extension" | "workflow" | "skill";
+  name: string;
+  description: string;
+  source: string;
+  insertText: string;
+}
+export interface CommandCatalog {
+  revision: string;
+  ready: boolean;
+  commands: CommandSuggestion[];
 }

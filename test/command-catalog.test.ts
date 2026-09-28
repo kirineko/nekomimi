@@ -1,0 +1,64 @@
+import { it, expect } from "vitest";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { commandCatalog, matchCommands, matchSkills } from "../src/customization/commands.js";
+import type { Activation, LoadedExtension } from "../src/customization/host.js";
+import { startWeb } from "../src/server/app.js";
+import { temporary, key, delay } from "./helpers.js";
+
+const extension = (name: string, id: string) => ({ resource: {name, id}, commands: new Map([["moe", {description:"猫咪问候",handler:async()=>"hello"}]]),workflows:[] } as unknown as LoadedExtension);
+it("matches catalogs and dispatch for duplicate commands, workflow aliases and skill ids", () => {
+  const a = extension("a", "a"), b = extension("b", "b");
+  const activation = {revision:"r",extensions:[a,b],resources:[{id:"skill:one",name:"review",kind:"skill",status:"enabled"},{id:"skill:two",name:"review",kind:"skill",status:"enabled"}]} as unknown as Activation;
+  expect(commandCatalog().ready).toBe(false);
+  let catalog = commandCatalog(activation);
+  expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaining(["/reload","/a:moe","/b:moe","/skill:skill:one"]));
+  expect(catalog.commands.some(c=>c.name==="/moe")).toBe(false);
+  expect(matchCommands(activation,"a:moe").candidates).toHaveLength(1);
+  expect(matchSkills(activation,"review")).toHaveLength(2);
+  expect(matchSkills(activation,"skill:one")).toHaveLength(1);
+  b.resource.name="a";
+  expect(commandCatalog(activation).commands.some(c=>c.kind==="extension")).toBe(false);
+  b.resource.name="b"; b.commands.clear();
+  b.workflows=[{id:"flow",triggers:[{kind:"command",name:"moe"},{kind:"command",name:"second"}]} as any];
+  catalog=commandCatalog(activation);
+  expect(catalog.commands.map(c=>c.name)).toContain("/b:moe");
+  expect(matchCommands(activation,"moe").workflows).toHaveLength(1);
+  a.commands.set("reload", {description:"shadow",handler:async()=>{}});
+  expect(commandCatalog(activation).commands.map(c=>c.name)).toContain("/a:reload");
+  a.unavailable=()=>true;
+  expect(commandCatalog(activation).commands.some(c=>c.kind==="extension")).toBe(false);
+});
+it("provides authenticated, read-only active metadata before first execution and after restart", async () => {
+  const workspace=await temporary(),home=await temporary(),root=join(workspace,".nekomimi/extensions/cat");
+  await mkdir(root,{recursive:true});
+  await writeFile(join(root,"extension.json"),JSON.stringify({name:"cat",sdkVersion:1,entry:"index.ts"}));
+  const source=`import { appendFileSync } from 'node:fs'; export default api=>{appendFileSync(${JSON.stringify(join(workspace,"activations"))},'x');api.registerCommand('moe',{description:'猫咪问候',async handler(){appendFileSync(${JSON.stringify(join(workspace,"executions"))},'x');return '喵';}});}`;
+  await writeFile(join(root,"index.ts"),source);
+  const options={workspace,home,apiKey:key,naming:false,runtime:{fetch:async()=>{throw new Error("unexpected model call");}}};
+  let app=await startWeb(options);
+  const req=(path:string,value?:unknown)=>fetch(app.origin+"/api/v1"+path,{method:value===undefined?"GET":"POST",headers:{authorization:`Bearer ${app.token}`,origin:app.origin,"content-type":"application/json"},body:value===undefined?undefined:JSON.stringify(value)});
+  const until=async(check:()=>Promise<boolean>)=>{for(let i=0;i<150;i++){if(await check())return;await delay(20);}throw new Error("fixture did not settle");};
+  try {
+    expect((await fetch(app.origin+"/api/v1/commands")).status).toBe(401);
+    await until(async()=> (await (await req("/commands")).json()).ready);
+    const initial=await(await req("/customization")).json(); expect(initial.receipts).toEqual([]); const resource=initial.resources.find((r:any)=>r.name==="cat");
+    expect((await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe")).toBe(false);
+    await req("/customization",{action:"set",id:resource.id,enabled:true,trusted:true,revision:initial.settingsRevision});
+    await until(async()=> (await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe"));
+    const session=await app.sessions.create("catalog check");
+    const journalPath=join(app.sessions.root,session.id,"journal.jsonl");
+    const journal=await readFile(journalPath,"utf8"),activations=await readFile(join(workspace,"activations"),"utf8");
+    const catalog=await(await req("/commands")).json();
+    for(let i=0;i<3;i++) expect(await(await req("/commands")).json()).toEqual(catalog);
+    expect(JSON.stringify(catalog)).not.toContain(key); expect(JSON.stringify(catalog)).not.toContain("handler");
+    expect(await readFile(journalPath,"utf8")).toBe(journal);
+    expect(await readFile(join(workspace,"activations"),"utf8")).toBe(activations);
+    await expect(readFile(join(workspace,"executions"))).rejects.toMatchObject({code:"ENOENT"});
+    await app.close(); app=await startWeb(options);
+    await until(async()=> (await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe"));
+    const management=await(await req("/customization")).json();
+    await req("/customization",{action:"set",id:resource.id,enabled:false,trusted:true,revision:management.settingsRevision});
+    await until(async()=> !(await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe"));
+  } finally {await app.close();}
+});

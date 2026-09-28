@@ -1,3 +1,4 @@
+import { commandCatalog } from "./commands.js";
 import { ExtensionProcess } from "./process.js";
 import { PROCESS_LIMITS } from "./rpc.js";
 import { checkTypes } from "./validation.js";
@@ -159,6 +160,12 @@ export class CustomizationHost {
   reserveReloadId(): string {
     return this.receipts.find(r => r.status === "pending")?.id ?? this.nextReloadId;
   }
+  // Startup is lifecycle initialization, not a user management action receipt.
+  async initialize() {
+    const receipt: ReloadReceipt = { id: id(), status: "pending" };
+    await this.reload(receipt);
+    if (receipt.status === "failed") this.degraded = receipt.error;
+  }
   requestReload(): ReloadReceipt {
     const pending = this.receipts.find((r) => r.status === "pending");
     if (pending) return pending;
@@ -228,6 +235,7 @@ export class CustomizationHost {
     return receipt;
     });
   }
+  commands() { return commandCatalog(this.active); }
   async describe() {
     const resources = await this.catalog.discover();
     return {

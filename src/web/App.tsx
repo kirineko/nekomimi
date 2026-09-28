@@ -1,3 +1,5 @@
+import { useSessionList } from "./hooks/useSessionList";
+import { DeleteSessionDialog } from "./components/DeleteSessionDialog";
 import { Customization, ExtensionInteractions } from "./components/Customization";
 import { SyntaxScope } from "./components/Markdown";
 import {
@@ -25,10 +27,9 @@ export function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [customizationOpen, setCustomizationOpen] = useState(false);
   const [deleting, setDeleting] = useState<SessionInfo>();
-  const [deleteBusy, setDeleteBusy] = useState(false);
+  const [commandRevision, setCommandRevision] = useState(0);
   const [error, setError] = useState("");
-  const [sessions, setSessions] = useState<SessionInfo[]>([]);
-  const [next, setNext] = useState<number>();
+  const { sessions, setSessions, next, load, loading: listLoading, error: listError } = useSessionList();
   const [selected, setSelected] = useState<string | undefined>(
     new URLSearchParams(location.search).get("session") ?? undefined,
   );
@@ -65,20 +66,6 @@ export function App() {
     older,
     latest,
   } = useSession(config ? selected : undefined);
-  const load = useCallback(async (offset = 0) => {
-    const data = await api<{ sessions: SessionInfo[]; next?: number }>(
-      `/sessions?offset=${offset}`,
-    );
-    setSessions((old) =>
-      offset
-        ? [
-            ...old,
-            ...data.sessions.filter((s) => !old.some((o) => o.id === s.id)),
-          ]
-        : data.sessions,
-    );
-    setNext(data.next);
-  }, []);
   useEffect(() => {
     void connect()
       .then((value) => {
@@ -92,7 +79,13 @@ export function App() {
       setSessions((old) =>
         old.map((s) => (s.id === snapshot.session.id ? snapshot.session : s)),
       );
-  }, [snapshot?.session.status, snapshot?.session.id, snapshot?.session.title]);
+  }, [snapshot?.session.status, snapshot?.session.id, snapshot?.session.title, snapshot?.session.activityAt]);
+  useEffect(() => { if (config) void load(); }, [config, snapshot?.session.activityAt, snapshot?.session.status, connection, load]);
+  useEffect(() => {
+    const refresh = () => { if (config) { void load(); setCommandRevision(n => n + 1); } };
+    window.addEventListener("focus", refresh); window.addEventListener("online", refresh);
+    return () => { window.removeEventListener("focus", refresh); window.removeEventListener("online", refresh); };
+  }, [config, load]);
   useEffect(() => {
     if (follow.current && conversation.current)
       conversation.current.scrollTop = conversation.current.scrollHeight;
@@ -112,20 +105,7 @@ export function App() {
   const refreshConfig = async () => {
     setConfig(await api("/config"));
     await load();
-  };
-  const remove = async () => {
-    if (!deleting) return;
-    setDeleteBusy(true);
-    try {
-      await api(`/sessions/${deleting.id}/delete`, {});
-      if (selected === deleting.id) clearSelection();
-      setDeleting(undefined);
-      await load();
-    } catch (e) {
-      setError(String(e));
-    } finally {
-      setDeleteBusy(false);
-    }
+    setCommandRevision(n => n + 1);
   };
   const choose = (id: string) => {
     follow.current = true;
@@ -142,7 +122,7 @@ export function App() {
         version: 1,
         title: "新会话",
       });
-      setSessions((old) => [session, ...old]);
+      await load();
       choose(session.id);
       return session.id;
     } finally {
@@ -159,6 +139,8 @@ export function App() {
       prompt: text,
     });
     pending.current = undefined;
+    void load();
+    setCommandRevision(n => n + 1);
   };
   const busy = ["running", "cancelling"].includes(
     snapshot?.session.status ?? "",
@@ -205,56 +187,19 @@ export function App() {
             changed={refreshConfig}
           />
         )}
-        {deleting && (
-          <div className="modal-backdrop">
-            <section
-              className="settings-panel confirm-dialog"
-              role="dialog"
-              aria-modal="true"
-              aria-label="删除会话"
-            >
-              <h2>删除 {deleting.title}？</h2>
-              <p>删除会话记录与附件，保留工作区文件。</p>
-              {error && <p role="alert">{error}</p>}
-              <div className="confirm-actions">
-                <button
-                  className="ghost"
-                  disabled={deleteBusy}
-                  onClick={() => setDeleting(undefined)}
-                >
-                  保留会话
-                </button>
-                <button
-                  className="danger"
-                  disabled={deleteBusy}
-                  onClick={() => void remove()}
-                >
-                  确认删除
-                </button>
-                {(deleting.status === "running" || deleting.naming) && (
-                  <button
-                    onClick={() =>
-                      void api(`/sessions/${deleting.id}/cancel`, {
-                        version: 1,
-                        runId: deleting.runId,
-                      })
-                        .then(() => load())
-                        .catch((e) => setError(String(e)))
-                    }
-                  >
-                    停止运行
-                  </button>
-                )}
-              </div>
-            </section>
-          </div>
-        )}
+        {deleting && <DeleteSessionDialog session={deleting} close={() => setDeleting(undefined)} removed={id => {
+          if (selected === id) clearSelection();
+          setDeleting(undefined); void load();
+        }} />}
         <Sidebar
           settings={() => setSettingsOpen(true)}
           remove={(s) => {
             setError("");
             setDeleting(s);
           }}
+          loading={listLoading}
+          error={listError}
+          retry={() => void load()}
           sessions={sessions}
           selected={selected}
           choose={choose}
@@ -264,7 +209,7 @@ export function App() {
           more={
             next !== undefined
               ? () => {
-                  void load(next).catch((e) => setError(String(e)));
+                  void load(true).catch((e) => setError(String(e)));
                 }
               : undefined
           }
@@ -403,7 +348,8 @@ export function App() {
           </section>
           {selected && <ExtensionInteractions key={selected} sessionId={selected} />}
           <Composer
-            key={selected ?? "new"}
+            commandRevision={commandRevision}
+            connected={!!config && connection === "connected"}
             busy={busy}
             configured={!!config?.configured && !creating}
             submit={submit}

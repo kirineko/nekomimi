@@ -318,7 +318,7 @@ test('compact layout preserves controls and inspector focus at all target sizes'
 test("shows and downloads diagnostics even when durable cursor and status do not change", async ({page}) => {
   const session = await app.sessions.create("诊断测试");
   await page.goto(app.url);
-  await page.getByRole("button", { name: /诊断测试/ }).click();
+  await page.getByRole("navigation", { name: "会话列表" }).locator(".session").filter({ hasText: "诊断测试" }).click();
   await expect(page.getByText("已连接", { exact:false })).toBeVisible();
   await page.waitForTimeout(400);
   const entry = await app.sessions.entry(session.id);

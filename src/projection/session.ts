@@ -229,6 +229,11 @@ export class SessionProjection {
       id,
       title: meta?.title ?? "未命名会话",
       updatedAt: events.at(-1)?.timestamp ?? "",
+      activityAt: events.reduce<string | null>((latest, event) => {
+        if (!["session.created", "command.accepted", "run.started", "run.finished"].includes(event.type)) return latest;
+        const time = Date.parse(event.timestamp);
+        return Number.isFinite(time) && (!latest || time > Date.parse(latest)) ? new Date(time).toISOString() : latest;
+      }, null),
       runId: active?.runId ?? started?.runId,
       status: active
         ? active.cancelling

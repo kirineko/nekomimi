@@ -13,7 +13,7 @@ import { ConfigStore } from "../config/store.js";
 import { workspacePaths } from "../storage/paths.js";
 import { migrate } from "../storage/migrate.js";
 import { nameSession } from "../session/title.js";
-import { mkdir, realpath, readdir, rename, rm, open } from "node:fs/promises";
+import { mkdir, realpath, readdir, rename, rm, open, stat } from "node:fs/promises";
 import { join } from "node:path";
 import lockfile from "proper-lockfile";
 import {
@@ -191,6 +191,7 @@ export class Sessions {
     for (const name of await readdir(paths.deleting))
       if (validId(name))
         await rm(join(paths.deleting, name), { recursive: true, force: true });
+    void service.customization.initialize();
     return service;
   }
   check() {
@@ -238,7 +239,7 @@ export class Sessions {
     for (const value of this.entries.get(sessionId)?.diagnostics ?? []) merged.set(value.id, value);
     return [...merged.values()].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
   }
-  async entry(sessionId: string): Promise<Entry> {
+  async entry(sessionId: string, project = true): Promise<Entry> {
     const directory = await this.sessionDirectory(sessionId);
     let entry = this.entries.get(sessionId);
     if (!entry) {
@@ -267,7 +268,7 @@ export class Sessions {
       )?.payload as { workspace?: string } | undefined;
       if (meta?.workspace !== this.workspace)
         throw new ApiError(403, "workspace", "会话不属于当前工作区");
-      await current.projection.update(current.reader.events);
+      if (project) await current.projection.update(current.reader.events);
     });
     current.tail = update.catch(() => {});
     await update;
@@ -307,21 +308,36 @@ export class Sessions {
     }
     return this.info(sessionId, await this.entry(sessionId));
   }
-  async list(offset: number, limit: number) {
-    const ids = (await readdir(this.root)).filter(validId).sort();
+  private listCache = new Map<string, { stamp: string; info: ReturnType<Sessions["info"]> }>();
+  async list(offset: number, limit: number, revision?: string) {
+    const ids = (await readdir(this.root)).filter(validId);
+    const live = new Set(ids);
+    for (const cached of this.listCache.keys()) if (!live.has(cached)) this.listCache.delete(cached);
     const results = [];
-    // Scan metadata without loading full attachments for every inactive session on every list.
-    for (const sessionId of ids.slice(offset, offset + limit)) {
+    for (const sessionId of ids) {
       try {
-        const entry = await this.entry(sessionId);
-        results.push(this.info(sessionId, entry));
+        const directory = await this.sessionDirectory(sessionId);
+        const mark = await stat(join(directory, "durable.json"));
+        const journal = await stat(join(directory, "journal.jsonl"));
+        const stamp = `${mark.ino}:${mark.mtimeMs}:${mark.ctimeMs}:${mark.size}:${journal.ino}:${journal.mtimeMs}:${journal.size}:${this.active?.sessionId === sessionId ? this.active.cancelling ? "cancelling" : "running" : "inactive"}`;
+        let cached = this.listCache.get(sessionId);
+        if (!cached || cached.stamp !== stamp || this.active?.sessionId === sessionId || this.naming?.sessionId === sessionId) {
+          cached = { stamp, info: this.info(sessionId, await this.entry(sessionId, false)) };
+          this.listCache.set(sessionId, cached);
+        }
+        results.push({ ...cached.info, naming: this.naming?.sessionId === sessionId });
       } catch {
-        /* Unmanaged/corrupt entries are not exposed as readable sessions. */
+        this.listCache.delete(sessionId);
+        // Unmanaged or corrupt entries are not readable sessions.
       }
     }
+    results.sort((a, b) => (b.activityAt ? Date.parse(b.activityAt) : -8640000000000000) - (a.activityAt ? Date.parse(a.activityAt) : -8640000000000000) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    const listRevision = hash(JSON.stringify(results.map(s => [s.id, s.activityAt])));
+    if (revision && revision !== listRevision) throw new ApiError(409, "list_changed", "会话顺序已更新，正在重新加载");
     return {
-      sessions: results,
-      next: offset + limit < ids.length ? offset + limit : undefined,
+      sessions: results.slice(offset, offset + limit),
+      next: offset + limit < results.length ? offset + limit : undefined,
+      listRevision,
     };
   }
   async submit(sessionId: string, command: Submit): Promise<Receipt> {
