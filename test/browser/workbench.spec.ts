@@ -25,7 +25,7 @@ test.beforeEach(async () => {
         calls++;
         const body = JSON.parse(String(init?.body));
         const prompt =
-          body.input.filter((i: any) => i.role === "user").at(-1)?.content[0]
+          body.input.filter((i: any) => i.role === "user" && !i.content?.[0]?.text?.startsWith("[Runtime environment data;")).at(-1)?.content[0]
             ?.text ?? "";
         if (prompt.includes("wait"))
           return await new Promise<Response>((_r, reject) =>

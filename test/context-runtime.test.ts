@@ -23,7 +23,7 @@ for(const protocol of ['responses','chat-completions'])it(`auto + manual ${proto
  try{
   await seed(f.session);const result=await run({...opts,prompt:'continue'});expect(result.status,result.error).toBe('completed');expect(requests.length).toBeGreaterThan(1);
   const summaryRequests=requests.filter(r=>JSON.stringify(r).includes('Conversation data:'));expect(summaryRequests.length).toBeGreaterThan(0);expect(summaryRequests.every(r=>r.tools.length===0)).toBe(true);
-  expect(JSON.stringify(requests.at(-1))).toContain('历史摘要');expect(JSON.stringify(requests.at(-1)).length).toBeLessThan(20000);
+  expect(JSON.stringify(requests.at(-1))).toContain('Runtime environment data');expect(JSON.stringify(requests.at(-1))).toContain('历史摘要');expect(JSON.stringify(requests.at(-1)).length).toBeLessThan(20000);
   let events=(await readSession(f.session)).events;expect(events.some(e=>e.type==='compaction.completed')).toBe(true);
   expect(events.filter(e=>e.type==='context.add').some(e=>JSON.stringify(e.payload).includes('History 0'))).toBe(true);
   const sent=events.filter(e=>e.type==='request.dispatched');for(let i=0;i<sent.length;i++)expect(JSON.parse((await readArtifact(result.session,(sent[i]!.payload as any).body)).toString())).toEqual(requests[i]);

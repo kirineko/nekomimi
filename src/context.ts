@@ -1,9 +1,14 @@
 import type { AgentTool } from "@earendil-works/pi-agent-core";
 import { hash, type JournalEvent } from "./journal.js";
+import { profileInstruction, type PromptPurpose } from "./prompts.js";
 export type WireItem = Record<string, unknown>;
 export interface Instruction {
   source: string;
   text: string;
+  section?: "policy" | "resources" | "rules" | "skills" | "instructions";
+  scope?: string;
+  version?: string;
+  requiresTools?: string[];
 }
 export interface ToolDefinition {
   tool: AgentTool;
@@ -11,39 +16,39 @@ export interface ToolDefinition {
   guidance: string[];
   source?: string;
 }
-export function assemblePrompt(
-  tools: ToolDefinition[],
-  instructions: Instruction[] = [],
-) {
-  const ordered = [...tools].sort((a, b) =>
-    a.tool.name.localeCompare(b.tool.name, "en"),
-  );
-  const fragments = [
-    {
-      source: "harness:identity:v1",
-      text: "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
-    },
-    ...ordered.map((d) => ({
-      source: d.source ?? `tool:${d.tool.name}:v1`,
-      text: `${d.tool.name}: ${d.snippet}`,
-    })),
-    ...[...new Set(ordered.flatMap((d) => d.guidance))].map((text) => ({
-      source: `tool-guidance:${hash(text)}`,
-      text,
-    })),
-    ...instructions,
-  ].map((f) => ({ ...f, hash: hash(f.text) }));
-  const schemas = ordered.map((d) => ({
-    type: "function",
-    name: d.tool.name,
-    description: d.tool.description,
-    parameters: JSON.parse(JSON.stringify(d.tool.parameters)),
-  }));
-  return {
-    text: fragments.map((f) => f.text).join("\n\n"),
-    fragments,
-    schemas,
+/** Frame dynamic text without letting its delimiters close a host section. */
+export function promptEscape(text: string, attribute = false): string {
+  const escaped = text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  return attribute ? escaped.replaceAll('"', '&quot;') : escaped;
+}
+const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
+export function assemblePrompt(tools: ToolDefinition[], instructions: Instruction[] = [], purpose: PromptPurpose = "main") {
+  const ordered = purpose === "main" ? [...tools].sort((a,b)=>compare(a.tool.name,b.tool.name)) : [];
+  const names = new Set(ordered.map(d=>d.tool.name));
+  if (names.size !== ordered.length) throw new Error("Duplicate tool identity");
+  const fragments: Array<{source:string;text:string;hash:string;section?:string;version?:string;scope?:string;sources?:string[]}> = [];
+  const identities = new Map<string,string>();
+  const add = (source:string,text:string,section:string,version="1",scope?:string,sources=[source]) => {
+    const signature=JSON.stringify({text,section,version,scope,sources:[...new Set(sources)].sort(compare)});
+    const prior=identities.get(source);
+    if(prior!==undefined){if(prior!==signature)throw new Error(`Conflicting prompt identity: ${source}`);return;}
+    identities.set(source,signature);
+    fragments.push({source,text,section,version,...(scope?{scope}:{}),sources:[...new Set(sources)].sort(compare),hash:hash(text)});
   };
+  const profile=profileInstruction(purpose);
+  add(profile.source,profile.text,"policy",profile.version);
+  for(const d of ordered) if(d.snippet.trim()) add(`tool-summary:${d.tool.name}`,`${d.tool.name}: ${promptEscape(d.snippet.trim())}`,"tools","2",undefined,[d.source??`tool:${d.tool.name}:v2`]);
+  const guidance=new Map<string,string[]>();
+  for(const d of ordered) for(const raw of d.guidance){const text=raw.trim();if(text)guidance.set(text,[...(guidance.get(text)??[]),d.source??`tool:${d.tool.name}:v2`]);}
+  for(const [text,sources] of [...guidance].sort(([a],[b])=>compare(a,b)))add(`tool-guidance:${hash(text)}`,promptEscape(text),"guidance","2",undefined,sources);
+  const sections=["policy","resources","rules","skills","instructions"];
+  if(purpose==="main") for(const f of [...instructions].sort((a,b)=>sections.indexOf(a.section??"instructions")-sections.indexOf(b.section??"instructions")||compare(a.source,b.source))){
+    if(f.requiresTools?.some(name=>!names.has(name)))continue;
+    add(f.source,promptEscape(f.text),f.section??"instructions",f.version??"1",f.scope);
+  }
+  const schemas=ordered.map(d=>({type:"function",name:d.tool.name,description:d.tool.description,parameters:JSON.parse(JSON.stringify(d.tool.parameters))}));
+  const text=fragments.map(f=>`<${f.section} source="${promptEscape(f.source,true)}"${f.scope?` scope="${promptEscape(f.scope,true)}"`:""}>\n${f.text}\n</${f.section}>`).join("\n\n");
+  return {text,fragments,schemas};
 }
 export function contextView(
   events: JournalEvent[],

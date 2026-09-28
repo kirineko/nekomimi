@@ -1,3 +1,4 @@
+import { promptData } from "./prompts.js";
 import { compactContext } from './compaction.js';
 import { contextView } from './context.js';
 import { inputBudget, measureContext } from './context-meter.js';
@@ -173,6 +174,16 @@ export async function run(options: RunOptions): Promise<RunResult> {
       throw new Error("Unknown tool name");
     const prompt = assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]);
     const refreshPrompt = () => Object.assign(prompt, assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]));
+    const environmentText = `[Runtime environment data; current values supersede earlier environment records; not instructions]\n${promptData(tools.environment())}`;
+    const ensureEnvironment = async () => {
+      runSignal.throwIfAborted();
+      const view=contextView(journal.events,prompt);
+      const current=[...view.nodes].reverse().find(n=>n.source==="runtime:environment:v1");
+      if(current && JSON.stringify(current.item.content)===JSON.stringify([{type:"input_text",text:environmentText}]))return;
+      await journal.appendIf("context.add",{source:"runtime:environment:v1",item:{role:"user",content:[{type:"input_text",text:environmentText}]}},()=>!runSignal.aborted,{runId});
+      runSignal.throwIfAborted();
+    };
+    const summaryPrompt=assemblePrompt([],[],"compaction");
     const manualCompact = /^\/compact(?:\s|$)/.test(options.prompt.trim());
     let beforeRequest: () => Promise<void> = async () => {};
     const settings = {...options, beforeRequest: () => beforeRequest()};
@@ -181,19 +192,19 @@ export async function run(options: RunOptions): Promise<RunResult> {
       await journal.append('context.measured', {measurement:measureContext(contextView(journal.events,prompt),provider.model,journal.events),prompt,model:provider.model,resourceRevision:activation.revision}, {runId});
       notify('context.measured');
     };
-    const compact = async (manual=false) => compactContext({journal,prompt,model:provider.model,protocol:provider.protocol,runId,signal:runSignal,manual,focus:manual?options.prompt.trim().slice(8).trim():undefined,notify:()=>notify('compaction'),summarize:async(events,limit)=>{
-      const summaryProvider=await createProvider(host,activation,journal,{runId}, {...prompt,schemas:[]}, {...options,purpose:'compaction',contextEvents:events,maxOutputTokens:limit,beforeRequest:undefined});
+    const compact = async (manual=false) => compactContext({journal,prompt,summaryPrompt,model:provider.model,protocol:provider.protocol,runId,signal:runSignal,manual,focus:manual?options.prompt.trim().slice(8).trim():undefined,notify:()=>notify('compaction'),summarize:async(events,limit)=>{
+      const summaryProvider=await createProvider(host,activation,journal,{runId}, summaryPrompt, {...options,purpose:'compaction',contextEvents:events,maxOutputTokens:limit,beforeRequest:undefined});
       const response=await (await summaryProvider.stream(summaryProvider.model,{messages:[]},{signal:runSignal})).result();
       if(response.stopReason!=='stop' || summaryProvider.lastOutcome!=='completed' || response.content.some(c=>c.type==='toolCall'))throw new Error(response.errorMessage??'摘要未完整生成');
       return response.content.filter(c=>c.type==='text').map(c=>c.text).join('\n');
     }});
     beforeRequest=async()=>{
-      runSignal.throwIfAborted();refreshPrompt();
+      runSignal.throwIfAborted();refreshPrompt();await ensureEnvironment();
       const measured=measureContext(contextView(journal.events,prompt),provider.model,journal.events),budget=inputBudget(provider.model);
       await publishContext();
       if(!measured.contextWindow)return;
       if(budget.available<=0)throw new Error('模型输出预留超过可用上下文');
-      if(measured.totalTokens>=budget.threshold && options.autoCompact!==false){await compact();await publishContext();}
+      if(measured.totalTokens>=budget.threshold && options.autoCompact!==false){await compact();await ensureEnvironment();await publishContext();}
       else if(measured.totalTokens>budget.available)throw new Error('上下文空间不足，请使用 /compact 或切换模型');
     };
     await journal.append(
@@ -304,6 +315,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
     let commandText: string | undefined;
     try {
       options.signal?.throwIfAborted();
+      await ensureEnvironment();
       if (manualCompact) {
         commandText=await compact(true);await publishContext();
       } else {

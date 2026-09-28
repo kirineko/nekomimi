@@ -72,7 +72,9 @@ it('reads a skill from the captured run revision even if its source changes', as
     const active = await host.acquire(); const custom = new CustomRun(host, active, journal, 'run', new AbortController().signal, { apiKey: key }); await custom.initialize([]);
     await writeFile(path, source.replace('ORIGINAL_SKILL', 'CHANGED_SKILL'));
     const skill = active.resources.find(r => r.kind === 'skill')!;
-    expect(await custom.load(skill.id)).toBe(source);
+    expect(await custom.load(skill.id)).toContain("loaded into current instructions");
+    expect(custom.instructions.some(i=>i.text.includes(source))).toBe(true);
+    expect(custom.instructions.some(i=>i.text.includes("CHANGED_SKILL"))).toBe(false);
     await rm(path); await expect(custom.load(skill.id)).rejects.toThrow("missing");
   } finally { await journal.close(); await host.release(); await host.close(); }
 });

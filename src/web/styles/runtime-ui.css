@@ -84,3 +84,18 @@
 .run-recovery {border-color:color-mix(in srgb,var(--accent) 25%,var(--line));background:color-mix(in srgb,var(--accent) 5%,var(--surface));color:var(--ink);border-radius:var(--ui-panel-radius,12px);}.run-recovery strong {color:var(--accent);}.run-recovery button {color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:var(--ui-control-radius,10px);background:var(--surface);}
 @media(prefers-reduced-motion:reduce){.header-menu *,.export-dialog *,.topbar-actions>button {transition:none!important;}}
 .header-menu {padding:calc(12px * var(--ui-scale,1));gap:calc(8px * var(--ui-scale,1));}.header-menu button,.export-dialog button {padding:var(--ui-padding,8px) calc(var(--ui-padding,8px) * 1.5);}.export-dialog {padding:calc(24px * var(--ui-scale,1));}.export-formats {gap:calc(10px * var(--ui-scale,1));}
+
+/* Keep composer actions consistent with runtime themes, including custom fonts. */
+.composer { border-color: var(--line); box-shadow: 0 4px 20px color-mix(in srgb,var(--ink) 4%,transparent); }
+.composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb,var(--accent) 9%,transparent); }
+.composer textarea::placeholder { color: var(--muted); }
+.composer .composer-action { display: grid; place-items: center; flex: 0 0 auto; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; transition: background .15s, transform .15s; }
+.composer-action svg { width: 22px; height: 22px; }
+.composer-action.primary svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.composer .composer-action.primary:not(:disabled) { background: var(--accent); color: var(--accent-ink, #fff); }
+.composer .composer-action.primary:not(:disabled):hover { background: var(--accent-hover,var(--accent)); transform: translateY(-1px); }
+.composer .composer-action.primary:disabled { background: color-mix(in srgb,var(--accent) 12%,var(--surface)); color: var(--muted); }
+.composer .composer-action.stop { background: color-mix(in srgb,var(--accent) 12%,var(--surface)); color: var(--accent); }
+.composer-action.stop svg { fill: currentColor; }
+.composer .composer-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .composer .composer-action { transition: none; } }

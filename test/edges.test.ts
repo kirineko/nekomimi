@@ -26,7 +26,7 @@ it('passes user and read-tool images through original wire history', async () =>
   const result = await run({ workspace, session: join(workspace, 's'), prompt: 'read image', apiKey: key, images: [{ type: 'image', mimeType: 'image/png', data: png }],
     fetch: async (_u, init) => { bodies.push(JSON.parse(String(init?.body))); return bodies.length === 1 ? response([callItem('read', { path: 'pixel.png' })]) : response([textItem()]); } });
   expect(result.status).toBe('completed');
-  expect(bodies[0].input[0].content[1].type).toBe('input_image');
+  expect(bodies[0].input.find((i: any) => i.content?.[0]?.text === 'read image').content[1].type).toBe('input_image');
   expect(bodies[1].input.find((i: any) => i.type === 'function_call_output').output[0].type).toBe('input_image');
 });
 it('keeps separate results for multiple calls and bounds agent turns', async () => {

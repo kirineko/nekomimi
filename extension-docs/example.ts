@@ -2,7 +2,8 @@ import type { ExtensionAPI } from "nekomimi/extensions";
 export default function (api: ExtensionAPI) {
   api.registerTool({
     name: "check",
-    description: "Return the review checklist",
+    description: "Return a fixed review checklist and record used=true in extension state. This does not inspect files or establish that a review passed.",
+    promptSnippet: "Get the review checklist",
     parameters: { type: "object", properties: {} },
     promptGuidelines: ["Use the checklist when reviewing changes."],
     async execute(_args, ctx) {

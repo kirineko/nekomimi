@@ -13,6 +13,11 @@ import { randomUUID } from "node:crypto";
 import { sdkCatalog } from "./node_modules/nekomimi/dist/customization/sdk.js";
 import {oauthFixture} from './oauth-fixture.mjs';
 import {reviewPackageFiles} from './review-package-fixture.mjs';
+const installedGuides = await sdkCatalog();
+for (const guide of installedGuides.guides) {
+  const content = await sdkCatalog(guide.entry);
+  if (!content.text || !content.hash) throw Error('Missing installed guide or content evidence: '+guide.entry);
+}
 if (SDK_VERSION !== 2) throw new Error("Missing public SDK");
 const workspace = resolve("custom-workspace");
 const home = resolve("custom-home");

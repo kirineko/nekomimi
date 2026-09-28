@@ -218,7 +218,7 @@ it("rejects same-scope collisions and duplicate tool registration", async () => 
 });
 it("explicit skills load content and arguments and disabled tools withdraw prompt contributions", async () => {
   const f = await setup(
-    `export default api=>{api.registerTool({name:'check',description:'UNIQUE_GUIDANCE',parameters:{type:'object'},async execute(){return {content:[]}}})}`,
+    `export default api=>{api.registerTool({name:'check',description:'Check result',promptGuidelines:['UNIQUE_GUIDANCE'],parameters:{type:'object'},async execute(){return {content:[]}}})}`,
   );
   const skill = join(f.workspace, ".agents/skills/check");
   await mkdir(skill, { recursive: true });
@@ -240,7 +240,7 @@ it("explicit skills load content and arguments and disabled tools withdraw promp
     });
     expect(r.status).toBe("completed");
     expect(body.instructions).toContain("SKILL_BODY_SENTINEL");
-    expect(body.input[0].content[0].text).toContain("extra-argument");
+    expect(body.input.some((i: any)=>i.content?.[0]?.text?.includes("extra-argument"))).toBe(true);
     expect(body.instructions).toContain("UNIQUE_GUIDANCE");
     await f.host.catalog.decide(f.id, false, false, 1);
     r = await run({

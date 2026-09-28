@@ -33,7 +33,7 @@ export async function branchHistory(source: string, destination: string, workspa
       const artifact = await journal.artifact(raw);
       await journal.append("branch.created", { sourceSessionId: session.events[0]?.sessionId, sourceRevision: view.revision, sourceEvents: artifact, sourceArtifacts: refs, omittedReasoning: reasoning.length, conversion: "canonical-dialogue-v1", sideEffectsReplayed: false });
       await journal.append("session.title", { title: "跨 Provider 历史分支", source: "branch" });
-      for (const node of nodes) await journal.append("context.add", { source: `branch:${node.eventId}:${node.itemIndex}`, item: node.item, originalEventId: node.eventId, sourceEvents: artifact, conversion: "canonical-dialogue-v1" });
+      for (const node of nodes) await journal.append("context.add", { source: node.source === "runtime:environment:v1" ? node.source : `branch:${node.eventId}:${node.itemIndex}`, item: node.item, originalEventId: node.eventId, sourceEvents: artifact, conversion: "canonical-dialogue-v1" });
     } finally { await journal.close(); }
     await rename(staging, destination);
     return { directory: await realpath(destination), sourceRevision: view.revision, omittedReasoning: reasoning.length };

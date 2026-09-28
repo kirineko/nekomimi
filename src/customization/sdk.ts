@@ -4,9 +4,16 @@ import { join, dirname } from 'node:path';
 import { hash } from '../journal.js';
 import { readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { exists } from "./resources.js";
+import { exists, safePath } from "./resources.js";
 import { CAPABILITIES } from "./types.js";
 import { CONTRACT_VERSIONS } from "./contracts.js";
+export const developmentGuides = {
+ "README.md":"Choose a development path", "tool-prompts.md":"Tool descriptions, parameters and prompt contributions",
+ "extensions.md":"Commands, tools and hooks", "skills-rules-mcp.md":"Skills, scoped rules and MCP",
+ "runtime-ui.md":"Fonts, colors, spacing, bubbles, motion, panels and runtime views",
+ "platform.md":"Providers, workflows and versioned packages", "validation.md":"Static validation, trials and diagnostics",
+ "customization-lifecycle.md":"Activation and evidence-based delivery", "scopes.md":"Project and user scope", "context.md":"Context and compaction",
+} as const;
 const entries = {
   public: "../extensions",
   legacy: "./types",
@@ -34,9 +41,18 @@ export async function sdkCatalog(entry?: string, workspace?: string, home?:strin
   const identity=await hostIdentity();
   const actualHome=userHome(home);
   const scopes={default:'project',supported:['project','user'],precedence:'project-over-user',candidateScope:'project',userWritesRequireAuthorization:true,executionAuthorization:'separate',paths:{project:workspace?{extensions:join(workspace,'.nekomimi/extensions'),skills:join(workspace,'.agents/skills'),rules:join(workspace,'AGENTS.md'),mcp:join(workspace,'.nekomimi/mcp.json')}:undefined,user:{extensions:join(actualHome,'extensions'),skills:actualHome===userHome()?join(homedir(),'.agents/skills'):join(actualHome,'skills'),rules:join(actualHome,'AGENTS.md'),mcp:join(actualHome,'mcp.json')}}};
-  const catalog = { scopes, host: {...identity,workspace,home:actualHome,cli:identity.requiresBuild?{requiresBuild:true,packageRoot:dirname(dirname(identity.entry)),hint:"源码宿主优先使用内置工具；构建后 CLI 属于新构建，需重新核对身份。"}:{command:identity.node,args:[identity.entry,...(workspace?["--workspace",workspace]:[]),"--home",actualHome]}}, templates:["command","theme","panel","view"], capabilityStatus:"supported_not_granted", versions: CONTRACT_VERSIONS, supportedSdkVersions: [1, 2], availableCapabilities: CAPABILITIES, entries: Object.keys(entries) };
+  const catalog = { scopes, host: {...identity,workspace,home:actualHome,cli:identity.requiresBuild?{requiresBuild:true,packageRoot:dirname(dirname(identity.entry)),hint:"源码宿主优先使用内置工具；构建后 CLI 属于新构建，需重新核对身份。"}:{command:identity.node,args:[identity.entry,...(workspace?["--workspace",workspace]:[]),"--home",actualHome]}}, templates:["command","theme","panel","view"], capabilityStatus:"supported_not_granted", versions: CONTRACT_VERSIONS, supportedSdkVersions: [1, 2], availableCapabilities: CAPABILITIES, entries: Object.keys(entries), guides: Object.entries(developmentGuides).map(([path,topic])=>({entry:`guide:${path}`,topic})) };
   if (!entry) return {...catalog, guidance:"使用 public 查询完整 SDK，ui 查询全局风格与视图。支持能力不等于资源获准能力；当前宿主状态见 customization_status；resource_list 仅为本轮固定快照。"};
-  if (!Object.hasOwn(entries, entry)) throw new Error("Unknown SDK catalog entry");
+  if(entry.startsWith("guide:")) {
+    const path=entry.slice(6);
+    const root=fileURLToPath(new URL('../../extension-docs/',import.meta.url));
+    if(!/\.(md|ts|json|txt)$/.test(path))throw new Error("Unsupported guide file; choose a catalog entry");
+    const actual=await safePath(root,path);
+    if(!await exists(actual))throw new Error("Installed guide unavailable; omit entry to list SDK guides");
+    const text=await readFile(actual,"utf8");
+    return {...catalog,entry,text,hash:hash(text),source:`installed-guide:${path}`};
+  }
+  if (!Object.hasOwn(entries, entry)) throw new Error("Unknown SDK catalog entry; omit entry to list types and guides");
   const path = entries[entry as keyof typeof entries];
   const declaration = fileURLToPath(new URL(path + ".d.ts", import.meta.url));
   const source = fileURLToPath(new URL(path + ".ts", import.meta.url));

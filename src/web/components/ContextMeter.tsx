@@ -9,10 +9,10 @@ export function ContextMeter({value,compacting=false}:{value?:ContextOccupancy;c
   return <div className="context-meter" ref={root} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setOpen(false);}} onKeyDown={e=>{if(e.key==='Escape'&&open){e.preventDefault();e.stopPropagation();setOpen(false);button.current?.focus();}}}>
     <button ref={button} className="context-trigger" type="button" aria-label="上下文占用明细" aria-expanded={open} aria-controls={open?id:undefined} onClick={()=>setOpen(!open)}>
       <svg aria-hidden="true" viewBox="0 0 24 24"><circle className="context-ring-track" cx="12" cy="12" r="9"/><circle className="context-ring" cx="12" cy="12" r="9" pathLength="100" strokeDasharray={`${Math.min(100,percent??0)} 100`}/></svg>
-      <span>{compacting?'整理中…':percent===undefined?'上下文':`~${percent}%`}</span>
+      <span>{compacting?'整理中…':percent===undefined?'上下文':`${percent}%`}</span>
     </button>
     {open&&<section id={id} className="context-popover" aria-label="上下文占用">
-      <div className="context-heading"><span>上下文已用 <strong>{percent===undefined?'—':`~${percent}%`}</strong></span><span className="context-total">{value?<><strong>~{number(value.totalTokens)}</strong><span> / {value.contextWindow?number(value.contextWindow):'容量未知'}</span></>:'等待首次请求'}</span></div>
+      <div className="context-heading"><span>上下文已用 <strong>{percent===undefined?'—':`${percent}%`}</strong></span><span className="context-total">{value?<><strong>~{number(value.totalTokens)}</strong><span> / {value.contextWindow?number(value.contextWindow):'容量未知'}</span></>:'等待首次请求'}</span></div>
       <div className="context-bar" aria-hidden="true">{rows.map(([name,n],i)=><span key={name} className={`context-part part-${i}`} style={{width:`${Math.min(100,n/(value?.contextWindow??value?.totalTokens??1)*100)}%`}}/>)}</div>
       <dl>{rows.map(([name,n],i)=><div key={name}><dt><i className={`context-part part-${i}`}/>{name}</dt><dd>~{number(n)}</dd></div>)}</dl>
     </section>}

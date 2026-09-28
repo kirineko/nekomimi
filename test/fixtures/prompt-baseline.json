@@ -1,0 +1,1554 @@
+{
+  "revision": "135b8cdc4a744563099bfd2ba67a469fc6c64b2f",
+  "model": "deepseek-flash",
+  "measurement": "estimateTokens; offline; no model calls",
+  "inputs": {
+    "coding": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nbash: Run a command using /bin/bash; timeout is milliseconds.\n\ncustomization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.\n\ncustomization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.\n\ncustomization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.\n\ncustomization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.\n\ncustomization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.\n\ncustomization_validate: Statically validate discovered extensions without executing factories.\n\nedit: Precisely replace unique non-overlapping text regions in one original file.\n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nresource_list: List available resource IDs, kinds, sources and states in this activation.\n\nresource_read: Read a discovered skill, rule or SDK document by its resource ID.\n\nresource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.\n\nwrite: Create a new file or replace a previously read file in full.\n\nCommands use /bin/bash. Use available native search commands; inspect exit status and output.\n\nFor edit, oldText must match exactly; do not rely on fuzzy matching.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nIf a file changed externally, read it again before writing.\n\nAvailable resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.\n\n[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:bash:v1",
+          "text": "bash: Run a command using /bin/bash; timeout is milliseconds.",
+          "hash": "71bd8d58e6bca1debbae0d513cd5945498472247791fad3110409a31e592af8d"
+        },
+        {
+          "source": "harness:customization_candidate:1",
+          "text": "customization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.",
+          "hash": "eb00158a74300f02330b3a47817a2c3360c071ddce75448fc65c7960ba1d391d"
+        },
+        {
+          "source": "harness:customization_package:1",
+          "text": "customization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.",
+          "hash": "b32b0c814146f59210833d088bdf304a32e4a5e9e54bc1a77ee8fc57ae7bccb0"
+        },
+        {
+          "source": "harness:customization_reload:1",
+          "text": "customization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.",
+          "hash": "9c1d51d3506948e2fdb545cf3a802a6e08e2da120ab277f6504887c688d53514"
+        },
+        {
+          "source": "harness:customization_sdk:1",
+          "text": "customization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.",
+          "hash": "b720a30b483f372b73824b2d098eadbeae1408cfa861262a13c2f4c56dd50dca"
+        },
+        {
+          "source": "harness:customization_status:1",
+          "text": "customization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.",
+          "hash": "4c1bf9563cb1d88e59bcae3ea088a5d7a735408a030450a356f7e4b02decc1c0"
+        },
+        {
+          "source": "harness:customization_validate:1",
+          "text": "customization_validate: Statically validate discovered extensions without executing factories.",
+          "hash": "7d61d7599a596fb80b352a5610eaaeb81825075d38f2d25215990d3adc48f767"
+        },
+        {
+          "source": "tool:edit:v1",
+          "text": "edit: Precisely replace unique non-overlapping text regions in one original file.",
+          "hash": "4f23ce971c134cb9e339c34ab28dbc774e84e71c32354201712571f4dc643254"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "harness:resource_list:1",
+          "text": "resource_list: List available resource IDs, kinds, sources and states in this activation.",
+          "hash": "ee61fdd5ef1f61eb0302d99195dbae775afe1d86444bf480b47ca2d2e05b0fb7"
+        },
+        {
+          "source": "harness:resource_read:1",
+          "text": "resource_read: Read a discovered skill, rule or SDK document by its resource ID.",
+          "hash": "43076e2ad7d330c43551bfb750f2ff0bdb50ac22414899f63b1b6940ced92138"
+        },
+        {
+          "source": "harness:resource_write:1",
+          "text": "resource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
+          "hash": "16058700883583117a2684bd00210eb0c2228b7f420fcb69ead856a4abdd010d"
+        },
+        {
+          "source": "tool:write:v1",
+          "text": "write: Create a new file or replace a previously read file in full.",
+          "hash": "fa511f9a83822436d3058844cefdfbf8780897d8f967a1959478a113180c14cd"
+        },
+        {
+          "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+          "text": "Commands use /bin/bash. Use available native search commands; inspect exit status and output.",
+          "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+        },
+        {
+          "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+          "text": "For edit, oldText must match exactly; do not rely on fuzzy matching.",
+          "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+          "text": "If a file changed externally, read it again before writing.",
+          "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+        },
+        {
+          "source": "resources:<revision>",
+          "text": "Available resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.",
+          "hash": "7c2aeb7d8483576c12d06df73c3b2238c50f5379efef93307f560e76783dd378"
+        },
+        {
+          "source": "rule:<workspace>/AGENTS.md",
+          "text": "[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+          "hash": "3dbb38aa295938e34624319d3d3fdcd9bfa6f1179bcc03d111d1aae9d605bc37"
+        }
+      ],
+      "schemas": [
+        {
+          "type": "function",
+          "name": "bash",
+          "description": "Run a command using /bin/bash; timeout is milliseconds.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "timeout": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600000
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_candidate",
+          "description": "Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "create"
+                  },
+                  {
+                    "type": "string",
+                    "const": "list"
+                  },
+                  {
+                    "type": "string",
+                    "const": "inspect"
+                  },
+                  {
+                    "type": "string",
+                    "const": "activate"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rollback"
+                  },
+                  {
+                    "type": "string",
+                    "const": "export"
+                  }
+                ]
+              },
+              "output": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "template": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "contentHash": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_package",
+          "description": "Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "prepare"
+                  },
+                  {
+                    "type": "string",
+                    "const": "inspect"
+                  },
+                  {
+                    "type": "string",
+                    "const": "activate"
+                  },
+                  {
+                    "type": "string",
+                    "const": "list"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rollback"
+                  },
+                  {
+                    "type": "string",
+                    "const": "export"
+                  },
+                  {
+                    "type": "string",
+                    "const": "uninstall"
+                  }
+                ]
+              },
+              "scope": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "project"
+                  },
+                  {
+                    "type": "string",
+                    "const": "user"
+                  }
+                ]
+              },
+              "id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "object",
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "registry": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "commit": {
+                    "type": "string"
+                  }
+                }
+              },
+              "bindings": {
+                "type": "object",
+                "patternProperties": {
+                  "^.*$": {
+                    "type": "string"
+                  }
+                }
+              },
+              "output": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_reload",
+          "description": "Queue resource reload after this run finishes. Receipt pending is not activation success.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_sdk",
+          "description": "Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "entry": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_status",
+          "description": "Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_validate",
+          "description": "Statically validate discovered extensions without executing factories.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "edit",
+          "description": "Precisely replace unique non-overlapping text regions in one original file.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "edits"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "edits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "oldText",
+                    "newText"
+                  ],
+                  "properties": {
+                    "oldText": {
+                      "type": "string"
+                    },
+                    "newText": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "read",
+          "description": "Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_list",
+          "description": "List available resource IDs, kinds, sources and states in this activation.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_read",
+          "description": "Read a discovered skill, rule or SDK document by its resource ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_write",
+          "description": "Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "kind",
+              "name",
+              "file",
+              "text",
+              "previousHash"
+            ],
+            "properties": {
+              "scope": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "project"
+                  },
+                  {
+                    "type": "string",
+                    "const": "user"
+                  }
+                ]
+              },
+              "kind": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "extension"
+                  },
+                  {
+                    "type": "string",
+                    "const": "skill"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rule"
+                  },
+                  {
+                    "type": "string",
+                    "const": "mcp"
+                  }
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "previousHash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "description": "Create a new file or replace a previously read file in full.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "content"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "restricted": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nAvailable resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.\n\n[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "resources:<revision>",
+          "text": "Available resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.",
+          "hash": "7c2aeb7d8483576c12d06df73c3b2238c50f5379efef93307f560e76783dd378"
+        },
+        {
+          "source": "rule:<workspace>/AGENTS.md",
+          "text": "[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+          "hash": "3dbb38aa295938e34624319d3d3fdcd9bfa6f1179bcc03d111d1aae9d605bc37"
+        }
+      ],
+      "schemas": [
+        {
+          "type": "function",
+          "name": "read",
+          "description": "Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "customization": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nbash: Run a command using /bin/bash; timeout is milliseconds.\n\ncustomization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.\n\ncustomization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.\n\ncustomization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.\n\ncustomization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.\n\ncustomization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.\n\ncustomization_validate: Statically validate discovered extensions without executing factories.\n\nedit: Precisely replace unique non-overlapping text regions in one original file.\n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nresource_list: List available resource IDs, kinds, sources and states in this activation.\n\nresource_read: Read a discovered skill, rule or SDK document by its resource ID.\n\nresource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.\n\nwrite: Create a new file or replace a previously read file in full.\n\nCommands use /bin/bash. Use available native search commands; inspect exit status and output.\n\nFor edit, oldText must match exactly; do not rely on fuzzy matching.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nIf a file changed externally, read it again before writing.\n\nAvailable resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.\n\n[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.\n\nDevelop a project theme; verify activation before reporting success.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:bash:v1",
+          "text": "bash: Run a command using /bin/bash; timeout is milliseconds.",
+          "hash": "71bd8d58e6bca1debbae0d513cd5945498472247791fad3110409a31e592af8d"
+        },
+        {
+          "source": "harness:customization_candidate:1",
+          "text": "customization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.",
+          "hash": "eb00158a74300f02330b3a47817a2c3360c071ddce75448fc65c7960ba1d391d"
+        },
+        {
+          "source": "harness:customization_package:1",
+          "text": "customization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.",
+          "hash": "b32b0c814146f59210833d088bdf304a32e4a5e9e54bc1a77ee8fc57ae7bccb0"
+        },
+        {
+          "source": "harness:customization_reload:1",
+          "text": "customization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.",
+          "hash": "9c1d51d3506948e2fdb545cf3a802a6e08e2da120ab277f6504887c688d53514"
+        },
+        {
+          "source": "harness:customization_sdk:1",
+          "text": "customization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.",
+          "hash": "b720a30b483f372b73824b2d098eadbeae1408cfa861262a13c2f4c56dd50dca"
+        },
+        {
+          "source": "harness:customization_status:1",
+          "text": "customization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.",
+          "hash": "4c1bf9563cb1d88e59bcae3ea088a5d7a735408a030450a356f7e4b02decc1c0"
+        },
+        {
+          "source": "harness:customization_validate:1",
+          "text": "customization_validate: Statically validate discovered extensions without executing factories.",
+          "hash": "7d61d7599a596fb80b352a5610eaaeb81825075d38f2d25215990d3adc48f767"
+        },
+        {
+          "source": "tool:edit:v1",
+          "text": "edit: Precisely replace unique non-overlapping text regions in one original file.",
+          "hash": "4f23ce971c134cb9e339c34ab28dbc774e84e71c32354201712571f4dc643254"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "harness:resource_list:1",
+          "text": "resource_list: List available resource IDs, kinds, sources and states in this activation.",
+          "hash": "ee61fdd5ef1f61eb0302d99195dbae775afe1d86444bf480b47ca2d2e05b0fb7"
+        },
+        {
+          "source": "harness:resource_read:1",
+          "text": "resource_read: Read a discovered skill, rule or SDK document by its resource ID.",
+          "hash": "43076e2ad7d330c43551bfb750f2ff0bdb50ac22414899f63b1b6940ced92138"
+        },
+        {
+          "source": "harness:resource_write:1",
+          "text": "resource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
+          "hash": "16058700883583117a2684bd00210eb0c2228b7f420fcb69ead856a4abdd010d"
+        },
+        {
+          "source": "tool:write:v1",
+          "text": "write: Create a new file or replace a previously read file in full.",
+          "hash": "fa511f9a83822436d3058844cefdfbf8780897d8f967a1959478a113180c14cd"
+        },
+        {
+          "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+          "text": "Commands use /bin/bash. Use available native search commands; inspect exit status and output.",
+          "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+        },
+        {
+          "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+          "text": "For edit, oldText must match exactly; do not rely on fuzzy matching.",
+          "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+          "text": "If a file changed externally, read it again before writing.",
+          "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+        },
+        {
+          "source": "resources:<revision>",
+          "text": "Available resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.",
+          "hash": "7c2aeb7d8483576c12d06df73c3b2238c50f5379efef93307f560e76783dd378"
+        },
+        {
+          "source": "rule:<workspace>/AGENTS.md",
+          "text": "[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+          "hash": "3dbb38aa295938e34624319d3d3fdcd9bfa6f1179bcc03d111d1aae9d605bc37"
+        },
+        {
+          "source": "fixture:development",
+          "text": "Develop a project theme; verify activation before reporting success.",
+          "hash": "a91af3f67681d99f39415ba3f549d6157f1489f0789214e8724844fd2334ccb6"
+        }
+      ],
+      "schemas": [
+        {
+          "type": "function",
+          "name": "bash",
+          "description": "Run a command using /bin/bash; timeout is milliseconds.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "timeout": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600000
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_candidate",
+          "description": "Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "create"
+                  },
+                  {
+                    "type": "string",
+                    "const": "list"
+                  },
+                  {
+                    "type": "string",
+                    "const": "inspect"
+                  },
+                  {
+                    "type": "string",
+                    "const": "activate"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rollback"
+                  },
+                  {
+                    "type": "string",
+                    "const": "export"
+                  }
+                ]
+              },
+              "output": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "template": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "contentHash": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_package",
+          "description": "Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "prepare"
+                  },
+                  {
+                    "type": "string",
+                    "const": "inspect"
+                  },
+                  {
+                    "type": "string",
+                    "const": "activate"
+                  },
+                  {
+                    "type": "string",
+                    "const": "list"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rollback"
+                  },
+                  {
+                    "type": "string",
+                    "const": "export"
+                  },
+                  {
+                    "type": "string",
+                    "const": "uninstall"
+                  }
+                ]
+              },
+              "scope": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "project"
+                  },
+                  {
+                    "type": "string",
+                    "const": "user"
+                  }
+                ]
+              },
+              "id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "object",
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "registry": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "commit": {
+                    "type": "string"
+                  }
+                }
+              },
+              "bindings": {
+                "type": "object",
+                "patternProperties": {
+                  "^.*$": {
+                    "type": "string"
+                  }
+                }
+              },
+              "output": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_reload",
+          "description": "Queue resource reload after this run finishes. Receipt pending is not activation success.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_sdk",
+          "description": "Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "entry": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_status",
+          "description": "Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "customization_validate",
+          "description": "Statically validate discovered extensions without executing factories.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "edit",
+          "description": "Precisely replace unique non-overlapping text regions in one original file.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "edits"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "edits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "oldText",
+                    "newText"
+                  ],
+                  "properties": {
+                    "oldText": {
+                      "type": "string"
+                    },
+                    "newText": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "read",
+          "description": "Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_list",
+          "description": "List available resource IDs, kinds, sources and states in this activation.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_read",
+          "description": "Read a discovered skill, rule or SDK document by its resource ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "resource_write",
+          "description": "Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "kind",
+              "name",
+              "file",
+              "text",
+              "previousHash"
+            ],
+            "properties": {
+              "scope": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "project"
+                  },
+                  {
+                    "type": "string",
+                    "const": "user"
+                  }
+                ]
+              },
+              "kind": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "extension"
+                  },
+                  {
+                    "type": "string",
+                    "const": "skill"
+                  },
+                  {
+                    "type": "string",
+                    "const": "rule"
+                  },
+                  {
+                    "type": "string",
+                    "const": "mcp"
+                  }
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "previousHash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "description": "Create a new file or replace a previously read file in full.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "content"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "mcp": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nbash: Run a command using /bin/bash; timeout is milliseconds.\n\nedit: Precisely replace unique non-overlapping text regions in one original file.\n\nmcp_fixture: \n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nwrite: Create a new file or replace a previously read file in full.\n\nCommands use /bin/bash. Use available native search commands; inspect exit status and output.\n\nFor edit, oldText must match exactly; do not rely on fuzzy matching.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nIf a file changed externally, read it again before writing.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:bash:v1",
+          "text": "bash: Run a command using /bin/bash; timeout is milliseconds.",
+          "hash": "71bd8d58e6bca1debbae0d513cd5945498472247791fad3110409a31e592af8d"
+        },
+        {
+          "source": "tool:edit:v1",
+          "text": "edit: Precisely replace unique non-overlapping text regions in one original file.",
+          "hash": "4f23ce971c134cb9e339c34ab28dbc774e84e71c32354201712571f4dc643254"
+        },
+        {
+          "source": "mcp:fixture:v1",
+          "text": "mcp_fixture: ",
+          "hash": "504d5ec3da6ef8bb034ad62e79b45c46fb8680e0357e8092b329b0e71999e231"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "tool:write:v1",
+          "text": "write: Create a new file or replace a previously read file in full.",
+          "hash": "fa511f9a83822436d3058844cefdfbf8780897d8f967a1959478a113180c14cd"
+        },
+        {
+          "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+          "text": "Commands use /bin/bash. Use available native search commands; inspect exit status and output.",
+          "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+        },
+        {
+          "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+          "text": "For edit, oldText must match exactly; do not rely on fuzzy matching.",
+          "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+          "text": "If a file changed externally, read it again before writing.",
+          "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+        }
+      ],
+      "schemas": [
+        {
+          "type": "function",
+          "name": "bash",
+          "description": "Run a command using /bin/bash; timeout is milliseconds.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "timeout": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600000
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "edit",
+          "description": "Precisely replace unique non-overlapping text regions in one original file.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "edits"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "edits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "oldText",
+                    "newText"
+                  ],
+                  "properties": {
+                    "oldText": {
+                      "type": "string"
+                    },
+                    "newText": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "mcp_fixture",
+          "description": "Read remote records",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "type": "function",
+          "name": "read",
+          "description": "Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "description": "Create a new file or replace a previously read file in full.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "content"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "rulesSkill": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nbash: Run a command using /bin/bash; timeout is milliseconds.\n\nedit: Precisely replace unique non-overlapping text regions in one original file.\n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nwrite: Create a new file or replace a previously read file in full.\n\nCommands use /bin/bash. Use available native search commands; inspect exit status and output.\n\nFor edit, oldText must match exactly; do not rely on fuzzy matching.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nIf a file changed externally, read it again before writing.\n\nOnly src/ follows these rules.\n\nRead changes and verify tests.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:bash:v1",
+          "text": "bash: Run a command using /bin/bash; timeout is milliseconds.",
+          "hash": "71bd8d58e6bca1debbae0d513cd5945498472247791fad3110409a31e592af8d"
+        },
+        {
+          "source": "tool:edit:v1",
+          "text": "edit: Precisely replace unique non-overlapping text regions in one original file.",
+          "hash": "4f23ce971c134cb9e339c34ab28dbc774e84e71c32354201712571f4dc643254"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "tool:write:v1",
+          "text": "write: Create a new file or replace a previously read file in full.",
+          "hash": "fa511f9a83822436d3058844cefdfbf8780897d8f967a1959478a113180c14cd"
+        },
+        {
+          "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+          "text": "Commands use /bin/bash. Use available native search commands; inspect exit status and output.",
+          "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+        },
+        {
+          "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+          "text": "For edit, oldText must match exactly; do not rely on fuzzy matching.",
+          "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+          "text": "If a file changed externally, read it again before writing.",
+          "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+        },
+        {
+          "source": "rule:fixture",
+          "text": "Only src/ follows these rules.",
+          "hash": "92bd0a513259d30370387efdc35a0263d57d54e358e4fbbd2088a5cb4ff8c94a"
+        },
+        {
+          "source": "skill:fixture",
+          "text": "Read changes and verify tests.",
+          "hash": "ea43e7f0528bea25e90f9ec252b360ffa14fea5af989a290bbc1b30bd88ff2b5"
+        }
+      ],
+      "schemas": [
+        {
+          "type": "function",
+          "name": "bash",
+          "description": "Run a command using /bin/bash; timeout is milliseconds.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "timeout": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600000
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "edit",
+          "description": "Precisely replace unique non-overlapping text regions in one original file.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "edits"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "edits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "oldText",
+                    "newText"
+                  ],
+                  "properties": {
+                    "oldText": {
+                      "type": "string"
+                    },
+                    "newText": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "read",
+          "description": "Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "function",
+          "name": "write",
+          "description": "Create a new file or replace a previously read file in full.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "path",
+              "content"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "compaction": {
+      "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.\n\nbash: Run a command using /bin/bash; timeout is milliseconds.\n\ncustomization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.\n\ncustomization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.\n\ncustomization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.\n\ncustomization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.\n\ncustomization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.\n\ncustomization_validate: Statically validate discovered extensions without executing factories.\n\nedit: Precisely replace unique non-overlapping text regions in one original file.\n\nread: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.\n\nresource_list: List available resource IDs, kinds, sources and states in this activation.\n\nresource_read: Read a discovered skill, rule or SDK document by its resource ID.\n\nresource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.\n\nwrite: Create a new file or replace a previously read file in full.\n\nCommands use /bin/bash. Use available native search commands; inspect exit status and output.\n\nFor edit, oldText must match exactly; do not rely on fuzzy matching.\n\nRead existing files before modifying them. Follow the returned byte offset to continue truncated reads.\n\nIf a file changed externally, read it again before writing.\n\nAvailable resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.\n\n[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+      "fragments": [
+        {
+          "source": "harness:identity:v1",
+          "text": "You are a coding assistant in the user's workspace. Inspect relevant context, make focused changes, and verify results. Preserve unrelated changes. Report uncertainty and incomplete work accurately.",
+          "hash": "2caa8f346d858ce27c6b72c23f0f5c9f4772168056e55aa00399f4a4aa9a9961"
+        },
+        {
+          "source": "tool:bash:v1",
+          "text": "bash: Run a command using /bin/bash; timeout is milliseconds.",
+          "hash": "71bd8d58e6bca1debbae0d513cd5945498472247791fad3110409a31e592af8d"
+        },
+        {
+          "source": "harness:customization_candidate:1",
+          "text": "customization_candidate: Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.",
+          "hash": "eb00158a74300f02330b3a47817a2c3360c071ddce75448fc65c7960ba1d391d"
+        },
+        {
+          "source": "harness:customization_package:1",
+          "text": "customization_package: Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.",
+          "hash": "b32b0c814146f59210833d088bdf304a32e4a5e9e54bc1a77ee8fc57ae7bccb0"
+        },
+        {
+          "source": "harness:customization_reload:1",
+          "text": "customization_reload: Queue resource reload after this run finishes. Receipt pending is not activation success.",
+          "hash": "9c1d51d3506948e2fdb545cf3a802a6e08e2da120ab277f6504887c688d53514"
+        },
+        {
+          "source": "harness:customization_sdk:1",
+          "text": "customization_sdk: Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.",
+          "hash": "b720a30b483f372b73824b2d098eadbeae1408cfa861262a13c2f4c56dd50dca"
+        },
+        {
+          "source": "harness:customization_status:1",
+          "text": "customization_status: Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.",
+          "hash": "4c1bf9563cb1d88e59bcae3ea088a5d7a735408a030450a356f7e4b02decc1c0"
+        },
+        {
+          "source": "harness:customization_validate:1",
+          "text": "customization_validate: Statically validate discovered extensions without executing factories.",
+          "hash": "7d61d7599a596fb80b352a5610eaaeb81825075d38f2d25215990d3adc48f767"
+        },
+        {
+          "source": "tool:edit:v1",
+          "text": "edit: Precisely replace unique non-overlapping text regions in one original file.",
+          "hash": "4f23ce971c134cb9e339c34ab28dbc774e84e71c32354201712571f4dc643254"
+        },
+        {
+          "source": "tool:read:v1",
+          "text": "read: Read a UTF-8 file or image. Text offset and limit are bytes; artifact:<sha256> reads saved evidence.",
+          "hash": "815141570d3711330d3d47210b5dc853054fc63c9197dbc5cd00e1a423444f9b"
+        },
+        {
+          "source": "harness:resource_list:1",
+          "text": "resource_list: List available resource IDs, kinds, sources and states in this activation.",
+          "hash": "ee61fdd5ef1f61eb0302d99195dbae775afe1d86444bf480b47ca2d2e05b0fb7"
+        },
+        {
+          "source": "harness:resource_read:1",
+          "text": "resource_read: Read a discovered skill, rule or SDK document by its resource ID.",
+          "hash": "43076e2ad7d330c43551bfb750f2ff0bdb50ac22414899f63b1b6940ced92138"
+        },
+        {
+          "source": "harness:resource_write:1",
+          "text": "resource_write: Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
+          "hash": "16058700883583117a2684bd00210eb0c2228b7f420fcb69ead856a4abdd010d"
+        },
+        {
+          "source": "tool:write:v1",
+          "text": "write: Create a new file or replace a previously read file in full.",
+          "hash": "fa511f9a83822436d3058844cefdfbf8780897d8f967a1959478a113180c14cd"
+        },
+        {
+          "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+          "text": "Commands use /bin/bash. Use available native search commands; inspect exit status and output.",
+          "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+        },
+        {
+          "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+          "text": "For edit, oldText must match exactly; do not rely on fuzzy matching.",
+          "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+        },
+        {
+          "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+          "text": "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+        },
+        {
+          "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+          "text": "If a file changed externally, read it again before writing.",
+          "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+        },
+        {
+          "source": "resources:<revision>",
+          "text": "Available resources (read by resource_read before use; skills are loaded on demand):\nrule:<workspace>/AGENTS.md: \ndoc:a514bc40c886de5eb1fe doc README.md: \ndoc:4c19c71a804592efee97 doc context.md: \ndoc:16bc3a1467df1ca2043b doc customization-lifecycle.md: \ndoc:2cc3dd6b1d3be59dbfcb doc durable-review.ts: \ndoc:a092b108a578851caff9 doc example.ts: \ndoc:493536544674e623b40c doc examples/sakura/FONT-LICENSE.txt: \ndoc:91bfe4aa7a0a94e7ae9f doc examples/sakura/README.md: \ndoc:92090df985279d9076d7 doc examples/sakura/extension.json: \ndoc:3814b45270c30fb05b24 doc examples/sakura/index.ts: \ndoc:e1c5d84d66fce6f72644 doc examples/sakura/nekomimi.json: \ndoc:adac826abec4036de565 doc examples/sakura/panel.ts: \ndoc:fd16026ccf8d1201979e doc extensions.md: \ndoc:2a856a3b8e6e2ebd7f35 doc http-providers.ts: \ndoc:af5d5ff533df11884ca2 doc panel-extension.ts: \ndoc:fa4e43acbd732b12f740 doc platform.md: \ndoc:56c8adb9965e37225e48 doc review-panel.ts: \ndoc:289c316def94269ff1ab doc review-workflow.ts: \ndoc:85a99fd0d0179e6631b2 doc runtime-ui.md: \ndoc:f6d62c599c64786a234a doc scopes.md: \ndoc:c563bb5efed622a84557 doc skills-rules-mcp.md: \ndoc:3f3f1e16eaf1988dccf7 doc v2.md: \ndoc:57ae5544e646570a7611 doc validation.md: \nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.",
+          "hash": "7c2aeb7d8483576c12d06df73c3b2238c50f5379efef93307f560e76783dd378"
+        },
+        {
+          "source": "rule:<workspace>/AGENTS.md",
+          "text": "[Rule scope: .; more specific scopes apply only to their target paths]\nPreserve public API compatibility.",
+          "hash": "3dbb38aa295938e34624319d3d3fdcd9bfa6f1179bcc03d111d1aae9d605bc37"
+        }
+      ],
+      "schemas": []
+    },
+    "title": {
+      "text": "Name this conversation in the language of the user. Return only a short title, at most 16 CJK characters or 8 words. No quotes, explanation, or tools.",
+      "fragments": [],
+      "schemas": []
+    }
+  },
+  "metrics": {
+    "coding": {
+      "system": 1406,
+      "schemas": 1946,
+      "total": 3352
+    },
+    "restricted": {
+      "system": 813,
+      "schemas": 126,
+      "total": 939
+    },
+    "customization": {
+      "system": 1429,
+      "schemas": 1946,
+      "total": 3375
+    },
+    "mcp": {
+      "system": 289,
+      "schemas": 529,
+      "total": 818
+    },
+    "rulesSkill": {
+      "system": 306,
+      "schemas": 481,
+      "total": 787
+    },
+    "compaction": {
+      "system": 1406,
+      "schemas": 0,
+      "total": 1406
+    },
+    "title": {
+      "system": 50,
+      "schemas": 0,
+      "total": 50
+    }
+  }
+}

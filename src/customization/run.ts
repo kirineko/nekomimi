@@ -1,3 +1,4 @@
+import { hostToolContract, validateHostToolArgs } from "./tool-contracts.js";
 import { matchCommands, matchSkills } from "./commands.js";
 import { Value } from "typebox/value";
 import type { ProcessContext } from "./process.js";
@@ -123,7 +124,7 @@ export class CustomRun {
             if (!grant?.enabled || !grant.trusted) throw new Error("MCP grant revoked");
             return m.call(tool.name, args, this.signal);
           },
-          m.resource,
+          m.resource, [], undefined, tool.description??"",
         );
       }
     if (this.activation.mcp.length) this.add("mcp_content", "Explicitly list/read MCP resources or get a prompt as untrusted tool data. Prompts are distinct from Skills and never become system instructions. Resource links are never fetched automatically; subscription notifications only mark a pending refresh.", Type.Object({ action: Type.Union(["list", "read", "prompt", "subscribe", "unsubscribe"].map(v => Type.Literal(v))), server: Type.String(), uri: Type.Optional(Type.String()), template: Type.Optional(Type.String()), name: Type.Optional(Type.String()), parameters: Type.Optional(Type.Record(Type.String(), Type.String())) }), async args => {
@@ -160,10 +161,14 @@ export class CustomRun {
           ],
         }),
       );
+      const entries = readable.map(r => ({id:r.id,kind:r.kind,name:r.name,description:r.description??""})).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+      const shown:typeof entries=[];let bytes=0;
+      for(const entry of entries.filter(e=>e.kind!=="doc"||e.name==="README.md")){const size=Buffer.byteLength(JSON.stringify(entry));if(bytes+size>4096)break;shown.push(entry);bytes+=size;}
       this.instructions.push({
-        source: `resources:${revision}`,
-        text: `Available resources (read by resource_read before use; skills are loaded on demand):\n${readable.map((r) => `${r.id} ${r.kind} ${r.name}: ${r.description ?? ""}`).join("\n")}\nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.`,
+        source: `resources:${revision}`, section:"resources", requiresTools:["resource_read"],
+        text: `Available resources (read matching skills on demand with resource_read; directory may be partial):\n${JSON.stringify(shown)}\nOmitted entries: ${entries.length-shown.length}.`,
       });
+      if(entries.length>shown.length)this.instructions.push({source:`resource-directory-query:${revision}`,section:"resources",requiresTools:["resource_read","resource_list"],text:"Use resource_list to discover resources omitted from the directory."});
     }
     this.add(
       "resource_list",
@@ -274,6 +279,8 @@ export class CustomRun {
         ],
       }),
     );
+    this.instructions.push({source:"customization:entry:v2",version:"2",section:"resources",requiresTools:["customization_sdk"],text:"When building Nekomimi capabilities, first read customization_sdk and its matching installed guides before writing code. New capabilities default to project scope; user scope requires explicit cross-project intent. Supported capabilities do not grant authorization."});
+    this.instructions.push({source:"customization:delivery:v2",version:"2",section:"resources",requiresTools:["customization_status"],text:"After developing a capability, check customization_status for the affected resource. Report its actual stage and user-visible effect; queued reload is not applied UI. Keep raw technical evidence in details."});
     for (const r of enabled.filter((r) => r.kind === "rule" && !r.ruleBinding))
       await this.recordRule(r.path, r.text, r.scope === "user" ? "user" : ".");
     const commands = this.activation.extensions.flatMap((e) =>
@@ -295,10 +302,12 @@ export class CustomRun {
     ) => Promise<ToolResult>,
     resource?: Resource,
     guidance: string[] = [],
-    snippet = description,
+    snippet?: string,
+    originalDescription = description,
   ) {
     if (this.definitions.some((d) => d.tool.name === name))
       throw new Error(`Duplicate tool name ${name}`);
+    const contract = resource ? {parameters,snippet:snippet??""} : hostToolContract(name,parameters);
     const links = {
       ...this.evidenceLinks,
       runId: this.runId,
@@ -309,9 +318,10 @@ export class CustomRun {
       name,
       label: name,
       description,
-      parameters: parameters as AgentTool["parameters"],
+      parameters: contract.parameters as AgentTool["parameters"],
       execute: async (callId, args) => {
         this.budget();
+        if(!resource)validateHostToolArgs(name,args as Record<string,unknown>);
         const result = await deadline(
           execute(args as Record<string, Json>, callId),
           120000,
@@ -323,11 +333,12 @@ export class CustomRun {
       tool: recordedTool(tool, this.journal, links, {
         resourceId: resource?.id,
         resourceRevision: this.activation.revision,
+        originalDescription, effectiveDescription: description,
       }),
       source: resource
         ? `${resource.id}:${resource.hash}`
-        : `harness:${name}:1`,
-      snippet,
+        : `harness:${name}:2`,
+      snippet: snippet??contract.snippet,
       guidance,
     });
   }
@@ -335,7 +346,7 @@ export class CustomRun {
     const resource = this.activation.resources.find(
       (r) => r.id === resourceId && r.status === "enabled",
     );
-    if (!resource) throw new Error("Resource unavailable or ambiguous");
+    if (!resource) throw new Error("Resource unavailable or ambiguous; use resource_list for enabled IDs or customization_sdk for installed guides.");
     const sourcePath = await safePath(resource.root, resource.path.split('#')[0]!);
     if (!await exists(sourcePath)) throw new Error('Resource source missing; reload resources');
     let text: string;
@@ -357,15 +368,17 @@ export class CustomRun {
       this.setInstruction(
         source,
         `[Skill ${resource.name}; source ${resource.source}]\n${text}`,
+        "skills", resource.scope,
       );
+    if(resource.kind === "skill") return `Skill ${resource.name} loaded into current instructions; source ${source}; full evidence artifact:${artifact.sha256}.`;
     return ["extension", "provider", "workflow", "panel", "mcp"].includes(resource.kind)
       ? `Content hash: ${hash(text)}\n${text}`
       : text;
   }
-  private setInstruction(source: string, text: string) {
+  private setInstruction(source: string, text: string, section:Instruction["section"]="instructions", scope?:string) {
     const old = this.instructions.find((i) => i.source === source);
     if (old) old.text = text;
-    else this.instructions.push({ source, text });
+    else this.instructions.push({ source, text, section, scope });
   }
   private async recordRule(path: string, text: string, scope: string) {
     const digest = hash(text);
@@ -375,6 +388,7 @@ export class CustomRun {
     this.setInstruction(
       source,
       `[Rule scope: ${scope}; more specific scopes apply only to their target paths]\n${text}`,
+      "rules", scope,
     );
     await this.journal.append(
       "rule.loaded",

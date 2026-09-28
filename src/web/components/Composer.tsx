@@ -191,33 +191,38 @@ export function Composer({
         />
         </div>
         <div className="composer-bottom">
-          <span className="composer-meta">
-            <span>{occupancy?.model ?? "DeepSeek"}</span>
-            <span className="composer-hint">{open && matches.length ? "Enter 补全命令 · Esc 收起" : "Enter 发送 · Shift+Enter 换行"}</span>
+          <span className="composer-model" title={occupancy?.model ?? "DeepSeek"}>
+            {occupancy?.model ?? "DeepSeek"}
           </span>
-          <ContextMeter value={occupancy} compacting={compacting}/>
           {busy ? (
             <button
               type="button"
-              className="stop"
+              className="composer-action stop"
+              aria-label="停止任务"
+              title="停止任务"
               onClick={() => {
                 void cancel().catch((e) => setError(String(e)));
               }}
             >
-              停止任务
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>
             </button>
           ) : (
             <button
-              className="primary"
+              className="composer-action primary"
+              aria-label={pending ? "确认中…" : "发送任务"}
               title="Enter 发送 · Shift+Enter 换行"
               type="submit"
               disabled={pending || !configured || !text.trim()}
             >
-              {pending ? "确认中…" : "发送任务"}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" /></svg>
             </button>
           )}
         </div>
       </form>
+      <div className="composer-status">
+        <span className="composer-hint">{open && matches.length ? "Enter 补全命令 · Esc 收起" : "Enter 发送 · Shift+Enter 换行"}</span>
+        <ContextMeter value={occupancy} compacting={compacting}/>
+      </div>
       {error && (
         <p className="error" role="alert">
           {error}
