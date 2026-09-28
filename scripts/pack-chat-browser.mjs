@@ -1,0 +1,32 @@
+import {chromium,expect} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {resolve,join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {readFile,mkdir} from 'node:fs/promises';
+const installation=resolve(process.argv[2]);
+const entry=join(installation,'node_modules/nekomimi');
+const {startWeb,Journal}=await import(pathToFileURL(join(entry,'dist/index.js')).href);
+const {sdkCatalog}=await import(pathToFileURL(join(entry,'dist/customization/sdk.js')).href);
+const workspace=join(installation,'candidate-assets-workspace'),home=join(installation,'candidate-assets-home');
+const app=await startWeb({workspace,home,naming:false});
+const browser=await chromium.launch({channel:'chrome'});
+try{
+ const sdk=await sdkCatalog(undefined,workspace,home);assert.equal(sdk.scopes.default,'project');assert.equal(sdk.host.home,home);assert.match(await readFile(join(entry,'extension-docs/scopes.md'),'utf8'),/scope: "user"/);
+ const session=await app.sessions.create('安装包导航验收');const record=await app.sessions.entry(session.id);
+ const journal=await Journal.open(record.directory);
+ for(let i=0;i<200;i++)await journal.append('context.add',{source:'user',item:{role:'user',content:[{type:'input_text',text:`记录 ${i}`}]}},{},false);
+ await journal.append('model.request',{request:{model:'fixture',input:[],tools:[]}},{modelCallId:'installed'});
+ await journal.append('attempt.started',{attempt:1,model:'fixture'},{modelCallId:'installed',attemptId:'installed'});
+ await journal.append('attempt.finished',{status:'completed'},{modelCallId:'installed',attemptId:'installed'});await journal.close();
+ const page=await browser.newPage({viewport:{width:1280,height:900}});const scripts=[];page.on('request',r=>{if(new URL(r.url()).pathname.endsWith('.js'))scripts.push(r.url());});
+ await page.goto(app.url);await page.getByText('安装包导航验收',{exact:true}).first().click();await expect(page.getByText('记录 199',{exact:true})).toBeVisible();
+ assert(!scripts.some(s=>/\/(Customization|FileBrowser|Changes|Inspector|ExportDialog)-/.test(s)));
+ await page.getByRole('button',{name:'查看更早',exact:true}).click();await expect(page.locator('.history-latest')).toHaveCount(1);await page.locator('.history-latest').click();await expect(page.getByText('记录 199',{exact:true})).toBeInViewport();
+ await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('tab',{name:/我的定制/}).waitFor();await page.getByRole('button',{name:'用户级',exact:true}).click();await page.keyboard.press('Escape');
+ await page.getByRole('button',{name:'打开工作区面板'}).click();await expect(page.locator('.file-browser')).toBeVisible();await page.getByRole('tab',{name:'变更',exact:true}).click();await expect(page.locator('.changes-list')).toBeVisible();await page.getByRole('button',{name:'关闭工作区面板'}).click();
+ await page.getByRole('button',{name:'检查调用'}).last().click();await expect(page.locator('.inspector')).toBeVisible();await page.getByRole('button',{name:'关闭工作区面板'}).click();
+ await page.getByRole('button',{name:'更多操作'}).click();await page.getByRole('button',{name:'导出',exact:true}).click();await expect(page.getByRole('button',{name:'下载 HTML'})).toBeVisible();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'更多操作'})).toBeFocused();
+ for(const name of ['Customization','FileBrowser','Changes','Inspector','ExportDialog'])assert(scripts.some(s=>s.includes('/'+name+'-')));
+ await mkdir('output/playwright',{recursive:true});await page.screenshot({path:'output/playwright/installed-chat-navigation.png'});
+ console.log(JSON.stringify({installedBrowser:true,lazyFeatures:5,history:true,scopeSdk:true,scopeDocs:true}));
+}finally{await browser.close();await app.close();}

@@ -81,6 +81,7 @@ export interface Resource extends ResourceDescriptor {
   text: string;
   manifest?: ExtensionManifest;
   files?: Record<string, string>;
+  binaryFiles?: Record<string, Buffer>;
   config?: McpConfig;
 }
 export interface McpConfig {
@@ -138,6 +139,7 @@ export class Resources {
     trusted: boolean,
     revision: number,
     candidate?: Resource,
+    expectedHash?: string,
   ) {
     const resources = await this.discover();
     if (!resources.some((r) => r.id === id) && !(candidate?.id === id && candidate.source === join(this.workspace, ".nekomimi", "managed", candidate.name, "extension.json")))
@@ -148,7 +150,8 @@ export class Resources {
       const settings = await this.decisions();
       if (settings.revision !== revision)
         throw new Error("Resource settings conflict; reload");
-      const target = candidate ?? resources.find(r => r.id === id)!;
+      const target = candidate ?? (await this.discover()).find(r => r.id === id)!;
+      if (!target || expectedHash !== undefined && target.hash !== expectedHash) throw new Error('Resource content conflict; inspect again');
       settings.entries[id] = { enabled, trusted, ...(target.manifest?.sdkVersion === 2 ? { capabilities: target.manifest.requiredCapabilities ?? [] } : {}) };
       settings.revision++;
       const folder = await safePath(this.home, dirname(this.decisionsPath));
@@ -256,6 +259,7 @@ export class Resources {
             text = await boundedRead(path);
             const manifest = checkManifest(JSON.parse(text));
             const files: Record<string, string> = {};
+            const fileHashes: Record<string, string> = {};
             let bytes = 0;
             const walk = async (dir: string, depth: number) => {
               if (depth > 12)
@@ -276,6 +280,11 @@ export class Resources {
                   )
                     throw new Error("Extension package limit");
                   files[relative(directory, target).split(sep).join("/")] = value;
+                } else if (/\.(woff2?|png|jpe?g|webp)$/.test(name)) {
+                  if (st.size > LIMITS.file) throw new Error("Extension asset size limit");
+                  const data = await readFile(target); bytes += data.length;
+                  if (bytes > LIMITS.package || Object.keys(fileHashes).length >= 128) throw new Error("Extension asset limit");
+                  fileHashes[relative(directory, target).split(sep).join("/")] = hash(data);
                 }
               }
             };
@@ -286,7 +295,8 @@ export class Resources {
             add("extension", scope, directory, path, manifest.name, text, {
               manifest,
               files,
-              hash: hash(JSON.stringify(files)),
+              ...(Object.keys(fileHashes).length ? {fileHashes} : {}),
+              hash: hash(JSON.stringify(Object.keys(fileHashes).length ? {files,fileHashes} : files)),
             });
           } catch (e) {
             add(
@@ -403,12 +413,17 @@ export class Resources {
     const docs = fileURLToPath(
       new URL("../../extension-docs/", import.meta.url),
     );
-    if (await exists(docs))
-      for (const name of (await readdir(docs)).sort())
-        if (/\.(md|ts|json)$/.test(name)) {
-          const path = await safePath(docs, name);
-          add("doc", "builtin", docs, path, name, await boundedRead(path));
+    if (await exists(docs)) {
+      const walkDocs=async(dir:string,depth:number)=>{
+        if(depth>4)return;
+        for(const name of (await readdir(dir)).sort()) {
+          const path=await safePath(docs,join(dir,name)),st=await lstat(path);
+          if(st.isDirectory())await walkDocs(path,depth+1);
+          else if(/\.(md|ts|json|txt)$/.test(name))add('doc','builtin',docs,path,relative(docs,path).split(sep).join('/'),await boundedRead(path));
         }
+      };
+      await walkDocs(docs,0);
+    }
     return resolveResourcePrecedence(output);
   }
   snapshot(resources: Resource[]): ResourceSnapshot {
@@ -432,36 +447,40 @@ export class Resources {
     file: string,
     text: string,
     previousHash: string | null,
+    scope: "project" | "user" = "project",
   ) {
+    if(scope!=="project"&&scope!=="user")throw new Error("Invalid resource scope");
     if (
       !/^[a-z][a-z0-9-]{0,47}$/.test(name) ||
       Buffer.byteLength(text) > LIMITS.file
     )
       throw new Error("Invalid resource write");
-    if (!(await this.decisions()).userWrites)
+    if (scope==="user" && !(await this.decisions()).userWrites)
       throw new Error(
         "User resource writing is not authorized; enable it in customization settings",
       );
-    const roots = {
-      extension: join(this.home, "extensions", name),
-      skill:
-        this.home === userHome()
-          ? join(homedir(), ".agents", "skills", name)
-          : join(this.home, "skills", name),
-      rule: this.home,
-      mcp: this.home,
+    const base=scope==='project'?this.workspace:this.home;
+    const roots = scope==='project'?{
+      extension:join(this.workspace,'.nekomimi','extensions',name),
+      skill:join(this.workspace,'.agents','skills',name),
+      rule:this.workspace,
+      mcp:join(this.workspace,'.nekomimi'),
+    }:{
+      extension:join(this.home,'extensions',name),
+      skill:this.home===userHome()?join(homedir(),'.agents','skills',name):join(this.home,'skills',name),
+      rule:this.home,mcp:this.home,
     };
     if (
       (kind === "rule" && file !== "AGENTS.md") ||
       (kind === "mcp" && file !== "mcp.json")
     )
       throw new Error("Invalid resource filename");
-    await mkdir(this.home, { recursive: true, mode: 0o700 });
-    const release = await lockfile.lock(this.home, { retries: 3 });
+    await mkdir(base, { recursive: true, mode: 0o700 });
+    const release = await lockfile.lock(base, { retries: 3 });
     try {
       const root = roots[kind];
       await safePath(
-        kind === "skill" && this.home === userHome() ? homedir() : this.home,
+        scope === "user" && kind === "skill" && this.home === userHome() ? homedir() : base,
         root,
       );
       await mkdir(root, { recursive: true });
@@ -471,7 +490,7 @@ export class Resources {
         throw new Error("Resource changed; read again");
       await mkdir(dirname(path), { recursive: true });
       await atomicFile(path, text);
-      return { path, hash: hash(text) };
+      return { path, hash: hash(text), scope };
     } finally {
       await release();
     }

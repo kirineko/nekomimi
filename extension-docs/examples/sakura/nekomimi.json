@@ -1,0 +1,1 @@
+{"manifestVersion":1,"name":"sakura-studio","version":"1.0.0","sdkVersion":2,"requiredCapabilities":["themes","views","panels","commands","ui","ui-draft","ui-state"],"dependencies":{},"resources":[{"name":"sakura","kind":"extension","entry":"index.ts"}],"files":["panel.ts","demo.woff","sakura.png","FONT-LICENSE.txt","README.md"]}

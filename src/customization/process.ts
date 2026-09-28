@@ -1,3 +1,5 @@
+import { buildTheme } from "./theme-build.js";
+import { validateTheme, type ThemeDefinition, UI_ACTIONS, UI_SLOTS } from "./ui-contract.js";
 import { spawn, execFile, type ChildProcess } from "node:child_process";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
@@ -26,7 +28,7 @@ export interface ProcessContext extends ExtensionContext {
 }
 interface Registration {
   resourceId: string;
-  kind: "tool" | "command" | "hook" | "dispose" | "provider" | "workflow" | "panel";
+  kind: "tool" | "command" | "hook" | "dispose" | "provider" | "workflow" | "panel" | "theme" | "view";
   id?: string;
   models?: ModelDefinition[];
   handlerId: string;
@@ -122,7 +124,7 @@ export class ExtensionProcess {
     try {
       const registrations = await this.peer.request<Registration[]>("initialize", { entries: await Promise.all(resources.map(async resource => ({ resourceId: resource.id, entry: await safePath(resource.root, resource.manifest!.entry), sdkVersion: resource.manifest!.sdkVersion }))), sdk }, undefined, PROCESS_LIMITS.startupMs);
       if (!Array.isArray(registrations) || registrations.length > PROCESS_LIMITS.registrationCount) throw new Error("Invalid registrations");
-      const loadedResources = new Map(resources.map(resource => [resource.id, { resource, unavailable: () => this.exited || !!this.stopping, providers: [], workflows: [], panels: [], tools: [], commands: new Map(), hooks: new Map(), dispose: [] } as LoadedExtension]));
+      const loadedResources = new Map(resources.map(resource => [resource.id, { resource, unavailable: () => this.exited || !!this.stopping, providers: [], workflows: [], panels: [], themes: [], tools: [], commands: new Map(), hooks: new Map(), dispose: [] } as LoadedExtension]));
       const names = new Set<string>(), handlers = new Set<string>();
       const disposers: Array<{ handlerId: string; resourceId: string }> = [];
       for (const r of registrations) {
@@ -132,7 +134,7 @@ export class ExtensionProcess {
         if (!loaded) throw new Error("Registration resource identity mismatch");
         const resource = loaded.resource;
         if (resource.manifest?.sdkVersion === 2 && r.kind !== "dispose") {
-          const required = { tool: "tools", command: "commands", hook: "hooks", provider: "providers", workflow: "workflows", panel: "panels" }[r.kind];
+          const required = { tool: "tools", command: "commands", hook: "hooks", provider: "providers", workflow: "workflows", panel: "panels", theme: "themes", view: "views" }[r.kind];
           if (!resource.manifest.requiredCapabilities?.includes(required)) throw new Error("Registration capability not declared");
         }
         if (r.kind === "tool" || r.kind === "command") {
@@ -140,7 +142,23 @@ export class ExtensionProcess {
           names.add(r.resourceId + ":" + r.name);
           if (typeof r.description !== "string") throw new Error("Invalid registration description");
         }
-        if (r.kind === "panel") { loaded.panels.push(await buildPanel(resource, r as unknown as PanelDefinition)); }
+        if (["panel", "view", "theme"].includes(r.kind)) {
+          const key = `${r.resourceId}:${r.kind === 'theme' ? 'theme' : 'panel'}:${r.id}`;
+          if (names.has(key)) throw new Error('Duplicate UI registration');
+          names.add(key);
+          if (resource.manifest?.sdkVersion !== 2) throw new Error('UI registration requires current SDK');
+        }
+        if (r.kind === 'theme') { const {resourceId,handlerId,kind,...theme}=r; validateTheme(theme as unknown as ThemeDefinition); loaded.themes!.push(await buildTheme(resource, theme as unknown as ThemeDefinition)); }
+        else if (r.kind === "panel" || r.kind === 'view') {
+          const panel = r as unknown as PanelDefinition;
+          if(r.kind === 'view' && !(UI_SLOTS as readonly string[]).includes(panel.slot))throw new Error('Invalid view slot');
+          if(r.kind === 'panel' && !['sidebar','result'].includes(panel.slot)) throw new Error('Extended slots require registerView');
+          for(const action of panel.actions ?? []) if((UI_ACTIONS as readonly string[]).includes(action)) {
+            const capability = action.startsWith('draft.')?'ui-draft':action.startsWith('command.')?'ui-command':action.startsWith('state.')?'ui-state':'ui-navigation';
+            if(!resource.manifest?.requiredCapabilities?.includes(capability)) throw new Error('UI action capability not declared');
+          }
+          loaded.panels.push(await buildPanel(resource, panel));
+        }
         else if (r.kind === "tool") {
           if (r.parameters?.type !== "object") throw new Error("Invalid tool schema");
           loaded.tools.push({ name: r.name!, description: r.description!, parameters: r.parameters, promptSnippet: r.promptSnippet, promptGuidelines: r.promptGuidelines, execute: (args, ctx) => this.invoke(r.handlerId, args, ctx) });

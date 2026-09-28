@@ -1,0 +1,25 @@
+import {test,expect} from 'vitest';
+import {readFile,rm} from 'node:fs/promises';
+import {join} from 'node:path';
+import {Resources,exists} from '../src/customization/resources.js';
+import {sdkCatalog} from '../src/customization/sdk.js';
+import {temporary} from './helpers.js';
+test('resource writes default to project and explicit user writes share across workspaces with precedence',async()=>{
+ const first=await temporary(),second=await temporary(),home=await temporary();
+ const a=new Resources(first,home),b=new Resources(second,home);
+ const text='---\nname: shared\ndescription: shared skill\n---\nRead current files.';
+ const local=await a.write('skill','shared','SKILL.md',text,null);
+ expect(local.scope).toBe('project');expect(local.path).toBe(join(a.workspace,'.agents/skills/shared/SKILL.md'));
+ expect(await exists(join(home,'skills/shared'))).toBe(false);
+ await expect(a.write('skill','shared','SKILL.md',text,null,'user')).rejects.toThrow('not authorized');
+ await expect(a.write('skill','shared','SKILL.md',text,null,'invalid' as 'project')).rejects.toThrow('scope');
+ await a.allowUserWrites(true,0);
+ const shared=await a.write('skill','shared','SKILL.md',text,null,'user');
+ expect(shared.scope).toBe('user');expect(shared.path).toBe(join(a.home,'skills/shared/SKILL.md'));
+ const both=(await a.discover()).filter(r=>r.name==='shared');expect(both.find(r=>r.scope==='project')?.status).toBe('enabled');expect(both.find(r=>r.scope==='user')?.status).toBe('shadowed');
+ expect((await b.discover()).find(r=>r.name==='shared')?.scope).toBe('user');
+ await expect(a.write('skill','shared','SKILL.md',text+'update',null,'user')).rejects.toThrow('changed');
+ await rm(join(first,'.agents/skills/shared'),{recursive:true});expect((await a.discover()).find(r=>r.name==='shared')?.status).toBe('enabled');
+ expect(await readFile(shared.path,'utf8')).toBe(text);
+ const sdk=await sdkCatalog(undefined,first,home);expect(sdk.scopes.default).toBe('project');expect(sdk.scopes.paths.user.skills).toBe(join(home,'skills'));expect(sdk.host.home).toBe(home);
+});

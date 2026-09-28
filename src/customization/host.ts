@@ -1,3 +1,6 @@
+import { Lifecycle } from './lifecycle.js';
+import { Themes } from "./themes.js";
+import type { BuiltTheme } from "./theme-build.js";
 import { commandCatalog } from "./commands.js";
 import { ExtensionProcess } from "./process.js";
 import { PROCESS_LIMITS } from "./rpc.js";
@@ -39,6 +42,7 @@ export interface LoadedExtension {
   providers: RegisteredProvider[];
   workflows: RegisteredWorkflow[];
   panels: BuiltPanel[];
+  themes?: BuiltTheme[];
   resource: Resource;
   unavailable?: () => boolean;
   tools: ExtensionTool[];
@@ -60,6 +64,7 @@ export interface Activation {
   snapshot: ResourceSnapshot;
 }
 export interface ReloadReceipt {
+  resourceId?: string; resourceRevision?: string;
   id: string;
   status: "pending" | "activated" | "failed";
   revision?: string;
@@ -133,6 +138,8 @@ export async function validateExtension(r: Resource): Promise<string[]> {
   return errors;
 }
 export class CustomizationHost {
+  readonly lifecycle = new Lifecycle(this);
+  readonly themes = new Themes(this);
   readonly catalog: Resources;
   readonly oauth: McpOAuth;
   readonly workflows: Workflows;
@@ -164,22 +171,23 @@ export class CustomizationHost {
   async initialize() {
     const receipt: ReloadReceipt = { id: id(), status: "pending" };
     await this.reload(receipt);
-    if (receipt.status === "failed") this.degraded = receipt.error;
+    // Ordinary load failures can be repaired and reloaded. Only cleanup failures
+    // set degraded inside activate(), because they leave runtime state uncertain.
   }
-  requestReload(): ReloadReceipt {
+  requestReload(resource?: Resource): ReloadReceipt {
     const pending = this.receipts.find((r) => r.status === "pending");
     if (pending) return pending;
-    const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending" };
+    const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending", ...(resource ? {resourceId:resource.id,resourceRevision:resource.hash} : {}) };
     this.nextReloadId = id();
     this.receipts.push(receipt);
     this.receipts = this.receipts.slice(-30);
     if (!this.busy) void this.reload(receipt);
     return receipt;
   }
-  async requestCandidate(candidateId: string, expectedHash: string, authorize = false): Promise<ReloadReceipt> {
+  async requestCandidate(candidateId: string, expectedHash: string, authorize = false, expectedSettings?: number): Promise<ReloadReceipt> {
     const store = new Candidates(this.catalog.workspace);
     const { resource } = await store.prepare(candidateId, expectedHash);
-    return this.queueCandidate(resource, authorize);
+    return this.queueCandidate(resource, authorize, expectedSettings);
   }
   async requestRollback(name: string, authorize = false) {
     return this.queueCandidate(await new Candidates(this.catalog.workspace).previous(name), authorize);
@@ -214,10 +222,11 @@ export class CustomizationHost {
       return receipt;
     });
   }
-  private async queueCandidate(resource: Resource, authorize: boolean): Promise<ReloadReceipt> {
+  private async queueCandidate(resource: Resource, authorize: boolean, expectedSettings?: number): Promise<ReloadReceipt> {
     return this.exclusive(async () => {
     if (this.receipts.some(r => r.status === "pending")) throw new Error("Another customization change is pending");
     const settings = await this.catalog.decisions();
+    if (expectedSettings !== undefined && settings.revision !== expectedSettings) throw new Error("Authorization revision conflict; inspect again");
     const prior = settings.entries[resource.id];
     const store = new Candidates(this.catalog.workspace);
     const active = (await store.active()).find(r => r.resourceId === resource.id);
@@ -226,7 +235,7 @@ export class CustomizationHost {
     if (!authorize && (!prior?.enabled || !prior.trusted || expanded)) throw new Error("Candidate requires explicit authorization for code and capabilities");
     if (authorize) await this.catalog.decide(resource.id, true, true, settings.revision, resource);
     resource.status = "enabled";
-    const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending" };
+    const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending", resourceId:resource.id, resourceRevision:resource.hash };
     this.nextReloadId = id();
     this.candidateCommits.set(receipt.id, { resource, grants: required, expectedRevision: await store.revision() });
     this.receipts.push(receipt);
@@ -241,6 +250,7 @@ export class CustomizationHost {
     return {
       version: 1,
       resources: resources.map(describe),
+      abilities: await this.lifecycle.catalog(resources),
       settingsRevision: (await this.catalog.decisions()).revision,
       userWrites: (await this.catalog.decisions()).userWrites ?? false,
       oauth: await Promise.all(resources.filter(r => r.kind === "mcp" && r.config?.oauth).map(async r => {
@@ -265,6 +275,7 @@ export class CustomizationHost {
       providers: new ProviderRegistry(this.active?.extensions.flatMap(e => e.providers) ?? []).catalog(),
       providerProfiles: await new ProviderProfiles(this.catalog.home).list(),
       panels: this.panels.catalog(),
+      runtimeUi: await this.themes.describe(),
       workflowDefinitions: this.active?.extensions.flatMap(e => e.workflows.map(w => ({ resourceId: e.resource.id, resourceName: e.resource.name, id: w.id, revision: e.resource.hash, schemaVersion: w.schemaVersion, entry: w.entry, steps: Object.keys(w.steps), inputSchema: w.inputSchema }))) ?? [],
       workflows: (await this.workflows.list()).slice(-100).map(({ input, output, snapshot, ...state }) => ({ ...state, outputPreview: output === undefined ? undefined : JSON.stringify(output).slice(0, 2000) })),
     };
@@ -313,6 +324,7 @@ export class CustomizationHost {
     return this.exclusive(async () => {
       if (this.busy || receipt.status !== "pending") return;
       try {
+        if (this.degraded) throw new Error(this.degraded);
         const pending = this.candidateCommits.get(receipt.id);
         const packagePending = this.packageCommits.get(receipt.id);
         const removal = this.packageRemovals.get(receipt.id);
@@ -336,9 +348,12 @@ export class CustomizationHost {
         } else await this.activate();
         receipt.status = "activated";
         receipt.revision = this.active!.revision;
+        for (const resource of this.active!.extensions.map(e => e.resource).filter(r => !receipt.resourceId || r.id === receipt.resourceId)) await this.lifecycle.record(resource,'loaded',{passed:true});
       } catch (e) {
         receipt.status = "failed";
         receipt.error = String(e);
+        const failed = await this.catalog.discover().catch(() => []);
+        for(const resource of failed.filter(r => !!r.manifest && (!receipt.resourceId || r.id === receipt.resourceId))) await this.lifecycle.record(resource,'load-failed',{passed:false});
       } finally {
         this.candidateCommits.delete(receipt.id);
         this.packageCommits.delete(receipt.id);
@@ -402,6 +417,8 @@ export class CustomizationHost {
       if (groups.size > PROCESS_LIMITS.processes) throw new Error("Active extension process budget exceeded");
       for (const group of groups.values()) {
         for (const resource of group) {
+          const grant = await this.catalog.grant(resource);
+          if (resource.manifest?.sdkVersion === 2 && resource.manifest.requiredCapabilities?.some(c => !grant?.capabilities?.includes(c)) && !beforeSwitch) throw new Error(`${resource.name}: 新增权限待确认，保留原活动版本`);
           const errors = await validateExtension(resource);
           if (errors.length) throw new Error(`${resource.source}: ${errors.join("\n")}`);
         }

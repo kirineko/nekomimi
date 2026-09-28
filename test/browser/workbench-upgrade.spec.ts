@@ -117,7 +117,8 @@ test("search, diff, locate, open and reload preserve evidence and draft", async 
   await page.getByRole("button", { name: "关闭工作区面板" }).click();
   await page.reload();
   await expect(page.locator(".diff-line.add")).toContainText("A new file");
-  await page.getByRole("button", { name: "导出", exact: false }).click();
+  await page.getByRole('button',{name:'更多操作'}).click();
+  await page.getByRole('button',{name:'导出',exact:true}).click();
   const downloading = page.waitForEvent("download");
   await page.getByRole("button", { name: "下载 HTML" }).click();
   const download = await downloading;

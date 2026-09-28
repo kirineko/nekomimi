@@ -1,5 +1,5 @@
 import { DiffView } from "./DiffView";
-import { LocateFile } from "./WorkspacePanel";
+import { LocateFile } from "../workspace-context";
 import { toolContent } from "../../presentation/content";
 import { useContext, useState } from "react";
 import type { TimelineRow } from "../../shared/protocol";
@@ -15,10 +15,12 @@ export function ToolCard({
   const locate = useContext(LocateFile);
   const [opened, setOpened] = useState<string>();
   const { input, result, target } = toolContent(row.text);
+  const delivery=(row.details as {kind?:string;items?:unknown});
+  const deliveryItems=delivery?.kind==='customization-delivery'&&Array.isArray(delivery.items)?delivery.items.filter((item):item is {resourceId:string;revision:string;name:string;phase:string;scope?:string}=>!!item&&typeof item==='object'&&['resourceId','revision','name','phase'].every(key=>typeof item[key]==='string')).slice(0,20):[];
   const patch = (row.details as { patch?: { sha256: string } } | undefined)
     ?.patch?.sha256;
   return (
-    <article className="row row-tool">
+    <article data-row-id={row.id} className="row row-tool">
       <div className="tool-heading">
         <span className="tool-icon">
           {row.title === "bash" || row.title === "powershell" ? "⌘" : "↳"}
@@ -26,6 +28,7 @@ export function ToolCard({
         <strong>{toolTitle(row.title)}</strong>
         <span className={`badge ${row.status}`}>{statusText(row.status)}</span>
       </div>
+      {(row.details as {kind?:string})?.kind === 'customization-delivery' && <section aria-label="定制交付">{deliveryItems.map((item,i)=><div key={i}><strong>{item.name}</strong>{item.scope&&<small>{item.scope==='user'?'用户级':'项目级'}</small>}<p>{({authorization:'需要确认权限',load:'等待加载',draft:'待加载',apply:'等待应用',applied:'已应用',enabled:'可用'} as Record<string,string>)[item.phase]??'查看状态'}</p><button onClick={()=>window.dispatchEvent(new CustomEvent('nekomimi-customization-open',{detail:item}))}>查看当前状态与下一步</button></div>)}</section>}
       {target && (
         <div className="tool-target" title={target}>
           {target}

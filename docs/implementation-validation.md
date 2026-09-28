@@ -155,3 +155,11 @@ Change：`establish-observable-headless-core`。此报告验证根目录应用�
 根据实际截图反馈，将会话行从 62px 收紧为 52px，缩小分组和列表头留白；标题/时间共用左边缘，菜单/状态共用右边缘。选中行改为浅紫渐变、细边框与左侧强调线，完成/运行/取消/失败状态使用低饱和绿/紫/琥珀/玫瑰色标签，日期分组增加圆点及淡紫分隔线。菜单向左展开，避免较矮行高下遮挡下一行操作。
 
 最终构建的真实浏览器测量：行高 52px，标题与时间左边缘均为 25px，菜单与状态右边缘均为 209px，第二行时间与状态底边均为 240px。桌面和 390px 窄屏状态夹具截图为 `output/playwright/session-navigation/sidebar-refined-{desktop,detail,mobile}.png`，已人工查看。`npm run build`、5/5 导航浏览器测试、32/32 严格规格校验与 `git diff --check` 通过；本次仅调整 CSS 和对应设计/任务记录，未重复运行无关后端测试。
+
+## 统一平台 SDK 与运行时 UI（2026-09-28）
+
+完整主题、六类运行时扩展区域、受控桥接、SDK/文档整合及 `/moe` 内容展示的验收记录见 [runtime-ui-validation.md](runtime-ui-validation.md)。包括全量回归、安装包检查、截图路径、资源修订证据及未验证环境。
+
+## 输出预算与紧凑顶栏（2026-09-28）
+
+实际未完成原因、128K/64 轮默认值、错误提示、主题化菜单/导出与验证边界见 [response-recovery-header-validation.md](response-recovery-header-validation.md)。

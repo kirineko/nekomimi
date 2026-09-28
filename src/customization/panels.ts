@@ -8,18 +8,18 @@ import type { Json } from './types.js';
 import { Candidates } from './candidates.js';
 import { ExtensionProcess } from './process.js';
 import { panelDocument } from './panel-document.js';
-interface Instance {candidatePreview?:boolean;html:string; nonce:string; panel:BuiltPanel; expires:number; window:number; messages:number; lastId:number; workflow?:{id:string;waitId?:string;revision:number}; preview:boolean}
+interface Instance {sessionId?:string;candidatePreview?:boolean;html:string; nonce:string; panel:BuiltPanel; expires:number; window:number; messages:number; lastId:number; workflow?:{id:string;waitId?:string;revision:number}; preview:boolean}
 export class Panels {
   private instances = new Map<string,Instance>();
   constructor(readonly host:CustomizationHost) {}
   catalog() {return this.host.active?.extensions.flatMap(e=>e.panels.map(({bundle,css,resource,...p})=>({...p,resourceId:resource.id,revision:resource.hash}))) ?? [];}
   private async authorized(panel:BuiltPanel) {
     const grant = await this.host.catalog.grant(panel.resource);
-    if (!grant?.enabled || !grant.trusted || !grant.capabilities?.includes('panels')) throw new Error('Panel authorization revoked');
+    if (!grant?.enabled || !grant.trusted || !grant.capabilities?.includes(['sidebar','result'].includes(panel.slot)?'panels':'views')) throw new Error('Panel authorization revoked');
     const current = this.host.active?.extensions.flatMap(e=>e.panels).find(p=>p.resource.id===panel.resource.id && p.id===panel.id);
     if (!current || current.resource.hash!==panel.resource.hash || current.bundleHash!==panel.bundleHash) throw new Error('Panel revision no longer active');
   }
-  async mount(resourceId:string, panelId:string, revision:string, props:Json, workflowId?:string, preview=false, themeName?:string) {
+  async mount(resourceId:string, panelId:string, revision:string, props:Json, workflowId?:string, preview=false, themeName?:string, sessionId?:string) {
     for (const [key,value] of this.instances) if(value.expires<Date.now()) this.instances.delete(key);
     if(this.instances.size>=64) throw new Error('Panel instance limit');
     const panel=this.host.active?.extensions.flatMap(e=>e.panels).find(p=>p.resource.id===resourceId && p.id===panelId && p.resource.hash===revision);
@@ -30,7 +30,9 @@ export class Panels {
     const theme=themeName?panel.themes![themeName]:panel.theme;
     let workflow:Instance['workflow'];
     if(workflowId) {const state=await this.host.workflows.inspect(workflowId); if(state.resourceId!==resourceId) throw new Error('Panel workflow resource mismatch'); workflow={id:workflowId,waitId:state.wait?.id,revision:state.revision};}
-    return this.attach(panel,props,workflow,preview,theme);
+    const mounted=await this.attach(panel,props,workflow,preview,theme);
+    this.instances.get(mounted.instanceId)!.sessionId=sessionId;
+    return mounted;
   }
   private async attach(panel:BuiltPanel,props:Json,workflow:Instance['workflow'],preview:boolean,theme:BuiltPanel['theme'],candidatePreview=false) {
     for(const [key,value] of this.instances)if(value.expires<Date.now())this.instances.delete(key);
@@ -53,7 +55,8 @@ export class Panels {
       const registrations=await process.start(),panel=registrations.flatMap(r=>r.panels).find(p=>!panelId||p.id===panelId);
       if(!panel || Buffer.byteLength(JSON.stringify(props))>32768 || !Value.Check(panel.propsSchema,props))throw new Error('Candidate panel identity or props schema invalid');
       const {bundle,css,resource:owner,...descriptor}=panel;
-      return {panel:{...descriptor,resourceId:owner.id,revision:owner.hash},frame:await this.attach(panel,props,undefined,true,panel.theme,true)};
+      await this.host.lifecycle.record(owner,"preview",{passed:true,contributionId:panel.id});
+      return {verification:{stage:"preview",hostIntegration:"not_run",resourceRevision:owner.hash},panel:{...descriptor,resourceId:owner.id,revision:owner.hash},frame:await this.attach(panel,props,undefined,true,panel.theme,true)};
     }finally{await process.stop();}
   }
   async document(instanceId:string) {
@@ -63,6 +66,26 @@ export class Panels {
     return {html:instance.html,nonce:instance.nonce};
   }
   unmount(instanceId:string) {this.instances.delete(instanceId); return {status:'closed'};}
+  async recordUiAction(instanceId:string, action:string, stage:'intent'|'completed'|'failed', value:unknown) {
+    const instance=this.instances.get(instanceId);
+    if(!instance)throw new Error('Panel instance expired');
+    const journal=await Journal.open(join(this.host.catalog.workspace,'.nekomimi/panel-history'));
+    try{await journal.append(`panel.action.${stage}`,{action,sessionId:instance.sessionId,value},{resourceId:instance.panel.resource.id,resourceRevision:instance.panel.resource.hash,instanceId});}finally{await journal.close();}
+  }
+  async uiAction(instanceId:string, sequence:number, action:string, value:Json) {
+    const instance=this.instances.get(instanceId);
+    if(!instance||instance.expires<Date.now())throw new Error('Panel instance expired');
+    if(Date.now()-instance.window>=1000){instance.window=Date.now();instance.messages=0;}
+    if(++instance.messages>30||!Number.isSafeInteger(sequence)||sequence<=instance.lastId||Buffer.byteLength(JSON.stringify(value))>32768)throw new Error('Panel message identity/rate/size invalid');
+    instance.lastId=sequence;
+    await this.authorized(instance.panel);
+    if(instance.preview||!instance.panel.actions.includes(action))throw new Error('Panel action not authorized');
+    const capability=action.startsWith('draft.')?'ui-draft':action.startsWith('command.')?'ui-command':action.startsWith('state.')?'ui-state':'ui-navigation';
+    const grant=await this.host.catalog.grant(instance.panel.resource);
+    if(!grant?.capabilities?.includes(capability)||!instance.panel.resource.manifest?.requiredCapabilities?.includes(capability))throw new Error('Panel action not authorized');
+    if(!instance.sessionId)throw new Error('Panel session unbound');
+    return {sessionId:instance.sessionId,resourceId:instance.panel.resource.id,revision:instance.panel.resource.hash};
+  }
   async action(instanceId:string, sequence:number, action:string, value:Json) {
     const instance=this.instances.get(instanceId);
     if(!instance || instance.expires<Date.now()) throw new Error('Panel instance expired');

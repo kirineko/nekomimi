@@ -1,29 +1,32 @@
-# Nekomimi 定制开发
+# Nekomimi SDK
 
-SDK 2 新能力、Provider、能力包、MCP OAuth、持久工作流与面板见 [v2.md](v2.md)。V2 仍在实施验收中；以下为兼容保留的 SDK 1 基础。
+一个开发入口，覆盖扩展运行时、上下文、模型、工作流、能力包与界面。先使用 `customization_sdk({entry:"public"})` 获取安装版本的完整类型；`entry:"ui"` 查看主题和视图契约。查询结果中的支持能力不等于当前资源授权，新增权限需用户明确授权。
 
-先通过 resource_read 读取本文件和 example.ts。无需修改安装目录；在工作区 .nekomimi/extensions/<name>/ 创建 extension.json 与 index.ts，运行 customization_validate，用户启用后请求 customization_reload。重载返回 pending 时当前任务继续结束，下一次运行才能使用新版本；不要在当前工具中等待自己结束。
+## 从目标开始
 
-清单：`{"name":"review","sdkVersion":1,"entry":"index.ts","requiredCapabilities":["commands","tools","state","ui","model"]}`。
+| 目标 | 文档与完整示例 | 主要权限 |
+| --- | --- | --- |
+| 新增命令、工具、钩子、运行状态 | [扩展基础](extensions.md)、[example.ts](example.ts) | commands/tools/hooks/state/ui |
+| 加载 Skill、分层规则与 MCP | [上下文定制](skills-rules-mcp.md)、[平台指南](platform.md) | 各资源授权 |
+| 接入模型和辅助调用 | [平台指南](platform.md)、[http-providers.ts](http-providers.ts) | providers/model |
+| 持久等待、恢复、工作区状态 | [平台指南](platform.md)、[durable-review.ts](durable-review.ts) | workflows/workspace-state |
+| 修改整体风格和运行时区域 | [运行时 UI](runtime-ui.md)、[樱花组合包](examples/sakura/README.md) | themes/views 及具体桥接权限 |
+| 展示面板和工具结果 | [运行时 UI](runtime-ui.md)、[panel-extension.ts](panel-extension.ts)、[review-panel.ts](review-panel.ts) | panels/ui |
+| 打包、精确锁定、激活与回退 | [平台指南](platform.md) | 按包清单逐项授权 |
+| 验证、排错与验收 | [调试指南](validation.md) | 模拟/预览不代替激活授权 |
 
-用户在 Web「定制能力」信任并启用项目扩展。授权覆盖这个资源后，普通修改不重复确认；可停用并撤销。可信扩展具有 Node.js 权限，不是沙箱。通过 ctx.callTool/model/state/ui 的操作被宿主记录；自行运行 Node 网络/文件操作不保证有证据。
+## 开发路径
 
-工厂只注册工具、命令、钩子及清理；勿在模块顶层或工厂启动后台资源。可注册 beforeRun/beforeTool/afterTool/afterRun，前置钩子可返回 {block:"原因"}，后置观察不能修改原始结果。onDispose 必须幂等且及时完成。长期后台工作不适合 V1。
+1. 读取契约与相关完整示例，使用 `customization_candidate` 创建候选或在工作区创建扩展；不修改安装目录。
+2. 声明所需能力，运行完整类型和清单校验，修复后重新校验内容摘要。
+3. 按需模拟试验和独立 UI 预览；报告这些阶段的实际边界。
+4. 用户授权后激活，运行真实宿主入口；记录效果、交互、取消与回退结果。
+5. 需要分享时使用精确版本能力包；回退保留历史和状态兼容检查。
 
-工具名与命令名仅使用小写字母、数字、下划线、连字符，不能占用 read/write/edit/bash/powershell/web_search/reload/skill。模型工具名形如 ext_review_check；命令完整名 /review:inspect，无歧义时可用 /inspect。
+默认类型为 `ExtensionAPI` / `ExtensionFactory`。旧类型后缀与旧清单继续由兼容层处理，不能绕过新能力授权。sdk/package/rpc/ui 的协议数字独立演进，不需要按 V1/V2 选择不同开发指南。
 
-工具 execute(args, ctx) 返回 {content:[{type:"text",text:"..."}],details:{...}}；图片 content 可用 {type:"image",data:"base64",mimeType:"image/png"}。不支持 schema 时应减少复杂约束或明确拒绝，不隐藏改变语义。
+工厂仅注册定义；所有模型调用使用 ctx.model 或 Provider 宿主入口，所有受管执行保留证据。Journal 是权威历史，UI 内容和模型投影不是原始证据。可信 Node 扩展直接调用文件或网络 API 不保证被宿主记录。
 
-ctx.workspace、signal、resourceId 是只读运行属性。ctx.callTool(name,args) 调用当前启用工具；ctx.model(prompt) 使用选定的辅助模型 profile（未选则沿用默认配置）和独立上下文。ctx.state.get(key,version)/set(key,version,value) 持久保存 JSON；schema 版本不匹配报错，不自动清空。ctx.contribute(text) 增加带来源指令；ctx.followUp(prompt) 排队同一运行中的后续提示，继承取消和预算。ctx.reload() 只请求运行后的重载。
+- [定制交付全流程](customization-lifecycle.md)：当前宿主诊断、已有扩展新增权限、字体图片、预览应用与来源管理。
 
-ctx.ui({kind:"status"|"card",title,text}) 显示安全文本；ctx.ui({kind:"form",title,fields:[{name,label,required,options}]}) 等待 JSON 回答。headless 表单返回 interaction_unavailable，浏览器断线不自动选择默认值，五分钟超时或取消结束等待。不要将密钥作为表单字段，凭证在服务端环境变量配置。
-
-默认边界：最多 256 个资源或单 MCP 的工具，单资源文件 1 MiB、扩展包 8 MiB、工具证据 4 MiB，模型展示约 24000 字符；每运行最多 128 次宿主扩展操作。达到限制会明确报告，不保证任意扩展代码内存有界。
-
-新增注册使用 SDK 2；V1 工厂不能调用 registerProvider/registerWorkflow/registerPanel。当前支持能力以 customization_sdk 返回目录为准。
-
-开发入口：`resource_list` 返回当前资源 ID、来源和状态，`resource_read({id,file?})` 读取资料或已启用资源。项目文件用普通 read/write/edit；用户级资源先在 Web 授权“允许写用户资源”，再用 resource_write 的 previousHash 校验避免覆盖并发修改。这个授权不允许任意 home 路径。
-
-CLI：`nekomimi extensions list --workspace .` 获取 ID；`extensions validate <id>` 检查清单、依赖及完整 TypeScript 语义，不执行工厂；`extensions enable <id>` 授权后，`extensions trial <id> <command>` 在独立宿主中试运行，以模拟工具/模型/表单记录流程。试运行不启动 MCP，但可信代码直接使用 Node 的操作仍可能有副作用。`extensions reload` 校验一次本地加载；已打开的 Web 服务使用页面重载按钮。
-
-示例 example.ts 的 shell 命令用于 Unix/git 工作区；Windows 扩展应调用 powershell 或使用跨平台 read/edit/write 工具。内置 shell 的规则范围为工作区 cwd；V1 不解析脚本内容推断任意外部目标路径。
+- [项目级与用户级定制](scopes.md)：默认值、实际路径、授权和跨项目交付。

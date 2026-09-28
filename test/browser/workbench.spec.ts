@@ -143,18 +143,13 @@ test("submits, observes tool diff, inspects request, reloads, continues and expo
     page.locator(".conversation-heading").getByText("已完成", { exact: true }),
   ).toBeVisible();
   expect(await page.evaluate(() => (window as any).hacked)).toBeUndefined();
-  await page
-    .getByRole("button", { name: "导出", exact: false })
-    .first()
-    .click();
+  await page.getByRole('button',{name:'更多操作'}).click();
+  await page.getByRole('button',{name:'导出',exact:true}).click();
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "下载 HTML" }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe("session.html");
-  await page
-    .getByRole("button", { name: "导出", exact: false })
-    .first()
-    .click();
+  await page.getByRole('button',{name:'关闭导出'}).click();
   await page
     .getByRole("button", { name: "检查调用", exact: false })
     .last()
@@ -258,10 +253,10 @@ test("windows long history and pages context sources beyond a raw artifact page"
   await page.goto(`${app.origin}/?session=${session.id}#token=${app.token}`);
   await expect(page.locator(".row")).toHaveCount(60);
   for (const count of [120, 180, 180]) {
-    await page.getByRole("button", { name: "加载更早记录" }).click();
+    await page.getByRole("button", { name: "查看更早" }).click();
     await expect(page.locator(".row")).toHaveCount(count);
   }
-  await page.locator('.conversation').evaluate(el=>{el.scrollTop=50;el.dispatchEvent(new Event('scroll'));});
+  await page.locator('.conversation').evaluate(el=>{el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,deltaY:-100}));el.scrollTop=50;el.dispatchEvent(new Event('scroll'));});
   const live = await Journal.open(entry.directory);
   const updates = (async()=>{
     try {
@@ -276,11 +271,13 @@ test("windows long history and pages context sources beyond a raw artifact page"
   await expect(page.getByRole('textbox', {name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
   console.log(`180-row input fill and assertion: ${Date.now()-inputStart}ms`);
   await updates;
-  await expect(page.locator('.row-assistant')).toContainText('持续输出 7');
+  await expect(page.getByRole('button',{name:'有新消息 · 返回最新'})).toBeVisible();
   const distanceFromBottom=await page.locator('.conversation').evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight);
   expect(distanceFromBottom).toBeGreaterThan(100);
+  await page.getByRole('button',{name:'有新消息 · 返回最新'}).click();
+  await expect(page.locator('.row-assistant')).toContainText('持续输出 7');
   await expect(page.getByRole('textbox',{name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
-  await page.getByRole("button", { name: "回到最新记录" }).click();
+  await expect(page.getByRole("button", { name: "返回最新", exact:true })).toHaveCount(0);
   await expect(page.locator(".row")).toHaveCount(60);
   await page.getByRole("button", { name: "检查调用", exact: false }).click();
   await page.getByRole("button", { name: "输入", exact: true }).click();

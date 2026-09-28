@@ -23,7 +23,7 @@ node dist/cli.js inspect session-bundle
 
 `run/resume` 返回最终结构化结果；Ctrl-C 取消当前调用并等待 shell 停止。重复写入同一会话会返回冲突；进程崩溃后锁租约约 10 秒到期。
 
-`--instructions <文件>` 显式传入项目指导，可重复；每次运行单独指定。`--tools read,edit,write` 限制启用工具；默认另含本机 shell 和启用的 `web_search`。`--image <图片>` 提供图片输入。`--max-turns` 默认 32，`--max-output-tokens` 默认 4096；默认模型为 `deepseek-flash`。
+`--instructions <文件>` 显式传入项目指导，可重复；每次运行单独指定。`--tools read,edit,write` 限制启用工具；默认另含本机 shell 和启用的 `web_search`。`--image <图片>` 提供图片输入。`--max-turns` 默认 64，`--max-output-tokens` 默认 131072（128K，含推理与可见输出）；默认模型为 `deepseek-flash`。
 
 文件工具限制在工作区内，修改既有文件前必须读取，外部修改后需重读；edit 仅支持精确匹配。Shell 使用本机权限执行，并不提供操作系统沙箱。默认 Unix 使用 bash（缺失时 sh），Windows 分支使用 PowerShell。
 
@@ -133,3 +133,10 @@ CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 
 V2 真实模型演练入口为 `node scripts/customization-v2-live-smoke.mjs`，使用临时合成工作区，生成及修复走已配置真实模型，生成的 Provider 以明确标记的本地响应 fixture 验收；不会成为 CI 条件。`NEKOMIMI_LIVE_WORKSPACE` 可指定已有合成工作区继续使用验收。
 
 版本候选安装验收支持 `node scripts/pack-smoke.mjs /绝对路径/nekomimi-0.2.0.tgz`，便于不同 Node/平台测试同一 tarball。完整审查包组合 Skills/Rules、MCP 内容与本地 OAuth、自定义 Provider、持久重启回答和面板；所有协议服务使用合成数据，不需要账号。
+
+
+### 输出未完成与顶栏操作
+
+服务端 `response.incomplete` 不等同于调用轮数耗尽。调用证据保留 `incompleteReason`、`outputBudget` 和 usage；`max_output_tokens` 提示分步骤继续，`content_filter` 提示调整描述，网络截断不执行未完成的工具调用。显式预算和轮数参数优先；输出耗尽不自动扩大预算或重试。
+
+顶栏“更多操作”收纳外观与导出。外观内使用“显示扩展内容”开关替代独立恢复按钮，恢复默认同时清除当前主题效果并关闭当前页扩展视图；全局/项目范围放在高级选项。导出弹层默认展示 HTML/诊断包，脱敏设置折叠；可用 Escape、关闭按钮或遮罩退出。菜单与控件跟随主题字体、语义配色、圆角与焦点样式。

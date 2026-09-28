@@ -23,3 +23,5 @@ export type {
   ResourceDescriptor,
   ResourceSnapshot,
 } from "./customization/types.js";
+
+export type { ThemeDefinition, UiSlot, UiAction, ViewOptions } from "./customization/ui-contract.js";

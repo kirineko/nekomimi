@@ -51,7 +51,7 @@ export class ResponsesProvider {
       reasoning: true,
       input: ["text", "image"],
       contextWindow: 1_000_000,
-      maxTokens: settings.maxOutputTokens ?? 4096,
+      maxTokens: settings.maxOutputTokens ?? 131072,
       cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
       compat: { supportsDeveloperRole: false },
     };
@@ -102,6 +102,7 @@ export class ResponsesProvider {
         const attempts = this.settings.maxAttempts ?? 2;
         if (!Number.isInteger(attempts) || attempts < 1 || attempts > 10)
           throw new Error("maxAttempts must be 1..10");
+        const outputBudget=this.model.maxTokens;
         for (let attempt = 1; attempt <= attempts; attempt++) {
           this.journal.check();
           options?.signal?.throwIfAborted();
@@ -161,7 +162,7 @@ export class ResponsesProvider {
               tools: this.prompt.schemas,
               tool_choice: "auto",
               stream: true,
-              max_output_tokens: this.model.maxTokens,
+              max_output_tokens: outputBudget,
               ...(this.settings.purpose === "session-title"
                 ? { reasoning: { effort: "none" } }
                 : {}),
@@ -186,6 +187,7 @@ export class ResponsesProvider {
               : completed
                 ? "completed"
                 : "failed";
+          const incompleteReason=terminalType==='response.incomplete'?(terminal?.incomplete_details as {reason?:string}|undefined)?.reason:undefined;
           if (!completed)
             result = {
               ...result,
@@ -194,7 +196,10 @@ export class ResponsesProvider {
                 streamError?.message ??
                   (timeout.aborted
                     ? "Model request timed out"
-                    : (result.errorMessage ?? `Response ${this.lastOutcome}`)),
+                    : (incompleteReason==='max_output_tokens'
+                      ? `本次回复达到 ${outputBudget%1024===0?`${outputBudget/1024}K`:outputBudget} 输出上限（包含推理）。请分步骤继续任务。`
+                      : incompleteReason==='content_filter' ? '服务端过滤了本次响应，请调整任务描述后重试。'
+                      : (result.errorMessage ?? `Response ${this.lastOutcome}`))),
               ),
             };
           await recorded.finish(
@@ -202,6 +207,7 @@ export class ResponsesProvider {
               status: this.lastOutcome,
               httpStatus: status,
               terminalType,
+              incompleteReason, outputBudget,
               response: terminal
                 ? await this.journal.artifact(JSON.stringify(terminal))
                 : undefined,
@@ -249,7 +255,7 @@ export class ResponsesProvider {
           if (retry) {
             await this.journal.append(
               "attempt.retry",
-              { nextAttempt: attempt + 1, reason: result.errorMessage },
+              { nextAttempt: attempt + 1, reason: result.errorMessage, nextOutputBudget:outputBudget },
               links,
             );
             await new Promise<void>((resolve, reject) => {

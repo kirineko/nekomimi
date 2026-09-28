@@ -33,7 +33,7 @@ nekomimi web
 
 可以让 Nekomimi 为项目编写工具、命令或工作流程，例如：“创建一个 /review 命令，按项目规范审查改动，并显示结果卡片。”它可以读取随包 SDK 资料、生成扩展、校验并修复。首次生成后，在顶部 **定制能力** 中信任并启用，再重载使用；后续修改在当前任务结束后生效。
 
-V1 支持本地 TypeScript 扩展、Skills、分层 AGENTS.md 规则、MCP 工具，以及状态、卡片和表单。0.2.0 的 V2 实现增加能力包、Provider、MCP 内容/OAuth、持久工作流和隔离面板，支持通过对话生成、校验、修复并启用定制能力。扩展作为可信 Node 代码运行，进程隔离不是 OS 沙箱。详细目录、授权和示例见 [定制开发文档](extension-docs/README.md) 与 [V2 实施记录](docs/customization-v2-validation.md)。
+Nekomimi SDK 统一提供本地 TypeScript 扩展、Skills、分层规则、MCP 工具与内容/OAuth、Provider、能力包、持久工作流、隔离面板及运行时主题与视图扩展。支持通过对话生成、校验、修复并启用定制能力；可信 Node 扩展的进程隔离不是 OS 沙箱。见 [开发入口](extension-docs/README.md)、[运行时 UI](extension-docs/runtime-ui.md) 和 [调试验收](extension-docs/validation.md)。
 
 ## 日常使用
 

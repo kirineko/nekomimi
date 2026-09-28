@@ -75,6 +75,7 @@ it('previews an explicitly authorized candidate factory without replacing regist
   const {candidate}=await store.inspect(draft.id);expect(candidate.report.passed).toBe(true);
   await expect(f.host.panels.previewCandidate(draft.id,candidate.contentHash,undefined,{items:[]},false)).rejects.toThrow('explicit');
   const preview=await f.host.panels.previewCandidate(draft.id,candidate.contentHash,undefined,{items:['candidate']},true);
+  expect(preview.verification).toMatchObject({stage:'preview',hostIntegration:'not_run',resourceRevision:candidate.contentHash});
   expect((await f.host.panels.document(preview.frame.instanceId)).html).toContain('candidate');expect(f.host.active!.revision).toBe(revision);expect(await f.host.catalog.decisions()).toEqual(decisions);
   await expect(f.host.panels.action(preview.frame.instanceId,1,'workflow.answer',{decision:'approve'})).rejects.toThrow('not authorized');
  }finally{await f.host.close();}

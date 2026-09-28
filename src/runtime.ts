@@ -227,8 +227,8 @@ export async function run(options: RunOptions): Promise<RunResult> {
       },
       prepareNextTurn: async () => {
         journal.check();
-        if (++turns > (options.maxTurns ?? 32))
-          throw new Error("Run turn limit exceeded");
+        if (++turns > (options.maxTurns ?? 64))
+          throw new Error("已达到本次任务的调用轮数上限，请分步骤继续任务");
         refreshPrompt();
         return undefined;
       },
@@ -290,7 +290,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
       while (custom.followups.length) {
         runSignal.throwIfAborted();
         const followup = custom.followups.shift()!;
-        if (++turns > (options.maxTurns ?? 32)) throw new Error('Run turn limit exceeded');
+        if (++turns > (options.maxTurns ?? 64)) throw new Error('已达到本次任务的调用轮数上限，请分步骤继续任务');
         await journal.append('context.add', { source: 'extension:follow-up', item: { role: 'user', content: [{ type: 'input_text', text: followup }] } }, { runId });
         refreshPrompt(); await agent.prompt(followup);
       }

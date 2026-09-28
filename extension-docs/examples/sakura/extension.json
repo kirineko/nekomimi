@@ -1,0 +1,1 @@
+{"name":"sakura-studio","sdkVersion":2,"entry":"index.ts","requiredCapabilities":["themes","views","panels","commands","ui","ui-draft","ui-state"]}

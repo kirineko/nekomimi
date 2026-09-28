@@ -2,6 +2,7 @@ import type { PanelView } from "../CustomPanel";
 import type { WorkflowView, WorkflowDefinitionView } from "../WorkflowManagement";
 import type { ResourceDescriptor } from "../../../customization/types";
 export interface Management {
+  abilities?: import("../../../shared/customization-lifecycle").Ability[];
   panels: PanelView[];
   workflows: WorkflowView[];
   workflowDefinitions: WorkflowDefinitionView[];

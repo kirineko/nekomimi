@@ -8,7 +8,7 @@ import { packageAction } from "./package-management.js";
 import { realpath } from "node:fs/promises";
 import { Type } from "typebox";
 import type { AgentTool } from "@earendil-works/pi-agent-core";
-import { dirname, join, resolve, relative, matchesGlob } from "node:path";
+import { basename, dirname, join, resolve, relative, matchesGlob } from "node:path";
 import { Journal, hash, id, type JournalEvent } from "../journal.js";
 import {
   assemblePrompt,
@@ -50,6 +50,7 @@ export class CustomRun {
   private rules = new Map<string, string>();
   private changes = 0;
   private operations = 0;
+  private fileVersions = new Map<string,string>();
   private mcpContentBytes = 0;
   constructor(
     readonly host: CustomizationHost,
@@ -161,7 +162,7 @@ export class CustomRun {
       );
       this.instructions.push({
         source: `resources:${revision}`,
-        text: `Available resources (read by resource_read before use; skills are loaded on demand):\n${readable.map((r) => `${r.id} ${r.kind} ${r.name}: ${r.description ?? ""}`).join("\n")}\nFor self-customization read the SDK docs before writing extension files. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.`,
+        text: `Available resources (read by resource_read before use; skills are loaded on demand):\n${readable.map((r) => `${r.id} ${r.kind} ${r.name}: ${r.description ?? ""}`).join("\n")}\nFor self-customization read the SDK docs before writing extension files. New capabilities default to project scope. Use user scope only when the user explicitly requests cross-project availability; user writes and code execution require their existing separate authorization. Project candidates are development drafts; publish cross-project capabilities with user-scoped resource_write or customization_package. Finish development with customization_status for the affected resource so the user gets a version-bound delivery card; report the actual stage, never equate queued reload with applied theme. Extensions are trusted local code; SDK calls are recorded, direct Node operations are not guaranteed recorded.`,
       });
     }
     this.add(
@@ -192,20 +193,40 @@ export class CustomRun {
               report: checkTypes(r),
             })),
         );
+        for (const resource of resources.filter(r => r.kind === 'extension')) await this.host.lifecycle.record(resource,'static',{passed:checks.find(c => c.id === resource.id)?.report.passed,sessionId:basename(this.journal.directory),runId:this.runId});
         return { content: [{ type: "text", text: JSON.stringify(checks) }] };
       },
     );
-    this.add("customization_sdk", "Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.", Type.Object({ entry: Type.Optional(Type.String()) }), async args => ({ content: [{ type: "text", text: JSON.stringify(await sdkCatalog(args.entry as string | undefined)) }] }));
-    this.add("customization_candidate", "Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.", Type.Object({ action: Type.Union([Type.Literal("create"), Type.Literal("list"), Type.Literal("inspect"), Type.Literal("activate"), Type.Literal("rollback")]), name: Type.Optional(Type.String()), id: Type.Optional(Type.String()), contentHash: Type.Optional(Type.String()) }), async args => {
+    this.add("customization_status", "Read current host customization stages, missing permissions and next steps. Unlike resource_list this reads current discovery, without loading code or changing settings.", Type.Object({resourceId:Type.Optional(Type.String())}), async args => {
+      const items = (await this.host.lifecycle.catalog()).filter(item => !args.resourceId || item.resourceId === args.resourceId);
+      return {content:[{type:'text',text:JSON.stringify({host:(await sdkCatalog(undefined,this.host.catalog.workspace,this.host.catalog.home)).host,pinnedActivation:this.activation.revision,currentActivation:this.host.active?.revision,items:items.slice(0,100),total:items.length,receipts:this.host.receipts.slice(-3)})}],details:JSON.parse(JSON.stringify({kind:'customization-delivery',items:items.slice(0,20).map(({key,resourceId,revision,name,type,phase,missing,scope})=>({key,resourceId,revision,name,type,phase,missing,scope}))}))};
+    });
+    this.add("customization_sdk", "Read the installed SDK catalog or signatures; availableCapabilities identifies implemented registrations.", Type.Object({ entry: Type.Optional(Type.String()) }), async args => ({ content: [{ type: "text", text: JSON.stringify(await sdkCatalog(args.entry as string | undefined,this.host.catalog.workspace,this.host.catalog.home)) }] }));
+    this.add("customization_candidate", "Create, list or fully type-check an isolated project candidate. Activation requires explicit authorization and the checked content hash.", Type.Object({ action: Type.Union([Type.Literal("create"), Type.Literal("list"), Type.Literal("inspect"), Type.Literal("activate"), Type.Literal("rollback"), Type.Literal("export")]), output: Type.Optional(Type.String()), name: Type.Optional(Type.String()), template: Type.Optional(Type.String()), id: Type.Optional(Type.String()), contentHash: Type.Optional(Type.String()) }), async args => {
       const store = new Candidates(this.host.catalog.workspace);
-      const result = args.action === "create" ? await store.scaffold(String(args.name ?? "")) : args.action === "inspect" ? await store.preview(String(args.id ?? "")) : args.action === "activate" ? await this.host.requestCandidate(String(args.id ?? ""), String(args.contentHash ?? "")) : args.action === "rollback" ? await this.host.requestRollback(String(args.name ?? "")) : await store.list();
+      const result = args.action === "create" ? await store.scaffold(String(args.name ?? ""), typeof args.template === "string" ? args.template : undefined) : args.action === "inspect" ? await store.preview(String(args.id ?? "")) : args.action === "activate" ? await this.host.requestCandidate(String(args.id ?? ""), String(args.contentHash ?? "")) : args.action === "export" ? await store.export(String(args.id??""),String(args.contentHash??""),String(args.output??"")) : args.action === "rollback" ? await this.host.requestRollback(String(args.name ?? "")) : await store.list();
+      if (args.action === 'create' || args.action === 'inspect') {
+        const resource = await store.read(args.action === 'create' ? (result as {id:string}).id : String(args.id));
+        await this.host.lifecycle.record(resource,args.action === 'create' ? 'created' : 'static',{sessionId:basename(this.journal.directory),runId:this.runId,...(args.action === 'inspect' ? {passed:(result as unknown as {report:{passed:boolean}}).report.passed} : {})});
+      }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
     });
-    this.add("customization_package", "Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.", Type.Object({ action: Type.Union(["prepare", "inspect", "activate", "list", "rollback", "export", "uninstall"].map(v => Type.Literal(v))), scope: Type.Optional(Type.Union([Type.Literal("project"), Type.Literal("user")])), id: Type.Optional(Type.String()), source: Type.Optional(Type.Object({ kind: Type.String(), path: Type.Optional(Type.String()), name: Type.Optional(Type.String()), version: Type.Optional(Type.String()), registry: Type.Optional(Type.String()), url: Type.Optional(Type.String()), commit: Type.Optional(Type.String()) })), bindings: Type.Optional(Type.Record(Type.String(), Type.String())), output: Type.Optional(Type.String()) }), async args => ({ content: [{ type: "text", text: JSON.stringify(await packageAction(this.host, args, { user: false, signal: this.signal })) }] }));
+    this.add("customization_package", "Prepare, inspect, activate, share or remove capability packages. New sources and expanded permissions require user authorization in management. Prepare does not execute package scripts. Local sources must be inside the workspace.", Type.Object({ action: Type.Union(["prepare", "inspect", "activate", "list", "rollback", "export", "uninstall"].map(v => Type.Literal(v))), scope: Type.Optional(Type.Union([Type.Literal("project"), Type.Literal("user")])), id: Type.Optional(Type.String()), source: Type.Optional(Type.Object({ kind: Type.String(), path: Type.Optional(Type.String()), name: Type.Optional(Type.String()), version: Type.Optional(Type.String()), registry: Type.Optional(Type.String()), url: Type.Optional(Type.String()), commit: Type.Optional(Type.String()) })), bindings: Type.Optional(Type.Record(Type.String(), Type.String())), output: Type.Optional(Type.String()) }), async args => {
+      const result = await packageAction(this.host,args,{user:false,signal:this.signal});
+      if (args.action === 'prepare') {
+        const {Packages} = await import('./packages.js');
+        const store = new Packages(this.host.catalog.workspace,this.host.catalog.home);
+        const candidate = result as Awaited<ReturnType<typeof store.prepare>>;
+        const stage = (await store.list()).some(p => p.packageId === candidate.packageId) ? 'updated' : 'created';
+        for(const resource of await store.resources(candidate)) await this.host.lifecycle.record(resource,stage,{sessionId:basename(this.journal.directory),runId:this.runId});
+      }
+      return {content:[{type:'text',text:JSON.stringify(result)}]};
+    });
     this.add(
       "resource_write",
-      "Write a user-level customization resource only when user resource writing has been authorized. previousHash null creates a file; existing files require their current hash.",
+      "Write a customization resource. scope defaults to project; explicit user scope requires user directory writing authorization. previousHash null creates a file; existing files require their current hash.",
       Type.Object({
+        scope: Type.Optional(Type.Union([Type.Literal("project"),Type.Literal("user")])),
         kind: Type.Union([
           Type.Literal("extension"),
           Type.Literal("skill"),
@@ -218,14 +239,19 @@ export class CustomRun {
         previousHash: Type.Union([Type.String(), Type.Null()]),
       }),
       async (args) => {
+        const scope=args.scope===undefined?"project":args.scope;
+        if(scope!=="project"&&scope!=="user")throw new Error("Invalid resource scope");
         const before = args.previousHash;
+        const existed=(await this.host.catalog.discover()).some(r=>r.name===args.name&&r.kind===args.kind&&r.scope===scope);
         const result = await this.host.catalog.write(
           args.kind as "extension" | "skill" | "rule" | "mcp",
           String(args.name),
           String(args.file),
           String(args.text),
           before as string | null,
+          scope,
         );
+        for (const resource of (await this.host.catalog.discover()).filter(r => r.name === args.name && r.scope === scope && r.kind === args.kind)) await this.host.lifecycle.record(resource,existed ? 'updated' : 'created',{sessionId:basename(this.journal.directory),runId:this.runId});
         await this.journal.append(
           "resource.written",
           {
@@ -453,6 +479,20 @@ export class CustomRun {
     }
   }
   async hook(event: Hook, value: HookEvent = {}) {
+    if (!this.trial && (event === 'beforeTool' || event === 'afterTool') && ['write','edit'].includes(value.tool ?? '')) {
+      const path = typeof value.args?.path === 'string' ? resolve(this.host.catalog.workspace,value.args.path) : undefined;
+      if (path) {
+        const store = new Candidates(this.host.catalog.workspace);
+        const resources = [...await this.host.catalog.discover(), ...await Promise.all((await store.list()).map(id => store.read(id).catch(() => undefined)))].filter((r): r is Resource => !!r);
+        for (const resource of resources.filter(r => r.scope !== 'builtin' && inside(r.root,path))) {
+          if (event === 'beforeTool') this.fileVersions.set(resource.id,resource.hash);
+          else if (this.fileVersions.get(resource.id) !== resource.hash) {
+            await this.host.lifecycle.record(resource,'updated',{sessionId:basename(this.journal.directory),runId:this.runId});
+            this.fileVersions.set(resource.id,resource.hash);
+          }
+        }
+      }
+    }
     for (const ext of this.activation.extensions)
       for (const handler of ext.hooks.get(event) ?? []) {
         try {
@@ -475,10 +515,10 @@ export class CustomRun {
         }
       }
     if (event === "afterTool" && !this.trial) {
-      for (const ext of this.activation.extensions) for (const panel of ext.panels.filter(p => p.renderer === value.tool)) {
+      for (const ext of this.activation.extensions) for (const panel of ext.panels.filter(p => p.renderer === value.tool && ["sidebar","result"].includes(p.slot))) {
         try {
           const props = JSON.parse(JSON.stringify({tool:value.tool,args:value.args,result:value.result}));
-          await this.context(ext).ui({kind:'panel',title:panel.id,panelId:panel.id,props});
+          await this.context(ext).ui({kind:'panel',title:panel.title??panel.id,panelId:panel.id,props});
         } catch (error) { await this.journal.append('extension.error',{event:'renderer',panelId:panel.id,message:String(error)},{runId:this.runId,resourceId:ext.resource.id}); }
       }
       await this.host.workflows.observe(this.journal, this.activation, "tool-completed", value.tool, this.options);

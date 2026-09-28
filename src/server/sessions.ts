@@ -496,10 +496,44 @@ export class Sessions {
   async customizationAction(value: Record<string, unknown>) {
     return this.exclusive(async () => {
       this.check();
+      if (value.action === 'theme-verify') {
+        const active = (await this.customization.themes.describe()).active;
+        if (!active || active.resourceId !== value.resourceId || active.revision !== value.contentHash || active.id !== value.id) throw new ApiError(409,'theme_conflict','主题版本已变化');
+        const resource = this.customization.active?.resources.find(r => r.id === active.resourceId);
+        if (!resource) throw new ApiError(409,'theme_conflict','主题尚未加载');
+        const evidence = await this.customization.lifecycle.evidence();
+        const identity = await (await import('../customization/sdk.js')).hostIdentity();
+        if (!evidence.some(e => e.resourceId === resource.id && e.revision === resource.hash && e.stage === 'host' && e.host === identity.build && e.contributionId === active.id && e.passed)) await this.customization.lifecycle.record(resource,'host',{passed:true,contributionId:active.id});
+        return {status:'verified'};
+      }
+      if (value.action === 'theme-select') return this.customization.themes.select(value.scope as 'user'|'project', value.selection as any, Number(value.revision));
       if (value.action === 'user-writes' && typeof value.enabled === 'boolean' && typeof value.revision === 'number') { await this.customization.catalog.allowUserWrites(value.enabled,value.revision); return { status: 'saved' }; }
       if (value.action === 'candidate-panel-preview') return this.customization.panels.previewCandidate(String(value.id),String(value.contentHash),typeof value.panelId === 'string'?value.panelId:undefined,(value.props ?? {}) as Json,value.authorize===true);
-      if (value.action === 'panel-mount') return this.customization.panels.mount(String(value.resourceId), String(value.panelId), String(value.revision), (value.props ?? {}) as Json, typeof value.workflowId === 'string' ? value.workflowId : undefined, value.preview === true, typeof value.theme === 'string' ? value.theme : undefined);
+      if (value.action === 'panel-mount') return this.customization.panels.mount(String(value.resourceId), String(value.panelId), String(value.revision), (value.props ?? {}) as Json, typeof value.workflowId === 'string' ? value.workflowId : undefined, value.preview === true, typeof value.theme === 'string' ? value.theme : undefined, typeof value.sessionId === 'string' ? value.sessionId : undefined);
       if (value.action === 'panel-action') {
+        if(['draft.set','command.run','session.navigate','view.open','state.read','state.subscribe'].includes(String(value.method))) {
+          const data=(value.value??{}) as Record<string,unknown>;
+          const bound=await this.customization.panels.uiAction(String(value.instanceId),Number(value.sequence),String(value.method),data as Json);
+          const entry=await this.entry(bound.sessionId);
+          if(value.method==='command.run') {
+            if(typeof data.command!=='string'||data.command.length>8000||typeof data.commandId!=='string'||!validId(data.commandId))throw new ApiError(400,'panel_command','命令参数无效');
+            const name=/^\/([a-z][a-z0-9_:-]*)(?:\s|$)/.exec(data.command)?.[1];
+            if(!name||!this.customization.commands().commands.some(c=>c.name===`/${name}`))throw new ApiError(400,'panel_command','只能调用已注册命令');
+            await this.customization.panels.recordUiAction(String(value.instanceId),'command.run','intent',data);
+            try {
+              const receipt=await this.submitInner(bound.sessionId,{version:1,commandId:data.commandId,prompt:data.command});
+              await this.customization.panels.recordUiAction(String(value.instanceId),'command.run','completed',receipt);
+              return receipt;
+            }catch(error){await this.customization.panels.recordUiAction(String(value.instanceId),'command.run','failed',{error:String(error)});throw error;}
+          }
+          if(value.method==='state.read'||value.method==='state.subscribe')return {sessionId:bound.sessionId,title:this.info(bound.sessionId,entry).title,status:this.info(bound.sessionId,entry).status};
+          if(value.method==='draft.set'&&(typeof data.text!=='string'||data.text.length>16000))throw new ApiError(400,'panel_draft','草稿无效');
+          if(value.method==='session.navigate') {
+            if(data.sessionId!==bound.sessionId)throw new ApiError(403,'panel_scope','无法导航到未绑定会话');
+          }
+          if(value.method==='view.open'&&!this.customization.panels.catalog().some(p=>p.resourceId===bound.resourceId&&p.id===data.viewId&&p.slot==='page'))throw new ApiError(403,'panel_view','视图不可用');
+          return {uiAction:value.method,value:data,sessionId:bound.sessionId,resourceId:bound.resourceId};
+        }
         try {return await this.customization.panels.action(String(value.instanceId), Number(value.sequence), String(value.method), (value.value ?? null) as Json);}
         catch(error) {
           if(/Workflow (revision conflict|answer identity conflict|interaction is not waiting)/.test(String(error))) throw new ApiError(409,'panel_conflict','工作流回答冲突，请刷新权威状态');
@@ -566,13 +600,22 @@ export class Sessions {
         return { status: 'disconnected' };
       }
       if (typeof value.action === 'string' && ['package-collect', 'package-list', 'package-inspect', 'package-activate', 'package-rollback', 'package-export', 'package-uninstall'].includes(value.action)) return packageAction(this.customization, { ...value, action: value.action.slice(8) }, { user: true });
-      if (value.action === 'candidate-inspect' && typeof value.id === 'string') return new Candidates(this.customization.catalog.workspace).preview(value.id);
-      if (value.action === 'candidate-activate' && typeof value.id === 'string' && typeof value.contentHash === 'string') return this.customization.requestCandidate(value.id, value.contentHash, value.authorize === true);
+      if (value.action === 'candidate-export') return new Candidates(this.customization.catalog.workspace).export(String(value.id),String(value.contentHash),String(value.output));
+      if (value.action === 'candidate-inspect' && typeof value.id === 'string') {const store=new Candidates(this.customization.catalog.workspace),preview=await store.preview(value.id);await this.customization.lifecycle.record(await store.read(value.id),'static',{passed:preview.report.passed});return preview;}
+      if (value.action === 'candidate-activate' && typeof value.id === 'string' && typeof value.contentHash === 'string') return this.customization.requestCandidate(value.id, value.contentHash, value.authorize === true, typeof value.revision === "number" ? value.revision : undefined);
       if (value.action === 'candidate-rollback' && typeof value.name === 'string') return this.customization.requestRollback(value.name, value.authorize === true);
       if (value.action === 'validate') {
         const r = (await this.customization.catalog.discover()).find(r => r.id === value.id);
         if (!r || r.kind !== 'extension') throw new ApiError(400, 'resource', '扩展不存在');
-        return { errors: await validateExtension(r), report: checkTypes(r) };
+        const errors = await validateExtension(r), report = checkTypes(r);
+        await this.customization.lifecycle.record(r,'static',{passed:report.passed && !errors.length});
+        return { errors, report };
+      }
+      if (value.action === 'authorize-version') {
+        const resource = (await this.customization.catalog.discover()).find(r => r.id === value.id);
+        if (!resource || resource.hash !== value.contentHash) throw new ApiError(409,'resource_conflict','资源已变化，请重新确认权限');
+        await this.customization.catalog.decide(resource.id,true,true,Number(value.revision),undefined,String(value.contentHash));
+        return this.customization.requestReload(resource);
       }
       if (value.action === 'set' && typeof value.id === 'string' && typeof value.enabled === 'boolean' && typeof value.trusted === 'boolean' && typeof value.revision === 'number') {
         await this.customization.catalog.decide(value.id, value.enabled, value.trusted, value.revision);

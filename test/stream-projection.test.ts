@@ -77,6 +77,8 @@ it("pages a long timeline without sending the entire history", async () => {
     expect(page.rows).toHaveLength(60);
     expect(page.before).toBe(190);
     expect(projection.page(page.before).rows[0]?.text).toBe("item 130");
+    expect(projection.page(60).after).toBe(60);
+    expect(projection.page(undefined,60,60).rows[0]?.text).toBe("item 60");
   } finally {
     await j.close();
   }

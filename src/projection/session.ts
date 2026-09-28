@@ -1,3 +1,4 @@
+import {readablePanel} from "../shared/ui-content.js";
 import { artifactRefs, readArtifact, type JournalEvent } from "../journal.js";
 import type { SessionInfo, TimelineRow } from "../shared/protocol.js";
 const clipped = (text: string) =>
@@ -85,7 +86,7 @@ export class SessionProjection {
     if (e.type === 'workflow.reference') { const r=this.row(e,e.eventId,'status','持久工作流');r.text=`工作流 ${p.definitionId} · ${p.workflowId}。结果与交互以独立工作流 Journal 为准。`;r.details=p; }
     if (['extension.ui', 'extension.command_result', 'extension.error', 'interaction.opened', 'interaction.answered', 'interaction.cancelled', 'tool.evidence_gap', 'tool.execution_error'].includes(e.type)) {
       const r = this.row(e, String(p.instanceId ?? p.id ?? e.eventId), 'status', p.title ?? p.value?.title ?? (e.type === 'extension.command_result' ? '命令结果' : e.type));
-      r.text = clipped(p.text ?? p.message ?? JSON.stringify(p.answer ?? p.value ?? p));
+      r.text = clipped(p.kind==='panel'?readablePanel(p):p.text ?? p.message ?? JSON.stringify(p.answer ?? p.value ?? p));
       r.details = p; r.status = e.type === 'interaction.opened' ? 'waiting' : e.type === 'interaction.cancelled' ? 'cancelled' : 'completed';
     }
     if (e.type === "attempt.started") {
@@ -247,13 +248,14 @@ export class SessionProjection {
       error: this.error,
     };
   }
-  page(before = Number.MAX_SAFE_INTEGER, limit = 60) {
+  page(before = Number.MAX_SAFE_INTEGER, limit = 60, after?: number) {
     const all = [...this.rows.values()];
-    const rows = all.slice(0, before);
+    const rows = all.slice(0, after === undefined ? before : after + limit);
     const start = Math.max(0, rows.length - limit);
     return {
       rows: rows.slice(start),
       before: start || undefined,
+      after: rows.length < all.length ? rows.length : undefined,
       totalRows: all.length,
     };
   }

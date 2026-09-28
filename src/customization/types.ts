@@ -1,18 +1,7 @@
 /** Public, JSON-based contracts. No runtime/framework objects cross this boundary. */
-export const SDK_VERSION = 1 as const;
-export const CAPABILITIES = [
-  "tools",
-  "commands",
-  "hooks",
-  "state",
-  "model",
-  "ui",
-  "follow-up",
-  "providers",
-  "workflows",
-  "workspace-state",
-  "panels",
-] as const;
+export const SDK_VERSION = 2 as const;
+import {SDK_CAPABILITIES} from "./capabilities.js";
+export const CAPABILITIES = SDK_CAPABILITIES;
 export type Json =
   | null
   | boolean
@@ -67,6 +56,7 @@ export interface FormField {
 export interface Contribution {
   kind: "status" | "card" | "form" | "panel";
   panelId?: string;
+  summary?: string;
   props?: Json;
   title: string;
   text?: string;
@@ -109,6 +99,11 @@ export interface HookEvent {
   result?: ToolResult;
 }
 export interface ExtensionAPI {
+  registerProvider(provider: import('./sdk-contracts.js').ProviderDefinition): void;
+  registerWorkflow(workflow: import('./sdk-contracts.js').WorkflowDefinition): void;
+  registerPanel(panel: import('./sdk-contracts.js').PanelDefinition): void;
+  registerTheme(theme: import('./ui-contract.js').ThemeDefinition): void;
+  registerView(view: import('./sdk-contracts.js').PanelDefinition & import('./ui-contract.js').ViewOptions): void;
   registerTool(tool: ExtensionTool): void;
   registerCommand(name: string, command: ExtensionCommand): void;
   on(

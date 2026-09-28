@@ -1,3 +1,5 @@
+import { normalizeColor } from '../shared/color.js';
+import { UI_SLOTS, UI_ACTIONS, validateView } from "./ui-contract.js";
 import { build } from "esbuild";
 import { realpath, readFile, stat } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve, extname } from "node:path";
@@ -7,10 +9,11 @@ import { safePath, LIMITS, type Resource } from "./resources.js";
 import type { PanelDefinition } from "./contracts.js";
 export interface BuiltPanel extends PanelDefinition { resource: Resource; bundle: string; css: string; bundleHash: string }
 export function validatePanel(panel: PanelDefinition) {
-  if (!panel || !/^[a-z][a-z0-9_-]{0,47}$/.test(panel.id) || panel.uiVersion !== 1 || !["sidebar", "result"].includes(panel.slot) || typeof panel.entry !== "string" || !/\.[cm]?[jt]sx?$/.test(panel.entry) || !panel.propsSchema || panel.propsSchema.type !== "object" || !Array.isArray(panel.actions) || panel.actions.length > 3 || new Set(panel.actions).size !== panel.actions.length || panel.actions.some(a => !["workflow.state", "workflow.answer", "workflow.cancel"].includes(a)) || typeof panel.fallback !== "string" || !panel.fallback.trim() || panel.fallback.length > 4000) throw new Error("Invalid panel descriptor");
+  if (!panel || !/^[a-z][a-z0-9_-]{0,47}$/.test(panel.id) || panel.uiVersion !== 1 || !["sidebar", "result", ...UI_SLOTS].includes(panel.slot) || typeof panel.entry !== "string" || !/\.[cm]?[jt]sx?$/.test(panel.entry) || !panel.propsSchema || panel.propsSchema.type !== "object" || !Array.isArray(panel.actions) || panel.actions.length > 9 || new Set(panel.actions).size !== panel.actions.length || panel.actions.some(a => !["workflow.state", "workflow.answer", "workflow.cancel", ...UI_ACTIONS].includes(a)) || typeof panel.fallback !== "string" || !panel.fallback.trim() || panel.fallback.length > 4000) throw new Error("Invalid panel descriptor");
+  if (panel.title !== undefined || UI_SLOTS.includes(panel.slot as any)) validateView(panel as any);
   if (panel.renderer !== undefined && !/^[a-z][a-z0-9_-]{0,79}$/.test(panel.renderer)) throw new Error("Invalid renderer tool name");
   if (panel.themes && (Object.keys(panel.themes).length > 8 || Object.keys(panel.themes).some(name=>!/^[a-z][a-z0-9-]{0,31}$/.test(name)))) throw new Error("Invalid panel theme choices");
-  for (const tokens of [panel.theme, ...Object.values(panel.themes ?? {})]) if(tokens) for (const [name, value] of Object.entries(tokens)) if (!["background", "foreground", "accent", "border"].includes(name) || !/^#[a-f0-9]{6}$/i.test(value)) throw new Error("Invalid panel theme token");
+  for (const tokens of [panel.theme, ...Object.values(panel.themes ?? {})]) if(tokens) for (const [name, value] of Object.entries(tokens)) try { if (!["background", "foreground", "accent", "border"].includes(name)) throw new Error(); normalizeColor(value); } catch { throw new Error("Invalid panel theme token"); }
 }
 /** Only the fixed esbuild API and immutable local inputs; no config files or hooks. */
 export async function buildPanel(resource: Resource, panel: PanelDefinition): Promise<BuiltPanel> {

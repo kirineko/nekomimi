@@ -57,6 +57,7 @@ export interface Snapshot {
   cursor: Cursor;
   rows: TimelineRow[];
   before?: number;
+  after?: number;
   totalRows: number;
 }
 export interface Update {

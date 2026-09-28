@@ -1,3 +1,4 @@
+import {RuntimeViews} from "./RuntimeViews";
 import { useEffect, useRef, useState } from "react";
 import { sessionTime } from "../session-time";
 import { useInspectorFocus } from "../hooks/useInspectorFocus";
@@ -65,6 +66,7 @@ export function Sidebar({
       <button className="new-session" onClick={create}>
         <span>＋</span> 新建会话
       </button>
+      <RuntimeViews slot="sidebar-widget"/>
       <div className="section-label">
         会话 <span>{sessions.length}</span>
       </div>

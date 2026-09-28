@@ -48,7 +48,8 @@ test('production CSP highlights Markdown and historical diff; exported HTML work
   await page.screenshot({path:info.outputPath('syntax-narrow.png'),fullPage:true});
   await page.setViewportSize({width:1440,height:1000});
   await page.screenshot({path:info.outputPath('syntax-wide.png'),fullPage:true});
-  await page.getByRole('button',{name:'导出',exact:false}).first().click();
+  await page.getByRole('button',{name:'更多操作'}).click();
+  await page.getByRole('button',{name:'导出',exact:true}).click();
   const downloaded=page.waitForEvent('download');
   await page.getByRole('button',{name:'下载 HTML'}).click();
   const download=await downloaded;const path=info.outputPath('session.html');await download.saveAs(path);

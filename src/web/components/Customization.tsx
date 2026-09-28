@@ -1,3 +1,4 @@
+import { AbilityCards } from './customization/AbilityCards';
 import type { Management } from "./customization/types";
 import { CustomizationShell, CategoryPanel, type Category } from "./customization/Shell";
 import { ModelSettings } from "./customization/ModelSettings";
@@ -31,17 +32,18 @@ const labels: Record<string, string> = {
   activated: "已生效",
   failed: "失败",
 };
-export function Customization({ close, sessionId, branched }: { close: () => void; sessionId?: string; branched?: (id: string) => void }) {
+export function Customization({ close, sessionId, branched, target }: { target?: {resourceId:string;revision:string}; close: () => void; sessionId?: string; branched?: (id: string) => void }) {
   const [data, setData] = useState<Management>();
   const [error, setError] = useState("");
   const [result, setResult] = useState("");
+  const [feedbackTarget,setFeedbackTarget] = useState<{category:Category;id?:string;revision?:string}>();
   const [busy, setBusy] = useState(false);
   const [preview, setPreview] = useState<CandidatePreview>();
   const [panelProps,setPanelProps]=useState("{}");
   const [candidatePanel,setCandidatePanel]=useState<{panel:PanelView;frame:PanelMount;props:string}>();
   const [packagePreview, setPackagePreview] = useState<PackagePreview>();
   const [authorizationUrl, setAuthorizationUrl] = useState("");
-  const [category, setCategory] = useState<Category>("models");
+  const [category, setCategory] = useState<Category>("mine");
   const [modelIssue, setModelIssue] = useState(false);
   const [loadError, setLoadError] = useState("");
   const refreshSequence = useRef(0);
@@ -68,6 +70,8 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
     };
   }, [refresh]);
   const action = async (value: object) => {
+    const target = value as {id?:string};
+    setFeedbackTarget({category,id:target.id,revision:data?.resources.find(r => r.id === target.id)?.hash});
     setBusy(true);
     setError(""); setResult("");
     try {
@@ -86,13 +90,13 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
     }
   };
   const inspect = async (id: string) => {
-    setBusy(true); setError(""); setPreview(undefined);
+    setFeedbackTarget({category:"resources",id}); setBusy(true); setError(""); setPreview(undefined);
     try { setPreview(await api<CandidatePreview>("/customization", { action: "candidate-inspect", id })); }
     catch (e) { setError(String(e)); }
     finally { setBusy(false); }
   };
   const inspectPackage = async (id: string, scope: string) => {
-    setBusy(true); setError(""); setPackagePreview(undefined);
+    setFeedbackTarget({category:"packages",id}); setBusy(true); setError(""); setPackagePreview(undefined);
     try { setPackagePreview(await api<PackagePreview>("/customization", { action: "package-inspect", id, scope })); }
     catch (e) { setError(String(e)); }
     finally { setBusy(false); }
@@ -103,14 +107,22 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
         {!data && !loadError && <p role="status">正在整理你的定制能力…</p>}
         {loadError && <p role="alert">加载失败：{loadError} <button onClick={() => void refresh().catch(e => setLoadError(String(e)))}>重试加载</button></p>}
         {data?.busy && <p role="status">任务运行中，资源变更将在任务结束后生效。</p>}
-        {(error || data?.degraded) && <p role="alert">{error || data?.degraded}</p>}
-        {result && <p role="status">{result}</p>}
-        {data?.receipts.slice(-3).map(r => <p key={r.id} role="status">重载：{labels[r.status] ?? r.status} {r.error}</p>)}
+        {data?.degraded && <p role="alert">{data.degraded}</p>}
+        {error && <p role="status">操作未完成 <button onClick={() => setCategory(feedbackTarget?.category ?? "resources")}>查看详情</button></p>}
+
       </div>
+      <CategoryPanel id="mine" active={category}>
+        {feedbackTarget?.category==='mine' && error && <p role="alert">{error}</p>}
+        {data && <AbilityCards target={target} data={data} sessionId={sessionId} busy={busy} action={action} onManage={() => setCategory('resources')} onSource={branched} />}
+      </CategoryPanel>
       <CategoryPanel id="models" active={category}>
+        {feedbackTarget?.category==='models' && error && <p role="alert">{error}</p>}
         {data && <ModelSettings onIssue={setModelIssue} active={category === "models"} data={data} busy={busy} action={action} refresh={refresh} sessionId={sessionId} onResources={() => setCategory("resources")} />}
       </CategoryPanel>
       <CategoryPanel id="resources" active={category}>
+        {error && (feedbackTarget?.category??'resources')==='resources' && !data?.resources.some(r=>r.id===feedbackTarget?.id) && <p role="alert">{error}</p>}
+        {!!data?.receipts.length && <details className="customization-disclosure"><summary>加载记录</summary>{data.receipts.slice(-10).map(r => <p key={r.id}>重载：{labels[r.status] ?? r.status} {r.error}</p>)}</details>}
+        {result && !feedbackTarget?.id && feedbackTarget?.category === category && <p role="status">{result}<button onClick={() => setResult('')}>关闭提示</button></p>}
         <div className="customization-section-heading"><div><h3>我的资源</h3><p>为你的搭档，添一点新本领。</p></div>
           <button disabled={busy || !data} onClick={() => void action({ action: "reload" })}>重新加载资源</button>
         </div>
@@ -158,7 +170,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
             </details>)}
             {preview.requestedCapabilities.includes('panels')&&<><label>候选面板数据 JSON<textarea aria-label="候选面板数据 JSON" value={panelProps} onChange={e=>setPanelProps(e.target.value)}/></label><p>预览会在独立进程执行可信 Node 工厂；面板桥接动作禁用，活动版本不变。</p><button disabled={busy||!preview.report.passed} onClick={()=>{void Promise.resolve().then(()=>api<{panel:PanelView;frame:PanelMount}>("/customization",{action:'candidate-panel-preview',id:preview.id,contentHash:preview.contentHash,props:JSON.parse(panelProps),authorize:true})).then(result=>setCandidatePanel({...result,props:panelProps})).catch(e=>setError(String(e)));}}>授权执行候选工厂并预览面板</button></>}
             {candidatePanel&&<CustomPanel key={candidatePanel.frame.instanceId} panel={candidatePanel.panel} propsJson={candidatePanel.props} prepared={candidatePanel.frame} preview/>}
-            <button disabled={busy || !preview.report.passed} onClick={() => void action({ action: "candidate-activate", id: preview.id, contentHash: preview.contentHash, authorize: true })}>授权并启用此版本</button>
+            <button disabled={busy || !preview.report.passed} onClick={() => void action({ action: "candidate-activate", id: preview.id, contentHash: preview.contentHash, authorize: true, revision: data?.settingsRevision })}>授权并启用此版本</button>
           </article>}
           {data.managed?.filter(entry => entry.previous).map(entry => <button key={entry.name} disabled={busy} onClick={() => void action({ action: "candidate-rollback", name: entry.name, authorize: true })}>回退 {entry.name} 到 {entry.previous!.slice(0, 12)}</button>)}
         </section>}
@@ -196,6 +208,8 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
               ))}
             {r.shadowedBy && <p>由 {r.shadowedBy} 覆盖</p>}
             </details>
+            {error && feedbackTarget?.id === r.id && <p role="alert">{error}</p>}
+            {result && feedbackTarget?.id === r.id && <p role="status">{feedbackTarget.revision !== r.hash ? '旧版本结果：' : ''}{result}<button onClick={() => setResult('')}>关闭提示</button></p>}
             {r.kind === "extension" && (
               <button
                 disabled={busy}
@@ -237,6 +251,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
         )}
       </CategoryPanel>
       <CategoryPanel id="packages" active={category}>
+        {feedbackTarget?.category==='packages' && (error||result) && <p role={error?'alert':'status'}>{error||result}<button onClick={()=>{setResult('');setError('');}}>关闭提示</button></p>}
         <div className="customization-section-heading"><div><h3>能力包</h3><p>把喜欢的能力，收进工具箱。</p></div></div>
         <p className="customization-notice">能力包中的本地扩展具有本机权限；宿主操作有记录，直接 Node API 行为不保证被记录。安装与回退需显式授权。</p>
         {!!data?.packageCandidates?.length && <section aria-label="能力包候选">
@@ -266,114 +281,11 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
         {data && !data.packages?.length && !data.packageCandidates?.length && <p className="customization-empty">还没有能力包。准备好的候选会出现在这里。</p>}
       </CategoryPanel>
       <CategoryPanel id="workflows" active={category}>
+        {feedbackTarget?.category==='workflows' && error && <p role="alert">{error}</p>}
         <div className="customization-section-heading"><div><h3>工作流与面板</h3><p>让重复的事情，有自己的节奏。</p></div></div>
         {data && <PanelManagement panels={data.panels ?? []} flows={data.workflows ?? []} />}
         {data && <WorkflowManagement flows={data.workflows ?? []} definitions={data.workflowDefinitions ?? []} busy={busy} action={action} />}
       </CategoryPanel>
     </CustomizationShell>
-  );
-}
-interface Item {
-  id: string;
-  runId: string;
-  resourceId: string;
-  value: Contribution;
-}
-export function ExtensionInteractions({ sessionId }: { sessionId: string }) {
-  const [items, setItems] = useState<Item[]>([]);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    const c = new AbortController();
-    let timer: ReturnType<typeof setTimeout>;
-    const poll = async () => {
-      try {
-        const r = await api<{ items: Item[] }>(
-          `/sessions/${sessionId}/interactions`,
-          undefined,
-          c.signal,
-        );
-        setItems(r.items);
-      } catch (e) {
-        if (!c.signal.aborted) setError(String(e));
-      }
-      if (!c.signal.aborted) timer = setTimeout(poll, 800);
-    };
-    void poll();
-    return () => {
-      c.abort();
-      clearTimeout(timer);
-    };
-  }, [sessionId]);
-  return (
-    <section aria-label="扩展交互">
-      {error && <p role="alert">{error}</p>}
-      {items.map((item) => (
-        <ExtensionForm
-          key={item.id}
-          item={item}
-          sessionId={sessionId}
-          done={() => setItems((old) => old.filter((i) => i.id !== item.id))}
-        />
-      ))}
-    </section>
-  );
-}
-function ExtensionForm({
-  item,
-  sessionId,
-  done,
-}: {
-  item: Item;
-  sessionId: string;
-  done: () => void;
-}) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const submission = useRef<{ payload: string; id: string }>(undefined);
-  return (
-    <form
-      className="extension-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const answer = Object.fromEntries(new FormData(e.currentTarget));
-        const payload = JSON.stringify(answer);
-        if (submission.current?.payload !== payload)
-          submission.current = { payload, id: crypto.randomUUID() };
-        setBusy(true);
-        setError("");
-        void api(`/sessions/${sessionId}/answer`, {
-          id: item.id,
-          commandId: submission.current.id,
-          answer,
-        })
-          .then(done)
-          .catch((e) => setError(String(e)))
-          .finally(() => setBusy(false));
-      }}
-    >
-      <h3>{item.value.title}</h3>
-      <p>{item.value.text}</p>
-      {item.value.fields?.map((field) => (
-        <label key={field.name}>
-          {field.label}
-          {field.options ? (
-            <select name={field.name} required={field.required} disabled={busy}>
-              <option value="">请选择</option>
-              {field.options.map((o) => (
-                <option key={o}>{o}</option>
-              ))}
-            </select>
-          ) : (
-            <input
-              name={field.name}
-              required={field.required}
-              disabled={busy}
-            />
-          )}
-        </label>
-      ))}
-      {error && <p role="alert">{error}</p>}
-      <button disabled={busy}>提交回答</button>
-    </form>
   );
 }

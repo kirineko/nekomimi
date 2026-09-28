@@ -4,12 +4,14 @@ import { commandWord, matchingCommands, completeCommand } from "../command-input
 import type { CommandSuggestion } from "../../shared/protocol";
 import { useEffect, useRef, useState, useId } from "react";
 export function Composer({
-  commandRevision, connected,
+  contextRevision=0, requestedDraft, commandRevision, connected,
   busy,
   configured,
   submit,
   cancel,
 }: {
+  contextRevision?: number;
+  requestedDraft?: {id:string;text:string};
   commandRevision: number; connected: boolean;
   busy: boolean;
   configured: boolean;
@@ -17,9 +19,25 @@ export function Composer({
   cancel: () => Promise<void>;
 }) {
   const textarea = useRef<HTMLTextAreaElement>(null);
+  const context=useRef(contextRevision);context.current=contextRevision;
+  const submission=useRef<{context:number;restore:boolean;done:boolean;start:number;end:number}|undefined>(undefined);
+  useEffect(()=>{
+    const transfer=(event:Event)=>{
+      if(event.type==='keydown' && !['Tab','Escape'].includes((event as KeyboardEvent).key))return;
+      if(event.type==='focusin' && (event.target===document.body || (event.target instanceof Node && textarea.current?.closest('.composer')?.contains(event.target))))return;
+      if(submission.current)submission.current.restore=false;
+    };
+    document.addEventListener('pointerdown',transfer,true);
+    document.addEventListener('keydown',transfer,true);
+    window.addEventListener('blur',transfer);
+    document.addEventListener('focusin',transfer);
+    return()=>{submission.current=undefined;document.removeEventListener('pointerdown',transfer,true);document.removeEventListener('keydown',transfer,true);window.removeEventListener('blur',transfer);document.removeEventListener('focusin',transfer);};
+  },[]);
   const composing = useRef(false);
   const ended = useRef(0);
   const [text, setText] = useState("");
+  const [draftConflict,setDraftConflict]=useState<string>();
+  useEffect(()=>{if(requestedDraft){if(text.trim())setDraftConflict(requestedDraft.text);else{setText(requestedDraft.text);setCaret(requestedDraft.text.length);}}},[requestedDraft?.id]);
   const [caret, setCaret] = useState(0);
   const [focused, setFocused] = useState(false);
   const [ime, setIme] = useState(false);
@@ -71,22 +89,35 @@ export function Composer({
   }, [text]);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  useEffect(()=>{
+    const current=submission.current;
+    if(pending||!configured||!current?.done)return;
+    submission.current=undefined;
+    if(current.restore&&current.context===contextRevision&&textarea.current){
+      textarea.current.focus({preventScroll:true});
+      textarea.current.setSelectionRange(Math.min(current.start,textarea.current.value.length),Math.min(current.end,textarea.current.value.length));
+    }
+  },[pending,configured,contextRevision]);
   const send = async () => {
-    if (pending || busy || !configured || !text.trim()) return;
+    if (submission.current && !submission.current.done || pending || busy || !configured || !text.trim()) return;
+    const current={context:contextRevision,restore:true,done:false,start:textarea.current?.selectionStart??0,end:textarea.current?.selectionEnd??0};
+    submission.current=current;
     setDismissed(true);
     setPending(true);
     setError("");
     try {
       await submit(text);
-      setText("");
+      if(current.context===context.current)setText("");
     } catch (e) {
-      setError(String(e));
+      if(current.context===context.current)setError(String(e));
     } finally {
+      current.done=true;
       setPending(false);
     }
   };
   return (
     <div className="composer-wrap">
+      {draftConflict!==undefined&&<div role="dialog" aria-label="保留当前草稿"><p>扩展提供了新的草稿，如何处理？</p><button onClick={()=>{setText(draftConflict);setCaret(draftConflict.length);setDraftConflict(undefined);}}>替换草稿</button><button onClick={()=>{setText(text+'\n'+draftConflict);setDraftConflict(undefined);}}>追加</button><button onClick={()=>setDraftConflict(undefined)}>保留原草稿</button></div>}
       {open && createPortal(<div ref={popup} className="command-popup" style={position} onMouseDown={e => e.preventDefault()} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget as Node) && e.relatedTarget !== textarea.current) setDismissed(true); }}>
         <div className="command-popup-heading"><span>命令 · ↑↓ 选择 · Tab / Enter 补全</span><button type="button" aria-label="关闭命令提示" onClick={() => setDismissed(true)}>×</button></div>
         <div id={listId} role="listbox" aria-label="斜杠命令">

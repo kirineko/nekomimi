@@ -80,13 +80,12 @@ test("configures, sends with Enter, names, exports offline and deletes across wi
     await expect.poll(() => taskCalls).toBe(2);
     expect(titleCalls).toBe(1);
     await expect(page.locator(".conversation-heading")).toContainText("已完成");
-    await page
-      .getByRole("button", { name: "导出", exact: false })
-      .first()
-      .click();
+    await page.getByRole('button',{name:'更多操作'}).click();
+  await page.getByRole('button',{name:'导出',exact:true}).click();
     const downloadEvent = page.waitForEvent("download");
     await page.getByRole("button", { name: "下载 HTML" }).click();
     const download = await downloadEvent;
+    await page.getByRole("button",{name:"关闭导出"}).click();
     const html = await readFile((await download.path())!, "utf8");
     expect(html).toContain("Nekomimi");
     expect(html).not.toContain(key);

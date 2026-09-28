@@ -9,7 +9,7 @@ export interface RegisteredProvider {
   serialize(input: ProviderInput, context: ProcessContext): Promise<{ body: import("./types.js").Json; path: string }>;
   parse(input: { requestId: string; sequence: number; chunk: string; final: boolean }, context: ProcessContext): Promise<ProviderOutput | null>;
 }
-export const defaultModel: ModelDefinition = { id: "deepseek-flash", name: "DeepSeek Flash", protocol: "responses", historyCompatibility: "deepseek-responses-v1", contextWindow: 1_000_000, maxOutputTokens: 4096, capabilities: { tools: true, images: true, reasoning: true } };
+export const defaultModel: ModelDefinition = { id: "deepseek-flash", name: "DeepSeek Flash", protocol: "responses", historyCompatibility: "deepseek-responses-v1", contextWindow: 1_000_000, maxOutputTokens: 131072, capabilities: { tools: true, images: true, reasoning: true } };
 export function validateProvider(value: { id: string; models: ModelDefinition[] }) {
   if (!/^[a-z][a-z0-9-]{0,47}$/.test(value.id) || value.id === "deepseek" || !Array.isArray(value.models) || !value.models.length || value.models.length > 128) throw new Error("Invalid or reserved Provider identity");
   const ids = new Set<string>();

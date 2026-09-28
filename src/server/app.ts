@@ -73,6 +73,7 @@ export async function startWeb(
         if (req.method === "GET" && path === "/api/v1/commands") {
           json(res, sessions.customization.commands()); return;
         }
+        if(req.method==='GET'&&path==='/api/v1/runtime-ui'){json(res,{runtimeUi:await sessions.customization.themes.describe(),panels:sessions.customization.panels.catalog()});return;}
         if (path === '/api/v1/customization') {
           if (req.method === 'GET') { json(res, await sessions.customization.describe()); return; }
           if (req.method === 'POST') { json(res, await sessions.customizationAction(object(await body(req)))); return; }
@@ -177,6 +178,7 @@ export async function startWeb(
             ...entry.projection.page(
               integer(url.searchParams.get("before"), Number.MAX_SAFE_INTEGER),
               60,
+              url.searchParams.has("after") ? integer(url.searchParams.get("after"), 0) : undefined,
             ),
           });
           return;
@@ -311,7 +313,7 @@ export async function startWeb(
         throw new ApiError(403, "path", "资源路径无效");
       res.setHeader(
         "content-security-policy",
-        `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src ${origin}/api/v1/panels/; base-uri 'none'; frame-ancestors 'none'; form-action 'self'`,
+        `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src ${origin}/api/v1/panels/; base-uri 'none'; frame-ancestors 'none'; form-action 'self'`,
       );
       res.setHeader(
         "content-type",

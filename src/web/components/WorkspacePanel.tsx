@@ -1,9 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { useInspectorFocus } from "../hooks/useInspectorFocus";
-export const LocateFile = createContext<((path: string) => void) | undefined>(
-  undefined,
-);
-export type PanelTab = "files" | "changes" | "trace";
+import type {PanelTab} from "../workspace-context";
 export function WorkspacePanel({
   tab,
   setTab,

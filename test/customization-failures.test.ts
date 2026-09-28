@@ -63,7 +63,7 @@ it("guards user writes with authorization, version and paths", async () => {
   const home = await temporary();
   const resources = new Resources(workspace, home);
   await expect(
-    resources.write("extension", "mine", "index.ts", "hello", null),
+    resources.write("extension", "mine", "index.ts", "hello", null, "user"),
   ).rejects.toThrow("not authorized");
   await resources.allowUserWrites(true, 0);
   const a = await resources.write(
@@ -72,14 +72,15 @@ it("guards user writes with authorization, version and paths", async () => {
     "index.ts",
     "hello",
     null,
+    "user",
   );
   await expect(
-    resources.write("extension", "mine", "index.ts", "replacement", null),
+    resources.write("extension", "mine", "index.ts", "replacement", null, "user"),
   ).rejects.toThrow("changed");
   await expect(
-    resources.write("extension", "mine", "../../escape", "bad", null),
+    resources.write("extension", "mine", "../../escape", "bad", null, "user"),
   ).rejects.toThrow("outside");
-  await resources.write("extension", "mine", "index.ts", "updated", a.hash);
+  await resources.write("extension", "mine", "index.ts", "updated", a.hash, "user");
   expect(await readFile(a.path, "utf8")).toBe("updated");
 });
 it("reports cleanup failure and blocks subsequent runs", async () => {
@@ -93,6 +94,10 @@ it("reports cleanup failure and blocks subsequent runs", async () => {
     await f.host.reload(receipt);
     expect(receipt.status).toBe("failed");
     expect(f.host.degraded).toContain("cleanup");
+    await expect(f.host.acquire()).rejects.toThrow("cleanup");
+    const retry = f.host.requestReload();
+    await f.host.reload(retry);
+    expect(retry.status).toBe("failed");
     await expect(f.host.acquire()).rejects.toThrow("cleanup");
   } finally {
     await f.host.close().catch(() => {});
@@ -310,4 +315,20 @@ it('retains a reported error result and distinguishes it from an unknown outcome
     expect(completed).toBeDefined();
     expect(journal.events.find(e => e.type === 'tool.execution_error')!.payload).toMatchObject({ unknown: false });
   } finally { await journal.close(); }
+});
+
+it("recovers from a repaired startup load failure without restarting", async () => {
+  const f = await setup("export default () => {}");
+  try {
+    await writeFile(join(f.root, "extension.json"), "{broken");
+    await f.host.initialize();
+    expect(f.host.active).toBeUndefined();
+    expect(f.host.degraded).toBeUndefined();
+    await rm(f.root, { recursive: true });
+    const receipt = f.host.requestReload();
+    await f.host.reload(receipt);
+    expect(receipt.status).toBe("activated");
+    await expect(f.host.acquire()).resolves.toBe(f.host.active);
+    await f.host.release();
+  } finally { await f.host.close(); }
 });

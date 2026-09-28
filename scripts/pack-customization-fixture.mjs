@@ -13,7 +13,7 @@ import { randomUUID } from "node:crypto";
 import { sdkCatalog } from "./node_modules/nekomimi/dist/customization/sdk.js";
 import {oauthFixture} from './oauth-fixture.mjs';
 import {reviewPackageFiles} from './review-package-fixture.mjs';
-if (SDK_VERSION !== 1) throw new Error("Missing public SDK");
+if (SDK_VERSION !== 2) throw new Error("Missing public SDK");
 const workspace = resolve("custom-workspace");
 const home = resolve("custom-home");
 await mkdir(workspace);
@@ -31,7 +31,7 @@ await writeFile(
 );
 await writeFile(
   resolve(root, "index.ts"),
-  `import { SDK_VERSION } from 'nekomimi/extensions'; export default api => { api.registerCommand('check', {description:'Check installed SDK', async handler(_,ctx) { const list=await ctx.callTool('resource_list',{}); const doc=list.details.find(r=>r.kind==='doc'&&r.name==='README.md'); const result=await ctx.callTool('resource_read',{id:doc.id}); if(!result.content[0].text.includes('SDK 1')) throw Error('Missing installed docs'); return 'installed-sdk-'+SDK_VERSION; }}); };`,
+  `import { SDK_VERSION } from 'nekomimi/extensions'; export default api => { api.registerCommand('check', {description:'Check installed SDK', async handler(_,ctx) { const list=await ctx.callTool('resource_list',{}); const doc=list.details.find(r=>r.kind==='doc'&&r.name==='README.md'); const result=await ctx.callTool('resource_read',{id:doc.id}); if(!result.content[0].text.includes('Nekomimi SDK')) throw Error('Missing installed docs'); return 'installed-sdk-'+SDK_VERSION; }}); };`,
 );
 await writeFile(
   resolve(workspace, "mcp.mjs"),
@@ -86,7 +86,7 @@ try {
       throw Error("Unexpected model call");
     },
   });
-  if (used.status !== "completed" || used.text !== "installed-sdk-1")
+  if (used.status !== "completed" || used.text !== "installed-sdk-2")
     throw Error(used.error ?? "Command failed");
   if (
     !(await readSession(used.session)).events.some(
@@ -144,9 +144,55 @@ try {
     if(!(await readFile(resolve(workspace,'review-result.json'),'utf8')).includes('approve'))throw Error('Installed review output missing');
   }finally{await oauth.close();}
   console.log(
-    "Installed SDK 1/2, package, Provider, durable workflow, static panel and stdio MCP verified on " +
+    "Installed unified SDK with legacy compatibility, package, Provider, durable workflow, static panel and stdio MCP verified on " +
       process.version,
   );
 } finally {
   await host.close();
 }
+
+// The tarball owns all current SDK declarations, docs and offline theme assets.
+const uiDocs=await readFile(resolve('node_modules/nekomimi/extension-docs/runtime-ui.md'),'utf8');
+if(!uiDocs.includes('typography'))throw Error('Missing runtime UI documentation');
+const sdkPublic=await sdkCatalog('public');
+if(!sdkPublic.sections.some(s=>s.entry==='ui'&&s.text.includes('ThemeDefinition')))throw Error('Incomplete SDK catalog');
+const themePackage=await new Packages(workspace,home).prepare({kind:'local',path:resolve('node_modules/nekomimi/extension-docs/examples/sakura')},'project');
+if(!(await new Packages(workspace,home).preview('project',themePackage.id)).passed)throw Error('Installed theme example did not typecheck');
+console.log('installed runtime UI docs, complete types and theme assets verified');
+
+// Installed candidate path, including an update that expands an existing grant.
+const assetWorkspace=resolve('candidate-assets-workspace'),assetHome=resolve('candidate-assets-home');
+await mkdir(assetWorkspace);await mkdir(assetHome);
+const assetHost=new CustomizationHost(assetWorkspace,assetHome),assetStore=new Candidates(assetWorkspace);
+try {
+ const draft=await assetStore.scaffold('sakura-studio','panel');
+ const initial=await assetStore.inspect(draft.id);
+ await assetHost.requestCandidate(draft.id,initial.candidate.contentHash,true);
+ while(assetHost.receipts.some(r=>r.status==='pending'))await new Promise(r=>setTimeout(r,20));
+ const previous=(await assetStore.active())[0];
+ const {cp}=await import('node:fs/promises');
+ await cp(resolve('node_modules/nekomimi/extension-docs/examples/sakura'),draft.path,{recursive:true});
+ const next=await assetStore.inspect(draft.id);
+ if(!next.candidate.report.passed)throw Error(JSON.stringify(next.candidate.report));
+ const before=await assetHost.lifecycle.catalog();
+ if(!before.some(a=>a.candidateId===draft.id&&a.missing.includes('themes')))throw Error('Missing expanded theme grant not visible');
+ try {await assetHost.requestCandidate(draft.id,next.candidate.contentHash);throw Error('Expected grant rejection');}catch(error){if(!String(error).includes('authorization'))throw error;}
+ if((await assetStore.active())[0].revision!==previous.revision)throw Error('Cancelled update changed active version');
+ const settings=(await assetHost.catalog.decisions()).revision;
+ try{await assetHost.requestCandidate(draft.id,next.candidate.contentHash,true,settings+1);throw Error('Expected conflict');}catch(error){if(!String(error).includes('revision conflict'))throw error;}
+ await assetHost.requestCandidate(draft.id,next.candidate.contentHash,true,settings);
+ while(assetHost.receipts.some(r=>r.status==='pending'))await new Promise(r=>setTimeout(r,20));
+ if(assetHost.receipts.at(-1).status!=='activated')throw Error(JSON.stringify(assetHost.receipts.at(-1)));
+ const theme=(await assetHost.themes.catalog())[0];
+ if(!theme?.assetsData?.font||!theme.assetsData.background)throw Error('Installed candidate assets missing');
+ await assetHost.themes.select('project',{resourceId:theme.resourceId,revision:theme.revision,id:theme.id},0);
+ if(!(await assetHost.lifecycle.catalog()).some(a=>a.phase==='applied'))throw Error('Applied stage missing');
+ const current=await assetStore.load((await assetStore.active())[0]);
+ for(const name of Object.keys(current.binaryFiles))if(!(await readFile(resolve(draft.path,name))).equals(await readFile(resolve(current.root,name))))throw Error('Binary bytes changed');
+ await assetStore.export(draft.id,next.candidate.contentHash,'theme.tgz');
+ if((await assetStore.previous('sakura-studio')).hash!==previous.revision)throw Error('Rollback identity changed');
+ const instructions=await readFile(resolve('node_modules/nekomimi/extension-docs/customization-lifecycle.md'),'utf8');
+ if(!instructions.includes('customization_status'))throw Error('Missing lifecycle documentation');
+ if(!(await sdkCatalog()).host.build)throw Error('Missing installed build identity');
+ console.log('installed candidate binary assets, expanded grants, application and rollback verified');
+} finally {await assetHost.close();}

@@ -74,10 +74,13 @@ export async function trialExtension(
     const result = await runtime.command(command);
     await runtime.hook("afterRun");
     if (!result.handled) throw new Error("Trial requires an extension command");
+    const verifiedResource=options.resource ?? host.active?.resources.find(r=>r.id===resourceId);
+    if(verifiedResource)await host.lifecycle.record(verifiedResource,'simulation',{passed:true});
     return {
       ...result,
       session: journal.directory,
       simulated: true,
+      verification:{stage:"simulation",hostIntegration:"not_run",resourceRevision:options.resource?.hash},
       boundary: "Trusted code with mock host services; not an OS sandbox",
     };
   } finally {

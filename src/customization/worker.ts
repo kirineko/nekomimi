@@ -53,6 +53,8 @@ peer.handle = async (method, value, callId) => {
           return step.execute(argument.input, context);
         });
       },
+      registerTheme(theme) { if (entry.sdkVersion !== 2) throw new Error("Theme requires current SDK"); add("theme", theme, () => null); },
+      registerView(view) { if (entry.sdkVersion !== 2) throw new Error("View requires current SDK"); add("view", view, () => null); },
       registerPanel(panel) { if (entry.sdkVersion !== 2) throw new Error("Panel requires SDK 2"); add("panel", panel, () => null); },
       registerTool(tool) {
         const { execute, ...descriptor } = tool;

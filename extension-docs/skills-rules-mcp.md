@@ -20,6 +20,9 @@ MCP 项目配置：.nekomimi/mcp.json；用户配置：~/.nekomimi/mcp.json。�
 {"version":1,"servers":{"local":{"transport":"stdio","command":"node","args":["./server.mjs"],"env":{"SERVICE_TOKEN":"SERVICE_TOKEN"}},"remote":{"transport":"http","url":"https://example.com/mcp","credentialEnv":"MCP_TOKEN"}}}
 ```
 
-env 的值是服务端环境变量名称，credentialEnv 是 Bearer token 的环境变量名称，不要填入密钥。HTTP 仅支持 HTTPS 或本机 HTTP，拒绝 URL 中的凭证和查询参数。OAuth-only 服务不受 V1 支持。
+env 的值是服务端环境变量名称，credentialEnv 是 Bearer token 的环境变量名称，不要填入密钥。HTTP 仅支持 HTTPS 或本机 HTTP，拒绝 URL 中的凭证和查询参数。OAuth-only 服务不受 兼容基础模式 支持。
 
 用户启用连接后发现 tools；模型名称带服务器标识和工具名称摘要，具体原名在描述中。content/structuredContent/isError 保留在证据，资源引用不会自动读取。工具列表更新在运行结束后重载。断线或取消后的 unknown 不自动重跑；取消并不保证远端副作用撤销。
+
+
+HTTP MCP 的 OAuth、资源、模板和 Prompt 当前支持方式见 [平台指南](platform.md)。上述兼容基础模式说明不限制当前宿主的 OAuth 能力。

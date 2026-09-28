@@ -77,3 +77,25 @@ describe('application integration', () => {
     expect(result.status).toBe('completed');
   });
 });
+
+it('uses 128K by default and records the actual exhausted budget without retrying partial tools',async()=>{
+ const workspace=await temporary();const bodies:any[]=[];
+ const result=await run({workspace,session:join(workspace,'s'),apiKey:key,prompt:'write',fetch:async(_u,init)=>{bodies.push(JSON.parse(String(init?.body)));return response([callItem('write',{path:'never',content:'no'})],'incomplete');}});
+ expect(bodies).toHaveLength(1);expect(bodies[0].max_output_tokens).toBe(131072);expect(result.error).toContain('128K');
+ const s=await readSession(result.session);expect(s.events.some(e=>e.type==='tool.intent')).toBe(false);
+ expect(s.events.find(e=>e.type==='attempt.finished')?.payload).toMatchObject({incompleteReason:'max_output_tokens',outputBudget:131072});
+});
+it('preserves an explicit output budget and explains content filtering without retry',async()=>{
+ const workspace=await temporary();let calls=0;
+ const result=await run({workspace,session:join(workspace,'s'),apiKey:key,prompt:'hello',maxOutputTokens:2048,fetch:async(_u,init)=>{
+  calls++;expect(JSON.parse(String(init?.body)).max_output_tokens).toBe(2048);
+  const e=events([],'incomplete');e.at(-1)!.response.incomplete_details.reason='content_filter';return new Response(encode(e),{headers:{'content-type':'text/event-stream'}});
+ }});expect(calls).toBe(1);expect(result.error).toContain('过滤');
+});
+it('stops at 64 turns by default while respecting an explicit turn cap',async()=>{
+ for(const cap of [undefined,2]){
+  const workspace=await temporary();let calls=0;
+  const result=await run({workspace,session:join(workspace,'s'),apiKey:key,prompt:'read',tools:['read'],maxTurns:cap,fetch:async()=>++calls<66?response([callItem('read',{path:'missing'},'c'+calls)]):response([textItem('done')])});
+  expect(calls).toBe(cap??64);expect(result.status).toBe('failed');expect(result.error).toContain('轮数上限');
+ }
+},60000);

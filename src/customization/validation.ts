@@ -18,19 +18,21 @@ export interface ValidationDiagnostic {
 }
 export interface ValidationReport {
   version: 1;
+  verification?: {stage:"static";hostIntegration:"not_run"};
   resourceId: string;
   contentHash: string;
   passed: boolean;
   diagnostics: ValidationDiagnostic[];
 }
-export function contentHash(files: Record<string, string>): string {
+export function contentHash(files: Record<string, string>, binaryFiles: Record<string, Buffer> = {}): string {
+  if (Object.keys(binaryFiles).length) return hash(JSON.stringify({ version: 2, files: Object.entries({ ...files, ...binaryFiles }).sort(([a],[b]) => a.localeCompare(b)).map(([path, value]) => [path, Buffer.byteLength(value), hash(value)]) }));
   return hash(JSON.stringify(Object.entries(files).sort(([a], [b]) => a.localeCompare(b))));
 }
 /** Compiler API only: no tsconfig discovery, plugins, emit, or module execution. */
 export function checkTypes(resource: Resource): ValidationReport {
   const files = resource.files ?? {};
-  const digest = contentHash(files);
-  const result: ValidationReport = { version: 1, resourceId: resource.id, contentHash: digest, passed: false, diagnostics: [] };
+  const digest = contentHash(files, resource.binaryFiles);
+  const result: ValidationReport = { version: 1, verification:{stage:"static",hostIntegration:"not_run"}, resourceId: resource.id, contentHash: digest, passed: false, diagnostics: [] };
   const add = (diagnostic: Omit<ValidationDiagnostic, "resourceId" | "contentHash">) => result.diagnostics.push({ ...diagnostic, resourceId: resource.id, contentHash: digest });
   if (!resource.manifest || resource.error) {
     add({ stage: "manifest", code: "invalid_manifest", message: resource.error ?? "Missing manifest" });

@@ -181,8 +181,8 @@ async function main() {
     const { Candidates } = await import('./customization/candidates.js');
     const { sdkCatalog } = await import('./customization/sdk.js');
     const store = new Candidates(resolve(values.workspace ?? process.cwd()));
-    if (arg === 'sdk') console.log(JSON.stringify(await sdkCatalog(rest[0]), null, 2));
-    else if (arg === 'create') console.log(JSON.stringify(await store.scaffold(rest[0] ?? ''), null, 2));
+    if (arg === 'sdk') console.log(JSON.stringify(await sdkCatalog(rest[0],store.workspace,values.home), null, 2));
+    else if (arg === 'create') console.log(JSON.stringify(await store.scaffold(rest[0] ?? '', rest[1]), null, 2));
     else if (arg === 'inspect') {
       const { candidate } = await store.inspect(rest[0] ?? '');
       console.log(JSON.stringify(candidate, null, 2));
@@ -333,8 +333,8 @@ async function main() {
       search: settings.search,
       model: values.model ?? settings.model,
       baseUrl: values["base-url"] ?? settings.baseUrl,
-      maxOutputTokens: positive(values["max-output-tokens"], 4096),
-      maxTurns: positive(values["max-turns"], 32),
+      maxOutputTokens: values["max-output-tokens"] === undefined ? undefined : positive(values["max-output-tokens"], 131072),
+      maxTurns: positive(values["max-turns"], 64),
       instructions,
       images,
       tools: values.tools?.split(",").filter(Boolean),

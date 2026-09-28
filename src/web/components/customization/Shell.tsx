@@ -3,16 +3,16 @@ import { CatMark } from "../Brand";
 import type { Management } from "./types";
 
 const categories = [
+  { id: "mine", label: "我的定制", symbol: "✦" },
   { id: "models", label: "模型", symbol: "✧" },
-  { id: "resources", label: "资源", symbol: "◇" },
-  { id: "packages", label: "能力包", symbol: "▧" },
-  { id: "workflows", label: "工作流与面板", symbol: "⌘" },
+  { id: "resources", label: "管理", symbol: "◇" },
+
 ] as const;
-export type Category = typeof categories[number]["id"];
+export type Category = typeof categories[number]["id"] | "packages" | "workflows";
 
 export function CategoryPanel({ id, active, children }: { id: Category; active: Category; children: ReactNode }) {
   // Keep forms and explicit panel mounts alive across navigation. Hidden trees are not focusable.
-  return <div role="tabpanel" id={`customization-${id}`} aria-labelledby={`customization-tab-${id}`} hidden={id !== active} className="customization-category">{children}</div>;
+  return <div role="tabpanel" id={`customization-${id}`} aria-labelledby={`customization-${id === "packages" || id === "workflows" ? "subtab" : "tab"}-${id}`} hidden={id !== active} className="customization-category">{children}</div>;
 }
 
 export function CustomizationShell({ close, category, onCategory, data, children, modelIssue }: {
@@ -59,11 +59,13 @@ export function CustomizationShell({ close, category, onCategory, data, children
     }
   }, [category]);
   const attention: Record<Category, number> = {
+    mine: data?.abilities?.filter(a => ["authorization","error"].includes(a.phase)).length ?? 0,
     models: modelIssue ? 1 : 0,
     resources: (data?.resources.filter(r => r.status === "untrusted" || r.status === "error" || !!r.error).length ?? 0) + (data?.candidates?.length ?? 0) + (data?.mcp?.filter(m => m.toolErrors.length > 0).length ?? 0),
     packages: data?.packageCandidates?.length ?? 0,
     workflows: data?.workflows?.filter(w => w.status === "unknown" || w.status === "waiting" || !!w.error).length ?? 0,
   };
+  const top = category === "packages" || category === "workflows" ? "resources" : category;
   return <div className="modal-backdrop customization-backdrop">
     <section ref={root} className="settings-panel customization-panel" role="dialog" aria-modal="true" aria-label="定制能力">
       <header className="customization-header">
@@ -71,7 +73,7 @@ export function CustomizationShell({ close, category, onCategory, data, children
         <button className="customization-close" onClick={close} aria-label="关闭定制能力">×</button>
       </header>
       <div role="tablist" aria-label="定制分类" className="customization-tabs">
-        {categories.map((item, index) => <button key={item.id} role="tab" id={`customization-tab-${item.id}`} aria-controls={`customization-${item.id}`} aria-selected={category === item.id} tabIndex={category === item.id ? 0 : -1} onClick={() => onCategory(item.id)} onKeyDown={event => {
+        {categories.map((item, index) => <button key={item.id} role="tab" id={`customization-tab-${item.id}`} aria-controls={`customization-${item.id}`} aria-selected={top === item.id} tabIndex={top === item.id ? 0 : -1} onClick={() => onCategory(item.id)} onKeyDown={event => {
           let next: number;
           if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % categories.length;
           else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index + categories.length - 1) % categories.length;
@@ -82,6 +84,7 @@ export function CustomizationShell({ close, category, onCategory, data, children
           document.getElementById(`customization-tab-${categories[next]!.id}`)?.focus();
         }}><span aria-hidden="true">{item.symbol}</span>{item.label}{attention[item.id] > 0 && <span className="customization-count" aria-label={`${attention[item.id]} 项待处理`}>{attention[item.id]}</span>}</button>)}
       </div>
+      {top === 'resources' && <nav className="customization-subnav" aria-label="管理分类">{([['resources','资源与权限'],['packages','能力包'],['workflows','工作流与面板']] as const).map(([id,label]) => <button key={id} id={`customization-subtab-${id}`} aria-pressed={category === id} onClick={() => onCategory(id)}>{label}</button>)}</nav>}
       <div className="customization-body">{children}</div>
       <footer className="customization-footer"><span aria-hidden="true">✦</span> 小小定制，无限可能 <span>NEKOMIMI</span></footer>
     </section>
