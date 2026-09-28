@@ -28,7 +28,7 @@ function WorkflowItem({ flow, definitions, action, busy }: { flow: WorkflowView;
     {flow.error && <p role="alert">{flow.error}</p>}{flow.outputPreview && <pre>{flow.outputPreview}</pre>}
     {flow.wait && flow.status === "waiting" && <DurableForm key={flow.wait.id} flow={flow} action={action} busy={busy} />}
     {["ready", "queued"].includes(flow.status) && <button disabled={busy} onClick={() => void action({ action: "workflow-resume", id: flow.id, revision: flow.revision })}>继续工作流</button>}
-    {!["completed", "cancelled"].includes(flow.status) && <button disabled={busy} onClick={() => void action({ action: "workflow-cancel", id: flow.id, revision: flow.revision })}>取消工作流</button>}
+    {!["completed", "cancelled"].includes(flow.status) && <button className="customization-danger" disabled={busy} onClick={() => void action({ action: "workflow-cancel", id: flow.id, revision: flow.revision })}>取消工作流</button>}
     {flow.status === "unknown" && <section aria-label="核对未知结果">
       <p>先检查外部效果。提交已核对的结果不会重跑步骤；重新尝试可能重复外部效果。</p>
       <label>核对记录<input aria-label="核对记录" value={note} onChange={e => setNote(e.target.value)} /></label>
@@ -55,10 +55,11 @@ export function WorkflowManagement({ flows, definitions, busy, action }: { flows
   const [target, setTarget] = useState(""), [input, setInput] = useState("{}"), [error, setError] = useState("");
   const command = useRef(crypto.randomUUID());
   return <section aria-label="持久工作流"><h3>持久工作流</h3>
-    {!!definitions.length && <form onSubmit={e => { e.preventDefault(); try { const [resourceId, definitionId] = target.split("|"); void action({ action: "workflow-start", resourceId, definitionId, input: JSON.parse(input), commandId: command.current }).then(result => { if (result) command.current = crypto.randomUUID(); }); } catch (e) { setError(String(e)); } }}>
+    {!definitions.length && <p className="customization-empty">暂无可启动的工作流定义。</p>}
+    {!!definitions.length && <details className="customization-disclosure"><summary>启动新工作流</summary><form onSubmit={e => { e.preventDefault(); try { const [resourceId, definitionId] = target.split("|"); void action({ action: "workflow-start", resourceId, definitionId, input: JSON.parse(input), commandId: command.current }).then(result => { if (result) command.current = crypto.randomUUID(); }); } catch (e) { setError(String(e)); } }}>
       <label>工作流定义<select aria-label="工作流定义" required value={target} onChange={e => setTarget(e.target.value)}><option value="">选择工作流</option>{definitions.map(d => <option key={`${d.resourceId}|${d.id}`} value={`${d.resourceId}|${d.id}`}>{d.resourceName}:{d.id} · {d.revision.slice(0, 12)}</option>)}</select></label>
       <label>工作流输入 JSON<textarea aria-label="工作流输入 JSON" value={input} onChange={e => setInput(e.target.value)} /></label><button disabled={busy}>启动工作流</button>
-    </form>}
+    </form></details>}
     {error && <p role="alert">{error}</p>}
     {flows.map(flow => <WorkflowItem key={flow.id} flow={flow} definitions={definitions} busy={busy} action={action} />)}
   </section>;

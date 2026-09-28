@@ -57,3 +57,54 @@ Change：`establish-observable-headless-core`。此报告验证根目录应用�
 - 新增 `test/review-regressions.test.ts`，8 项回归覆盖全部凭证分割位置、单字节块、二进制邻接字节、shell 双通道及导出、取消/超时后的后台进程、HTTP 200/500 响应、EOF/断流尾部保留。
 - 本次 `npm run typecheck`、`npm test`（9 个测试文件、53 项测试，含构建）通过；`openspec validate --all --strict` 三个 change 通过。进程组及本地 HTTP 测试在允许相应操作的环境运行。
 - 再次审查修复和相关调用链，未发现新的可操作问题。本次未运行真实模型调用；Windows 进程树终止仍未实机验证。
+
+## 2026-09-28 定制能力面板改版
+
+变更：`simplify-anime-customization-panel`。保留现有管理协议与服务端持久化，将面板分为模型、资源、能力包、工作流与面板；加入猫耳徽章、淡紫与樱粉点缀、统一卡片与宿主控件。新增配置、资源详情及高级操作按需展开。
+
+### 功能入口
+
+| 操作 | 新入口 |
+| --- | --- |
+| 主对话 / 辅助 / 命名模型 | 模型 → 用途摘要选择器；默认项仍表示原 DeepSeek 设置 |
+| 新增配置、端点授权与 API key | 模型 → 新增配置；请求路径在高级请求设置，最终授权范围始终显示 |
+| 旧 DeepSeek 迁移、跨 Provider 分支 | 模型 → 高级模型操作 |
+| 资源启停、来源、遮蔽、校验、重载 | 资源 → 资源卡片 / 资源详情 |
+| 用户目录写入授权、扩展候选与 MCP OAuth | 资源 → 对应具名入口 |
+| 能力包候选、安装与已安装版本管理 | 能力包 → 检查候选 / 管理能力包 |
+| 工作流启动、回答、未知结果核对与证据 | 工作流与面板 → 持久工作流 |
+| 自定义面板打开与预览 | 工作流与面板 → 打开或预览面板 |
+
+### 行为证据映射
+
+`test/browser/customization-studio.spec.ts` 使用真实本地 Web 外壳和管理 API 响应夹具，隔离失败与界面状态；`test/browser/customization.spec.ts` 继续使用真实本地管理服务、扩展与协议 fixture 验证副作用边界。
+
+| Delta Scenario | 验证证据 |
+| --- | --- |
+| 初次打开面板 | empty studio：模型默认页、完整表单和高级操作默认收起 |
+| 切换分类查看资源 | resource diagnostics + 原定制闭环：来源、版本、遮蔽、诊断与各分类操作可达 |
+| 查看不同分类的控件 | studio screenshots：模型、编辑器、资源、工作流截图及颜色对比数据 |
+| 选择与取消选择 | model selection：搜索、方向键、Home/End、Escape、取消无写入、单用途选择、失败和重开 |
+| 无可用 Provider | empty studio：空状态引导资源分类，无自动授权 |
+| 取消草稿与保存失败 | draft survives + validates fields：失败保留非敏感输入、清除密钥、保留已确认凭证引用、取消清除草稿、显式重试 |
+| 轮询期间编辑 | draft survives：管理轮询与切页不丢草稿或焦点，冲突后读取新 revision |
+| 隐藏分类发生失败 | resource diagnostics + studio screenshots：全局失败收据、待生效、分类计数、旧有效版本和未知结果核对入口 |
+| 取消不撤销已提交操作 | closing during a submitted save：重开读取完成结果且只提交一次；候选预览切页不再次启动工厂 |
+| 仅使用键盘操作 | empty studio + model selection：页签导航、选择、Tab 焦点约束、逐层 Escape、关闭返回入口 |
+| 窄屏与长内容 | studio screenshots：1440×900、390×844、360×800、200% 等效浏览器缩放，无面板及页面横向溢出，关闭和选择选项可达 |
+
+### 截图与边界
+
+截图在本地 `output/playwright/customization-studio/`（按项目惯例忽略入库），命名为 `{desktop,mobile,narrow,zoom-200}-{models,editor,resources,workflows}.png`。`contrast.json` 保存实际浏览器计算颜色的对比值。200% 验收使用 720×450 CSS 视口验证 1440×900 桌面缩放后的等效重排，并通过 CDP 请求 2 倍设备比例；截图按 CSS 像素保存。这是布局模拟，不是修改 Chrome 用户缩放设置；未使用会扭曲固定定位的 CSS zoom。截图中的资源与错误为验收夹具。
+
+本次验证为 macOS / Node.js 24.15.0 / 本机 Chrome，不宣称已覆盖 Safari、Firefox 或真实移动设备。无生产凭证和真实模型请求。模型凭证与配置仍为现有两步写入，失败不承诺事务回滚；已确认凭证引用仅在本次编辑草稿中保留，取消或关闭清除草稿，结果未知须用户重新输入后显式提交。第三方面板 iframe 内部主题不在本次改版范围。
+
+### 验证结果
+
+- `npm run typecheck`：通过。
+- `npm test`：默认并发首轮 229/231 通过，工作流组合与服务分页两项触发既有超时；`npm test -- --maxWorkers=2` 完整复验 39 个文件、231/231 通过（102.63s），未修改超时或跳过用例。
+- `npm run test:browser` 首轮发现名称 pattern 校验失效；修正转义并重建后，`npx playwright test` 全量 29/29 通过（1.5m），含七项新增面板场景、九项定制服务闭环及聊天/设置/文件/追踪回归。
+- `openspec validate --all --strict`：32/32 通过；`git diff --check` 通过。
+- 浏览器计算颜色的对比度：正文 14.13:1、辅助文字 6.60:1、主按钮 6.40:1、控件边框 3.49:1、选中页签边框 3.92:1；键盘焦点使用主紫色轮廓。减少动态效果测试确认过渡时长为 0s。
+- 已查看桌面、390px/360px 窄屏和等效缩放截图；长名称/路径正常换行，滚动正文时头部与分类保留，错误与未知结果文字可见；模型编辑输入焦点与禁用状态可辨认。
+- React 组件检查：状态容器和模型草稿分离；分类使用 hidden 保留表单/面板实例，隐藏内容不能接收焦点；轮询清理、陈旧响应过滤与焦点恢复沿用公开接口；未新增依赖或修改后端协议。

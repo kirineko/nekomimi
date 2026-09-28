@@ -15,7 +15,13 @@ test('previews an unactivated candidate panel and places its recorded contributi
  await writeFile(join(draft.path,'index.ts'),(await readFile(resolve('extension-docs/panel-extension.ts'),'utf8')).replace("slot:'result'","slot:'sidebar'"));await copyFile(resolve('extension-docs/review-panel.ts'),join(draft.path,'review-panel.ts'));
  const app=await startWeb({workspace,home,apiKey:key,naming:false,staticDir:resolve('dist/web-dist')});
  try{
-  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('button',{name:`检查候选 ${draft.id}`,exact:true}).click();await page.getByLabel('候选面板数据 JSON').fill('{"items":["Unactivated candidate"]}');await page.getByRole('button',{name:'授权执行候选工厂并预览面板'}).click();await expect(page.frameLocator('iframe').getByText('Unactivated candidate',{exact:true})).toBeVisible();expect(await store.active()).toHaveLength(0);
+  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();await page.getByRole('button',{name:`检查候选 ${draft.id}`,exact:true}).click();await page.getByLabel('候选面板数据 JSON').fill('{"items":["Unactivated candidate"]}');await page.getByRole('button',{name:'授权执行候选工厂并预览面板'}).click();await expect(page.frameLocator('iframe').getByText('Unactivated candidate',{exact:true})).toBeVisible();expect(await store.active()).toHaveLength(0);
+  const mounted = await page.locator('iframe').getAttribute('src');
+  const previewActions: string[] = [];
+  page.on('request', request => { if(request.method()==='POST' && request.url().endsWith('/customization')) previewActions.push(request.postDataJSON().action); });
+  await page.getByRole('tab',{name:/模型/}).click(); await page.getByRole('tab',{name:/资源/}).click();
+  await expect(page.locator('iframe')).toHaveAttribute('src', mounted!);
+  expect(previewActions).not.toContain('candidate-panel-preview');
   await page.getByRole('button',{name:'授权并启用此版本'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');await page.getByRole('button',{name:'关闭定制能力'}).click();await page.getByLabel('任务内容').fill('/review-panel');await page.getByRole('button',{name:'发送任务'}).click();await expect(page.getByRole('complementary',{name:'扩展侧栏'})).toContainText('审查结果');await page.reload();await expect(page.getByRole('complementary',{name:'扩展侧栏'})).toContainText('审查结果');
  }finally{await app.close();}
 });
@@ -25,10 +31,10 @@ test('reconciles an unknown workflow result in the browser without repeating its
  await writeFile(join(root,'index.ts'),`import type {ExtensionFactory2} from 'nekomimi/extensions';export default ((api)=>{api.registerWorkflow({id:'unknown-review',schemaVersion:1,inputSchema:{type:'object'},entry:'effect',steps:{effect:{transitions:[],async execute(_input,ctx){await ctx.callTool('write',{path:'external.txt',content:'one recorded effect'});throw Error('Injected failure after external effect');}}}})}) satisfies ExtensionFactory2;`);
  const options={workspace,home,naming:false,staticDir:resolve('dist/web-dist')};let app=await startWeb(options);
  try{
-  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('button',{name:'信任并启用 unknown'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');
+  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();await page.getByRole('button',{name:'信任并启用 unknown'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');
   // The pinned process must finish cleanup/reload before the next 1.5s management poll can expose unknown.
-  const value=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(value!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
-  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
+  await page.getByRole("tab", { name: /工作流与面板/ }).click(); await page.getByText("启动新工作流", { exact: true }).click(); const value=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(value!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
+  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();await page.getByRole("tab", { name: /工作流与面板/ }).click(); await expect(page.getByRole('region',{name:'核对未知结果'})).toBeVisible({timeout:20_000});
   await page.getByLabel('核对记录').fill('外部文件已核验，只执行过一次');await page.getByLabel('核对后的结果 JSON').fill('{"kind":"complete","output":{"verified":true}}');await page.getByRole('button',{name:'提交已核对结果'}).click();await expect(page.getByRole('article',{name:'工作流 unknown-review'})).toContainText('已完成');
   await page.getByRole('button',{name:'查看工作流证据'}).click();await expect(page.getByRole('region',{name:'工作流证据'})).toContainText('workflow.unknown.resolved');
   const {readdir,readFile}=await import('node:fs/promises'),{readSession}=await import('../../src/journal.js');const [flow]=await readdir(join(workspace,'.nekomimi/workflows'));const journal=await readSession(join(workspace,'.nekomimi/workflows',flow!));expect(journal.events.filter(e=>e.type==='tool.intent'&&(e.payload as any).name==='write')).toHaveLength(1);expect(await readFile(join(workspace,'external.txt'),'utf8')).toBe('one recorded effect');
@@ -42,24 +48,29 @@ test("restores a durable workflow form after service restart and continues only 
   const options = { workspace, home, naming: false, staticDir: resolve("dist/web-dist") };
   let app = await startWeb(options);
   try {
-    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
     await page.getByRole("button", { name: "信任并启用 durable" }).click();
     await expect(page.getByRole("dialog")).toContainText("已生效");
-    const value = await page.getByLabel("工作流定义").locator("option").nth(1).getAttribute("value");
+    await page.getByRole("tab", { name: /工作流与面板/ }).click(); await page.getByText("启动新工作流", { exact: true }).click(); const value = await page.getByLabel("工作流定义").locator("option").nth(1).getAttribute("value");
     await page.getByLabel("工作流定义").selectOption(value!);
     await page.getByLabel("工作流输入 JSON").fill('{"target":"review.txt"}');
     await page.getByRole("button", { name: "启动工作流", exact: true }).click();
     await expect(page.getByRole("form", { name: "审查确认" })).toBeVisible();
     await app.close(); app = await startWeb(options);
-    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
+    await page.getByRole("tab", { name: /工作流与面板/ }).click();
     await expect(page.getByRole("form", { name: "审查确认" })).toBeVisible();
     await page.getByLabel("审查决定").selectOption("通过");
+    await page.getByRole("tab", { name: /模型/ }).click();
+    await page.getByRole("tab", { name: /工作流与面板/ }).click();
+    await expect(page.getByLabel("审查决定")).toHaveValue("通过");
     await page.getByRole("button", { name: "提交并继续工作流" }).click();
     await expect(page.getByRole("article", { name: "工作流 durable-review" })).toContainText("已完成");
     await expect(page.getByRole("form", { name: "审查确认" })).toHaveCount(0);
     await page.getByRole("button", { name: "查看工作流证据" }).click();
     await expect(page.getByRole("region", { name: "工作流证据" })).toContainText("workflow.step.started");
-    await page.reload(); await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.reload(); await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
+    await page.getByRole("tab", { name: /工作流与面板/ }).click();
     await expect(page.getByRole("article", { name: "工作流 durable-review" })).toContainText("已完成");
   } finally { await app.close(); }
 });
@@ -74,23 +85,29 @@ test("configures a custom Provider without a default key, selects it and execute
     return Response.json({ choices: [{ message: ++requests === 1 ? { role: "assistant", content: null, tool_calls: [{ id: "browser-read", type: "function", function: { name: "read", arguments: '{"path":"sample.txt"}' } }] } : { role: "assistant", content: "Custom Provider completed" }, finish_reason: requests === 1 ? "tool_calls" : "stop" }] });
   } } });
   try {
-    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.goto(app.url); await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
     await page.getByRole("button", { name: "信任并启用 providers" }).click();
     await expect(page.getByRole("dialog")).toContainText("已生效");
+    await page.getByRole("tab", { name: /模型/ }).click();
+    await page.getByRole("button", { name: "＋ 新增配置" }).click();
     await page.getByLabel("模型配置名称").fill("browser-profile");
-    await page.getByLabel("自定义 Provider", { exact: true }).selectOption("example-chat");
+    await page.getByRole("button", { name: "自定义 Provider", exact: true }).click();
+    await page.getByRole("option", { name: "example-chat", exact: true }).click();
     await page.getByLabel("Provider 服务地址").fill("https://fixture.invalid/v1");
     await page.getByRole("button", { name: "授权并保存模型配置" }).click();
     await expect(page.getByRole("dialog")).toContainText("模型配置已保存");
-    await page.getByLabel("主对话模型").selectOption("browser-profile");
-    await expect(page.getByLabel("主对话模型")).toHaveValue("browser-profile");
+    await page.getByRole("button", { name: "主对话模型", exact: true }).click();
+    await page.getByRole("option", { name: /browser-profile/ }).click();
+    await expect(page.getByRole("button", { name: "主对话模型", exact: true })).toContainText("browser-profile");
     await page.getByRole("button", { name: "关闭定制能力" }).click();
     await page.getByRole("textbox", { name: "任务内容" }).fill("Read sample.txt using the custom Provider");
     await expect(page.getByRole("button", { name: "发送任务" })).toBeEnabled();
     await page.getByRole("button", { name: "发送任务" }).click();
     await expect(page.locator(".timeline")).toContainText("Custom Provider completed");
     await expect(page.locator(".conversation-heading")).toContainText("已完成"); expect(requests).toBe(2);
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
+    await page.getByRole("tab", { name: /模型/ }).click();
+    await page.getByText("高级模型操作", { exact: true }).click();
     await page.getByRole("button", { name: "创建跨 Provider 历史分支" }).click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(page.locator(".timeline")).toContainText("显式历史分支");
@@ -107,7 +124,8 @@ test("reviews a package, installs its command and uninstalls without erasing his
   const app = await startWeb({ workspace, home, apiKey: key, naming: false, staticDir: resolve("dist/web-dist") });
   try {
     await page.goto(app.url);
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
+    await page.getByRole("tab", { name: /能力包/ }).click();
     await page.getByRole("button", { name: /^检查能力包 browser-package/ }).click();
     await expect(page.getByRole("dialog")).toContainText("能力包检查通过");
     await expect(page.getByRole("dialog")).toContainText("commands");
@@ -118,7 +136,9 @@ test("reviews a package, installs its command and uninstalls without erasing his
     await page.getByRole("button", { name: "发送任务" }).click();
     await expect(page.locator(".timeline")).toContainText("Browser package evidence");
     await expect(page.locator(".conversation-heading")).toContainText("已完成");
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
+    await page.getByRole("tab", { name: /能力包/ }).click();
+    await page.getByText("管理能力包", { exact: true }).click();
     await page.getByRole("button", { name: "导出能力包到工作区" }).click();
     await page.getByRole("button", { name: "卸载能力包 browser-package" }).click();
     await expect.poll(async () => (await packages.list()).length).toBe(0);
@@ -135,7 +155,7 @@ test("checks candidate diagnostics, activates an approved hash and rolls back wi
   const app = await startWeb({ workspace, home, apiKey: key, naming: false, staticDir: resolve("dist/web-dist") });
   try {
     await page.goto(app.url);
-    const open = async () => page.getByRole("button", { name: "定制能力", exact: true }).click();
+    const open = async () => { await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click(); };
     const inspect = async () => page.getByRole("button", { name: `检查候选 ${candidate.id}`, exact: true }).click();
     const activate = async (button: Locator, action: string) => {
       const response = page.waitForResponse(r => r.request().method() === "POST" &&
@@ -214,7 +234,7 @@ test("enable extension, use form, reload a changed command and retain history", 
   page.on("pageerror", (e) => errors.push(e.message));
   try {
     await page.goto(app.url);
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
     await expect(page.getByRole("dialog", { name: "定制能力" })).toContainText(
       "待授权",
     );
@@ -233,7 +253,7 @@ test("enable extension, use form, reload a changed command and retain history", 
       join(root, "index.ts"),
       `export default api=>{api.registerCommand('inspect',{description:'Inspect',async handler(){return '第二版审查';}});}`,
     );
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
     await page.getByRole("button", { name: "重新加载资源" }).click();
     await expect(page.getByRole("dialog")).toContainText("已生效");
     await page.getByRole("button", { name: "关闭定制能力" }).click();
@@ -243,7 +263,7 @@ test("enable extension, use form, reload a changed command and retain history", 
     await page.reload();
     await expect(page.locator(".timeline")).toContainText("已检查 全部");
     await writeFile(join(root, "index.ts"), "export default !!!");
-    await page.getByRole("button", { name: "定制能力", exact: true }).click();
+    await page.getByRole("button", { name: "定制能力", exact: true }).click(); await page.getByRole("tab", { name: /资源/ }).click();
     await page.getByRole("button", { name: "重新加载资源" }).click();
     await expect(page.getByRole("dialog")).toContainText("失败");
     await expect(page.getByRole("dialog")).toContainText("index.ts");
@@ -269,10 +289,12 @@ test('isolates custom panels, preserves host controls, and rejects conflicting w
   await writeFile(join(root,'index.ts'),extension);await copyFile(resolve('extension-docs/review-panel.ts'),join(root,'review-panel.ts'));
   const app=await startWeb({workspace,home,naming:false,staticDir:resolve('dist/web-dist')});
   try{
-    await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('button',{name:'信任并启用 panels'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');
-    const definition=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(definition!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('form',{name:'Panel approval'})).toBeVisible();
-    const other=await context.newPage();await other.goto(app.origin);await other.getByRole('button',{name:'定制能力',exact:true}).click();
+    await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();await page.getByRole('button',{name:'信任并启用 panels'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');
+    await page.getByRole("tab", { name: /工作流与面板/ }).click(); await page.getByText("启动新工作流", { exact: true }).click(); const definition=await page.getByLabel('工作流定义').locator('option').nth(1).getAttribute('value');await page.getByLabel('工作流定义').selectOption(definition!);await page.getByRole('button',{name:'启动工作流',exact:true}).click();await expect(page.getByRole('form',{name:'Panel approval'})).toBeVisible();
+    const other=await context.newPage();await other.goto(app.origin);await other.getByRole('button',{name:'定制能力',exact:true}).click(); await other.getByRole("tab", { name: /资源/ }).click();
     for(const tab of [page,other]){
+      await tab.getByRole("tab", { name: /工作流与面板/ }).click();
+      await tab.getByText("打开或预览面板", { exact: true }).click();
       await expect(tab.getByLabel('面板定义').locator('option')).toHaveCount(2);
       const panel=await tab.getByLabel('面板定义').locator('option').nth(1).getAttribute('value');await tab.getByLabel('面板定义').selectOption(panel!);await tab.getByLabel('面板数据 JSON').fill('{"items":["Alpha","Beta"]}');
       const flow=await tab.getByLabel('关联工作流').locator('option').nth(1).getAttribute('value');await tab.getByLabel('关联工作流').selectOption(flow!);await tab.getByRole('button',{name:'打开面板',exact:true}).click();
@@ -321,10 +343,10 @@ test('authorizes MCP through a browser callback, refreshes after service restart
  await writeFile(join(workspace,'.nekomimi/mcp.json'),JSON.stringify({version:1,servers:{oauth:{...fixture.resource.config,oauth:{issuer:fixture.resource.config!.oauth!.issuer,dynamicRegistration:true}}}}));
  const options={workspace,home,naming:false,staticDir:resolve('dist/web-dist')};let app=await startWeb(options);
  try{
-  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('button',{name:'授权 MCP oauth',exact:true}).click();
+  await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();await page.getByRole('button',{name:'授权 MCP oauth',exact:true}).click();
   const popupPromise=context.waitForEvent('page');await page.getByRole('link',{name:'打开 MCP 授权页面'}).click();const popup=await popupPromise;await expect(popup.locator('body')).toContainText('授权完成');await popup.close();
   await expect(page.getByRole('region',{name:'MCP 授权'})).toContainText('authorized');expect(fixture.counts().registrations).toBe(1);
-  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click();
+  await app.close();app=await startWeb(options);await page.goto(app.url);await page.getByRole('button',{name:'定制能力',exact:true}).click(); await page.getByRole("tab", { name: /资源/ }).click();
   await expect(page.getByRole('region',{name:'MCP 授权'})).toContainText('authorized');await page.getByRole('button',{name:'信任并启用 oauth'}).click();await expect(page.getByRole('dialog')).toContainText('已生效');expect(fixture.counts().refreshes).toBe(1);
   const management=await page.evaluate(async()=>JSON.stringify(await(await fetch('/api/v1/customization')).json()));expect(management).not.toContain('initial-secret');expect(management).not.toContain('refreshed-secret');expect(management).not.toContain('refresh-secret');
   await page.getByRole('button',{name:'断开 MCP 授权'}).click();await expect(page.getByRole('region',{name:'MCP 授权'})).toContainText('disconnected');

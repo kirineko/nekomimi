@@ -1,36 +1,13 @@
+import type { Management } from "./customization/types";
+import { CustomizationShell, CategoryPanel, type Category } from "./customization/Shell";
+import { ModelSettings } from "./customization/ModelSettings";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PanelManagement, CustomPanel, type PanelView, type PanelMount } from "./CustomPanel";
 import { api } from "../api";
-import { WorkflowManagement, type WorkflowView, type WorkflowDefinitionView } from "./WorkflowManagement";
+import { WorkflowManagement } from "./WorkflowManagement";
 import type {
-  ResourceDescriptor,
   Contribution,
 } from "../../customization/types";
-interface Management {
-  panels: PanelView[];
-  workflows: WorkflowView[];
-  workflowDefinitions: WorkflowDefinitionView[];
-  providers: { id: string; resourceId?: string; revision: string; models: { id: string; name: string; protocol: string }[] }[];
-  providerProfiles: { revision: number; entries: Record<string, { id: string; providerId: string; model: string; baseUrl: string }>; selection: { main?: string; auxiliary?: string; naming?: string } };
-  oauth: { server: string; status: string; issuer?: string; clientId?: string }[];
-  packages: { packageId: string; scope: "project" | "user"; revision: string; previous?: string; manifest: { name: string; version: string } }[];
-  packageCandidates: { id: string; scope: "project" | "user"; name: string; revision: string }[];
-  candidates: string[];
-  managed: { name: string; revision: string; previous?: string }[];
-  resources: ResourceDescriptor[];
-  userWrites: boolean;
-  settingsRevision: number;
-  activeRevision?: string;
-  busy: boolean;
-  degraded?: string;
-  mcp: {
-    id: string;
-    diagnostics: string;
-    toolErrors: { name: string; error: string }[];
-  }[];
-  activeResources: ResourceDescriptor[];
-  receipts: { id: string; status: string; error?: string }[];
-}
 interface CandidatePreview {
   id: string; name: string; contentHash: string; previousRevision?: string;
   addedCapabilities: string[]; requestedCapabilities: string[];
@@ -64,15 +41,14 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
   const [candidatePanel,setCandidatePanel]=useState<{panel:PanelView;frame:PanelMount;props:string}>();
   const [packagePreview, setPackagePreview] = useState<PackagePreview>();
   const [authorizationUrl, setAuthorizationUrl] = useState("");
-  const [profileId, setProfileId] = useState("");
-  const [providerId, setProviderId] = useState("");
-  const [modelId, setModelId] = useState("");
-  const [providerUrl, setProviderUrl] = useState("");
-  const [providerPaths, setProviderPaths] = useState("/responses");
-  const [providerKey, setProviderKey] = useState("");
-  const [omitReasoning, setOmitReasoning] = useState(false);
+  const [category, setCategory] = useState<Category>("models");
+  const [modelIssue, setModelIssue] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const refreshSequence = useRef(0);
   const refresh = useCallback(async (signal?: AbortSignal) => {
-    setData(await api<Management>("/customization", undefined, signal));
+    const sequence = ++refreshSequence.current;
+    const snapshot = await api<Management>("/customization", undefined, signal);
+    if (sequence === refreshSequence.current && !signal?.aborted) { setData(snapshot); setLoadError(""); }
   }, []);
   useEffect(() => {
     const c = new AbortController();
@@ -81,7 +57,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
       try {
         await refresh(c.signal);
       } catch (e) {
-        if (!c.signal.aborted) setError(String(e));
+        if (!c.signal.aborted) setLoadError(String(e));
       }
       if (!c.signal.aborted) timer = setTimeout(poll, 1500);
     };
@@ -93,7 +69,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
   }, [refresh]);
   const action = async (value: object) => {
     setBusy(true);
-    setError("");
+    setError(""); setResult("");
     try {
       const r = await api<{ errors?: string[]; authorizationUrl?: string; path?: string; sessionId?: string }>("/customization", value);
       if (r.errors) setResult(r.errors.join("\n") || "静态校验通过");
@@ -104,6 +80,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
       return r;
     } catch (e) {
       setError(String(e));
+      await refresh().catch(() => {});
     } finally {
       setBusy(false);
     }
@@ -120,36 +97,25 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
     catch (e) { setError(String(e)); }
     finally { setBusy(false); }
   };
-  const saveProfile = async () => {
-    const provider = data?.providers.find(p => p.id === providerId);
-    if (!provider?.resourceId || !data) return;
-    setBusy(true); setError("");
-    try {
-      if (providerKey) await api("/customization", { action: "provider-credential", ref: profileId, secret: providerKey });
-      await api("/customization", { action: "provider-save", revision: data.providerProfiles.revision, profile: { id: profileId, providerId, resourceId: provider.resourceId, model: modelId, baseUrl: providerUrl, paths: providerPaths.split(",").map(p => p.trim()), ...(providerKey ? { credentialRef: profileId } : {}) } });
-      setProviderKey(""); setResult("模型配置已保存；选择用途后生效。"); await refresh();
-    } catch (e) { setError(String(e)); }
-    finally { setBusy(false); }
-  };
   return (
-    <div className="modal-backdrop">
-      <section
-        className="settings-panel customization-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-label="定制能力"
-      >
-        <header>
-          <h2>定制能力</h2>
-          <button onClick={close} aria-label="关闭定制能力">
-            关闭
-          </button>
-        </header>
-        <p>扩展、技能、规则与 MCP。项目中的可执行扩展和连接须先授权启用。</p>
-        <p>
-          本地扩展是可信代码，具有本机权限；通过宿主执行的操作有记录，直接调用
-          Node API 的行为不保证被记录。
-        </p>
+    <CustomizationShell close={close} category={category} onCategory={setCategory} data={data} modelIssue={modelIssue}>
+      <div className="customization-feedback">
+        {!data && !loadError && <p role="status">正在整理你的定制能力…</p>}
+        {loadError && <p role="alert">加载失败：{loadError} <button onClick={() => void refresh().catch(e => setLoadError(String(e)))}>重试加载</button></p>}
+        {data?.busy && <p role="status">任务运行中，资源变更将在任务结束后生效。</p>}
+        {(error || data?.degraded) && <p role="alert">{error || data?.degraded}</p>}
+        {result && <p role="status">{result}</p>}
+        {data?.receipts.slice(-3).map(r => <p key={r.id} role="status">重载：{labels[r.status] ?? r.status} {r.error}</p>)}
+      </div>
+      <CategoryPanel id="models" active={category}>
+        {data && <ModelSettings onIssue={setModelIssue} active={category === "models"} data={data} busy={busy} action={action} refresh={refresh} sessionId={sessionId} onResources={() => setCategory("resources")} />}
+      </CategoryPanel>
+      <CategoryPanel id="resources" active={category}>
+        <div className="customization-section-heading"><div><h3>我的资源</h3><p>为你的搭档，添一点新本领。</p></div>
+          <button disabled={busy || !data} onClick={() => void action({ action: "reload" })}>重新加载资源</button>
+        </div>
+        <p className="customization-notice">本地扩展具有本机权限。宿主操作有记录，直接调用 Node API 的行为不保证被记录。项目扩展和连接须先授权。</p>
+        <details className="customization-disclosure"><summary>用户目录写入授权</summary>
         {data && (
           <button
             disabled={busy}
@@ -166,31 +132,16 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
               : "允许此项目写入用户定制目录"}
           </button>
         )}
-        <button
-          disabled={busy}
-          onClick={() => void action({ action: "reload" })}
-        >
-          重新加载资源
-        </button>
-        {data?.busy && <p>任务运行中，资源变更将在任务结束后生效。</p>}
-        {(error || data?.degraded) && (
-          <p role="alert">{error || data?.degraded}</p>
-        )}
-        {result && <p role="status">{result}</p>}
+        </details>
         {authorizationUrl && <p><a href={authorizationUrl} target="_blank" rel="noreferrer noopener">打开 MCP 授权页面</a>（五分钟内有效）</p>}
         {!!data?.oauth?.length && <section aria-label="MCP 授权">
           <h3>MCP 授权</h3>
           {data.oauth.map(o => <article key={o.server}>
             <p>{data.resources.find(r => r.id === o.server)?.name ?? o.server} · {o.status} · {o.issuer}</p>
             <button disabled={busy || o.status === "authorizing"} onClick={() => void action({ action: "mcp-authorize", id: o.server })}>授权 MCP {data.resources.find(r => r.id === o.server)?.name}</button>
-            <button disabled={busy} onClick={() => void action({ action: "mcp-disconnect", id: o.server })}>断开 MCP 授权</button>
+            <button className="customization-danger" disabled={busy} onClick={() => void action({ action: "mcp-disconnect", id: o.server })}>断开 MCP 授权</button>
           </article>)}
         </section>}
-        {data?.receipts.slice(-3).map((r) => (
-          <p key={r.id} role="status">
-            重载：{labels[r.status] ?? r.status} {r.error}
-          </p>
-        ))}
         {!!data?.candidates?.length && <section aria-label="候选版本">
           <h3>候选版本</h3>
           {data.candidates.map(id => <button key={id} disabled={busy} onClick={() => void inspect(id)}>检查候选 {id}</button>)}
@@ -211,57 +162,6 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
           </article>}
           {data.managed?.filter(entry => entry.previous).map(entry => <button key={entry.name} disabled={busy} onClick={() => void action({ action: "candidate-rollback", name: entry.name, authorize: true })}>回退 {entry.name} 到 {entry.previous!.slice(0, 12)}</button>)}
         </section>}
-        {data?.providerProfiles && <section aria-label="模型提供商">
-          <h3>模型提供商</h3>
-          {sessionId && <div>
-            <p>跨协议继续时可创建历史分支。原会话和原始证据会保留，工具不会重跑。</p>
-            <label><input type="checkbox" checked={omitReasoning} onChange={e => setOmitReasoning(e.target.checked)} />允许新分支省略供应商专属 reasoning，保留其原始证据</label>
-            <button disabled={busy || data.busy} onClick={() => void action({ action: "history-branch", sessionId, omitReasoning })}>创建跨 Provider 历史分支</button>
-          </div>}
-          {([['main', '主对话模型'], ['auxiliary', '辅助调用模型'], ['naming', '自动命名模型']] as const).map(([purpose, label]) => <label key={purpose}>{label}
-            <select aria-label={label} disabled={busy} value={data.providerProfiles.selection[purpose] ?? ""} onChange={e => void action({ action: "provider-select", purpose, id: e.target.value, revision: data.providerProfiles.revision })}>
-              <option value="">默认 DeepSeek（使用原设置）</option>
-              {Object.values(data.providerProfiles.entries).map(p => <option key={p.id} value={p.id}>{p.id} · {p.providerId}/{p.model}</option>)}
-            </select>
-          </label>)}
-          {!data.providerProfiles.entries['legacy-deepseek'] && <button disabled={busy} onClick={() => void action({ action: "provider-migrate", revision: data.providerProfiles.revision })}>备份并迁移原 DeepSeek 配置</button>}
-          <form onSubmit={e => { e.preventDefault(); void saveProfile(); }}>
-            <h4>添加自定义模型配置</h4>
-            <label>配置名称<input aria-label="模型配置名称" value={profileId} onChange={e => setProfileId(e.target.value)} required pattern="[a-z][a-z0-9-]{0,47}" /></label>
-            <label>Provider<select aria-label="自定义 Provider" value={providerId} required onChange={e => { setProviderId(e.target.value); const model = data.providers.find(p => p.id === e.target.value)?.models[0]; setModelId(model?.id ?? ""); setProviderPaths(model?.protocol === "chat-completions" ? "/chat/completions" : "/responses"); }}><option value="">选择已启用的 Provider</option>{data.providers.filter(p => p.resourceId).map(p => <option key={p.id} value={p.id}>{p.id}</option>)}</select></label>
-            <label>模型<select aria-label="自定义模型" value={modelId} required onChange={e => setModelId(e.target.value)}><option value="">选择模型</option>{data.providers.find(p => p.id === providerId)?.models.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}</select></label>
-            <label>服务地址<input aria-label="Provider 服务地址" type="url" required value={providerUrl} onChange={e => setProviderUrl(e.target.value)} placeholder="https://example.com/v1" /></label>
-            <label>授权请求路径<input aria-label="Provider 请求路径" required value={providerPaths} onChange={e => setProviderPaths(e.target.value)} /></label>
-            <label>API key（可选）<input aria-label="Provider API key" type="password" autoComplete="off" value={providerKey} onChange={e => setProviderKey(e.target.value)} /></label>
-            <p>保存即授权此 Provider 使用上述端点。凭证只保存到服务端，不交给扩展。</p>
-            <button disabled={busy || !providerId}>授权并保存模型配置</button>
-          </form>
-        </section>}
-        {!!data?.packageCandidates?.length && <section aria-label="能力包候选">
-          <h3>能力包候选</h3>
-          {data.packageCandidates.map(p => <button key={p.id} disabled={busy} onClick={() => void inspectPackage(p.id, p.scope)}>检查能力包 {p.name} · {p.revision.slice(0, 12)}</button>)}
-          {packagePreview && <article>
-            <h4>{packagePreview.candidate.manifest.name}</h4>
-            <p role="status">{packagePreview.passed ? "能力包检查通过" : "能力包检查未通过"}</p>
-            <p>新增授权：{packagePreview.addedPermissions.join(", ") || "无"}。变更文件：{packagePreview.changedFiles}。</p>
-            {packagePreview.checks.flatMap(c => c.diagnostics).map((d, i) => <p key={i} role="alert">{d.file}:{d.line}:{d.column} · {d.message}</p>)}
-            {packagePreview.files.map(f => <details key={f.name}><summary>{f.name}</summary><pre>{f.preview ?? "文件删除或非文本内容"}</pre></details>)}
-            <p>文本预览最多显示每个文件的前 4000 字符。</p>
-            <button disabled={busy || !packagePreview.passed} onClick={() => void action({ action: "package-activate", id: packagePreview.candidate.id, scope: packagePreview.candidate.scope, authorize: true })}>授权并安装能力包</button>
-          </article>}
-        </section>}
-        {!!data?.packages?.length && <section aria-label="已安装能力包">
-          <h3>已安装能力包</h3>
-          {data.packages.map(p => <article key={p.packageId}>
-            <h4>{p.manifest.name} {p.manifest.version}</h4>
-            <p>{p.scope === "project" ? "项目" : "用户"} · {p.revision.slice(0, 12)}</p>
-            {p.previous && <button disabled={busy} onClick={() => void action({ action: "package-rollback", id: p.packageId, scope: p.scope, authorize: true })}>回退能力包 {p.manifest.name}</button>}
-            <button disabled={busy} onClick={() => void action({ action: "package-export", id: p.packageId, scope: p.scope, output: `${p.manifest.name.replace(/[^a-zA-Z0-9_-]/g, "_")}-${p.revision.slice(0, 12)}.tgz` })}>导出能力包到工作区</button>
-            <button disabled={busy} onClick={() => void action({ action: "package-uninstall", id: p.packageId, scope: p.scope })}>卸载能力包 {p.manifest.name}</button>
-          </article>)}
-        </section>}
-        {data && <PanelManagement panels={data.panels ?? []} flows={data.workflows ?? []} />}
-        {data && <WorkflowManagement flows={data.workflows ?? []} definitions={data.workflowDefinitions ?? []} busy={busy} action={action} />}
         {data?.resources.map((r) => (
           <article className="customization-resource" key={r.id}>
             <h3>
@@ -273,8 +173,12 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
                 : r.scope === "user"
                   ? "用户"
                   : "内置"}{" "}
-              · {labels[r.status]}
+              <span className="customization-state" data-state={r.status}>{labels[r.status] ?? r.status}</span>
             </p>
+            {r.error && <p role="alert">{r.error}</p>}
+            {!!data.mcp?.find(m => m.id === r.id)?.toolErrors.length && <p role="alert">工具诊断异常，请展开资源详情。</p>}
+            {data.busy && <p role="status">配置待生效</p>}
+            <details><summary>资源详情 · 来源与诊断</summary>
             <code>{r.source}</code>
             {r.description && <p>{r.description}</p>}
             <p>
@@ -290,8 +194,8 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
                   {t.name}: {t.error}
                 </p>
               ))}
-            {r.error && <p role="alert">{r.error}</p>}
             {r.shadowedBy && <p>由 {r.shadowedBy} 覆盖</p>}
+            </details>
             {r.kind === "extension" && (
               <button
                 disabled={busy}
@@ -303,6 +207,7 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
             {!["shadowed", "error"].includes(r.status) &&
               r.scope !== "builtin" && (
                 <button
+                  className={r.status === "enabled" ? "customization-danger" : undefined}
                   disabled={busy}
                   onClick={() =>
                     void action({
@@ -330,8 +235,42 @@ export function Customization({ close, sessionId, branched }: { close: () => voi
             中创建定制内容。
           </p>
         )}
-      </section>
-    </div>
+      </CategoryPanel>
+      <CategoryPanel id="packages" active={category}>
+        <div className="customization-section-heading"><div><h3>能力包</h3><p>把喜欢的能力，收进工具箱。</p></div></div>
+        <p className="customization-notice">能力包中的本地扩展具有本机权限；宿主操作有记录，直接 Node API 行为不保证被记录。安装与回退需显式授权。</p>
+        {!!data?.packageCandidates?.length && <section aria-label="能力包候选">
+          <h3>能力包候选</h3>
+          {data.packageCandidates.map(p => <button key={p.id} disabled={busy} onClick={() => void inspectPackage(p.id, p.scope)}>检查能力包 {p.name} · {p.revision.slice(0, 12)}</button>)}
+          {packagePreview && <article>
+            <h4>{packagePreview.candidate.manifest.name}</h4>
+            <p role="status">{packagePreview.passed ? "能力包检查通过" : "能力包检查未通过"}</p>
+            <p>新增授权：{packagePreview.addedPermissions.join(", ") || "无"}。变更文件：{packagePreview.changedFiles}。</p>
+            {packagePreview.checks.flatMap(c => c.diagnostics).map((d, i) => <p key={i} role="alert">{d.file}:{d.line}:{d.column} · {d.message}</p>)}
+            {packagePreview.files.map(f => <details key={f.name}><summary>{f.name}</summary><pre>{f.preview ?? "文件删除或非文本内容"}</pre></details>)}
+            <p>文本预览最多显示每个文件的前 4000 字符。</p>
+            <button disabled={busy || !packagePreview.passed} onClick={() => void action({ action: "package-activate", id: packagePreview.candidate.id, scope: packagePreview.candidate.scope, authorize: true })}>授权并安装能力包</button>
+          </article>}
+        </section>}
+        {!!data?.packages?.length && <section aria-label="已安装能力包">
+          <h3>已安装能力包</h3>
+          {data.packages.map(p => <article key={p.packageId}>
+            <h4>{p.manifest.name} {p.manifest.version}</h4>
+            <p>{p.scope === "project" ? "项目" : "用户"} · {p.revision.slice(0, 12)}</p>
+            <details><summary>管理能力包</summary>
+            {p.previous && <button disabled={busy} onClick={() => void action({ action: "package-rollback", id: p.packageId, scope: p.scope, authorize: true })}>回退能力包 {p.manifest.name}</button>}
+            <button disabled={busy} onClick={() => void action({ action: "package-export", id: p.packageId, scope: p.scope, output: `${p.manifest.name.replace(/[^a-zA-Z0-9_-]/g, "_")}-${p.revision.slice(0, 12)}.tgz` })}>导出能力包到工作区</button>
+            <button className="customization-danger" disabled={busy} onClick={() => void action({ action: "package-uninstall", id: p.packageId, scope: p.scope })}>卸载能力包 {p.manifest.name}</button></details>
+          </article>)}
+        </section>}
+        {data && !data.packages?.length && !data.packageCandidates?.length && <p className="customization-empty">还没有能力包。准备好的候选会出现在这里。</p>}
+      </CategoryPanel>
+      <CategoryPanel id="workflows" active={category}>
+        <div className="customization-section-heading"><div><h3>工作流与面板</h3><p>让重复的事情，有自己的节奏。</p></div></div>
+        {data && <PanelManagement panels={data.panels ?? []} flows={data.workflows ?? []} />}
+        {data && <WorkflowManagement flows={data.workflows ?? []} definitions={data.workflowDefinitions ?? []} busy={busy} action={action} />}
+      </CategoryPanel>
+    </CustomizationShell>
   );
 }
 interface Item {

@@ -44,10 +44,13 @@ export function PanelManagement({panels,flows}:{panels:PanelView[];flows:{id:str
   const [selected,setSelected]=useState(''),[props,setProps]=useState('{}'),[workflow,setWorkflow]=useState(''),[live,setLive]=useState<{key:string;panel:PanelView;props:string;workflow?:string;preview:boolean}>();
   const panel=panels.find(p=>`${p.resourceId}|${p.id}`===selected);
   return <section aria-label="自定义面板"><h3>自定义面板</h3>
+    {!panels.length && <p className="customization-empty">暂无可用面板。</p>}
+    <details className="customization-disclosure"><summary>打开或预览面板</summary>
     <label>面板定义<select aria-label="面板定义" value={selected} onChange={e=>{setSelected(e.target.value);setWorkflow('');}}><option value="">选择面板</option>{panels.map(p=><option key={`${p.resourceId}|${p.id}`} value={`${p.resourceId}|${p.id}`}>{p.id} · {p.slot}</option>)}</select></label>
     <label>面板数据 JSON<textarea aria-label="面板数据 JSON" value={props} onChange={e=>setProps(e.target.value)}/></label>
     <label>关联工作流<select aria-label="关联工作流" value={workflow} onChange={e=>setWorkflow(e.target.value)}><option value="">不关联</option>{flows.filter(f=>f.resourceId===panel?.resourceId).map(f=><option key={f.id} value={f.id}>{f.id} · {f.status}</option>)}</select></label>
     <button disabled={!panel} onClick={()=>panel&&setLive({key:crypto.randomUUID(),panel,props,preview:true})}>预览面板</button><button disabled={!panel} onClick={()=>panel&&setLive({key:crypto.randomUUID(),panel,props,workflow,preview:false})}>打开面板</button>
+    </details>
     {live&&<CustomPanel key={live.key} panel={live.panel} propsJson={live.props} workflowId={live.workflow} preview={live.preview}/>}
   </section>;
 }
