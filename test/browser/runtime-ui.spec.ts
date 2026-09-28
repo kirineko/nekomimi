@@ -1,3 +1,4 @@
+import {waitForPanelLayout} from './panel-layout.js';
 import {test,expect} from '@playwright/test';
 import {cp,mkdir,writeFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
@@ -85,7 +86,14 @@ test('combines ordered views, explicit renderers and pages, and releases subscri
   const first=page.frameLocator('iframe[title="面板 first-header"]');await expect(first.getByText('completed',{exact:true})).toBeVisible();
   await first.getByRole('button',{name:'运行命令'}).click();await first.getByRole('button',{name:'运行命令'}).click();await expect(page.getByText('hello from first',{exact:true})).toHaveCount(2);
   const renderer=page.locator('.timeline .runtime-views').filter({has:page.locator('summary')}).first();await renderer.getByText('选择结果展示',{exact:true}).click();await renderer.getByRole('button',{name:'first-message',exact:true}).click();await expect(renderer.locator('iframe')).toHaveCount(1);await renderer.getByRole('button',{name:'second-message',exact:true}).click();await expect(renderer.locator('iframe')).toHaveCount(1);await expect(renderer.locator('iframe')).toHaveAttribute('title','面板 second-message');
-  await first.getByRole('button',{name:'打开页面'}).click();await expect(page.getByRole('region',{name:'扩展页面'})).toBeVisible();await expect(page.frameLocator('iframe[title="面板 first-page"]').getByText('first visible',{exact:true})).toBeVisible();await page.getByRole('button',{name:'返回会话'}).click();await expect(page.getByRole('region',{name:'扩展页面'})).toHaveCount(0);
+  // The iframe element exists before its async mount and resize complete. Wait for
+  // rendered content and its state subscription before clicking another frame.
+  const message=page.frameLocator('iframe[title="面板 second-message"]');
+  await expect(message.getByText('second visible',{exact:true})).toBeVisible();
+  await expect(message.getByText('completed',{exact:true})).toBeVisible();
+  await waitForPanelLayout(renderer.locator('iframe'));
+  const opened=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/customization')&&r.request().postDataJSON()?.method==='view.open');
+  await first.getByRole('button',{name:'打开页面'}).click();expect((await opened).ok()).toBe(true);await expect(page.getByRole('region',{name:'扩展页面'})).toBeVisible();await expect(page.frameLocator('iframe[title="面板 first-page"]').getByText('first visible',{exact:true})).toBeVisible();await waitForPanelLayout(page.locator('iframe[title="面板 first-page"]'));await page.getByRole('button',{name:'返回会话'}).click();await expect(page.getByRole('region',{name:'扩展页面'})).toHaveCount(0);
   await header.getByRole('button',{name:'隐藏此挂件'}).first().click();await expect(header.locator('iframe')).toHaveCount(1);await page.getByRole('button',{name:'更多操作'}).click();await page.getByRole('button',{name:'外观',exact:true}).click();await page.getByRole('button',{name:'恢复默认界面'}).click();await expect(page.locator('iframe')).toHaveCount(0);
  }finally{await app.close();}
 });

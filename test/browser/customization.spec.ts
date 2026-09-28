@@ -1,3 +1,4 @@
+import {waitForPanelLayout} from './panel-layout.js';
 import { test, expect as baseExpect, type Locator } from "@playwright/test";
 import { mkdir, writeFile, copyFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
@@ -309,7 +310,9 @@ test('isolates custom panels, preserves host controls, and rejects conflicting w
     expect(await frame.evaluate(()=>{try{return document.cookie;}catch{return 'blocked';}})).toBe('blocked');
     expect(await frame.evaluate(async()=>{try{await fetch('/api/v1/config');return 'allowed';}catch{return 'blocked';}})).toBe('blocked');
     await page.frameLocator('iframe').getByLabel('筛选审查项').fill('Beta');await expect(page.frameLocator('iframe').getByText('Alpha',{exact:true})).toHaveCount(0);
-    await page.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(page.frameLocator('iframe').locator('p')).toContainText('ready');
+    await waitForPanelLayout(page.locator('iframe'));
+    const answered=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/customization')&&r.request().postDataJSON()?.method==='workflow.answer');
+    await page.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();expect((await answered).ok()).toBe(true);await expect(page.frameLocator('iframe').locator('p')).toContainText('ready');
     await other.bringToFront();
     await other.frameLocator('iframe').getByLabel('审查决定').selectOption('reject');
     await other.frameLocator('iframe').getByRole('button',{name:'确认审查'}).click();await expect(other.frameLocator('iframe').locator('p')).toContainText('冲突');
