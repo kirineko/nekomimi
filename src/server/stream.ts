@@ -21,6 +21,7 @@ export async function subscribe(
   res.on("close", () => {
     closed = true;
   });
+  let lastContext = "";
   let lastStatus = "";
   let lastDiagnostic = "";
   let heartbeats = 0;
@@ -48,7 +49,8 @@ export async function subscribe(
       }
       const cursor = entry.reader.cursor;
       const session = sessions.info(sessionId, entry);
-      if (cursor.seq !== seq || session.status !== lastStatus || (session.diagnostic?.id ?? "") !== lastDiagnostic) {
+      const context = await sessions.context(entry), contextKey=JSON.stringify(context);
+      if (contextKey !== lastContext || cursor.seq !== seq || session.status !== lastStatus || (session.diagnostic?.id ?? "") !== lastDiagnostic) {
         const rows = [...entry.projection.rows.values()].filter(
           (r) => r.seq > seq,
         );
@@ -56,8 +58,9 @@ export async function subscribe(
           send("reset", { reason: "需要重新加载快照" });
           break;
         }
-        if (!send("update", { version: 1, cursor, session, rows }, cursor.seq))
+        if (!send("update", { version: 1, cursor, session, rows, ...context }, cursor.seq))
           break;
+        lastContext=contextKey;
         seq = cursor.seq;
         hash = cursor.hash;
         lastStatus = session.status;

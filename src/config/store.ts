@@ -11,6 +11,7 @@ export interface Settings {
   model: string;
   baseUrl: string;
   search?: SearchSettings;
+  autoCompact?: boolean;
 }
 interface Auth {
   version: 1;
@@ -48,9 +49,10 @@ export class ConfigStore {
   async settings() {
     const v = await this.read("settings.json", defaults);
     this.validate(v);
-    return { ...v, search: v.search ?? { ...searchDefaults } };
+    return { ...v, autoCompact: v.autoCompact ?? true, search: v.search ?? { ...searchDefaults } };
   }
   private validate(v: Settings) {
+    if (v.autoCompact !== undefined && typeof v.autoCompact !== "boolean") throw new ApiError(400, "config", "自动压缩配置无效");
     if (v.search !== undefined) {
       if (!v.search || typeof v.search.enabled !== "boolean") throw new ApiError(400, "config", "搜索配置无效");
       this.validate({ version: 1, revision: 0, model: v.search.model, baseUrl: v.search.baseUrl });
@@ -120,6 +122,7 @@ export class ConfigStore {
           revision: old.revision + 1,
           model: value.model as string,
           baseUrl: value.baseUrl as string,
+          autoCompact: value.autoCompact as boolean ?? (old as Settings).autoCompact ?? true,
           search: value.search as SearchSettings ?? (old as Settings).search ?? { ...searchDefaults },
         };
         this.validate(next);

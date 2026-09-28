@@ -1,15 +1,18 @@
+import { ContextMeter } from "./ContextMeter";
+import type { ContextOccupancy } from "../../shared/protocol";
 import { createPortal } from "react-dom";
 import { useCommands } from "../hooks/useCommands";
 import { commandWord, matchingCommands, completeCommand } from "../command-input";
 import type { CommandSuggestion } from "../../shared/protocol";
 import { useEffect, useRef, useState, useId } from "react";
 export function Composer({
-  contextRevision=0, requestedDraft, commandRevision, connected,
+  occupancy, compacting, contextRevision=0, requestedDraft, commandRevision, connected,
   busy,
   configured,
   submit,
   cancel,
 }: {
+  occupancy?: ContextOccupancy; compacting?: boolean;
   contextRevision?: number;
   requestedDraft?: {id:string;text:string};
   commandRevision: number; connected: boolean;
@@ -189,9 +192,10 @@ export function Composer({
         </div>
         <div className="composer-bottom">
           <span className="composer-meta">
-            <span>DeepSeek</span>
+            <span>{occupancy?.model ?? "DeepSeek"}</span>
             <span className="composer-hint">{open && matches.length ? "Enter 补全命令 · Esc 收起" : "Enter 发送 · Shift+Enter 换行"}</span>
           </span>
+          <ContextMeter value={occupancy} compacting={compacting}/>
           {busy ? (
             <button
               type="button"

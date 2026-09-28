@@ -1,3 +1,4 @@
+import { envelopeKey, estimateTokens } from '../context-meter.js';
 import { createAssistantMessageEventStream, type AssistantMessage, type Model } from "@earendil-works/pi-ai";
 import type { StreamFn } from "@earendil-works/pi-agent-core";
 import { RecordedCall } from "../recorded-call.js";
@@ -34,10 +35,11 @@ export async function createProvider(host: CustomizationHost, activation: Activa
   return new AdapterProvider(host, journal, links, prompt, settings, provider, model, selected);
 }
 export class AdapterProvider {
-  readonly model: Model<"openai-responses">;
+  readonly model: Model<"openai-responses"> & { contextIdentity: string };
+  get protocol(){return this.definition.protocol;}
   lastOutcome = "completed";
   constructor(private host: CustomizationHost, private journal: Journal, private links: Links, private prompt: ReturnType<typeof assemblePrompt>, private settings: ProviderOptions, private provider: RegisteredProvider, private definition: ModelDefinition, private selected: NonNullable<Awaited<ReturnType<ProviderProfiles["resolve"]>>>) {
-    this.model = { id: definition.id, name: definition.name, api: "openai-responses", provider: provider.id, baseUrl: selected.profile.baseUrl, reasoning: definition.capabilities.reasoning, input: definition.capabilities.images ? ["text", "image"] : ["text"], contextWindow: definition.contextWindow, maxTokens: Math.min(settings.maxOutputTokens ?? definition.maxOutputTokens, definition.maxOutputTokens), cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 } };
+    this.model = { contextIdentity: `${provider.resource.hash}:${definition.protocol}:${definition.historyCompatibility}`, id: definition.id, name: definition.name, api: "openai-responses", provider: provider.id, baseUrl: selected.profile.baseUrl, reasoning: definition.capabilities.reasoning, input: definition.capabilities.images ? ["text", "image"] : ["text"], contextWindow: definition.contextWindow, maxTokens: Math.min(settings.maxOutputTokens ?? definition.maxOutputTokens, definition.maxOutputTokens), cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 } };
   }
   wireCallId(value: string) { return value; }
   private context(signal: AbortSignal, links: Links): ProcessContext {
@@ -79,6 +81,7 @@ export class AdapterProvider {
     void (async () => {
       const call = new RecordedCall(this.journal, this.links);
       try {
+        await this.settings.beforeRequest?.();
         const view = contextView(this.settings.contextEvents ?? this.journal.events, this.prompt);
         const history = view.nodes.map(n => n.item);
         if ((!this.definition.capabilities.tools && this.prompt.schemas.length) || (!this.definition.capabilities.images && /"(?:input_image|image_url)"\s*:/.test(JSON.stringify(history)))) throw new Error("Selected model does not support tools or images in this context");
@@ -119,6 +122,9 @@ export class AdapterProvider {
             const native = await this.journal.artifact(JSON.stringify(completed.rawItems));
             await recorded.finish({ status: "completed", response: native, usage: completed.usage, parserChunks: sequence });
             finished = true;
+            const inputUsage=(completed.usage as any)?.input_tokens ?? (completed.usage as any)?.inputTokens ?? (completed.usage as any)?.prompt_tokens;
+            if(!this.settings.purpose && Number.isSafeInteger(inputUsage) && inputUsage>0) await this.journal.append('context.usage',{key:envelopeKey(view,this.model),input:inputUsage,heuristic:estimateTokens(view.prompt.text)+estimateTokens(view.prompt.schemas)+estimateTokens(view.nodes.map(n=>n.item)),attemptId:recorded.links.attemptId},call.links);
+
             await this.journal.append(this.settings.purpose ? "auxiliary.response" : "context.add", { items, source: `response:${recorded.links.attemptId}`, native, provider: this.provider.id, providerRevision: this.provider.resource.hash, protocol: this.definition.protocol, historyCompatibility: this.definition.historyCompatibility }, recorded.links);
             this.lastOutcome = "completed";
             const message = this.message(completed.projection.content, completed.projection.content.some(c => c.type === "toolCall") ? "toolUse" : "stop");

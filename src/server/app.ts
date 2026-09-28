@@ -175,6 +175,7 @@ export async function startWeb(
             version: 1,
             session: sessions.info(sessionId, entry),
             cursor: entry.reader.cursor,
+            ...await sessions.context(entry),
             ...entry.projection.page(
               integer(url.searchParams.get("before"), Number.MAX_SAFE_INTEGER),
               60,

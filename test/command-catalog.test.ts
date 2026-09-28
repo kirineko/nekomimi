@@ -12,7 +12,7 @@ it("matches catalogs and dispatch for duplicate commands, workflow aliases and s
   const activation = {revision:"r",extensions:[a,b],resources:[{id:"skill:one",name:"review",kind:"skill",status:"enabled"},{id:"skill:two",name:"review",kind:"skill",status:"enabled"}]} as unknown as Activation;
   expect(commandCatalog().ready).toBe(false);
   let catalog = commandCatalog(activation);
-  expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaining(["/reload","/a:moe","/b:moe","/skill:skill:one"]));
+  expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaining(["/compact","/reload","/a:moe","/b:moe","/skill:skill:one"]));
   expect(catalog.commands.some(c=>c.name==="/moe")).toBe(false);
   expect(matchCommands(activation,"a:moe").candidates).toHaveLength(1);
   expect(matchSkills(activation,"review")).toHaveLength(2);
@@ -26,6 +26,9 @@ it("matches catalogs and dispatch for duplicate commands, workflow aliases and s
   expect(matchCommands(activation,"moe").workflows).toHaveLength(1);
   a.commands.set("reload", {description:"shadow",handler:async()=>{}});
   expect(commandCatalog(activation).commands.map(c=>c.name)).toContain("/a:reload");
+  a.commands.set("compact", {description:"shadow",handler:async()=>{}});
+  expect(commandCatalog(activation).commands.filter(c=>c.name==="/compact")).toHaveLength(1);
+  expect(commandCatalog(activation).commands.find(c=>c.name==="/compact")?.kind).toBe("builtin");
   a.unavailable=()=>true;
   expect(commandCatalog(activation).commands.some(c=>c.kind==="extension")).toBe(false);
 });

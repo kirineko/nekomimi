@@ -32,7 +32,10 @@ test('submit restores focus for mouse and keyboard and failure retains draft',as
  const app=await server();try{
   await page.goto(app.url);const input=page.getByRole('textbox',{name:'任务内容'});
   await input.fill('鼠标提交');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeFocused();await expect(input).toHaveValue('');
+  await expect(page.getByText('任务完成',{exact:true})).toHaveCount(1);await app.sessions.active?.done;
   await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();await input.fill('键盘提交');await input.press('Enter');await expect(input).toBeFocused();await expect(input).toHaveValue('');
+  await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();
+  await expect(page.getByText('任务完成',{exact:true})).toHaveCount(2);await app.sessions.active?.done;
   await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();
   await page.route('**/submit',r=>r.fulfill({status:503,json:{error:{message:'稍后重试'}}}),{times:1});
   await input.fill('失败草稿');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeEnabled();await expect(input).toBeFocused();await expect(input).toHaveValue('失败草稿');
@@ -73,6 +76,7 @@ test('latest follows new messages and delayed layout, while deliberate history r
   const sessionId=new URL(page.url()).searchParams.get('session')!;
   const entry=await app.sessions.entry(sessionId);
   const {Journal}=await import('../../src/journal.js');
+  await app.sessions.active?.done;
   let journal=await Journal.open(entry.directory);await journal.append('web.session',{title:'长回复'});await journal.close();
   await page.waitForTimeout(400);await expect(page.locator('.history-latest')).not.toContainText('有新消息');
   journal=await Journal.open(entry.directory);await journal.append('context.add',{items:[{type:'message',role:'assistant',content:[{type:'output_text',text:'新增消息一'}]}]},{runId:'follow-one',attemptId:'follow-one'});await journal.close();

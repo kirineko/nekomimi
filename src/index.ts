@@ -13,3 +13,5 @@ export { startWeb } from "./server/app.js";
 
 export { ConfigStore } from "./config/store.js";
 export { workspacePaths } from "./storage/paths.js";
+
+export type { ContextOccupancy } from "./shared/protocol.js";

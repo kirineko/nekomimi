@@ -88,3 +88,11 @@ npm uninstall -g nekomimi
 ## 开发与文档
 
 开发说明、CLI 高级用法和验收记录见[开发指南](https://github.com/kirineko/nekomimi/blob/main/docs/development.md)与[文档索引](https://github.com/kirineko/nekomimi/blob/main/docs/README.md)。
+
+### 上下文占用与压缩
+
+输入框旁的圆环可查看当前请求的系统提示词、工具定义和对话占用估算（`~`），并非累计账单。默认接近模型容量时自动整理早期内容；可在设置中关闭。发送 `/compact` 或 `/compact 保留未完成任务和文件路径` 可手动整理，点击停止可取消。摘要可能丢失细节并产生额外模型费用，全部原始记录仍可查看和导出；失败或取消不改变有效上下文。容量未知时只显示估算，不能安全整理时会提示处理。
+
+详细口径、预算、Provider 和 SDK 边界见 [上下文说明](extension-docs/context.md)。
+
+`nekomimi web` 启动成功后自动打开带连接信息的浏览器页面；远程终端、自动化和无图形环境请使用 `nekomimi web --no-open`。自动打开失败不会停止服务，可手动访问终端输出的 Web 地址。程序化 `startWeb()` 不会打开浏览器。

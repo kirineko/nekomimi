@@ -102,6 +102,7 @@ export class SessionProjection {
         r.title = "网页搜索调用";
         this.auxiliary.add(e.attemptId!);
       }
+      if (p.purpose === 'compaction') { r.title = '上下文整理'; this.auxiliary.add(e.attemptId!); }
       if (p.purpose === 'extension') { r.title = '扩展模型调用'; this.auxiliary.add(e.attemptId!); }
       if (p.purpose === "session-title") {
         r.title = "会话命名";
@@ -206,7 +207,8 @@ export class SessionProjection {
     if (e.type === "run.finished") {
       const r = this.row(e, e.eventId, "status", "任务结束");
       r.status = p.status;
-      r.text = clipped(p.error ?? "");
+      r.text = clipped(p.error ?? (p.command === "compact" ? p.text : ""));
+      if(p.command === "compact")r.title="上下文整理";
     }
   }
   info(

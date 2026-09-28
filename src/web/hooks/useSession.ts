@@ -51,7 +51,7 @@ export function useSession(sessionId: string | undefined) {
             cursor = initial.cursor;replayFloor.current=initial.cursor.seq;setLiveRows(new Set());
             if(!history.current)tailWindow.current=initial.after===undefined;
             else if(currentSnapshot.current && initial.cursor.seq>currentSnapshot.current.cursor.seq && initial.rows.some(row=>!currentSnapshot.current?.rows.some(old=>JSON.stringify(old)===JSON.stringify(row)))){unseen.current=true;setHasNew(true);}
-            setSnapshot(previous => history.current && previous ? { ...previous, session: initial.session, cursor: initial.cursor, totalRows: initial.totalRows } : initial);
+            setSnapshot(previous => history.current && previous ? { ...previous, context:initial.context,compacting:initial.compacting,session: initial.session, cursor: initial.cursor, totalRows: initial.totalRows } : initial);
           }
           setConnection("connected");
           setError("");
@@ -65,7 +65,7 @@ export function useSession(sessionId: string | undefined) {
             setSnapshot((previous) => {
               if (!previous || update.cursor.seq < previous.cursor.seq)
                 return previous;
-              if (history.current) return { ...previous, session: update.session, cursor: update.cursor, after: changed ? previous.after ?? previous.totalRows : previous.after };
+              if (history.current) return { ...previous, context:update.context,compacting:update.compacting,session: update.session, cursor: update.cursor, after: changed ? previous.after ?? previous.totalRows : previous.after };
               const rows = new Map(previous.rows.map((r) => [r.id, r]));
               const added=update.rows.filter(row=>!rows.has(row.id)).length;
               for (const row of update.rows) rows.set(row.id, row);
@@ -73,7 +73,7 @@ export function useSession(sessionId: string | undefined) {
               const overflow = Math.max(0, list.length - 180);
               return {
                 ...previous,
-                session: update.session,
+                context:update.context,compacting:update.compacting,session: update.session,
                 cursor: update.cursor,
                 rows: list.slice(overflow),
                 totalRows:previous.totalRows+added,

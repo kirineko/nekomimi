@@ -1,3 +1,6 @@
+import { contextView, type assemblePrompt } from "../context.js";
+import { measureContext, type ContextModel } from "../context-meter.js";
+import type { ContextOccupancy } from "../shared/protocol.js";
 import { CustomizationHost, validateExtension } from "../customization/host.js";
 import { Candidates } from "../customization/candidates.js";
 import { packageAction } from "../customization/package-management.js";
@@ -101,6 +104,31 @@ export class Sessions {
       model: this.options.model ?? s.model,
       baseUrl: this.options.baseUrl ?? s.baseUrl,
     };
+  }
+  private contextCache = new WeakMap<Entry, {key:string; value:{context?:ContextOccupancy; compacting:boolean}}>();
+  async context(entry: Entry) {
+    // Read metadata only: neither acquiring resources nor constructing a Provider is allowed here.
+    const settings = await this.settings(), profiles = await new ProviderProfiles(this.paths.home).list();
+    const profile = profiles.entries[profiles.selection.main ?? ''];
+    const activation = this.customization.active;
+    const semantic=entry.reader.events.findLast(e=>['context.measured','context.add','context.usage','tool.result','tool.failed','recovery.tool_unknown','run.finished'].includes(e.type)||e.type.startsWith('compaction.'))?.eventId;
+    const key = JSON.stringify([semantic, this.active?.runId, settings.revision, settings.model, settings.baseUrl, profiles.revision, activation?.revision]);
+    const cached = this.contextCache.get(entry); if (cached?.key === key) return cached.value;
+    const events = entry.reader.events;
+    const recorded = events.findLast(e => e.type === 'context.measured')?.payload as {prompt:ReturnType<typeof assemblePrompt>;model:ContextModel;resourceRevision:string}|undefined;
+    const latest = events.findLast(e => e.type.startsWith('compaction.') || e.type === 'run.finished');
+    const compacting = latest?.type === 'compaction.started' && latest.runId === this.active?.runId && !!this.active;
+    let context: ContextOccupancy | undefined;
+    if (recorded && recorded.resourceRevision === activation?.revision) {
+      const providerId=profile?.providerId ?? 'deepseek', modelId=profile?.model ?? settings.model;
+      const registered=activation?.extensions.flatMap(e=>e.providers).find(p=>p.id===providerId);
+      const definition=registered?.models.find(m=>m.id===modelId);
+      const model:ContextModel={...recorded.model,id:modelId,provider:providerId,baseUrl:profile?.baseUrl??settings.baseUrl,
+        contextIdentity:definition&&registered?`${registered.resource.hash}:${definition.protocol}:${definition.historyCompatibility}`:undefined,
+        contextWindow:providerId==='deepseek'?(modelId==='deepseek-flash'?1_000_000:0):(definition?.contextWindow??0)};
+      context=measureContext(contextView(events,recorded.prompt),model,events);
+    }
+    const value={context,compacting};this.contextCache.set(entry,{key,value});return value;
   }
   async migration(execute = false) {
     return this.exclusive(async () => {
@@ -429,6 +457,7 @@ export class Sessions {
       model: settings.model,
       baseUrl: settings.baseUrl,
       search: settings.search,
+      autoCompact: settings.autoCompact,
       prompt: command.prompt,
       signal: active.abort.signal,
       command: {
@@ -447,6 +476,7 @@ export class Sessions {
       .then(async (result) => {
         if (
           result.status === "completed" &&
+          !/^\/compact(?:\s|$)/.test(command.prompt.trim()) &&
           !this.closing &&
           this.options.naming !== false
         ) {

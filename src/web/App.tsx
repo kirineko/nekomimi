@@ -387,6 +387,8 @@ export function App() {
           {selected && <ExtensionInteractions key={selected} sessionId={selected} />}
           <RuntimeViews slot="composer-toolbar"/>
           <Composer
+            occupancy={snapshot && snapshot.session.id === selected ? snapshot.context : undefined}
+            compacting={!!snapshot && snapshot.session.id === selected && snapshot.compacting}
             contextRevision={inputContext}
             requestedDraft={uiDraft}
             commandRevision={commandRevision}

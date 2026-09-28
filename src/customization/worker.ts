@@ -28,7 +28,7 @@ peer.handle = async (method, value, callId) => {
       if (typeof handler !== "function" || descriptions.length >= PROCESS_LIMITS.registrationCount) throw new Error("Invalid or excessive registrations");
       if (kind === "tool" || kind === "command") {
         const name = descriptor.name;
-        if (!/^[a-z][a-z0-9_-]{0,39}$/.test(name) || names.has(entry.resourceId + ":" + name) || ["read", "write", "edit", "bash", "powershell", "reload", "skill", "web_search"].includes(name)) throw new Error(`Invalid, duplicate or reserved name: ${name}`);
+        if (!/^[a-z][a-z0-9_-]{0,39}$/.test(name) || names.has(entry.resourceId + ":" + name) || ["read", "write", "edit", "bash", "powershell", "reload", "compact", "skill", "web_search"].includes(name)) throw new Error(`Invalid, duplicate or reserved name: ${name}`);
         names.add(entry.resourceId + ":" + name);
       }
       const handlerId = String(++nextHandler);

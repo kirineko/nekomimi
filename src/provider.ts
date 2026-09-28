@@ -1,3 +1,4 @@
+import { envelopeKey, estimateTokens } from './context-meter.js';
 import { RecordedCall } from "./recorded-call.js";
 import {
   createAssistantMessageEventStream,
@@ -15,7 +16,9 @@ export interface ProviderOptions {
   auxiliaryProfile?: string;
   namingProfile?: string;
   search?: import("./web-search.js").SearchSettings;
-  purpose?: "session-title" | "extension";
+  purpose?: "session-title" | "extension" | "compaction";
+  autoCompact?: boolean;
+  beforeRequest?: () => Promise<void>;
   contextEvents?: import("./journal.js").JournalEvent[];
   model?: string;
   baseUrl?: string;
@@ -29,6 +32,7 @@ export interface ProviderOptions {
 }
 export class ResponsesProvider {
   readonly model: Model<"openai-responses">;
+  readonly protocol = "responses";
   lastOutcome = "completed";
   private callIds = new Map<string, string>();
   constructor(
@@ -50,7 +54,7 @@ export class ResponsesProvider {
       baseUrl: url.toString().replace(/\/$/, ""),
       reasoning: true,
       input: ["text", "image"],
-      contextWindow: 1_000_000,
+      contextWindow: (settings.model ?? "deepseek-flash") === "deepseek-flash" ? 1_000_000 : 0,
       maxTokens: settings.maxOutputTokens ?? 131072,
       cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
       compat: { supportsDeveloperRole: false },
@@ -87,6 +91,7 @@ export class ResponsesProvider {
       try {
         this.journal.check();
         options?.signal?.throwIfAborted();
+        await this.settings.beforeRequest?.();
         const view = contextView(
           this.settings.contextEvents ?? this.journal.events,
           this.prompt,
@@ -220,6 +225,9 @@ export class ResponsesProvider {
             },
           );
           if (completed) {
+            const inputUsage=(terminal?.usage as any)?.input_tokens ?? (terminal?.usage as any)?.inputTokens;
+            if(!this.settings.purpose && Number.isSafeInteger(inputUsage) && inputUsage>0) await this.journal.append('context.usage',{key:envelopeKey(view,this.model),input:inputUsage,heuristic:estimateTokens(view.prompt.text)+estimateTokens(view.prompt.schemas)+estimateTokens(view.nodes.map(n=>n.item)),attemptId:attemptId},call.links);
+
             const items = (terminal!.output ?? []) as WireItem[];
             const calls = items.filter((i) => i.type === "function_call");
             for (const call of result.content)

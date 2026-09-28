@@ -16,6 +16,7 @@ async function main() {
     allowPositionals: true,
     options: {
       port: { type: "string" },
+      "no-open": { type: "boolean" },
       home: { type: "string" },
       execute: { type: "boolean" },
       help: { type: "boolean", short: "h" },
@@ -40,7 +41,7 @@ async function main() {
   const [command, arg, ...rest] = positionals;
   if (values.help || !command) {
     console.log(
-      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --provider <profile>, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCustomization: nekomimi extensions list|validate|trial|enable|disable|reload [resource-id].\nCandidates: nekomimi candidates create|inspect|trial|activate|rollback|sdk.\nPackages: nekomimi packages prepare|inspect|activate|list|rollback|export|uninstall|collect <JSON-options>.\nModels: nekomimi providers list|save|select|credential|migrate; nekomimi branch <session> --output <new-directory> [--omit-reasoning].\nMCP OAuth: nekomimi mcp-auth status|authorize|disconnect <resource-id>.\nWorkflows: nekomimi workflows list|inspect|start|resume|answer|resolve|cancel|migrate|evidence|artifact|recover|state-get|state-migrate <JSON-options>.\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
+      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>] [--no-open]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --provider <profile>, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCustomization: nekomimi extensions list|validate|trial|enable|disable|reload [resource-id].\nCandidates: nekomimi candidates create|inspect|trial|activate|rollback|sdk.\nPackages: nekomimi packages prepare|inspect|activate|list|rollback|export|uninstall|collect <JSON-options>.\nModels: nekomimi providers list|save|select|credential|migrate; nekomimi branch <session> --output <new-directory> [--omit-reasoning].\nMCP OAuth: nekomimi mcp-auth status|authorize|disconnect <resource-id>.\nWorkflows: nekomimi workflows list|inspect|start|resume|answer|resolve|cancel|migrate|evidence|artifact|recover|state-get|state-migrate <JSON-options>.\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
     );
     return;
   }
@@ -84,6 +85,10 @@ async function main() {
     };
     process.once("SIGINT", stop);
     process.once("SIGTERM", stop);
+    if (!values["no-open"]) {
+      const { openBrowser } = await import("./browser-open.js");
+      void openBrowser(app.url).catch(() => console.error("未能自动打开浏览器，请手动打开上方 Web 地址。"));
+    }
     return;
   }
   if (command === 'workflows') {
@@ -331,6 +336,7 @@ async function main() {
       apiKey,
       providerProfile: values.provider,
       search: settings.search,
+      autoCompact: settings.autoCompact,
       model: values.model ?? settings.model,
       baseUrl: values["base-url"] ?? settings.baseUrl,
       maxOutputTokens: values["max-output-tokens"] === undefined ? undefined : positive(values["max-output-tokens"], 131072),

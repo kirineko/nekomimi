@@ -26,7 +26,7 @@ it('CLI SIGINT ends a blocked HTTP request with a durable cancelled run', async 
 
 it('web CLI starts a local service and exits cleanly on SIGINT', async () => {
   const dir = await temporary();
-  const child = spawn(process.execPath, [resolve('dist/cli.js'), 'web', '--workspace', dir, '--home', join(dir,'home')], { env: { ...process.env, DEEPSEEK_API_KEY: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, [resolve('dist/cli.js'), 'web', '--no-open', '--workspace', dir, '--home', join(dir,'home')], { env: { ...process.env, DEEPSEEK_API_KEY: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
   const exited = new Promise<number | null>((resolve, reject) => { child.on('error', reject); child.on('close', resolve); });
   let output = '';
   const started = new Promise<string>(resolve => child.stdout.on('data', bytes => { output += bytes; const match = output.match(/Web: (http:\/\/[^\s]+)/); if (match) resolve(match[1]!); }));
@@ -36,3 +36,20 @@ it('web CLI starts a local service and exits cleanly on SIGINT', async () => {
     child.kill('SIGINT'); expect(await exited).toBe(0);
   } finally { child.kill('SIGKILL'); }
 });
+
+it.skipIf(process.platform==='win32')('web CLI opens actual URL once; opener failure and startup failure are isolated',async()=>{
+ const {writeFile,readFile,chmod}=await import('node:fs/promises');
+ for(const mode of ['success','failure','startup'] as const){
+  const dir=await temporary(),record=join(dir,'opened.json'),opener=join(dir,process.platform==='darwin'?'open':'xdg-open');
+  await writeFile(opener,`#!${process.execPath}\nrequire('node:fs').appendFileSync(${JSON.stringify(record)},JSON.stringify(process.argv.slice(2))+'\\n');process.exit(${mode==='failure'?1:0});\n`);await chmod(opener,0o755);
+  const child=spawn(process.execPath,[resolve('dist/cli.js'),'web','--workspace',dir,'--home',join(dir,'home'),...(mode==='startup'?['--port','-1']:[])],{env:{...process.env,PATH:dir+':'+process.env.PATH},stdio:['ignore','pipe','pipe']});
+  let output='',stderr='';child.stderr.on('data',x=>stderr+=x);const exited=new Promise<number|null>((r,j)=>{child.once('error',j);child.once('close',r);});
+  const started=new Promise<string>(r=>child.stdout.on('data',x=>{output+=x;const match=output.match(/Web: (http:\/\/\S+)/);if(match)r(match[1]!);}));
+  try{
+   if(mode==='startup'){expect(await exited).not.toBe(0);await expect(readFile(record)).rejects.toMatchObject({code:'ENOENT'});continue;}
+   const url=await Promise.race([started,exited.then(()=>{throw new Error(stderr);})]);await expect.poll(async()=>{try{return await readFile(record,'utf8');}catch{return '';}}).toContain(url);
+   expect((await readFile(record,'utf8')).trim().split('\n')).toEqual([JSON.stringify([url])]);expect((await fetch(url)).status).toBe(200);
+   if(mode==='failure')await expect.poll(()=>stderr).toContain('手动打开');child.kill('SIGINT');expect(await exited).toBe(0);
+  }finally{child.kill('SIGKILL');}
+ }
+},30000);

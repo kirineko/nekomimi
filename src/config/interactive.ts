@@ -19,7 +19,10 @@ export async function configure(store: ConfigStore) {
     const baseUrl =
       (await rl.question(`服务地址 [${current.baseUrl}]: `)).trim() ||
       current.baseUrl;
+    const answer = (await rl.question(`自动压缩上下文 [${current.autoCompact ? "Y/n" : "y/N"}]: `)).trim().toLowerCase();
+    if (answer && !["y", "n", "yes", "no"].includes(answer)) throw new Error("请输入 y 或 n");
     await store.save("settings", {
+      autoCompact: answer ? ["y", "yes"].includes(answer) : current.autoCompact,
       revision: current.revision,
       model,
       baseUrl,

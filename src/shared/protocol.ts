@@ -1,3 +1,8 @@
+export interface ContextOccupancy {
+  revision:string; model:string; provider:string; contextWindow?:number;
+  systemTokens:number; toolsTokens:number; messageTokens:number; totalTokens:number;
+  method:'estimated'|'calibrated'; imageEstimate?:boolean; anchor?:string;
+}
 /** Browser-safe transport types. No Node or runtime imports belong here. */
 export const API_VERSION = 1;
 export interface EvidenceRef {
@@ -52,6 +57,8 @@ export interface TimelineRow {
   details?: unknown;
 }
 export interface Snapshot {
+  context?: ContextOccupancy;
+  compacting?: boolean;
   version: 1;
   session: SessionInfo;
   cursor: Cursor;
@@ -61,6 +68,8 @@ export interface Snapshot {
   totalRows: number;
 }
 export interface Update {
+  context?: ContextOccupancy;
+  compacting?: boolean;
   version: 1;
   cursor: Cursor;
   session: SessionInfo;

@@ -361,7 +361,13 @@ export class Journal {
     links: Links = {},
     durable = true,
   ): Promise<JournalEvent> {
-    return this.enqueue(async () => {
+    return this.enqueue(() => this.writeEvent(type, payload, links, durable));
+  }
+  /** Compare the source projection inside the writer queue, immediately before commit. */
+  appendIf(type: string, payload: unknown, condition: () => boolean, links: Links = {}): Promise<JournalEvent | undefined> {
+    return this.enqueue(() => condition() ? this.writeEvent(type, payload, links, true) : Promise.resolve(undefined));
+  }
+  private async writeEvent(type: string, payload: unknown, links: Links, durable: boolean): Promise<JournalEvent> {
       const body = {
         schemaVersion: 1 as const,
         eventId: id(),
@@ -381,8 +387,8 @@ export class Journal {
       if (durable || this.pendingBytes >= (this.options.flushBytes ?? 65536))
         await this.sync();
       return event;
-    });
   }
+
   async artifact(data: string | Uint8Array): Promise<Artifact> {
     this.check();
     try {

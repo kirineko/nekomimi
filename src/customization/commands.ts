@@ -23,9 +23,9 @@ export function matchSkills(activation: Activation, name: string) {
 }
 export function commandCatalog(activation?: Activation): CommandCatalog {
   if (!activation) return { revision: "unavailable", ready: false, commands: [] };
-  const commands: CommandSuggestion[] = [{ id: "builtin:reload", kind: "builtin", name: "/reload", description: "重新加载定制资源", source: "Nekomimi", insertText: "/reload" }];
+  const commands: CommandSuggestion[] = [{ id: "builtin:compact", kind: "builtin", name: "/compact", description: "整理上下文，可附加需要保留的重点", source: "Nekomimi", insertText: "/compact" }, { id: "builtin:reload", kind: "builtin", name: "/reload", description: "重新加载定制资源", source: "Nekomimi", insertText: "/reload" }];
   const unique = (name: string, target: Target) => {
-    if (name === "reload" || name.startsWith("skill:")) return false;
+    if (name === "reload" || name === "compact" || name.startsWith("skill:")) return false;
     const matches = matchCommands(activation, name);
     return target.cmd ? matches.candidates.length === 1 && !matches.workflows.length && matches.candidates[0]?.cmd === target.cmd
       : !matches.candidates.length && matches.workflows.length === 1 && matches.workflows[0] === target.workflow;

@@ -1,3 +1,6 @@
+import { compactContext } from './compaction.js';
+import { contextView } from './context.js';
+import { inputBudget, measureContext } from './context-meter.js';
 import { CustomizationHost } from "./customization/host.js";
 import { CustomRun } from "./customization/run.js";
 import type { Interactions } from "./customization/interactions.js";
@@ -170,7 +173,29 @@ export async function run(options: RunOptions): Promise<RunResult> {
       throw new Error("Unknown tool name");
     const prompt = assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]);
     const refreshPrompt = () => Object.assign(prompt, assemblePrompt(definitions, [...(options.instructions ?? []), ...custom.instructions]));
-    const provider = await createProvider(host, activation, journal, { runId }, prompt, options);
+    const manualCompact = /^\/compact(?:\s|$)/.test(options.prompt.trim());
+    let beforeRequest: () => Promise<void> = async () => {};
+    const settings = {...options, beforeRequest: () => beforeRequest()};
+    const provider = await createProvider(host, activation, journal, { runId }, prompt, settings);
+    const publishContext = async () => {
+      await journal.append('context.measured', {measurement:measureContext(contextView(journal.events,prompt),provider.model,journal.events),prompt,model:provider.model,resourceRevision:activation.revision}, {runId});
+      notify('context.measured');
+    };
+    const compact = async (manual=false) => compactContext({journal,prompt,model:provider.model,protocol:provider.protocol,runId,signal:runSignal,manual,focus:manual?options.prompt.trim().slice(8).trim():undefined,notify:()=>notify('compaction'),summarize:async(events,limit)=>{
+      const summaryProvider=await createProvider(host,activation,journal,{runId}, {...prompt,schemas:[]}, {...options,purpose:'compaction',contextEvents:events,maxOutputTokens:limit,beforeRequest:undefined});
+      const response=await (await summaryProvider.stream(summaryProvider.model,{messages:[]},{signal:runSignal})).result();
+      if(response.stopReason!=='stop' || summaryProvider.lastOutcome!=='completed' || response.content.some(c=>c.type==='toolCall'))throw new Error(response.errorMessage??'摘要未完整生成');
+      return response.content.filter(c=>c.type==='text').map(c=>c.text).join('\n');
+    }});
+    beforeRequest=async()=>{
+      runSignal.throwIfAborted();refreshPrompt();
+      const measured=measureContext(contextView(journal.events,prompt),provider.model,journal.events),budget=inputBudget(provider.model);
+      await publishContext();
+      if(!measured.contextWindow)return;
+      if(budget.available<=0)throw new Error('模型输出预留超过可用上下文');
+      if(measured.totalTokens>=budget.threshold && options.autoCompact!==false){await compact();await publishContext();}
+      else if(measured.totalTokens>budget.available)throw new Error('上下文空间不足，请使用 /compact 或切换模型');
+    };
     await journal.append(
       "run.started",
       {
@@ -191,7 +216,7 @@ export async function run(options: RunOptions): Promise<RunResult> {
         image_url: `data:${i.mimeType};base64,${i.data}`,
       })),
     ];
-    await journal.append(
+    if (!manualCompact) await journal.append(
       "context.add",
       { source: "user", item: { role: "user", content: input } },
       { runId },
@@ -279,6 +304,9 @@ export async function run(options: RunOptions): Promise<RunResult> {
     let commandText: string | undefined;
     try {
       options.signal?.throwIfAborted();
+      if (manualCompact) {
+        commandText=await compact(true);await publishContext();
+      } else {
       const reason = await custom.hook('beforeRun');
       if (reason) throw new Error(reason);
       const command = await custom.command(options.prompt);
@@ -295,6 +323,8 @@ export async function run(options: RunOptions): Promise<RunResult> {
         refreshPrompt(); await agent.prompt(followup);
       }
       await custom.hook('afterRun');
+      await publishContext();
+      }
     } catch (e) {
       error = journal.clean(String(e));
     } finally {
@@ -320,12 +350,12 @@ export async function run(options: RunOptions): Promise<RunResult> {
     if (!journal.failure.signal.aborted)
       await journal.append(
         "run.finished",
-        { status, error, text: journal.clean(text) },
+        { status, error, text: journal.clean(text), ...(manualCompact ? {command:"compact"} : {}) },
         { runId },
       );
     notify("run.finished");
     if (status === "completed" && !journal.failure.signal.aborted)
-      await host.workflows.observe(journal, activation, "run-completed", undefined, options);
+      if (!manualCompact) await host.workflows.observe(journal, activation, "run-completed", undefined, options);
     return {
       session: journal.directory,
       sessionId: journal.sessionId,

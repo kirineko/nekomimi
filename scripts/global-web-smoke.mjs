@@ -23,7 +23,7 @@ const model = createServer(async (req, res) => {
 });
 model.listen(0,'127.0.0.1'); await once(model,'listening');
 async function start(cwd) {
-  const child=spawn(process.execPath,[cli,'web','--home',home,'--port','0'],{cwd,stdio:['ignore','pipe','pipe']});
+  const child=spawn(process.execPath,[cli,'web','--no-open','--home',home,'--port','0'],{cwd,stdio:['ignore','pipe','pipe']});
   let output='';
   const url=await new Promise((resolve,reject)=>{
     const timer=setTimeout(()=>{child.kill();reject(new Error('Web startup timeout '+output));},15000);

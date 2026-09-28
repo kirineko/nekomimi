@@ -138,7 +138,7 @@ export class ExtensionProcess {
           if (!resource.manifest.requiredCapabilities?.includes(required)) throw new Error("Registration capability not declared");
         }
         if (r.kind === "tool" || r.kind === "command") {
-          if (typeof r.name !== "string" || !/^[a-z][a-z0-9_-]{0,39}$/.test(r.name) || names.has(r.resourceId + ":" + r.name) || ["read", "write", "edit", "bash", "powershell", "reload", "skill", "web_search"].includes(r.name)) throw new Error("Invalid or duplicate registration name");
+          if (typeof r.name !== "string" || !/^[a-z][a-z0-9_-]{0,39}$/.test(r.name) || names.has(r.resourceId + ":" + r.name) || ["read", "write", "edit", "bash", "powershell", "reload", "compact", "skill", "web_search"].includes(r.name)) throw new Error("Invalid or duplicate registration name");
           names.add(r.resourceId + ":" + r.name);
           if (typeof r.description !== "string") throw new Error("Invalid registration description");
         }

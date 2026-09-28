@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 interface Config {
   revision: number;
+  autoCompact: boolean;
   model: string;
   baseUrl: string;
   search: { enabled: boolean; model: string; baseUrl: string };
@@ -157,6 +158,12 @@ export function Settings({
               <p className="panel-muted">
                 需要时由模型调用 DeepSeek 服务端搜索。
               </p>
+            </div>
+            <div className="settings-card">
+              <button type="button" role="switch" className="context-auto-toggle" aria-checked={config.autoCompact} disabled={busy} onClick={()=>void perform(()=>api('/settings',{kind:'settings',revision:config.revision,model:config.model,baseUrl:config.baseUrl,autoCompact:!config.autoCompact}))}>
+                <span>自动整理上下文</span><span className="context-switch" aria-hidden="true"><i/></span>
+              </button>
+              <p className="panel-muted">接近模型容量时整理早期内容，保留原始记录。整理会产生少量模型用量；关闭后仍可使用 /compact。</p>
             </div>
             {message && (
               <p
