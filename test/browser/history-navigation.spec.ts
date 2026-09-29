@@ -29,7 +29,8 @@ test('bounded history reaches earliest and returns to latest with unchanged curs
   expect(await page.locator('[data-row-id]').count()).toBeLessThanOrEqual(180);
   await page.locator('.conversation').evaluate(el=>{el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,deltaY:100}));el.scrollTop=el.scrollHeight;});
   await expect(page.getByRole('button',{name:'返回最新',exact:true})).toHaveCount(1);
-  await expect(page.getByRole('button',{name:'查看较新',exact:true})).toBeInViewport();
+  await expect(page.getByText('历史记录 239',{exact:true})).toBeAttached();
+  await expect(page.getByRole('button',{name:'查看较新',exact:true})).toBeAttached();
   await page.screenshot({path:'output/playwright/history-single-navigation.png'});
   // Browser 200% zoom is a halved CSS viewport, unlike CSS zoom (which scales 100dvh).
   for(const [width,height] of [[360,900],[360,450]]){

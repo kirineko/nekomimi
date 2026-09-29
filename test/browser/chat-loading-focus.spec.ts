@@ -80,8 +80,8 @@ test('latest follows new messages and delayed layout, while deliberate history r
   let journal=await Journal.open(entry.directory);await journal.append('web.session',{title:'长回复'});await journal.close();
   await page.waitForTimeout(400);await expect(page.locator('.history-latest')).not.toContainText('有新消息');
   journal=await Journal.open(entry.directory);await journal.append('context.add',{items:[{type:'message',role:'assistant',content:[{type:'output_text',text:'新增消息一'}]}]},{runId:'follow-one',attemptId:'follow-one'});await journal.close();
-  await expect(page.locator('.history-latest')).toContainText('有新消息');expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThan(3);
-  await page.locator('.history-latest').click();await expect(page.getByText('新增消息一',{exact:true})).toBeInViewport();await expect(page.locator('.history-latest')).toHaveCount(0);
+  await expect(page.getByText('新增消息一',{exact:true})).toBeAttached();await expect(page.getByText('有新消息',{exact:false})).toHaveCount(0);expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThan(3);
+  await conversation.focus();await page.keyboard.press('End');await expect(page.getByText('新增消息一',{exact:true})).toBeInViewport();await expect(page.locator('.history-latest')).toHaveCount(0);
   journal=await Journal.open(entry.directory);await journal.append('context.add',{items:[{type:'message',role:'assistant',content:[{type:'output_text',text:'新增消息二'}]}]},{runId:'follow-two',attemptId:'follow-two'});await journal.close();
   await expect(page.getByText('新增消息二',{exact:true})).toBeInViewport();await expect.poll(distance).toBeLessThan(3);await expect(page.locator('.history-latest')).toHaveCount(0);
  }finally{await app.close();}

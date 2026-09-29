@@ -12,14 +12,13 @@ export function useSession(sessionId: string | undefined) {
   const loadingDirection = useRef<string|undefined>(undefined);
   const [navigationError,setNavigationError]=useState<{direction:string;message:string}>();
   const [historyMode, setHistoryMode] = useState(false);
-  const [hasNew, setHasNew] = useState(false);
   const [paging, setPaging] = useState(false);
   const [scrollRevision, setScrollRevision] = useState(0);
   const currentSnapshot = useRef(snapshot); currentSnapshot.current = snapshot;
   useEffect(() => {
     const current = ++generation.current;
     navigation.current++; loading.current = false; loadingDirection.current=undefined; setPaging(false);setNavigationError(undefined);
-    history.current = false; unseen.current=false;tailWindow.current=true; setHistoryMode(false); setHasNew(false);
+    history.current = false; unseen.current=false;tailWindow.current=true; setHistoryMode(false);
     const abort = new AbortController();
     setSnapshot(undefined);setLiveRows(new Set());
     setError("");
@@ -50,7 +49,7 @@ export function useSession(sessionId: string | undefined) {
             if (abort.signal.aborted) return;
             cursor = initial.cursor;replayFloor.current=initial.cursor.seq;setLiveRows(new Set());
             if(!history.current)tailWindow.current=initial.after===undefined;
-            else if(currentSnapshot.current && initial.cursor.seq>currentSnapshot.current.cursor.seq && initial.rows.some(row=>!currentSnapshot.current?.rows.some(old=>JSON.stringify(old)===JSON.stringify(row)))){unseen.current=true;setHasNew(true);}
+            else if(currentSnapshot.current && initial.cursor.seq>currentSnapshot.current.cursor.seq && initial.rows.some(row=>!currentSnapshot.current?.rows.some(old=>JSON.stringify(old)===JSON.stringify(row)))){unseen.current=true;}
             setSnapshot(previous => history.current && previous ? { ...previous, context:initial.context,compacting:initial.compacting,session: initial.session, cursor: initial.cursor, totalRows: initial.totalRows } : initial);
           }
           setConnection("connected");
@@ -61,23 +60,29 @@ export function useSession(sessionId: string | undefined) {
             cursor = update.cursor;
             if (!history.current && !loading.current) setLiveRows(old=>new Set([...old,...update.rows.filter(r=>r.seq>Math.max(previousCursor?.seq??Infinity,replayFloor.current)).map(r=>r.id)].slice(-180)));
             const changed = update.rows.some(row => {const old=currentSnapshot.current?.rows.find(r=>r.id===row.id);return !old || JSON.stringify(old)!==JSON.stringify(row);});
-            if (history.current && changed) {unseen.current=true;setHasNew(true);}
+            if (history.current && changed) {unseen.current=true;}
             setSnapshot((previous) => {
               if (!previous || update.cursor.seq < previous.cursor.seq)
                 return previous;
-              if (history.current) return { ...previous, context:update.context,compacting:update.compacting,session: update.session, cursor: update.cursor, after: changed ? previous.after ?? previous.totalRows : previous.after };
+              if (history.current && !tailWindow.current) return { ...previous, context:update.context,compacting:update.compacting,session: update.session, cursor: update.cursor };
               const rows = new Map(previous.rows.map((r) => [r.id, r]));
               const added=update.rows.filter(row=>!rows.has(row.id)).length;
               for (const row of update.rows) rows.set(row.id, row);
               const list = [...rows.values()];
               const overflow = Math.max(0, list.length - 180);
+              const browsing = history.current;
+              // Append live content without cropping the record being read. Once
+              // the bounded window fills, downward scrolling loads the next page.
+              if (browsing && overflow) tailWindow.current = false;
+              else unseen.current = false;
               return {
                 ...previous,
                 context:update.context,compacting:update.compacting,session: update.session,
                 cursor: update.cursor,
-                rows: list.slice(overflow),
+                rows: browsing ? list.slice(0, 180) : list.slice(overflow),
+                after: browsing && overflow ? (previous.before ?? 0) + 180 : undefined,
                 totalRows:previous.totalRows+added,
-                before: overflow
+                before: overflow && !browsing
                   ? (previous.before ?? 0) + overflow
                   : previous.before,
               };
@@ -124,16 +129,20 @@ export function useSession(sessionId: string | undefined) {
     if (direction !== 'latest' && boundary === undefined) return;
     const current = generation.current, request = ++navigation.current;
     setLiveRows(new Set());
-    loading.current = true; loadingDirection.current=direction; setPaging(true);setNavigationError(undefined);
+    loading.current = true; loadingDirection.current=direction; setPaging(true);
+    // Keep the retry notice until its replacement page is ready. Removing it
+    // first can shrink the header at scrollTop=0, where compensation is clamped.
+    setNavigationError(old => old?.direction === direction ? old : undefined);
     if(direction!=="latest"){history.current=true;setHistoryMode(true);}
     try {
       const query = direction === 'latest' ? '' : `?${direction === 'older' ? 'before' : 'after'}=${boundary}`;
       const page = await api<Snapshot>(`/sessions/${sessionId}/snapshot${query}`);
       if (generation.current !== current || navigation.current !== request) return;
+      setNavigationError(undefined);
       replayFloor.current=Math.max(replayFloor.current,page.cursor.seq);
       setLiveRows(new Set());
       history.current = direction !== 'latest'; setHistoryMode(history.current);
-      if (direction === 'latest') { tailWindow.current=true;setSnapshot(page); unseen.current=false; setHasNew(false); setScrollRevision(n => n + 1); }
+      if (direction === 'latest') { tailWindow.current=true;setSnapshot(page); unseen.current=false; setScrollRevision(n => n + 1); }
       else setSnapshot(old => {
         if (!old) return page;
         const merged = direction === 'older' ? [...page.rows, ...old.rows] : [...old.rows, ...page.rows];
@@ -142,6 +151,7 @@ export function useSession(sessionId: string | undefined) {
         const start = direction === 'older' ? (page.before ?? 0) : (page.after ?? page.totalRows) - rows.length;
         const end = start + rows.length;
         tailWindow.current=end>=page.totalRows;
+        if (tailWindow.current) unseen.current=false;
         return { ...old, rows, before: start || undefined, after: end < page.totalRows ? end : undefined, totalRows: page.totalRows };
       });
     } catch (error) {
@@ -153,11 +163,22 @@ export function useSession(sessionId: string | undefined) {
   const older = useCallback(() => pageWindow('older'), [pageWindow]);
   const newer = useCallback(() => pageWindow('newer'), [pageWindow]);
   const latest = useCallback(() => pageWindow('latest'), [pageWindow]);
-  const browse = useCallback(() => { history.current = true; setHistoryMode(true); }, []);
+  const isBrowsing = useCallback(() => history.current, []);
+  const browse = useCallback(() => {
+    // New manual browsing supersedes a pending return-to-latest, but not a
+    // history page load that can preserve the current reading anchor.
+    if (loadingDirection.current === 'latest') {
+      navigation.current++;
+      loading.current = false; loadingDirection.current = undefined;
+      setPaging(false); setNavigationError(undefined);
+    }
+    history.current = true; setHistoryMode(true);
+  }, []);
   const reachBottom = useCallback(() => {
-    if(!history.current || loading.current || !tailWindow.current)return;
+    if(!history.current || loading.current)return;
+    if(currentSnapshot.current?.after!==undefined){void newer();return;}
     if(unseen.current)void latest();
-    else {history.current=false;setHistoryMode(false);setHasNew(false);}
-  },[latest]);
-  return { reachBottom,navigationError,loadingDirection:loadingDirection.current,browse, snapshot, liveRows, connection, error, older, newer, latest, historyMode, hasNew, paging, scrollRevision };
+    else {history.current=false;setHistoryMode(false);}
+  },[latest,newer]);
+  return { reachBottom,navigationError,loadingDirection:loadingDirection.current,browse,isBrowsing, snapshot, liveRows, connection, error, older, newer, latest, historyMode, paging, scrollRevision };
 }

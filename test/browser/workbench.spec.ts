@@ -271,10 +271,11 @@ test("windows long history and pages context sources beyond a raw artifact page"
   await expect(page.getByRole('textbox', {name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
   console.log(`180-row input fill and assertion: ${Date.now()-inputStart}ms`);
   await updates;
-  await expect(page.getByRole('button',{name:'有新消息 · 返回最新'})).toBeVisible();
+  await expect(page.getByText('有新消息',{exact:false})).toHaveCount(0);
+  await expect(page.getByRole('button',{name:'返回最新',exact:true})).toBeVisible();
   const distanceFromBottom=await page.locator('.conversation').evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight);
   expect(distanceFromBottom).toBeGreaterThan(100);
-  await page.getByRole('button',{name:'有新消息 · 返回最新'}).click();
+  await page.getByRole('button',{name:'返回最新',exact:true}).click();
   await expect(page.locator('.row-assistant')).toContainText('持续输出 7');
   await expect(page.getByRole('textbox',{name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
   await expect(page.getByRole("button", { name: "返回最新", exact:true })).toHaveCount(0);

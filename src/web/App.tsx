@@ -1,3 +1,4 @@
+import { useConversationScroll } from "./hooks/useConversationScroll";
 import {AsyncFeature} from "./components/AsyncFeature";
 import {features} from "./features";
 import {UiBridgeContext} from "./ui-bridge";
@@ -11,7 +12,7 @@ import { SyntaxScope } from "./components/Markdown";
 import {WorkspacePanel} from "./components/WorkspacePanel";
 import {LocateFile, type PanelTab} from "./workspace-context";
 import { DiagnosticNotice } from "./components/DiagnosticNotice";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Receipt, SessionInfo, TimelineRow } from "../shared/protocol";
 import { api, connect, request } from "./api";
 import { useSession } from "./hooks/useSession";
@@ -41,10 +42,6 @@ export function App() {
     new URLSearchParams(location.search).get("session") ?? undefined,
   );
   const conversation = useRef<HTMLElement>(null);
-  const follow = useRef(true);
-  const scrollIntent=useRef(0);
-  const programScroll=useRef<number|undefined>(undefined);
-  const positionScroll=(el:HTMLElement,top:number)=>{el.scrollTop=top;programScroll.current=el.scrollTop;};
   const [inputContext,setInputContext]=useState(0);
   const selectionEpoch=useRef(0);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -72,7 +69,7 @@ export function App() {
   const [creating, setCreating] = useState(false);
   const pending = useRef<{ text: string; id: string } | undefined>(undefined);
   const {
-    snapshot, liveRows, browse, reachBottom, navigationError, loadingDirection, newer, historyMode, hasNew, paging, scrollRevision,
+    snapshot, liveRows, browse, isBrowsing, reachBottom, navigationError, loadingDirection, newer, historyMode, paging, scrollRevision,
     connection,
     error: streamError,
     older,
@@ -98,36 +95,10 @@ export function App() {
     window.addEventListener("focus", refresh); window.addEventListener("online", refresh);
     return () => { window.removeEventListener("focus", refresh); window.removeEventListener("online", refresh); };
   }, [config, load]);
-  useLayoutEffect(() => {
-    if (follow.current && !historyMode && conversation.current)
-      positionScroll(conversation.current,conversation.current.scrollHeight);
-  }, [snapshot?.rows, snapshot?.session.id, historyMode, scrollRevision]);
-  useLayoutEffect(() => {
-    if (!scrollRevision || !conversation.current) return;
-    follow.current = true;
-    positionScroll(conversation.current,conversation.current.scrollHeight);
-  }, [scrollRevision]);
-  const readingAnchor = useRef<{id:string;offset:number}|undefined>(undefined);
-  const captureAnchor = useCallback(() => {
-    const container=conversation.current;if(!container)return;
-    const top=container.getBoundingClientRect().top;
-    const row=Array.from(container.querySelectorAll<HTMLElement>('[data-row-id]')).find(el=>el.getBoundingClientRect().bottom>top+40);
-    readingAnchor.current=row?{id:row.dataset.rowId!,offset:row.getBoundingClientRect().top-top}:undefined;
-  },[]);
-  useLayoutEffect(()=>{
-    const container=conversation.current;
-    if(!container)return;
-    const restore=()=>{
-      if(!historyMode){if(follow.current)positionScroll(container,container.scrollHeight);return;}
-      const anchor=readingAnchor.current;if(!anchor)return;
-      const row=Array.from(container.querySelectorAll<HTMLElement>('[data-row-id]')).find(el=>el.dataset.rowId===anchor.id);
-      if(row)positionScroll(container,container.scrollTop+row.getBoundingClientRect().top-container.getBoundingClientRect().top-anchor.offset);
-    };
-    restore();
-    const observer=new ResizeObserver(restore);
-    const content=container.querySelector('.timeline');if(content)observer.observe(content);
-    return()=>observer.disconnect();
-  },[snapshot?.rows,historyMode]);
+  const captureReadingPosition = useConversationScroll(conversation, {
+    sessionId: selected, ready: !!snapshot && snapshot.session.id === selected,
+    rows: snapshot?.rows, revision: scrollRevision, isBrowsing, browse, reachBottom,
+  });
   useEffect(()=>{
     const open=()=>setCustomizationOpen(false);
     const manage=(event:Event)=>{setDeliveryTarget((event as CustomEvent).detail);setCustomizationOpen(true);};
@@ -156,7 +127,6 @@ export function App() {
   };
   const choose = (id: string, fromSubmit=false) => {
     if(!fromSubmit){selectionEpoch.current++;setInputContext(n=>n+1);}
-    follow.current = true;
     setSelected(id);
     setInspection(undefined);
     setSidebar(false);
@@ -327,24 +297,14 @@ export function App() {
             />
           )}
           {exportOpen&&<AsyncFeature feature={features.export} label="导出对话" modal error={error} busy={downloading||busy} redact={redact} setRedact={setRedact} close={()=>setExportOpen(false)} download={download}/>}
+          <div className="conversation-viewport">
           <section
             className="conversation"
             ref={conversation}
-            onWheel={() => {scrollIntent.current=Date.now()+600;}}
-            onTouchStart={() => {scrollIntent.current=Date.now()+600;}}
-            onPointerDown={() => {scrollIntent.current=Date.now()+600;}}
-            onKeyDown={e => {if(["ArrowDown","ArrowUp","PageDown","PageUp","End","Home"," "].includes(e.key))scrollIntent.current=Date.now()+600;}}
-            onScroll={(e) => {
-              const el = e.currentTarget;
-              if(programScroll.current!==undefined&&Math.abs(el.scrollTop-programScroll.current)<2){programScroll.current=undefined;return;}
-              programScroll.current=undefined;
-              if(historyMode)captureAnchor();
-              if(Date.now()>scrollIntent.current)return;
-              follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 48;
-              if (!follow.current && snapshot) browse();
-              else reachBottom();
-            }}
+            tabIndex={0}
+            aria-label="会话内容"
           >
+            <div className="conversation-content">
             {page&&!uiDisabled?<section aria-label="扩展页面"><button onClick={()=>setPage(undefined)}>返回会话</button><CustomPanel panel={page}/></section>:null}
             <RuntimeViews slot="session-header"/>
             <div className="conversation-heading">
@@ -368,10 +328,10 @@ export function App() {
                 rows={snapshot.rows}
                 inspect={inspect}
                 older={() => {
-                  captureAnchor(); follow.current = false;
+                  captureReadingPosition();
                   void older().catch((e) => setError(String(e)));
                 }}
-                newer={() => { captureAnchor(); follow.current = false; void newer().catch(e => setError(String(e))); }}
+                newer={() => { captureReadingPosition(); void newer().catch(e => setError(String(e))); }}
                 hasNewer={snapshot.after!==undefined} paging={paging} navigationError={navigationError}
                 hasOlder={!!snapshot.before}
               />
@@ -382,8 +342,10 @@ export function App() {
                 </p>
               </div>
             )}
+            </div>
           </section>
-          {(historyMode || navigationError?.direction === "latest") && <div className="history-return"><button className="history-latest" disabled={loadingDirection==='latest'} onClick={() => {follow.current=true;void latest();}}><span aria-hidden="true">↓</span> {navigationError?.direction==='latest'?'重试返回最新':hasNew?'有新消息 · 返回最新':'返回最新'}</button>{navigationError?.direction==='latest'&&<span role="alert">{navigationError.message}</span>}</div>}
+          {(historyMode || navigationError?.direction === "latest") && <div className="history-return"><button className="history-latest" disabled={loadingDirection==='latest'} onClick={() => {void latest();}}><span aria-hidden="true">↓</span> {navigationError?.direction==='latest'?'重试返回最新':'返回最新'}</button>{navigationError?.direction==='latest'&&<span role="alert">{navigationError.message}</span>}</div>}
+          </div>
           {selected && <ExtensionInteractions key={selected} sessionId={selected} />}
           <RuntimeViews slot="composer-toolbar"/>
           <Composer

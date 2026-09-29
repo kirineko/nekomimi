@@ -58,6 +58,6 @@ export function Timeline({sessionId,rows,inspect,older,hasOlder,newer,hasNewer,p
   return <ContinueTask.Provider value={onContinue}><LiveRows.Provider value={liveRows}><div className="timeline" aria-label="任务时间线">
     {hasOlder&&<div className="history-actions"><button disabled={paging} onClick={older}>{navigationError?.direction==='older'?'重试查看更早':'查看更早'}</button>{navigationError?.direction==='older'&&<span role="alert">{navigationError.message}</span>}</div>}
     <div className={sidebar.length?"timeline-panels":undefined}><div>{turns.map(turn=><Turn key={turn.id} turn={turn} sessionId={sessionId} inspect={inspect}/>)}</div>{!!sidebar.length&&<aside aria-label="扩展侧栏">{sidebar.map(row=><Message key={row.id} row={row}/>)}</aside>}</div>
-    {hasNewer&&<div className="history-actions"><button disabled={paging} onClick={newer}>{navigationError?.direction==='newer'?'重试查看较新':'查看较新'}</button>{navigationError?.direction==='newer'&&<span role="alert">{navigationError.message}</span>}</div>}
+    {hasNewer&&<div className="history-actions history-newer"><button disabled={paging} onClick={newer}>{navigationError?.direction==='newer'?'重试查看较新':'查看较新'}</button>{navigationError?.direction==='newer'&&<span role="alert">{navigationError.message}</span>}</div>}
   </div></LiveRows.Provider></ContinueTask.Provider>;
 }

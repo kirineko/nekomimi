@@ -153,7 +153,12 @@
 .ability-heading {display:flex;justify-content:space-between;gap:8px;}.ability-heading span {color:var(--muted);font-size:12px;}
 .ability-card p {margin:0;}.ability-phase {color:var(--accent);font-size:13px;}.ability-card details {font-size:12px;overflow-wrap:anywhere;}
 /* Navigation stays outside the reading window and inherits the active theme. */
-.history-return {display:flex;align-items:center;justify-content:center;gap:8px;flex:none;flex-wrap:wrap;padding:0 12px 6px;}
+.conversation-viewport {position:relative;flex:1;min-height:0;display:flex;flex-direction:column;}
+.conversation {min-height:0;overflow-anchor:none;}
+.conversation-content {display:flow-root;}
+.history-return {position:absolute;bottom:6px;inset-inline:12px;z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;pointer-events:none;}
+.history-return .history-latest {pointer-events:auto;}
+.history-return [role="alert"] {max-width:min(100%,28rem);max-height:4.5em;overflow:auto;pointer-events:auto;}
 .history-return .history-latest {display:flex;align-items:center;gap:6px;margin:0;background:var(--surface);color:var(--accent);border:1px solid var(--line);border-radius:var(--ui-control-radius,20px);padding:6px 12px;font:inherit;font-size:12px;box-shadow:0 3px 14px color-mix(in srgb,var(--accent) 12%,transparent);}
 .history-return [role="alert"] {background:var(--surface);font-size:12px;padding:4px 8px;border-radius:8px;}
 .history-actions {align-items:center;flex-wrap:wrap;padding:6px 0;}
@@ -168,3 +173,7 @@
 .customization-panel .customization-tabs button {white-space:normal;gap:5px;}
 .customization-panel .customization-primary {color:var(--ui-on-accent,#fff);}
 .customization-panel .ability-grid .ability-card {margin:0;padding:12px;gap:6px;}
+
+/* Only an older window needs clearance for both pagination and its floating
+   return/error controls. The latest window has no trailing placeholder. */
+.history-newer {padding-bottom:8rem;}
