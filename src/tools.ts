@@ -556,6 +556,7 @@ export class CoreTools {
         (a, l) => this.read(a, l),
         [
           "Read existing files before modifying them. Follow the returned byte offset to continue truncated reads.",
+          '@path or @"JSON path" identifies a workspace target, not its contents; trailing / means directory. Read/list as needed.',
         ],
       ),
       build(

@@ -36,8 +36,11 @@ test('applies a complete theme and shows user content with stable panel interact
   await expect(frame.locator('body')).toHaveCSS('font-size','15px');
   await frame.locator('body').evaluate(async()=>{await document.fonts.ready;});
   await page.locator('.row-panel').evaluate(async el=>{await Promise.all(el.getAnimations().map(animation=>animation.finished));});
-  await frame.getByRole('button',{name:'写入草稿'}).click();await expect(page.getByLabel('任务内容')).toHaveValue('保持输入');
-  await frame.getByLabel('面板便签').fill('第二条');await frame.getByRole('button',{name:'已提供草稿'}).click();await expect(page.getByRole('dialog',{name:'保留当前草稿'})).toBeVisible();await page.getByRole('button',{name:'保留原草稿'}).click();await expect(page.getByLabel('任务内容')).toHaveValue('保持输入');
+  await frame.getByRole('button',{name:'写入草稿'}).click();await expect(page.getByLabel('任务内容')).toHaveJSProperty('textContent', '保持输入');
+  await frame.getByLabel('面板便签').fill('第二条');await frame.getByRole('button',{name:'已提供草稿'}).click();await expect(page.getByRole('dialog',{name:'保留当前草稿'})).toBeVisible();await page.getByRole('button',{name:'保留原草稿'}).click();await expect(page.getByLabel('任务内容')).toHaveJSProperty('textContent', '保持输入');
+  await writeFile(join(workspace,'draft-reference.txt'),'fixture');
+  await page.getByLabel('任务内容').fill('@draft-reference');await expect(page.getByRole('option',{name:/draft-reference.txt/})).toBeVisible();await page.getByLabel('任务内容').press('Enter');await expect(page.locator('.reference-chip')).toHaveCount(1);
+  await frame.getByLabel('面板便签').fill('追加内容');await frame.getByRole('button',{name:'已提供草稿'}).click();await page.getByRole('button',{name:'追加',exact:true}).click();await expect(page.locator('.reference-chip')).toHaveCount(1);await expect(page.getByLabel('任务内容')).toContainText('追加内容');
   const panel=page.getByRole('region',{name:'自定义面板 今日元气'});await panel.getByRole('button',{name:'收起',exact:true}).click();await expect(page.locator('iframe[title="面板 今日元气"]')).toHaveCount(0);await panel.getByRole('button',{name:'重新打开'}).click();await expect(frame.getByRole('heading')).toContainText('小猫咪');
   await page.getByRole('button',{name:'灵感便签',exact:true}).click();
   await expect(page.frameLocator('iframe[title="面板 灵感便签"]').getByRole('heading')).toContainText('灵感便签');

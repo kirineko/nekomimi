@@ -14,7 +14,7 @@ test('optional features load on demand, cancel delayed load, retry network failu
   await page.getByRole('button',{name:'定制能力',exact:true}).click();
   await expect(page.getByRole('status')).toContainText('正在准备');await page.getByRole('button',{name:'关闭定制能力'}).click();
   release();await expect(page.getByRole('button',{name:'定制能力',exact:true})).toBeFocused();
-  await page.getByRole('button',{name:'定制能力',exact:true}).click();await expect(page.getByRole('tab',{name:/我的定制/})).toBeVisible();await page.keyboard.press('Escape');await expect(input).toHaveValue('保留草稿');
+  await page.getByRole('button',{name:'定制能力',exact:true}).click();await expect(page.getByRole('tab',{name:/我的定制/})).toBeVisible();await page.keyboard.press('Escape');await expect(input).toHaveJSProperty('textContent', '保留草稿');
   await page.route('**/FileBrowser-*.js',route=>route.abort(),{times:1});
   await page.getByRole('button',{name:'打开工作区面板'}).click();await expect(page.getByRole('alert')).toContainText('暂时无法打开');
   await page.getByRole('button',{name:'重试加载'}).click();await expect(page.getByRole('alert')).toHaveCount(0);
@@ -31,15 +31,15 @@ test('optional features load on demand, cancel delayed load, retry network failu
 test('submit restores focus for mouse and keyboard and failure retains draft',async({page})=>{
  const app=await server();try{
   await page.goto(app.url);const input=page.getByRole('textbox',{name:'任务内容'});
-  await input.fill('鼠标提交');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeFocused();await expect(input).toHaveValue('');
+  await input.fill('鼠标提交');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeFocused();await expect(input).toHaveJSProperty('textContent', '');
   await expect(page.getByText('任务完成',{exact:true})).toHaveCount(1);await app.sessions.active?.done;
-  await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();await input.fill('键盘提交');await input.press('Enter');await expect(input).toBeFocused();await expect(input).toHaveValue('');
+  await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();await input.fill('键盘提交');await input.press('Enter');await expect(input).toBeFocused();await expect(input).toHaveJSProperty('textContent', '');
   await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();
   await expect(page.getByText('任务完成',{exact:true})).toHaveCount(2);await app.sessions.active?.done;
   await expect(page.getByRole('button',{name:'发送任务'})).toBeVisible();
   await page.route('**/submit',r=>r.fulfill({status:503,json:{error:{message:'稍后重试'}}}),{times:1});
-  await input.fill('失败草稿');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeEnabled();await expect(input).toBeFocused();await expect(input).toHaveValue('失败草稿');
-  await input.press('Shift+Enter');await expect(input).toHaveValue('失败草稿\n');
+  await input.fill('失败草稿');await page.getByRole('button',{name:'发送任务'}).click();await expect(input).toBeEnabled();await expect(input).toBeFocused();await expect(input).toHaveJSProperty('textContent', '失败草稿');
+  await input.press('Shift+Enter');await expect(input).toHaveJSProperty('textContent', '失败草稿\n');
  }finally{await app.close();}
 });
 
@@ -55,7 +55,7 @@ test('late submit never steals focus or clears a new context draft',async({page}
    if(target==='tab'){await page.getByRole('button',{name:'定制能力',exact:true}).focus();await page.keyboard.press('Tab');}
    if(target==='session')await page.getByRole('button',{name:/新建会话/}).click();
    if(target==='blur')await page.evaluate(()=>window.dispatchEvent(new Event('blur')));
-   release();await expect(input).toBeEnabled();await expect(input).not.toBeFocused();await expect(input).toHaveValue('等待 '+target);
+   release();await expect(input).toBeEnabled();await expect(input).not.toBeFocused();await expect(input).toHaveJSProperty('textContent', '等待 '+target);
    if(target==='modal')await page.keyboard.press('Escape');
   }
  }finally{await app.close();}
@@ -94,7 +94,7 @@ test('running task allows next draft without submitting it or clearing it at com
   await page.goto(app.url);const input=page.getByRole('textbox',{name:'任务内容'});await input.fill('第一条');await input.press('Enter');
   await expect(page.getByRole('button',{name:'停止任务'})).toBeVisible();await expect(input).toBeFocused();await input.fill('下一条草稿');await input.press('Enter');await expect.poll(()=>calls).toBe(1);
   await page.getByRole('button',{name:'定制能力',exact:true}).click();await page.getByRole('tab',{name:/我的定制/}).waitFor();release();
-  await expect(page.getByRole('button',{name:'发送任务'})).toBeAttached();await expect(input).toHaveValue('下一条草稿');await expect(input).not.toBeFocused();
+  await expect(page.getByRole('button',{name:'发送任务'})).toBeAttached();await expect(input).toHaveJSProperty('textContent', '下一条草稿');await expect(input).not.toBeFocused();
   await page.keyboard.press('Escape');await expect(page.getByText('完成后保留草稿',{exact:true})).toBeVisible();expect(calls).toBe(1);
  }finally{release();await app.close();}
 });

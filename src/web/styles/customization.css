@@ -177,3 +177,18 @@
 /* Only an older window needs clearance for both pagination and its floating
    return/error controls. The latest window has no trailing placeholder. */
 .history-newer {padding-bottom:8rem;}
+
+.reference-editor {min-height:48px;max-height:180px;overflow-y:auto;white-space:pre-wrap;overflow-wrap:anywhere;outline:none;padding:12px 14px;font:inherit;color:var(--text);cursor:text;}
+.reference-editor[data-empty="true"]:before {content:attr(data-placeholder);color:var(--muted);pointer-events:none;position:absolute;}
+.reference-editor[aria-disabled="true"] {opacity:.6;cursor:default;}
+.reference-chip {display:inline-flex;vertical-align:baseline;align-items:center;gap:4px;max-width:100%;border:1px solid var(--line);border-radius:7px;padding:1px 5px;margin:1px 2px;background:var(--surface);color:var(--accent);white-space:normal;}
+.reference-chip>span {min-width:0;overflow-wrap:anywhere;}
+.reference-chip button {flex:none;border:0;background:transparent;color:inherit;padding:0 3px;cursor:pointer;}
+.reference-chip button:focus-visible {outline:2px solid var(--accent);}
+.reference-popup {overflow-y:auto;}
+.reference-popup nav,.reference-actions {display:flex;flex-wrap:wrap;gap:5px;padding:6px;}
+.reference-popup nav button,.reference-actions button {font:inherit;color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:3px 6px;}
+.reference-option {display:flex;align-items:stretch;min-width:0;}
+.reference-option>.command-option {flex:1;min-width:0;}
+.reference-option>button:last-child:not(.command-option) {flex:none;color:var(--accent);background:var(--surface);border:0;padding:0 10px;}
+.reference-option .command-option-description {overflow-wrap:anywhere;white-space:normal;}

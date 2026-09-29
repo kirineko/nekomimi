@@ -64,7 +64,7 @@ test("configures, sends with Enter, names, exports offline and deletes across wi
     await page.waitForTimeout(80);
     await input.fill("你好");
     await input.press("Shift+Enter");
-    await expect(input).toHaveValue("你好\n");
+    await expect(input).toHaveJSProperty('textContent', "你好\n");
     await input.press("Enter");
     await expect(page.locator(".conversation-heading h1")).toHaveText(
       "猫咪问候",

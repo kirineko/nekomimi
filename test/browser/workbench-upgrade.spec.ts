@@ -108,7 +108,7 @@ test("search, diff, locate, open and reload preserve evidence and draft", async 
     "A new file",
   );
   await page.getByRole("tab", { name: "执行详情", exact: true }).click();
-  await expect(draft).toHaveValue("下一步草稿");
+  await expect(draft).toHaveJSProperty('textContent', "下一步草稿");
   await page.getByRole("button", { name: "关闭工作区面板" }).click();
   await page.getByText("全部调用", { exact: false }).click();
   await page.getByRole("button", { name: /网页搜索调用/ }).click();

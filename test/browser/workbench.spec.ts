@@ -268,7 +268,7 @@ test("windows long history and pages context sources beyond a raw artifact page"
   })();
   const inputStart = Date.now();
   await page.getByRole('textbox', {name:'任务内容'}).fill('长历史下的输入响应测试');
-  await expect(page.getByRole('textbox', {name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
+  await expect(page.getByRole('textbox', {name:'任务内容'})).toHaveJSProperty('textContent', '长历史下的输入响应测试');
   console.log(`180-row input fill and assertion: ${Date.now()-inputStart}ms`);
   await updates;
   await expect(page.getByText('有新消息',{exact:false})).toHaveCount(0);
@@ -277,7 +277,7 @@ test("windows long history and pages context sources beyond a raw artifact page"
   expect(distanceFromBottom).toBeGreaterThan(100);
   await page.getByRole('button',{name:'返回最新',exact:true}).click();
   await expect(page.locator('.row-assistant')).toContainText('持续输出 7');
-  await expect(page.getByRole('textbox',{name:'任务内容'})).toHaveValue('长历史下的输入响应测试');
+  await expect(page.getByRole('textbox',{name:'任务内容'})).toHaveJSProperty('textContent', '长历史下的输入响应测试');
   await expect(page.getByRole("button", { name: "返回最新", exact:true })).toHaveCount(0);
   await expect(page.locator(".row")).toHaveCount(60);
   await page.getByRole("button", { name: "检查调用", exact: false }).click();

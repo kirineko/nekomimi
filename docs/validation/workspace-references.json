@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-30",
+  "environment": {
+    "os": "macOS 26.6.2",
+    "node": "24.15.0"
+  },
+  "samples": [
+    {
+      "entries": 5000,
+      "coldMs": 12,
+      "warmMs": 3.200000047683716,
+      "inputMs": 10,
+      "browser": "154.0.8037.58",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "entries": 5000,
+      "coldMs": 11.800000011920929,
+      "warmMs": 3.300000011920929,
+      "inputMs": 8,
+      "browser": "154.0.8037.58",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    }
+  ]
+}

@@ -31,7 +31,7 @@ test("discovers a real /moe extension before execution and completes navigation/
     await input.fill("/mo");
     await expect(page.getByRole("option",{name:/\/moe/})).toBeVisible();
     await input.press("Enter");
-    await expect(input).toHaveValue("/moe ");
+    await expect(input).toHaveJSProperty('textContent', "/moe ");
     expect(app.sessions.active).toBeUndefined();
     await expect(page.getByRole("listbox")).toHaveCount(0);
     await input.press("Enter");
@@ -47,7 +47,7 @@ test("discovers a real /moe extension before execution and completes navigation/
     await openDelete(page,"其他会话");
     await page.getByRole("button",{name:"确认删除"}).click();
     await expect(page.locator(".session-title")).toHaveCount(1);
-    await expect(input).toHaveValue("保留这段草稿");
+    await expect(input).toHaveJSProperty('textContent', "保留这段草稿");
     await expect(page).toHaveURL(new RegExp(older.id));
     await openDelete(page,"/moe"); await page.getByRole("button",{name:"确认删除"}).click();
     await expect(page.locator(".conversation-heading h1")).toHaveText("今天想做什么？");
@@ -66,7 +66,7 @@ test("compact sidebar menus, confirmation dismissal, busy/failure and paginated 
     await page.getByRole("button",{name:"更多会话"}).click();
     await expect(page.locator(".session-title")).toHaveCount(34);
     await expect(page.locator(".session-title").first()).toHaveText("分页期间新建");
-    await expect(page.getByRole("textbox",{name:"任务内容"})).toHaveValue("未发送草稿");
+    await expect(page.getByRole("textbox",{name:"任务内容"})).toHaveJSProperty('textContent', "未发送草稿");
     await page.getByLabel("会话操作 分页期间新建",{exact:true}).click();
     await page.getByLabel("会话操作 会话 32",{exact:true}).click();
     await expect(page.locator(".session-menu")).toHaveCount(1);
@@ -113,22 +113,22 @@ test("command keyboard, IME, parameters, errors, reload and responsive presentat
     await page.goto(app.url);
     const input=page.getByRole("textbox",{name:"任务内容"});
     await input.fill("/mo");await expect(page.getByRole("option")).toHaveCount(2);
-    await input.press("ArrowDown");await input.press("Tab");await expect(input).toHaveValue("/more ");
+    await input.press("ArrowDown");await input.press("Tab");await expect(input).toHaveJSProperty('textContent', "/more ");
     await input.fill('/mo {"x":1}');await input.press("Home");await input.press("ArrowRight");await input.press("ArrowRight");await input.press("ArrowRight");
     await expect(page.getByRole("option")).toHaveCount(2);
-    await page.getByRole("option",{name:/\/moe/}).click();await expect(input).toHaveValue('/moe {"x":1}');
+    await page.getByRole("option",{name:/\/moe/}).click();await expect(input).toHaveJSProperty('textContent', '/moe {"x":1}');
     await input.fill("/mo");await input.press("Escape");await expect(page.getByRole("listbox")).toHaveCount(0);
     await page.waitForTimeout(150);await expect(page.getByRole("listbox")).toHaveCount(0);
-    await input.fill("/mo");await input.dispatchEvent("compositionstart");await input.dispatchEvent("keydown",{key:"Enter",code:"Enter",isComposing:true});await expect(input).toHaveValue("/mo");
-    await input.dispatchEvent("compositionend");await input.dispatchEvent("keydown",{key:"Enter",keyCode:229,isComposing:true});await expect(input).toHaveValue("/mo");
-    await page.waitForTimeout(70);await input.press("Shift+Enter");await expect(input).toHaveValue("/mo\n");
+    await input.fill("/mo");await input.dispatchEvent("compositionstart");await input.dispatchEvent("keydown",{key:"Enter",code:"Enter",isComposing:true});await expect(input).toHaveJSProperty('textContent', "/mo");
+    await input.dispatchEvent("compositionend");await input.dispatchEvent("keydown",{key:"Enter",keyCode:229,isComposing:true});await expect(input).toHaveJSProperty('textContent', "/mo");
+    await page.waitForTimeout(70);await input.press("Shift+Enter");await expect(input).toHaveJSProperty('textContent', "/mo\n");
     await input.fill("正文 /mo");await expect(page.getByRole("listbox")).toHaveCount(0);
     await input.fill("/tmp/file");await expect(page.getByRole("listbox")).toHaveCount(0);
     await input.fill("/nothing");await expect(page.getByText("没有匹配的命令，可继续手动输入")).toBeVisible();
     fail=true;await input.press("Escape");await input.fill("/");await expect(page.getByText("命令加载失败")).toBeVisible();
     fail=false;ready=false;await page.getByRole("button",{name:"重试命令"}).click();await expect(page.getByText("命令尚未就绪")).toBeVisible();
     ready=true;names=["fresh"];rev++;await page.getByRole("button",{name:"重试命令"}).click();await expect(page.getByRole("option")).toContainText("/fresh");
-    await expect(input).toHaveValue("/");
+    await expect(input).toHaveJSProperty('textContent', "/");
     names=Array.from({length:12},(_,i)=>`command-${i}`);rev++;
     await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
     await expect(page.getByRole("option")).toHaveCount(12);
@@ -168,7 +168,7 @@ test("late command responses cannot replace a new catalog and failed submission 
     await page.route("**/submit",route=>route.fulfill({status:409,json:{error:{code:"busy",message:"测试任务繁忙"}}}));
     await input.press("Tab");await input.press("Enter");
     await expect(page.getByRole("alert")).toContainText("测试任务繁忙");
-    await expect(input).toHaveValue("/new ");
+    await expect(input).toHaveJSProperty('textContent', "/new ");
   }finally{oldRelease();await app.close();}
 });
 
@@ -191,12 +191,12 @@ test("date groups and long titles stay compact across midnight and list revision
     const input=page.getByRole("textbox",{name:"任务内容"});await input.fill("持续编辑");
     await page.getByRole("button",{name:"更多会话"}).click();
     await expect.poll(()=>conflict).toBe(true);
-    await expect(page.locator(".session-title")).toHaveCount(2);await expect(input).toHaveValue("持续编辑");
+    await expect(page.locator(".session-title")).toHaveCount(2);await expect(input).toHaveJSProperty('textContent', "持续编辑");
     await page.clock.runFor(31000);
     await expect(page.getByRole("heading",{name:"今天",exact:true})).toHaveCount(0);
     await expect(page.getByRole("heading",{name:"近 7 天",exact:true})).toBeVisible();
     const before=calls;await page.evaluate(()=>window.dispatchEvent(new Event("online")));await expect.poll(()=>calls).toBeGreaterThan(before);
-    await expect(input).toHaveValue("持续编辑");
+    await expect(input).toHaveJSProperty('textContent', "持续编辑");
     const title=page.locator(".session-title").first();expect(await title.evaluate(el=>el.scrollWidth>el.clientWidth)).toBe(true);
     await mkdir("output/playwright/session-navigation",{recursive:true});
     await page.screenshot({path:"output/playwright/session-navigation/groups-long-title.png"});

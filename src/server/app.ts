@@ -1,3 +1,4 @@
+import { WorkspaceReferences } from "./references.js";
 import { WorkspaceFiles, listFiles } from "./workspace.js";
 import { fileChangesPage, changeDiff } from "./changes.js";
 import { createServer } from "node:http";
@@ -30,8 +31,10 @@ export async function startWeb(
 ) {
   const sessions = await Sessions.open(options);
   const files = new WorkspaceFiles(sessions.workspace, options.openFile);
+  const references = new WorkspaceReferences(sessions.workspace);
   const token = randomBytes(32).toString("hex");
   const abort = new AbortController();
+  abort.signal.addEventListener("abort", () => references.close(), { once: true });
   let origin = "";
   let cookie = "";
   const staticDir =
@@ -53,6 +56,12 @@ export async function startWeb(
           );
           json(res, { version: 1 });
           return;
+        }
+        if (req.method === "GET" && path === "/api/v1/workspace/references") {
+          const reading = new AbortController(); res.once("close", () => reading.abort());
+          json(res, url.searchParams.get("mode") === "resolve"
+            ? await references.resolve(url.searchParams.get("path") ?? "", reading.signal)
+            : await references.list(url.searchParams.get("query") ?? "", url.searchParams.get("cursor") ?? undefined, url.searchParams.get("refresh") === "true", reading.signal)); return;
         }
         if (req.method === "GET" && path === "/api/v1/workspace/files") {
           const reading = new AbortController(); res.once("close", () => reading.abort());
