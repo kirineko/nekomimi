@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-08T14:29:26.579114+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "progress": {
+    "total": 89,
+    "complete": 78,
+    "remaining": 11
+  },
+  "checks": {
+    "browserPassed": 16,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "fullBrowserSuite": false
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-all.log": "788952c3089a85c6868f7485f64a8bb34ccfa13bf110d21d2706aeb23b88bd52",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-e.log": "57e029b23f425d108f08f2d0a902612570e4fc46f691f902399b0853acefeb5f",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-d.log": "989bba5c241934292e794676765a84ef8be755c4273f411438de2dba28c82e1c",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-c.log": "c6dfb40f6918195740d0c55899873d5dcd014967654e04673bebbae285ec9146",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-b.log": "df61a647e17ed937ea801bcb0545e35be97bd4512d9d84d62d1e5faa8f247506",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-a.log": "8ac012d74af15c8e9b32e388b09e0ece273ab6dd0ecc6b8b3d5531bbb83d2317",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/README.md": "39af674375a78314a87a67ae8721d6368bb16d8c10bc0f8afbc0ec20639e03ec",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-build.log": "46a6554be1c7ca5314bba04b60d58346250107256265e46a396db1a4661e9cb5",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-final.log": "43830bfdc86b1d0886b23cba24b148395980494e80ef21696e4d5c0103541c59",
+    "docs/validation/next-generation-nekomimi/customization-integration-migration/nekomimi-customization-strict.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "src/web/v2/routes/workflow-controls.tsx": "0c974095de750f546c972f1f49c62f6384a9c5395b1f4d152c5266219bc4f3a9",
+    "src/web/v2/state/create.ts": "34e7312b74ff94ac3520ec70bd677d608e750a4c0874593dda0f0d59dd8b0398",
+    "src/web/v2/routes/panels.tsx": "d5ea95619ac3fe7fe32f8047338bb2f1f079bb8899aa591939fee8875e79e3f4",
+    "src/web/v2/routes/work-nav.tsx": "49ac437db3dd22beb334aa64ffc179d9f442e0c58429ef741b1b9415d00ef388",
+    "src/web/v2/router.tsx": "887a3e03ed5d930b9ce7ad1e92dc9cf2142aeb71b4121ea4aa36cb577ebdb680",
+    "test/browser/customization.spec.ts": "265647323c7d409636ea8f70bc4645984d5e6af4a750166f492a7a94efec2981",
+    "test/browser/panel-management.spec.ts": "37295540719e6fc277abc04d574404e6c6a6a9122b7769f6960a450a67df73b7",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "fdc7357fa98cea0fcceb1b3ee899592b3af2d608eedc6f6589455f53371bb4b8",
+    "openspec/changes/next-generation-nekomimi/design.md": "e6785417365248c1991e8e5f4d5f7c437b5c78d60a414cd88bf813e1c4e6655f"
+  }
+}

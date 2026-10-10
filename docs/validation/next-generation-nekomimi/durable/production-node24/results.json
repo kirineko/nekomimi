@@ -1,0 +1,42 @@
+{
+  "node": "v24.15.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "results": [
+    {
+      "scenario": "SIGKILL and read-only reconstruction",
+      "effects": 1,
+      "modelCalls": 0,
+      "singleJournal": true,
+      "commits": 10
+    },
+    {
+      "scenario": "abort old tasks before explicit new submission",
+      "oldEffects": 1,
+      "oldModelCalls": 0,
+      "newModelCalls": 1,
+      "unknownEvidenceRetained": true,
+      "fixedContextAtProvider": true,
+      "distinctSequenceMapping": true,
+      "oldQueuedInputWithdrawn": true
+    },
+    {
+      "scenario": "Journal injected failure",
+      "failurePoint": "append",
+      "unchangedReliableEntries": true,
+      "modelCalls": 0
+    },
+    {
+      "scenario": "Journal injected failure",
+      "failurePoint": "sync",
+      "unchangedReliableEntries": true,
+      "modelCalls": 0
+    },
+    {
+      "scenario": "Journal injected failure",
+      "failurePoint": "watermark.rename",
+      "unchangedReliableEntries": true,
+      "modelCalls": 0
+    }
+  ]
+}

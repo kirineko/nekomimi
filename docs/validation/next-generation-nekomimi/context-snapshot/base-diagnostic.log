@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/task-profiles.test.ts (3 tests | 1 failed) 973ms
+   × selects work and create from persisted mode for the same user task, with exact recorded profile and body 932ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/task-profiles.test.ts > selects work and create from persisted mode for the same user task, with exact recorded profile and body
+AssertionError: {"session":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-93Yjpo/session","sessionId":"400567eb-d975-400f-a39c-e7e11b735442","runId":"c6d55a18-cf2e-4226-a438-e443bcc1ca7e","status":"failed","text":"","error":"Error: 目标身份摘要不一致","durableSeq":18}: expected 'failed' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "failed"
+
+ ❯ test/task-profiles.test.ts:36:160
+     34|     const result = await run({ workspace: mode === "work" ? owner : de…
+     35|       ...(mode === "create" ? { target: { kind: "extension", root: dev…
+     36|       fetch: async (_url, init) => { body = JSON.parse(String(init!.bo…
+       |                                                                                                                                                                ^
+     37|     const events = (await readSession(session)).events, attempt = even…
+     38|     const viewEvent = events.find(event => event.type === "context.vie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  05:31:16
+   Duration  1.56s (transform 213ms, setup 0ms, import 533ms, tests 973ms, environment 0ms)
+

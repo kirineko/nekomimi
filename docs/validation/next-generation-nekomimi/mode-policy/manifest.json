@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-10-06T19:35:01.118786+00:00",
+  "node": "v24.15.0",
+  "platform": "Darwin arm64",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted apply; manifest identifies the validation logs, not a committed release",
+  "files": {
+    "browser.log": "bafd444a49a216726895ff73495e2d7d746cd19a364c4c7d88ab2d1989049d51",
+    "build-first.log": "6b928732e671388b71451dbc6ffb72741fabf06319021500efed5c5511b0f980",
+    "current-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "expanded-fixed-tests.log": "9482eacb22607109a24e25097b8e2f7a52f062e4449336f1d557f821a288488e",
+    "expanded-fixed-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "expanded-tests.log": "8879ab3eb5f35078eb13eb9cee124da51b82be4b4cf53ec47f023abda6692fc5",
+    "expanded-types.log": "8f9e3f7bcff7fa2b6516b692f86c7a4de572fa437d22b2b77e3a17988038ce79",
+    "final-build.log": "6b928732e671388b71451dbc6ffb72741fabf06319021500efed5c5511b0f980",
+    "final-tests.log": "a492a196698ab06fcfd81101d275de7e68a9eaf65ecd14ebb96af39d6c101a31",
+    "final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "regression-first.log": "b58bfd4641cdd4d57ea2b9c1379f15b65284c2a72eed7b68a59c895154a50d95",
+    "regression-second.log": "2b04e640b76ef4cfb6cd4c70d5b63d3267147af9bb43d8e10e730f0920a46c9d",
+    "spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "tests-first.log": "5b64503b720601e4ebfffaf54035f5d8ec8735a218c0a888e773cf770997e318",
+    "tests-second.log": "61631bbfc2309aa019a9c1a2f49fa9d862dcf40d008288f5224efe3df1049beb",
+    "types-first.log": "929bb1924b4915e7c4073a94617868c2041be48a41e13ac6e42f58ff28e3d522",
+    "types-second.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

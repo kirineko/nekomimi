@@ -1,0 +1,34 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"5bb60a16-aa87-4e93-9395-b9431bb7a3fe","timestamp":"2026-10-06T23:15:12.023Z","sessionId":"4d869377-f916-4f05-8fa5-34aeaaac50b0","runId":"9bac8a4d-3065-496a-897a-d44448bafd05","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"57df50c8-88cf-4896-a5ad-bd3aee78c4c1","timestamp":"2026-10-06T23:15:13.133Z","sessionId":"6a58f4cb-c525-4650-af7f-18f54b940145","runId":"ae52000f-53d2-4448-ba3e-a70a9865a4cf","seq":32,"durableSeq":31,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"9a2a10f4-8a92-4855-aa05-acae96a8cb30","timestamp":"2026-10-06T23:15:14.240Z","sessionId":"ba5bb2a7-e36c-4a40-9c5f-182a278a53ab","runId":"20ed76f0-14f6-4784-aa8f-6eb32c4021c8","seq":32,"durableSeq":31,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"c4d4ec9c-5e5f-40c4-81e2-0c2ac30e4aeb","timestamp":"2026-10-06T23:15:15.159Z","sessionId":"574c944a-b99a-4ad3-a1de-8b1b115f01cc","runId":"2bb00ffa-8d9d-4dea-99c7-37511a3f4005","seq":33,"durableSeq":32,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"52d41c62-a929-40da-887b-65948a235eba","timestamp":"2026-10-06T23:15:16.051Z","sessionId":"d0d72e73-8ee0-4a32-a970-a64fd3e7936f","runId":"14b9a4c6-e4ce-4619-bf64-eee2108a891d","attemptId":"0d0bbd6a-979a-43b5-87af-e0029d7b6622","seq":34,"durableSeq":34,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"19f8f50c-c64e-4440-ab44-69e2b88d3f72","timestamp":"2026-10-06T23:15:17.427Z","sessionId":"ededd266-8c0c-430c-bdb5-9557a7049eb1","runId":"9bcabb5a-f9dc-4628-a625-c3592dd800e1","attemptId":"05fe8399-5575-4274-94fe-0e876251b6bc","seq":36,"durableSeq":35,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"305bd111-50c8-4349-80fb-5024de873d09","timestamp":"2026-10-06T23:15:18.584Z","sessionId":"02168e68-d8c4-4eae-8868-e15546b8ac05","runId":"714ddd6e-ac03-45c0-90de-d1a2dd3b6c65","attemptId":"739ee95c-1e70-4947-9800-6ee06cbe06d6","seq":35,"durableSeq":34,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"82318dbf-1b09-47b8-849a-04c7567cf151","timestamp":"2026-10-06T23:15:19.526Z","sessionId":"93e1bc6e-2451-4481-a87c-8706b04a393e","runId":"c9808956-e3c8-40ba-ba2d-d5d4d41f377a","attemptId":"36ead2b2-fc49-43cf-900b-5e5289cfa2cd","seq":35,"durableSeq":34,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-failures.test.ts (11 tests | 1 failed) 16384ms
+   × preserves full evidence for bounded model results and marks capture gaps 80ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-failures.test.ts > preserves full evidence for bounded model results and marks capture gaps
+AssertionError: expected { type: 'text', …(1) } to have property "text" with value StringContaining "Truncated"
+ ❯ test/customization-failures.test.ts:49:31
+     47|     );
+     48|     const result = await tool.execute("one", {});
+     49|     expect(result.content[0]).toHaveProperty(
+       |                               ^
+     50|       "text",
+     51|       expect.stringContaining("Truncated"),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 90 passed (91)
+   Start at  07:15:05
+   Duration  35.02s (transform 409ms, setup 0ms, import 2.67s, tests 66.11s, environment 0ms)
+

@@ -1,0 +1,14 @@
+
+Running 5 tests using 2 workers
+
+(node:30907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/project-delivery.spec.ts:8:1 › project delivery reviews and authorizes the exact candidate, preserves the work draft and does not repeat a lost-response installation (4.2s)
+  ✓  3 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.6s)
+  ✓  1 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.5s)
+  ✓  4 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓  5 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.7s)
+
+  5 passed (10.4s)

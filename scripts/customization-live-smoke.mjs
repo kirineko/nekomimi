@@ -21,7 +21,7 @@ await writeFile(
   join(root, "extension.json"),
   JSON.stringify({
     name: "review",
-    sdkVersion: 1,
+    sdkVersion: 3, requiredCapabilities: ['commands', 'tools', 'ui'],
     entry: "index.ts",
     requiredCapabilities: ["commands", "tools", "ui"],
   }),

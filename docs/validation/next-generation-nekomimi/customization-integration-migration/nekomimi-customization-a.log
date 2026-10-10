@@ -1,0 +1,54 @@
+
+Running 3 tests using 1 worker
+
+(node:3981) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization.spec.ts:40:1 › reconciles an unknown workflow result in the browser without repeating its external effect (4.5s)
+  ✘  2 test/browser/customization.spec.ts:60:1 › restores a durable workflow form after service restart and continues only after an explicit answer (23.4s)
+(node:4024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/customization.spec.ts:360:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (2.6s)
+
+
+  1) test/browser/customization.spec.ts:60:1 › restores a durable workflow form after service restart and continues only after an explicit answer 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('审查决定')
+    Expected: "通过"
+    Received: ""
+    Timeout:  20000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('审查决定') with timeout 20000ms
+      - waiting for getByLabel('审查决定')
+        44 × locator resolved to <select required="" aria-label="审查决定" data-slot="select" class="rounded-md border border-line bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted disabled:opacity-50 aria-invalid:border-destructive w-auto cursor-pointer max-w-full">…</select>
+           - unexpected value ""
+
+
+      79 |     await page.getByRole("link",{name:"模型用途与配置",exact:true}).click();
+      80 |     await page.getByRole("link",{name:"持久工作流管理",exact:true}).click();
+    > 81 |     await expect(page.getByLabel("审查决定")).toHaveValue("通过");
+         |                                           ^
+      82 |     await page.getByRole("button", { name: "提交并继续工作流" }).click();
+      83 |     await expect(page.getByRole("article", { name: "工作流 durable-review" })).toContainText("已完成");
+      84 |     await expect(page.getByRole("form", { name: "审查确认" })).toHaveCount(0);
+        at /Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:81:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-restores-a-d-6c393-ly-after-an-explicit-answer/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-restores-a-d-6c393-ly-after-an-explicit-answer/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-restores-a-d-6c393-ly-after-an-explicit-answer/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-restores-a-d-6c393-ly-after-an-explicit-answer/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization.spec.ts:60:1 › restores a durable workflow form after service restart and continues only after an explicit answer 
+  2 passed (32.7s)

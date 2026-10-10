@@ -1,0 +1,61 @@
+
+Running 8 tests using 1 worker
+
+(node:65909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets (5.8s)
+(node:65931) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/model-advanced.spec.ts:35:47 › 10.4 work history branch explicit retry after lost response preserves target and creates once (1.5s)
+  ✓  3 test/browser/model-advanced.spec.ts:35:47 › 10.4 create history branch explicit retry after lost response preserves target and creates once (1.2s)
+  ✓  4 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (578ms)
+  ✓  5 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (455ms)
+  ✓  6 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.3s)
+  ✓  7 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (287ms)
+  ✓  8 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+
+
+  1) test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog')
+    Expected substring: "conflict"
+    Received string:    "备份并迁移原 DeepSeek 配置备份本地原配置并创建 legacy-deepseek 配置，保留现有用途选择，仅补齐未配置的默认、辅助和命名用途。凭证留在服务端；不会调用模型。用户范围 · 配置修订 2从本地已保存设置读取；进程启动参数不会迁入。操作未确认：操作失败，请检查本地配置和数据完整性。请关闭后重新读取并审阅；不会自动重试。取消操作确认备份并迁移原 DeepSeek 配置"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog') with timeout 5000ms
+      - waiting for getByRole('dialog')
+        2 × locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_u_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_v_" aria-describedby="radix-_r_10_" class="fixed top-1/2 left-1/2 z-50 w-[min(440px,calc(100vw-32px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background p-6 text-foreground shadow-floating max-h-[85dvh] overflow-auto break-words">…</div>
+          - unexpected value "备份并迁移原 DeepSeek 配置备份本地原配置并创建 legacy-deepseek 配置，保留现有用途选择，仅补齐未配置的默认、辅助和命名用途。凭证留在服务端；不会调用模型。用户范围 · 配置修订 2从本地已保存设置读取；进程启动参数不会迁入。取消操作确认备份并迁移原 DeepSeek 配置"
+        12 × locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_u_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_v_" aria-describedby="radix-_r_10_" class="fixed top-1/2 left-1/2 z-50 w-[min(440px,calc(100vw-32px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background p-6 text-foreground shadow-floating max-h-[85dvh] overflow-auto break-words">…</div>
+           - unexpected value "备份并迁移原 DeepSeek 配置备份本地原配置并创建 legacy-deepseek 配置，保留现有用途选择，仅补齐未配置的默认、辅助和命名用途。凭证留在服务端；不会调用模型。用户范围 · 配置修订 2从本地已保存设置读取；进程启动参数不会迁入。操作未确认：操作失败，请检查本地配置和数据完整性。请关闭后重新读取并审阅；不会自动重试。取消操作确认备份并迁移原 DeepSeek 配置"
+
+
+      23 |     await profiles.select('work','existing',2);
+      24 |     await page.getByRole('button',{name:'确认备份并迁移原 DeepSeek 配置',exact:true}).click();
+    > 25 |     await expect(page.getByRole('dialog')).toContainText('conflict');expect(migrations).toBe(1);
+         |                                            ^
+      26 |     await expect(page.getByRole('button',{name:'确认备份并迁移原 DeepSeek 配置',exact:true})).toBeDisabled();
+      27 |     await page.getByRole('button',{name:'取消操作',exact:true}).click();
+      28 |     await page.getByRole('button',{name:'备份并迁移原 DeepSeek 配置',exact:true}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/model-advanced.spec.ts:25:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/model-advanced-10-4-migrat-ad380-es-without-exposing-secrets/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/model-advanced-10-4-migrat-ad380-es-without-exposing-secrets/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/model-advanced-10-4-migrat-ad380-es-without-exposing-secrets/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/model-advanced-10-4-migrat-ad380-es-without-exposing-secrets/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets 
+  7 passed (16.9s)

@@ -16,7 +16,7 @@ async function setup(source: string) {
   await mkdir(root, { recursive: true });
   await writeFile(
     join(root, "extension.json"),
-    JSON.stringify({ name: "test", sdkVersion: 1, entry: "index.ts" }),
+    JSON.stringify({ name: "test", sdkVersion: 3, requiredCapabilities: ['commands', 'tools', 'state', 'ui', 'model', 'hooks', 'follow-up'], entry: "index.ts" }),
   );
   await writeFile(join(root, "index.ts"), source);
   const host = new CustomizationHost(workspace, home);
@@ -85,7 +85,7 @@ it("guards user writes with authorization, version and paths", async () => {
 });
 it("reports cleanup failure and blocks subsequent runs", async () => {
   const f = await setup(
-    `export default api=>{api.onDispose(()=>{throw Error('cannot clean')});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.onDispose(()=>{throw Error('cannot clean')});}`,
   );
   try {
     await f.host.acquire();
@@ -105,7 +105,7 @@ it("reports cleanup failure and blocks subsequent runs", async () => {
 });
 it("retains state across runs and refuses a changed state schema", async () => {
   const f = await setup(
-    `export default api=>{api.registerCommand('count',{description:'count',async handler(a,c){const n=await c.state.get('n',1)||0;await c.state.set('n',1,n+1);return String(n+1)}});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('count',{description:'count',async handler(a,c){const n=Number(await c.state.get('n',1)||0);await c.state.set('n',1,n+1);return String(n+1)}});}`,
   );
   const session = join(f.workspace, "session");
   try {
@@ -126,7 +126,7 @@ it("retains state across runs and refuses a changed state schema", async () => {
     ).toBe("2");
     await writeFile(
       join(f.root, "index.ts"),
-      `export default api=>{api.registerCommand('count',{description:'count',async handler(a,c){await c.state.get('n',2);}});}`,
+      `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('count',{description:'count',async handler(a,c){await c.state.get('n',2);}});}`,
     );
     const result = await run({ ...f, session, apiKey: key, prompt: "/count" });
     expect(result.status).toBe("failed");
@@ -137,7 +137,7 @@ it("retains state across runs and refuses a changed state schema", async () => {
 });
 it("trial uses mock services in a separate journal and headless form is unavailable", async () => {
   const f = await setup(
-    `export default api=>{api.registerCommand('ask',{description:'ask',async handler(a,c){await c.callTool('write',{path:'must-not-exist',content:'bad'});return await c.model('check')}});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('ask',{description:'ask',async handler(a,c){await c.callTool('write',{path:'must-not-exist',content:'bad'});return await c.model('check')}});}`,
   );
   try {
     const result = await trialExtension(f.workspace, f.home, f.id, "/ask");
@@ -147,7 +147,7 @@ it("trial uses mock services in a separate journal and headless form is unavaila
     ).rejects.toThrow();
     await writeFile(
       join(f.root, "index.ts"),
-      `export default api=>{api.registerCommand('ask',{description:'ask',async handler(a,c){await c.ui({kind:'form',title:'input',fields:[{name:'answer',label:'answer'}]})}});}`,
+      `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('ask',{description:'ask',async handler(a,c){await c.ui({kind:'form',title:'input',fields:[{name:'answer',label:'answer'}]})}});}`,
     );
     const r = await run({
       ...f,
@@ -162,7 +162,7 @@ it("trial uses mock services in a separate journal and headless form is unavaila
 });
 it("records auxiliary model attempts without mixing their messages into primary history", async () => {
   const f = await setup(
-    `export default api=>{api.registerCommand('think',{description:'think',async handler(a,c){return await c.model('private helper context')}});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('think',{description:'think',async handler(a,c){return await c.model('private helper context')}});}`,
   );
   let calls = 0;
   try {
@@ -196,7 +196,7 @@ it("records auxiliary model attempts without mixing their messages into primary 
 });
 it("rejects same-scope collisions and duplicate tool registration", async () => {
   const f = await setup(
-    `export default api=>{const t={name:'same',description:'x',parameters:{type:'object'},async execute(){return {content:[]}}};api.registerTool(t);api.registerTool(t);}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{const t={name:'same',description:'x',parameters:{type:'object' as const},async execute(){return {content:[]}}};api.registerTool(t);api.registerTool(t);}`,
   );
   try {
     await expect(f.host.acquire()).rejects.toThrow("duplicate");
@@ -204,9 +204,9 @@ it("rejects same-scope collisions and duplicate tool registration", async () => 
     await mkdir(second);
     await writeFile(
       join(second, "extension.json"),
-      JSON.stringify({ name: "test", sdkVersion: 1, entry: "index.ts" }),
+      JSON.stringify({ name: "test", sdkVersion: 3, requiredCapabilities: ['commands', 'tools', 'state', 'ui', 'model', 'hooks', 'follow-up'], entry: "index.ts" }),
     );
-    await writeFile(join(second, "index.ts"), "export default api=>{}");
+    await writeFile(join(second, "index.ts"), "export default (api: import('nekomimi/extensions').ExtensionAPI)=>{}");
     expect(
       (await f.host.catalog.discover())
         .filter((r) => r.kind === "extension")
@@ -218,7 +218,7 @@ it("rejects same-scope collisions and duplicate tool registration", async () => 
 });
 it("explicit skills load content and arguments and disabled tools withdraw prompt contributions", async () => {
   const f = await setup(
-    `export default api=>{api.registerTool({name:'check',description:'Check result',promptGuidelines:['UNIQUE_GUIDANCE'],parameters:{type:'object'},async execute(){return {content:[]}}})}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerTool({name:'check',description:'Check result',promptGuidelines:['UNIQUE_GUIDANCE'],parameters:{type:'object'},async execute(){return {content:[]}}})}`,
   );
   const skill = join(f.workspace, ".agents/skills/check");
   await mkdir(skill, { recursive: true });
@@ -261,7 +261,7 @@ it("explicit skills load content and arguments and disabled tools withdraw promp
 });
 it("blocks front-hook errors, keeps post-hook errors separate and propagates cancellation", async () => {
   const f = await setup(
-    `export default api=>{api.on('beforeTool',async()=>{throw Error('gate failed')});api.registerCommand('test',{description:'test',async handler(a,c){await c.callTool('write',{path:'no.txt',content:'no'});}});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.on('beforeTool',async()=>{throw Error('gate failed')});api.registerCommand('test',{description:'test',async handler(a,c){await c.callTool('write',{path:'no.txt',content:'no'});}});}`,
   );
   try {
     const a = await run({
@@ -274,7 +274,7 @@ it("blocks front-hook errors, keeps post-hook errors separate and propagates can
     await expect(readFile(join(f.workspace, "no.txt"))).rejects.toThrow();
     await writeFile(
       join(f.root, "index.ts"),
-      `export default api=>{api.on('afterTool',async()=>{throw Error('observer failed')});api.registerCommand('test',{description:'test',async handler(a,c){await c.callTool('write',{path:'yes.txt',content:'yes'});return 'done'}});}`,
+      `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.on('afterTool',async()=>{throw Error('observer failed')});api.registerCommand('test',{description:'test',async handler(a,c){await c.callTool('write',{path:'yes.txt',content:'yes'});return 'done'}});}`,
     );
     const b = await run({
       ...f,

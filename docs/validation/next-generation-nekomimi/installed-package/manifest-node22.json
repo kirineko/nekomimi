@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-08T16:38:53.454443+00:00",
+  "node": "22.19.0",
+  "platform": "darwin-arm64",
+  "nodeArchiveSha256": "c59006db713c770d6ec63ae16cb3edc11f49ee093b5c415d667bb4f436c6526d",
+  "hostBuild": "bee8db6c78c75921eb28d393129aff9df6a9624b8f286baeae6f48752c11eafb",
+  "archive": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-Vlug1L/nekomimi-0.2.1.tgz",
+  "archiveSha256": "77ef00a355e83348c4d8e8c5845789db077b5952e1b565417f2e6103ded23269",
+  "command": "PATH=<verified-node22>/bin:$PATH <verified-node22>/bin/node scripts/pack-smoke.mjs <same-node24-tarball>",
+  "exitCode": 0,
+  "files": {
+    "docs/validation/next-generation-nekomimi/installed-package/README.md": "d13b6a24553ea1d8d162646f7e9811d520f4efe0fcdc969a4a5286b60307610e",
+    "docs/validation/next-generation-nekomimi/installed-package/node22-pack.log": "9cfd0d322d7acb64bb7519aef435e938564ce885da0428e6697b46f5817863e2",
+    "docs/validation/next-generation-nekomimi/installed-package/node22-official-shasums.txt": "de2602986573174f8815e5c66a157950132166113edddd9124c30784303ede31",
+    "docs/validation/next-generation-nekomimi/installed-package/release-check.log": "79242ee90f2d7a0a8b629ac61aaf054117e27a4e65f59dac3da8e4b357d31ac0",
+    "docs/validation/next-generation-nekomimi/installed-package/strict.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  }
+}

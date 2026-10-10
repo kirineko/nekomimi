@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-07T14:40:24.536208+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/mcp-discovery.ts": "ddb0042453d657d078269812f023a0fd31564994570b4f272bc68446b43c5c1d",
+    "src/customization/run.ts": "f0b1071a6307b287accab0ad6eafc25bb57c764fe864bbdcda1b74366900ffc6",
+    "src/runtime.ts": "620dc11845466b9c231c7d35f5733aa078b35e7535f51046c28ef9110fd72972",
+    "test/mcp-snapshots.test.ts": "cec62c04b3e7192cbf97367e0a2b090dbbf473e08efa37e9fdc4682a7dc40d80",
+    "test/mcp-version-runtime.test.ts": "1ea6ec2c441fbd53ece192eb25fc450848f3e1bb6a0b80e94eeceee0545a443e",
+    "test/mcp-demand.test.ts": "5371cacf83e653eefb4445408e51063b55b62f0fbc5044ba840692ba41844fa0",
+    "extension-docs/platform.md": "00f8801645f514e643677a51ee36c3ef7ce53d4610aca816d0f9ee950ad73354",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "c86b6edc4b6abc5da919e6e0d3aac2c4bb33b1bcbb658d3e7c047ca3598289c9",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/versions.md": "075cb3067548cf8a8b221e0ef3f627bf3e6b955e85ed1f28322d57bd44f1786a",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/version-tests.log": "084c657c27bf0156ccad27e44e1eb88a2f6af06ff8d87283d29e55bdce40b470",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/version-final.log": "4011288016aea17b6eb66104f6884664cd0a8cf789edfed415993ac6d854ca13",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/version-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/version-build.log": "94994449772faabdbb8aadf3142813eca0ade186deca3a57e292dfddcac345b2",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/version-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  }
+}

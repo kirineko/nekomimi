@@ -1,0 +1,20 @@
+
+Running 11 tests using 2 workers
+
+(node:94661) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:94662) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (726ms)
+  ✓   3 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (655ms)
+  ✓   2 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (2.0s)
+  ✓   4 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (811ms)
+  ✓   6 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (521ms)
+  ✓   5 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓   7 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓   8 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.8s)
+  ✓   9 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓  10 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (846ms)
+  ✓  11 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (1.7s)
+
+  11 passed (11.5s)

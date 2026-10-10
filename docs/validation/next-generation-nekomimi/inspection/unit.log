@@ -1,0 +1,49 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/inspection.test.ts (2 tests | 2 failed) 446ms
+   × keeps parent failure and child success separate, scopes attempts, and counts each usage owner once 411ms
+   × bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero 34ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/inspection.test.ts > keeps parent failure and child success separate, scopes attempts, and counts each usage owner once
+AssertionError: expected undefined to match object [ { id: 'tool:script', …(2) } ]
+
+- Expected:
+[
+  {
+    "children": 3,
+    "id": "tool:script",
+    "status": "failed",
+  },
+]
+
++ Received:
+undefined
+
+ ❯ test/inspection.test.ts:32:24
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/inspection.test.ts > bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero
+TypeError: Cannot read properties of undefined (reading 'trim')
+ ❯ creationHash src/session/identity.ts:44:45
+     42| }
+     43| export function creationHash(title: string, input: SessionCreation): s…
+     44|   return hash(JSON.stringify({ title: title.trim().slice(0, 100) || "新…
+       |                                             ^
+     45| }
+     46| export async function createSessionBinding(ownerWorkspace: string, ses…
+ ❯ Sessions.createInner src/server/sessions.ts:753:25
+ ❯ src/server/sessions.ts:748:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  06:07:08
+   Duration  1.16s (transform 300ms, setup 0ms, import 657ms, tests 446ms, environment 0ms)
+

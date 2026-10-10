@@ -1,0 +1,51 @@
+{
+  "recordedAt": "2026-10-08T05:27:53.648960+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "progress": {
+    "total": 89,
+    "complete": 78,
+    "remaining": 11
+  },
+  "checks": {
+    "browserPassed": 41,
+    "unitPassed": 12,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "fullBrowserSuite": false,
+    "performanceBaselineCompared": false
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-stream-browser.log": "d95d0db9664dbd44a4d5c5f6c217837edd029ac82af09bcd1a3d516dd6b2a6c4",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-syntax-unit.log": "00a6c55a7cf5a018f9222bd1c38cb3e6d2308ca2226e632ac66c3c1059803531",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-syntax-build.log": "83163d8022f4fda7d8b121fff5b70079c8e512c56c4d9125715b7f085711b855",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-migration-browser.log": "f782cecdac8c67e2c8b7860d632bbea01bd5f124387f531bc0a7d5636c1a417b",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-scroll-syntax-fixed.log": "82d0f92af824d9b5927a447bd45f57f0dfdecc66923292578cfacd91d26a3a67",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-syntax-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-syntax-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-syntax-browser.log": "59279c66f1b99713c9799f75a3013d120f7ebf19362f5fefc965c8fec123f2d5",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-local-syntax-browser-final.log": "f92e67f4e1219801548fc8b6f50335215069b5417065b0d9a63edee311eb9197",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-scroll-syntax-browser.log": "2251d9b806218d65ac3335458a1ff9cbdca33276dce08edd7a3fea0d4df79054",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/nekomimi-scroll-final.log": "323f6736281764fbe47bbe9defcca14de6221c0bbe8b6632c9c792b14dbc95ef",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/syntax-wide.png": "857a218e780873d8883554ab1452bed9816bdef3db1bfdb647f16800a678abe4",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/syntax-narrow.png": "384e775ee1a5270ac5446b387c5bab1deb374be45322fa800b68dddb18d02e2b",
+    "docs/validation/next-generation-nekomimi/local-syntax-scroll/README.md": "dcd9560a18e4c8819ac7d98eac4aa3a6a4f5e803a61f9df8c1baa1fb1ddbe146",
+    "src/web/v2/state/sessionStream.ts": "3267d014057364960db2046152c2d1844e05f6c6f5cb9e823a2dc748c98570b3",
+    "src/web/v2/router.tsx": "68680e283862f1d5c0ba080d36cfe610fb8d616ed145bb6e492c420c5462afef",
+    "scripts/generate-syntax-styles.mjs": "ab132522537dd176d808412aefb5084c8b4e406b58fd6f30a8b6a2c542187646",
+    "src/presentation/syntax/palette.ts": "0c733e7597316c59c78877a85fac64621c6dd6c13a8e1b8e1459ba9c0bbc6e68",
+    "src/web/styles/syntax.css": "fdb845ad5f282c6c0e2df2493b9cd4f72de70236eaf0311371956cceeaf21e80",
+    "test/browser/context-meter.spec.ts": "5d2c96578704ebe2bffaf16746f0650899e217b4a2f536df216dc270872a7a8c",
+    "test/browser/local-experience.spec.ts": "29346f422b145528a32f604b5963958a13253ba75907beaf3cb59bd09caf1016",
+    "test/browser/syntax.spec.ts": "8e148bb53c3c7a93ef7fc3f7637b1bc142723eb62ae5bbe88f26b8d8796c0177",
+    "test/browser/scroll-fixture.ts": "5270afb7ec37e47040d655d0c71885b26a8568c31f6643a20047986e85141d33",
+    "test/browser/scrolling.spec.ts": "bee34d0bf944164057e76bb59cbf111c9179b433096120cbe3220422aa925efd",
+    "test/browser/scrolling-native.spec.ts": "98513c1300b991df82c1b7b20d18815b493efd65ff77163d0dfbf4b3fdc8c453",
+    "openspec/changes/next-generation-nekomimi/design.md": "4305394b77e126fa071ef3d56b71f562dd07e33d8c193c6572c5351388bd8b29",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "f41f3b7cacec0a3688d846452372440a48464f20a6af4e164dc01869457f71fe"
+  }
+}

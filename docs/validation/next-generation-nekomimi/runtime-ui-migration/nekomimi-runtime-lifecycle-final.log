@@ -1,0 +1,68 @@
+
+Running 17 tests using 2 workers
+
+(node:2195) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.8s)
+  ✓   3 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (660ms)
+  ✓   4 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (643ms)
+  ✓   5 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.9s)
+  ✓   6 test/browser/runtime-ui.spec.ts:19:1 › applies a complete theme and shows user content with stable panel interaction and readable history (4.8s)
+  ✘   1 test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview (11.3s)
+(node:2250) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.5s)
+  ✓   8 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.5s)
+  ✓   9 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.8s)
+  ✓  10 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.7s)
+  ✓  12 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (2.0s)
+  ✓  11 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.9s)
+  ✓  13 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.5s)
+  ✓  14 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.5s)
+  ✓  15 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.1s)
+  ✓  16 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.1s)
+  ✓  17 test/browser/v2-runtime-slots.spec.ts:138:1 › 10.9 hiding extensions unmounts open slots and restoring visibility never remounts (1.8s)
+
+
+  1) test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '候选不存在或暂不可读', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: '候选不存在或暂不可读', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: '候选不存在或暂不可读', exact: true })
+
+
+      56 |         // The legacy global open event is replaced by explicit scoped deep links.
+      57 |         await page.goto(`${app.origin}/v2/create/session/${session.id}/candidate/removed-resource?revision=obsolete`);
+    > 58 |         await expect(page.getByRole('heading', { name: '候选不存在或暂不可读', exact: true })).toBeVisible();
+         |                                                                                      ^
+      59 |         expect(writes).toEqual([]);
+      60 |     }
+      61 |     finally {
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-lifecycle.spec.ts:58:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 
+  16 passed (25.9s)

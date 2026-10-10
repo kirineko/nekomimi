@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-07T21:19:42.840844+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.4": "in progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "browser": 9,
+    "distinctUnit": 58,
+    "finalUnitSubset": 24,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/management/advanced-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/advanced-unit-final.log": "5890940af744a7c8e2d392124c204ccc6c67ffa3d8e82ffe03bf459954aa026f",
+    "docs/validation/next-generation-nekomimi/management/advanced-unit.log": "14fda58b15c0c04eba5718f33b1cfe0a24df3334861ee0f0c1170dfb8ca62cf2",
+    "docs/validation/next-generation-nekomimi/management/advanced-types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/validation/next-generation-nekomimi/management/advanced-browser-final.log": "8af6ee57266ea12a28fcf9864088498b6c7fd7e2bcf5734a29a74464c5dff959",
+    "docs/validation/next-generation-nekomimi/management/advanced-browser.log": "89d39c3776d8600d8d0a60336a02d887d9bea775b52c4b28655aa25b1b49e572",
+    "docs/validation/next-generation-nekomimi/management/advanced-build-final.log": "cd8ba768a9aceb3e6091bb3cf1e81428bd3b6bacada17d75fe2a5ac1ed4432a4",
+    "docs/validation/next-generation-nekomimi/management/advanced-build.log": "613d8e38de003bad443ad58329377ad39b0a5293ea0c091e340e3ef07cc27781",
+    "docs/validation/next-generation-nekomimi/management/advanced-types-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/validation/next-generation-nekomimi/management/advanced-models-progress.md": "2858b010af89d7543630e2bf57f84dd1629797d001ea4936279defebd24636c9",
+    "src/customization/history-branch.ts": "3b9156e757b5506d88bf5445fc286f9be0d64f4d2acf963f7e0cb63e44d34855",
+    "src/customization/provider-profiles.ts": "f317aea2784200d968a5e0955e400daa7197fdc60f07c7eb08944fd337f5f678",
+    "src/server/sessions.ts": "03efbdf5577b6588921863bee13cb7bc088ed9b04846a612c46741e058b50967",
+    "src/web/v2/routes/model-advanced.tsx": "a5e628a9c6a405be96737ccc3443297e7e1614bdab1f25cfe18926b141b47032",
+    "src/web/v2/routes/management-confirm.tsx": "27df8b7189c64bf2576b98fb1ec526a9268ab883842445d5bedddfa20b3bf4ce",
+    "src/web/v2/routes/models.tsx": "acdaa4a6406df088144ade602e12b361b4ce31fffefdd5a3a96bbd29860600bb",
+    "src/web/v2/routes/work-nav.tsx": "a0be05d9cf069fc8efac0af5f08394cc04bc2e0038bcef3d2172c795f930b1c0",
+    "src/web/v2/router.tsx": "f4026d98c0afea3a82ba741ecc32a9da8f31554c7a46e11c0a8c3e68fbbef0dc",
+    "test/history-branch-identity.test.ts": "ad3b9fd6f53731892b33cf8d61e034780bf6e5ff35a69fd3bea48e3a9f67e8b1",
+    "test/customization-provider.test.ts": "596a4df62ab658f592ba3757fbf869e613a3eb3b811478dfa11c4736fe7de746",
+    "test/browser/model-advanced.spec.ts": "885e097ca4f1498eb8479373c670ddd274aa961e1a7a902a6ef609941c085485",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "45dbd7b6363a9c6199f3ca1b1e6a602ecc52bc8bff87f1df01ed67ed12a06830",
+    "openspec/changes/next-generation-nekomimi/design.md": "5283cb89d0451040466bfb5dc18eb59f09aa96ab131d57d0a3effabcb9bac63a",
+    "openspec/changes/next-generation-nekomimi/specs/web-customization/spec.md": "2d48450f435fab730433ce5809a7e43e02d3599881d4d6da65e61d2e72e5139a"
+  }
+}

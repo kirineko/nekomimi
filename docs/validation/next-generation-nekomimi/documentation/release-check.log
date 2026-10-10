@@ -1,0 +1,19 @@
+
+> nekomimi@0.2.1 test:release
+> node --test scripts/release-check.test.mjs
+
+✔ valid release metadata (0.376792ms)
+✔ reject private (0.0935ms)
+✔ reject wrong version (0.06175ms)
+✔ reject prerelease (0.043667ms)
+✔ reject wrong repository (0.337209ms)
+✔ reject missing license (0.031625ms)
+✔ registry availability fails closed (0.066667ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.719625

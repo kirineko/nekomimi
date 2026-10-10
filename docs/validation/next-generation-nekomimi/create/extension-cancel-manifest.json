@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-07T19:14:50.013715+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.2": "in-progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "unitDistinct": 26,
+    "browser": 5,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-browser.log": "88123d4f063785c52f94399f601d65c0bb2ca13d0200ad23924baadc636356cd",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-build.log": "0f9437bb7582915df868a571a74b47164cfff999f4dbc8a4b93e495fce922130",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-final-unit.log": "fe2602a16fc20d3fc95c4104be0ee24bd13ebcd8d0d667f9e7ead8d4c7a7ba1f",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-types-2.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-types.log": "dc9d10cf0ce160db5c9964cf9221067b9392299b7a6233dc6f637186f67cf03c",
+    "docs/validation/next-generation-nekomimi/create/extension-cancel-unit.log": "fd23cf0b55fc37a54d0bb4257c7e4d260bb44854de73b40d06cb1358723d2788",
+    "docs/validation/next-generation-nekomimi/create/extension-cancellation.md": "f8a3681fb3b4e37a6b89e9af395d9857e30665fa196ba8d4c6f0b088a630fd2d",
+    "openspec/changes/next-generation-nekomimi/design.md": "b0b17c25e449709e84491ddf9217bf6a8d5a279925a8d1d35f43c34d2ca93015",
+    "openspec/changes/next-generation-nekomimi/specs/web-task-workbench/spec.md": "378c9bdff671c06511c651a44258563d162e014b2dc2af1c13edbbcf3ab2fbfb",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "014c74b5f1eecc2a293312aead35d03ec6a2994fe439c7150206fc97a098cfa2",
+    "src/customization/host.ts": "f9fe1cab86010af7a93e0f678d9dd6bc9d09769aa5ca51c5e4350e3501dabff7",
+    "src/customization/panels.ts": "f873becc2fbfef86c582fb7429c835ef613248b71bb44655501172b68cd8a42d",
+    "src/customization/process.ts": "5640631963cc4d52a461eb5a3b5bbdb80aecede49d1918fb781dc2587bbb0ced",
+    "src/customization/trial.ts": "3a765b4bef0e1ec9568473ec28f35aa2b2f8ff109cccc86d78f1ea3c8d67846f",
+    "src/shared/customization-lifecycle.ts": "d0e8ad87898b186966ad5059ac977e155fc00e824cbf6d5e52208955039dbc2b",
+    "test/customization-validation-cancel.test.ts": "24e4c17dda51525f660f7697a874031ed3097a445e81327e1d2749d81f0587d4"
+  }
+}

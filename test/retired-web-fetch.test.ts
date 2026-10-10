@@ -1,3 +1,5 @@
+import {openJournalStorage} from '../src/pi/journal-storage.js';
+import {BACKGROUND_CONTEXT} from '@earendil-works/chord/context';
 import { it, expect } from 'vitest';
 import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
@@ -38,7 +40,7 @@ it('returns an unknown-tool result for an obsolete model call without fetching t
 });
 
 it('keeps old fetch statuses and artifacts readable through replay and export/import', async () => {
-  const workspace = await temporary(), directory = join(workspace, 's'), j = await Journal.open(directory);
+  const workspace = await temporary(), directory = join(workspace, 's'), j = (await openJournalStorage(directory, BACKGROUND_CONTEXT)).journal;
   const statuses = ['complete', 'failed', 'cancelled', 'partial'];
   try {
     for (const status of statuses) {

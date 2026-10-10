@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-07T15:29:15.167494+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/shared/customization-lifecycle.ts": "46da4fd3ba41ff59c3ad5f09def4a11dce9440d171f0d5c6fd4c3d9bbf2c9307",
+    "src/customization/lifecycle.ts": "f4329f6278456afb0ac3a5acf50d8797dcce17c9bcb1e603d33d5a59cfea3ce7",
+    "src/customization/run.ts": "4a06aa88e26f429140c1392b0333050a95c2efc718deec5aefc938fb4d21d6d1",
+    "src/shared/protocol.ts": "b31fa681c28691f950efc9573f76134845d7eedcf80fd4d3aa3772877f5137bb",
+    "src/session/delivery.ts": "e598f8372328926979e41b6ce2c745c7ee90a7b9eea630fe2a48bc4836688d6c",
+    "src/web/components/customization/AbilityCards.tsx": "7222df1d43138044c8fc9e456588933f8e1492923e40e6aeb19d91f0d65ee076",
+    "test/delivery-receipts.test.ts": "6813f70cf150e3a72a132c2b65ad9cfe29092d92af6109577567a073279e5f3d",
+    "extension-docs/customization-lifecycle.md": "4cc7fbb5517bea41d7fdbd3df5799469545b5782a351edeb2fed5b09aa38da1a",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "4652941ac4e7023c2d8ca59226b0a426370fc54d9b7bb450525990089f6435cc",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection.md": "6e4cea8cc67c1ce3a31c934b57695e9ec9bf04f939db7ebcac70a3cfc891b272",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-regression.log": "c78fa2f4fbff1f2fc89ae86affcc825e9906dee33aa2aff24c3e782ed33cc2df",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-build.log": "269d91dc53821c5149d8507c11fa1e94ab95d858fcbcf71891ad8e570dd4a50d",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-final.log": "0a94dafb0efdebdb68efee29e3d02c9fa4a9aaeb271dff9714b99c02d0178178",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-first.log": "9f046d23ab21b5088761e059717cadfbeebfb8c03b366ca7e15c456f8aba200b",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/projection-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

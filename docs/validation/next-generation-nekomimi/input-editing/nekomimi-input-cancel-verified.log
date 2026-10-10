@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:82154) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-interactions.spec.ts:8:1 › an extension form survives reload, isolates sessions and retries the same explicit answer (4.2s)
+  ✓  2 test/browser/v2-interactions.spec.ts:47:1 › a create form answers only its own interaction and ignores late work polling (885ms)
+
+  2 passed (6.4s)

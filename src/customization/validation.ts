@@ -1,4 +1,6 @@
 import ts from "typescript";
+import { SDK_VERSION } from "./types.js";
+import type { VerificationResult } from "../shared/customization-lifecycle.js";
 import { resolve, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
@@ -6,19 +8,11 @@ import { createRequire } from "node:module";
 import { hash } from "../journal.js";
 import type { Resource } from "./resources.js";
 
-export interface ValidationDiagnostic {
-  stage: "manifest" | "syntax" | "type" | "dependency";
-  code: number | string;
-  message: string;
-  resourceId: string;
-  contentHash: string;
-  file?: string;
-  line?: number;
-  column?: number;
-}
+import type { ValidationDiagnostic } from "../shared/validation-task.js";
+export type { ValidationDiagnostic } from "../shared/validation-task.js";
 export interface ValidationReport {
   version: 1;
-  verification?: {stage:"static";hostIntegration:"not_run"};
+  verification?: VerificationResult;
   resourceId: string;
   contentHash: string;
   passed: boolean;
@@ -32,7 +26,7 @@ export function contentHash(files: Record<string, string>, binaryFiles: Record<s
 export function checkTypes(resource: Resource): ValidationReport {
   const files = resource.files ?? {};
   const digest = contentHash(files, resource.binaryFiles);
-  const result: ValidationReport = { version: 1, verification:{stage:"static",hostIntegration:"not_run"}, resourceId: resource.id, contentHash: digest, passed: false, diagnostics: [] };
+  const result: ValidationReport = { version: 1, verification:{stage:"static",status:"failed",hostIntegration:"not_run",resourceId:resource.id,resourceRevision:digest,environment:{node:process.version,platform:process.platform,arch:process.arch,sdkVersion:SDK_VERSION,compilerVersion:ts.version}}, resourceId: resource.id, contentHash: digest, passed: false, diagnostics: [] };
   const add = (diagnostic: Omit<ValidationDiagnostic, "resourceId" | "contentHash">) => result.diagnostics.push({ ...diagnostic, resourceId: resource.id, contentHash: digest });
   if (!resource.manifest || resource.error) {
     add({ stage: "manifest", code: "invalid_manifest", message: resource.error ?? "Missing manifest" });
@@ -42,7 +36,7 @@ export function checkTypes(resource: Resource): ValidationReport {
   const sdk = existsSync(sdkSource) ? sdkSource : fileURLToPath(new URL("../extensions.d.ts", import.meta.url));
   const options: ts.CompilerOptions = {
     target: ts.ScriptTarget.ES2023, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler,
-    jsx: ts.JsxEmit.ReactJSX, strict: true, noImplicitAny: resource.manifest.sdkVersion !== 1, noEmit: true, skipLibCheck: true,
+    jsx: ts.JsxEmit.ReactJSX, strict: true, noImplicitAny: true, noEmit: true, skipLibCheck: true,
     allowJs: true, checkJs: true, allowImportingTsExtensions: true,
     types: ["node"], typeRoots: [dirname(dirname(createRequire(import.meta.url).resolve("@types/node/package.json")))],
     lib: ["lib.es2023.d.ts", "lib.dom.d.ts"],
@@ -55,6 +49,7 @@ export function checkTypes(resource: Resource): ValidationReport {
   host.fileExists = path => snapshot.has(resolve(path)) || exists(path);
   const entrypoints = [...snapshot.keys()].filter(p => /\.[cm]?[jt]sx?$/.test(p));
   const program = ts.createProgram(entrypoints, options, host);
+  result.verification!.environment.sdkHash = hash(JSON.stringify(program.getSourceFiles().filter(file => file.fileName.startsWith(dirname(sdk) + "/")).map(file => [relative(dirname(sdk), file.fileName), hash(file.text)]).sort(([a],[b]) => a!.localeCompare(b!))));
   const syntax = program.getSyntacticDiagnostics();
   const diagnostics = [...syntax, ...program.getOptionsDiagnostics(), ...program.getSemanticDiagnostics()];
   for (const diagnostic of diagnostics) {
@@ -69,5 +64,6 @@ export function checkTypes(resource: Resource): ValidationReport {
     if (result.diagnostics.length >= 100) { add({ stage: "type", code: "diagnostic_limit", message: "Stopped after 100 diagnostics" }); break; }
   }
   result.passed = result.diagnostics.length === 0;
+  result.verification!.status = result.passed ? "passed" : "failed";
   return result;
 }

@@ -1,0 +1,32 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/web/v2/routes/create.tsx(36,18): error TS2339: Property 'candidates' does not exist on type '{}'.
+src/web/v2/routes/create.tsx(37,52): error TS2339: Property 'candidates' does not exist on type '{}'.
+src/web/v2/routes/create.tsx(37,67): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/web/v2/routes/create.tsx(38,55): error TS2339: Property 'abilities' does not exist on type '{}'.
+src/web/v2/routes/create.tsx(39,52): error TS2339: Property 'abilities' does not exist on type '{}'.
+src/web/v2/routes/create.tsx(39,66): error TS7006: Parameter 'ability' implicitly has an 'any' type.
+src/web/v2/routes/create.tsx(57,151): error TS2339: Property 'candidates' does not exist on type '{}'.
+src/web/v2/routes/details.tsx(137,28): error TS2339: Property 'busy' does not exist on type '{}'.
+src/web/v2/routes/details.tsx(137,57): error TS2339: Property 'degraded' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(41,45): error TS2339: Property 'resources' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(41,62): error TS7006: Parameter 'resource' implicitly has an 'any' type.
+src/web/v2/routes/resources.tsx(46,107): error TS2339: Property 'degraded' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(46,177): error TS2339: Property 'degraded' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(46,197): error TS2339: Property 'busy' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(48,70): error TS2339: Property 'busy' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,38): error TS2339: Property 'userWrites' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,92): error TS2339: Property 'userWrites' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,260): error TS2339: Property 'userWrites' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,287): error TS2339: Property 'settingsRevision' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,329): error TS2339: Property 'userWrites' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(49,368): error TS2339: Property 'settingsRevision' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(52,69): error TS7006: Parameter 'resource' implicitly has an 'any' type.
+src/web/v2/routes/resources.tsx(52,133): error TS2740: Type '{}' is missing the following properties from type 'CustomizationDescribe': candidates, abilities, busy, resources, and 6 more.
+src/web/v2/routes/resources.tsx(53,82): error TS2339: Property 'receipts' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(53,122): error TS2339: Property 'receipts' does not exist on type '{}'.
+src/web/v2/routes/resources.tsx(53,146): error TS7006: Parameter 'receipt' implicitly has an 'any' type.
+src/web/v2/state/create.ts(27,114): error TS2339: Property 'receipts' does not exist on type '{}'.
+src/web/v2/state/create.ts(27,128): error TS7006: Parameter 'receipt' implicitly has an 'any' type.

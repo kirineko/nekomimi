@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/web/v2/routes/handoff-summary.tsx(10,58): error TS2554: Expected 1 arguments, but got 0.

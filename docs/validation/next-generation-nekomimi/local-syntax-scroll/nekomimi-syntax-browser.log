@@ -1,0 +1,64 @@
+
+Running 16 tests using 2 workers
+
+(node:98959) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.3s)
+  ✓   3 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (696ms)
+  ✓   1 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (2.3s)
+  ✓   4 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (2.1s)
+  ✓   5 test/browser/header-recovery.spec.ts:36:1 › export is disabled without a session or while the durable run is active (2.5s)
+  ✓   6 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (1.0s)
+  ✓   8 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.6s)
+  ✓   7 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.9s)
+  ✓   9 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.5s)
+  ✓  10 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.8s)
+  ✓  11 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.8s)
+  ✓  12 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.6s)
+  ✓  13 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (1.2s)
+  ✓  14 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (2.2s)
+{"browser":"","cacheViewMs":819,"workerJobs":2}
+  ✘  15 test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline (45.2s)
+(node:99069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"browser":"","first100LinesMs":1332,"inputFillDuringStreamMs":34}
+  ✓  16 test/browser/syntax.spec.ts:67:1 › streaming code stays interactive and stale highlighting cannot cross sessions (7.8s)
+
+
+  1) test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '更多', exact: true })
+
+
+      49 |   await page.setViewportSize({width:1440,height:1000});
+      50 |   await page.screenshot({path:info.outputPath('syntax-wide.png'),fullPage:true});
+    > 51 |   await page.getByRole('button',{name:'更多操作',exact:true}).click();
+         |                                                         ^
+      52 |   await page.getByRole('menuitem',{name:'导出会话',exact:true}).click();
+      53 |   const downloaded=page.waitForEvent('download');
+      54 |   await page.getByRole('button',{name:'下载 HTML'}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/syntax.spec.ts:51:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline 
+  15 passed (1.1m)

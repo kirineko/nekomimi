@@ -14,8 +14,8 @@ it('validates complete style values and rejects executable or unbounded input',(
  for(const path of ['../secret','/secret','https://host/x','a\\b','a//b']) expect(()=>assetPath(path)).toThrow();
  expect(()=>validateView({title:'工具栏',order:3,match:{role:'assistant'}})).not.toThrow();
  expect(()=>validateView({title:'',order:Infinity})).toThrow();
- expect(()=>checkManifest({name:'theme',sdkVersion:2,entry:'index.ts',requiredCapabilities:['themes','views','ui-draft']})).not.toThrow();
- expect(()=>checkManifest({name:'theme',sdkVersion:2,entry:'index.ts',requiredCapabilities:['arbitrary-css']})).toThrow();
+ expect(()=>checkManifest({name:'theme',sdkVersion:3,entry:'index.ts',requiredCapabilities:['themes','views','ui-draft']})).not.toThrow();
+ expect(()=>checkManifest({name:'theme',sdkVersion:3,entry:'index.ts',requiredCapabilities:['arbitrary-css']})).toThrow();
 });
 it('loads only hashed bounded local assets with matching signatures',async()=>{
  const root=await temporary(),data=Buffer.from([137,80,78,71,13,10,26,10]);await writeFile(join(root,'image.png'),data);
@@ -29,11 +29,13 @@ it('registers themes and views with explicit capabilities and rejects duplicate 
  const {mkdir}=await import('node:fs/promises');const {CustomizationHost}=await import('../src/customization/host.js');
  for(const mode of ['valid','duplicate','undeclared','legacy']) {
   const workspace=await temporary(),home=await temporary(),root=join(workspace,'.nekomimi/extensions/ui');await mkdir(root,{recursive:true});
-  await writeFile(join(root,'extension.json'),JSON.stringify({name:'ui',sdkVersion:mode==='legacy'?1:2,entry:'index.ts',requiredCapabilities:mode==='undeclared'?['views']:['themes','views']}));
+  await writeFile(join(root,'extension.json'),JSON.stringify({name:'ui',sdkVersion:mode==='legacy'?1:3,entry:'index.ts',requiredCapabilities:mode==='undeclared'?['views']:['themes','views']}));
   await writeFile(join(root,'panel.ts'),'export default {mount(root:HTMLElement){root.textContent="View"}};');
-  await writeFile(join(root,'index.ts'),`import type {ExtensionFactory2} from 'nekomimi/extensions';export default ((api)=>{api.registerTheme({id:'sakura',title:'樱花'});${mode==='duplicate'?"api.registerTheme({id:'sakura',title:'重复'});":''}api.registerView({id:'widget',title:'挂件',uiVersion:1,entry:'panel.ts',slot:'sidebar-widget',propsSchema:{type:'object'},actions:[],fallback:'挂件内容'});}) satisfies ExtensionFactory2;`);
+  await writeFile(join(root,'index.ts'),`import type {ExtensionFactory3} from 'nekomimi/extensions';export default ((api)=>{api.registerTheme({id:'sakura',title:'樱花'});${mode==='duplicate'?"api.registerTheme({id:'sakura',title:'重复'});":''}api.registerView({id:'widget',title:'挂件',uiVersion:1,contractVersion:3,modes:['work','create'],targetScope:'current',entry:'panel.ts',slot:'sidebar-widget',propsSchema:{type:'object'},actions:[],fallback:'挂件内容'});}) satisfies ExtensionFactory3;`);
   const host=new CustomizationHost(workspace,home);
-  try {const resource=(await host.catalog.discover()).find(r=>r.kind==='extension')!;await host.catalog.decide(resource.id,true,true,0);
+  try {const resource=(await host.catalog.discover()).find(r=>r.kind==='extension')!;
+   if(mode==='legacy'){await expect(host.catalog.decide(resource.id,true,true,0)).rejects.toThrow('sdkVersion');await expect(host.acquire()).rejects.toThrow('sdkVersion');continue;}
+   await host.catalog.decide(resource.id,true,true,0);
    if(mode==='valid'){await host.acquire();await host.release();expect((await host.themes.catalog())[0]?.title).toBe('樱花');expect(host.panels.catalog()[0]?.slot).toBe('sidebar-widget');
     const theme=(await host.themes.catalog())[0]!;await host.themes.select('user',{id:theme.id,resourceId:theme.resourceId,revision:theme.revision},0);expect((await host.themes.describe()).active?.id).toBe('sakura');await host.themes.select('project',{id:theme.id,resourceId:theme.resourceId,revision:theme.revision},0);expect((await host.themes.describe()).active?.id).toBe('sakura');await expect(host.themes.select('project',null,0)).rejects.toThrow('conflict');
     await host.catalog.decide(resource.id,false,false,(await host.catalog.decisions()).revision);expect((await host.themes.describe()).unavailable).toBe(true);
@@ -55,11 +57,18 @@ it('validates the distributed complete theme example and keeps denied actions in
  const host=new CustomizationHost(workspace,home);
  try{const resource=(await host.catalog.discover()).find(r=>r.kind==='extension')!;expect(await validateExtension(resource)).toEqual([]);await host.catalog.decide(resource.id,true,true,0);await host.acquire();await host.release();
  const panel=host.panels.catalog().find(p=>p.id==='moe')!;const instance=await host.panels.mount(resource.id,panel.id,resource.hash,{name:'test'},undefined,false,undefined,'session-a');
- expect(await host.panels.uiAction(instance.instanceId,1,'draft.set',{text:'hello'})).toMatchObject({sessionId:'session-a'});
- await expect(host.panels.uiAction(instance.instanceId,1,'draft.set',{text:'hello'})).rejects.toThrow('identity');
- await expect(host.panels.uiAction(instance.instanceId,2,'command.run',{})).rejects.toThrow('authorized');
- await host.catalog.decide(resource.id,false,false,(await host.catalog.decisions()).revision);await expect(host.panels.uiAction(instance.instanceId,3,'draft.set',{text:'hello'})).rejects.toThrow('revoked');
- host.panels.unmount(instance.instanceId);await expect(host.panels.document(instance.instanceId)).rejects.toThrow('expired');
+ for(const wrongSession of [undefined,'session-b']) {
+  await expect(host.panels.document(instance.instanceId,wrongSession)).rejects.toThrow('scope mismatch');
+  expect(()=>host.panels.unmount(instance.instanceId,wrongSession)).toThrow('scope mismatch');
+  await expect(host.panels.uiAction(instance.instanceId,1,'draft.set',{text:'hello'},wrongSession)).rejects.toThrow('scope mismatch');
+  await expect(host.panels.action(instance.instanceId,1,'workflow.cancel',{},wrongSession)).rejects.toThrow('scope mismatch');
+ }
+ expect((await host.panels.document(instance.instanceId,'session-a')).html).toContain('NekomimiPanel');
+ expect(await host.panels.uiAction(instance.instanceId,1,'draft.set',{text:'hello'},'session-a')).toMatchObject({sessionId:'session-a'});
+ await expect(host.panels.uiAction(instance.instanceId,1,'draft.set',{text:'hello'},'session-a')).rejects.toThrow('identity');
+ await expect(host.panels.uiAction(instance.instanceId,2,'command.run',{},'session-a')).rejects.toThrow('authorized');
+ await host.catalog.decide(resource.id,false,false,(await host.catalog.decisions()).revision);await expect(host.panels.uiAction(instance.instanceId,3,'draft.set',{text:'hello'},'session-a')).rejects.toThrow('revoked');
+ host.panels.unmount(instance.instanceId,'session-a');await expect(host.panels.document(instance.instanceId)).rejects.toThrow('expired');
  }finally{await host.close();}
 },30000);
 it('creates typechecked theme and UI candidates without activating them',async()=>{

@@ -1,0 +1,60 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/core-switch-gate.test.ts (5 tests | 2 failed) 1982ms
+   × reports an in-flight body as busy instead of switching across a request that has not dispatched yet 706ms
+   × blocks live approvals and parked workflow waits without loading their factories or creating workflow storage on inspection 298ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/core-switch-gate.test.ts > reports an in-flight body as busy instead of switching across a request that has not dispatched yet
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/core-switch-gate.test.ts:46:18
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/core-switch-gate.test.ts > blocks live approvals and parked workflow waits without loading their factories or creating workflow storage on inspection
+AssertionError: expected { ready: true, …(2) } to match object { ready: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "blockers": [
+-     {
+-       "id": "parked",
+-       "kind": "workflow",
+-       "state": "waiting",
+-       "target": Any<String>,
+-     },
+-   ],
+-   "ready": false,
++   "blockers": [],
++   "ready": true,
+  }
+
+ ❯ test/core-switch-gate.test.ts:77:60
+     75|   } finally {await flow.close();}
+     76|   const history=(await readSession(flow.directory)).events;
+     77|   expect(await f.app.prepareCoreSwitch('workflow-switch')).toMatchObje…
+       |                                                            ^
+     78|   expect((await readSession(flow.directory)).events).toEqual(history);
+     79| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  2 failed | 37 passed (39)
+   Start at  00:32:50
+   Duration  54.43s (transform 360ms, setup 0ms, import 2.06s, tests 51.98s, environment 0ms)
+

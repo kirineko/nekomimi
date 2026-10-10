@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: SSE ended with an incomplete frame
++ actual - expected
+
++ 'failed'
+- 'completed'
+
+    at file:///Users/kirineko/Github/nekomimi/scripts/measure-runtime-performance.mjs:28:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'failed',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

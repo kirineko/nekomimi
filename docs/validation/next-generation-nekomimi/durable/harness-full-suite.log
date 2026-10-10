@@ -1,0 +1,176 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-server.test.ts (1 test | 1 failed) 3546ms
+   × keeps form answers idempotent, restores history without plugin and protects management 3545ms
+ ❯ test/session-navigation.test.ts (4 tests | 1 failed) 15704ms
+   × sorts before pagination and rejects changed versions while ignoring corrupt directories 15004ms
+ ❯ test/prompt-contracts.test.ts (30 tests | 1 failed) 20034ms
+   × keeps environment provenance hidden from conversation bubbles after branching 780ms
+{"nekomimiDiagnostic":{"version":1,"id":"2c25bdbd-bc25-49fe-b300-a366cdeb126f","timestamp":"2026-10-06T18:01:46.906Z","sessionId":"57302704-fe2a-4922-b510-657d4c1ae767","runId":"dc3f02b2-5a46-42dc-b4e2-d653cf265eab","attemptId":"7235a731-53f2-4a62-852a-e42047757403","seq":17,"durableSeq":17,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-workflow.test.ts (1 test | 1 failed) 30003ms
+   × creates a review extension through recorded model tools, then uses skills, rules and MCP across reload and restart 30003ms
+ ❯ test/customization-package-source.test.ts (6 tests | 1 failed) 31965ms
+   × bounds Git object history even when the selected commit has a tiny working tree 30003ms
+ ❯ test/customization-packages.test.ts (5 tests | 1 failed) 36020ms
+   × installs a local multi-resource package with stable identities and target-bound rules 15003ms
+ ❯ test/edges.test.ts (6 tests | 1 failed) 29267ms
+   × durability failure blocks a tool before dispatch 2681ms
+{"nekomimiDiagnostic":{"version":1,"id":"e35f99f3-cf9a-41d5-9cbe-f1e21b3c77b1","timestamp":"2026-10-06T18:02:17.404Z","sessionId":"b8b7321e-bebb-4abf-8e7f-cb9440cd7a9e","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6976d45d-1dbe-4d63-b679-fd582afd2037","timestamp":"2026-10-06T18:02:40.111Z","sessionId":"391faebc-5d3d-40c0-8abe-c267b7861c50","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4f3a105d-6961-4a12-9bb8-e8b2b7a7dfc4","timestamp":"2026-10-06T18:02:41.047Z","sessionId":"deefca23-f7d5-4846-b613-8db1e8786321","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"025ee0c2-5441-4de1-b5b1-7cd44619af47","timestamp":"2026-10-06T18:02:41.394Z","sessionId":"f71a7b3b-ee96-41e9-ae77-6dc51315d5db","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"65cb3d1e-54f3-4d82-8316-430b5dd98722","timestamp":"2026-10-06T18:02:41.663Z","sessionId":"b6d03eaa-86ed-48f0-8395-e57f25b4c0d6","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"f7b3f0db-1e06-4cee-848e-d0b1ce8059cc","timestamp":"2026-10-06T18:02:41.899Z","sessionId":"7cd23a06-efdb-4d27-9fba-25628b6f7b70","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a9f8bd8f-22f0-4fb0-8cad-01a67a6a9f57","timestamp":"2026-10-06T18:02:42.381Z","sessionId":"709ddeb1-9766-4316-a05e-e4968a13f765","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"9bd871c4-03e5-44b0-aa34-d6aa1fb5011e","timestamp":"2026-10-06T18:02:42.485Z","sessionId":"887e1347-c389-4ff8-a654-7d846871572d","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"14c3ade6-86a4-42a4-a074-126f6941f1dc","timestamp":"2026-10-06T18:02:42.511Z","sessionId":"887e1347-c389-4ff8-a654-7d846871572d","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+ ❯ test/customization-v2-composite.test.ts (1 test | 1 failed) 90004ms
+   × generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers 90003ms
+ ❯ test/runtime.test.ts (11 tests | 1 failed) 105446ms
+   × stops at 64 turns by default while respecting an explicit turn cap 60005ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-package-source.test.ts > bounds Git object history even when the selected commit has a tiny working tree
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-package-source.test.ts:102:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  test/customization-packages.test.ts > installs a local multi-resource package with stable identities and target-bound rules
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-packages.test.ts:24:1
+     22|   return source;
+     23| }
+     24| it("installs a local multi-resource package with stable identities and…
+       | ^
+     25|   const workspace = await temporary(), home = await temporary(), sourc…
+     26|   const packages = new Packages(workspace, home), host = new Customiza…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  test/customization-server.test.ts > keeps form answers idempotent, restores history without plugin and protects management
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ test/customization-server.test.ts:73:19
+     71|     }, { timeout: 8000 }).toBe(1);
+     72|     const answer = {
+     73|       id: items[0].id,
+       |                   ^
+     74|       commandId: "answer",
+     75|       answer: { choice: "yes" },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  test/customization-v2-composite.test.ts > generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers
+Error: Test timed out in 90000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-v2-composite.test.ts:13:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  test/customization-workflow.test.ts > creates a review extension through recorded model tools, then uses skills, rules and MCP across reload and restart
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-workflow.test.ts:8:1
+      6| import { run } from "../src/runtime.js";
+      7| import { readSession, hash } from "../src/journal.js";
+      8| it("creates a review extension through recorded model tools, then uses…
+       | ^
+      9|   const workspace = await temporary();
+     10|   const home = await temporary();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  test/edges.test.ts > durability failure blocks a tool before dispatch
+Error: Durable Journal storage poisoned
+ ❯ check src/pi/journal-storage.ts:129:13
+    127|   function check(): void {
+    128|     if (failed || journal.failure.signal.aborted)
+    129|       throw new Error("Durable Journal storage poisoned", { cause: fai…
+       |             ^
+    130|     journal.check();
+    131|   }
+ ❯ Object.scanSubmissions src/pi/journal-storage.ts:134:5
+ ❯ node_modules/@earendil-works/pi-durable/src/harness/scheduler.ts:525:17
+ ❯ scanAll node_modules/@earendil-works/pi-durable/src/harness/util.ts:49:21
+ ❯ TaskScheduler.#loadScopes node_modules/@earendil-works/pi-durable/src/harness/scheduler.ts:524:28
+ ❯ node_modules/@earendil-works/pi-durable/src/harness/scheduler.ts:328:41
+ ❯ HarnessImpl.#runCommit node_modules/@earendil-works/pi-durable/src/session/session.ts:414:18
+ ❯ node_modules/@earendil-works/pi-durable/src/session/session.ts:100:45
+
+Caused by: Error: Operation failed: journal.sync: synthetic disk full
+ ❯ observeIO src/diagnostics.ts:18:67
+ ❯ Journal.sync src/journal.ts:356:5
+ ❯ src/journal.ts:346:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { operation: 'journal.sync', original: { stack: 'Error: synthetic disk full\n    at Object.beforeIO (/Users/kirineko/Github/nekomimi/test/edges.test.ts:19:94)\n    at /Users/kirineko/Github/nekomimi/src/journal.ts:356:70\n    at observeIO (/Users/kirineko/Github/nekomimi/src/diagnostics.ts:17:22)\n    at Journal.sync (/Users/kirineko/Github/nekomimi/src/journal.ts:356:11)\n    at /Users/kirineko/Github/nekomimi/src/journal.ts:439:36\n    at /Users/kirineko/Github/nekomimi/src/journal.ts:346:22', message: 'synthetic disk full', constructor: 'Function<Error>', name: 'Error', toString: 'Function<toString>' }, code: undefined, syscall: undefined }
+Caused by: Error: synthetic disk full
+ ❯ Object.beforeIO test/edges.test.ts:19:94
+ ❯ src/journal.ts:356:70
+ ❯ observeIO src/diagnostics.ts:17:22
+ ❯ Journal.sync src/journal.ts:356:11
+ ❯ src/journal.ts:439:36
+ ❯ src/journal.ts:346:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  test/prompt-contracts.test.ts > keeps environment provenance hidden from conversation bubbles after branching
+Error: Unsupported session format; 请选择独立的新Durable目录，原文件不会迁移或覆盖
+ ❯ checkFormat src/pi/journal-storage.ts:42:11
+     40|   if (!events.length) return;
+     41|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     42|     throw new ApiError(422, "incompatible_format", "Unsupported sessio…
+       |           ^
+     43|   let previousSeq = 0;
+     44|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:82:5
+ ❯ branchHistory src/customization/history-branch.ts:11:3
+ ❯ test/prompt-contracts.test.ts:130:2
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  test/runtime.test.ts > stops at 64 turns by default while respecting an explicit turn cap
+Error: Test timed out in 60000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/runtime.test.ts:95:1
+     93|  }});expect(calls).toBe(1);expect(result.error).toContain('过滤');
+     94| });
+     95| it('stops at 64 turns by default while respecting an explicit turn cap…
+       | ^
+     96|  for(const cap of [undefined,2]){
+     97|   const workspace=await temporary();let calls=0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  test/session-navigation.test.ts > sorts before pagination and rejects changed versions while ignoring corrupt directories
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/session-navigation.test.ts:25:1
+     23|   } finally { await j.close(); }
+     24| });
+     25| it("sorts before pagination and rejects changed versions while ignorin…
+       | ^
+     26|   const service = await Sessions.open({ workspace: await temporary(), …
+     27|   try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  9 failed | 53 passed (62)
+      Tests  9 failed | 363 passed (372)
+   Start at  02:01:24
+   Duration  106.46s (transform 5.23s, setup 0ms, import 23.86s, tests 1068.81s, environment 3ms)
+

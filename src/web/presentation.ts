@@ -1,16 +1,7 @@
+import { listStatus } from "./glossary.js";
+
 export const statusText = (value?: string) =>
-  ({
-    running: "进行中",
-    cancelling: "正在停止",
-    completed: "已完成",
-    cancelled: "已停止",
-    failed: "失败",
-    incomplete: "未完成",
-    interrupted: "已中断",
-    idle: "就绪",
-  })[value ?? ""] ??
-  value ??
-  "";
+  listStatus[value ?? ""] ?? value ?? "";
 export const toolTitle = (name: string) =>
   ({
     web_search: "搜索网页",
@@ -49,3 +40,10 @@ export const duration = (ms?: number) =>
     : ms < 1000
       ? `${ms} ms`
       : `${(ms / 1000).toFixed(1)} s`;
+
+export function failureText(text:string) {
+  if(/Response incomplete/i.test(text))return '本次回复未完整生成。可以继续任务；具体原因可在调用证据中查看。';
+  if(/Run turn limit exceeded/i.test(text))return '已达到本次任务的调用轮数上限，请分步骤继续任务。';
+  if(/timed out/i.test(text))return '模型响应超时，请检查连接后继续任务。';
+  return text||'本次任务未完成，可以检查调用证据后继续。';
+}

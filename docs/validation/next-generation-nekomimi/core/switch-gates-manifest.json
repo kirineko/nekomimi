@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-10-07T16:40:58.088415+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree; task 8.5 remains incomplete",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/core/switch-gate.ts": "d7ad7bcdcc92787370bccc2ad70110dcfeb36a3ca76f3ab1e8a2a9836fbb21ac",
+    "src/core/operation-fence.ts": "a00c9736205cc6680e42313997a569bc0d0d5a7662c40dc2bfa3911501ab1108",
+    "src/server/sessions.ts": "eee2824f01cb206e1f53a9abcebbcec4dc4b1028ec102ce6185c44502d85aab5",
+    "src/server/app.ts": "526dd233ca71c5f8bac6b0cb6c33a993071874842669f402675ea2875d0763f2",
+    "src/customization/interactions.ts": "2e4017a1f1d07fcf8a066fca0274118c631238bd1044ce1fb0d6e76435ca0853",
+    "src/customization/workflows.ts": "31da1ed53159f0a345f21e3a29fff44fdc2f4bfc2c936a2760303df5776b2e86",
+    "test/core-switch-gate.test.ts": "525644ca11e301cf070a406db30be51abd19517b2a2cf5f9e8b3416a912ff7c1",
+    "test/core-operation-fence.test.ts": "ed4973a615a7c76a736fad749882a0395253fb6b94dd1fdb5f5bcf29eec6c9e7",
+    "test/independent-sessions.test.ts": "4c66e6a3f028726ad100ca8a677252845a9fb43e78e86bef0d4041c033a2523d",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "0b696b1308af8345a12de52f0637f46bf26cdd7d4037ddcdf2b4f78de7fd4040",
+    "openspec/changes/next-generation-nekomimi/design.md": "7538cbeb69f5aab527b182dc009d0b4ae21d41341e35ba5641fd64de45c3e06f",
+    "docs/validation/next-generation-nekomimi/core/switch-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/core/switch-gate-complete.log": "7fc478560135c49582986345424da1c67c582d8e4e4627a458ae6dae71b2549f",
+    "docs/validation/next-generation-nekomimi/core/switch-gate-first.log": "ad3d03e47402704081a7c5c2a6a4f6528dac9e4c142ab489c5ca646406a33c5c",
+    "docs/validation/next-generation-nekomimi/core/switch-gates.md": "12e4031a612ca85d957d6c57ba44a849ca3c7519fc451d62da84d760115dcef3",
+    "docs/validation/next-generation-nekomimi/core/switch-fences.log": "1a25e2322ced3f17f9e71ed4c2436f67a344fbf728402673c2a2538d7008400d",
+    "docs/validation/next-generation-nekomimi/core/switch-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/core/switch-build.log": "8a2816382a8c3d3c3d73dfb9c0f58d7caeaf7c34c5f36cd65f6ec518997e7bd1"
+  }
+}

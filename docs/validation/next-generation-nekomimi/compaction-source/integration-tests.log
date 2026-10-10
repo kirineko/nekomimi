@@ -1,0 +1,55 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-runtime.test.ts (12 tests | 3 failed) 23405ms
+   × rejects a completed create summary after a late profile change and preserves its evidence 1523ms
+   × rejects a completed create summary after a late permission change and preserves its evidence 1419ms
+   × rejects a completed create summary after a late lifecycle change and preserves its evidence 1534ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late profile change and preserves its evidence
+Error: Artifact symlink rejected: d85fa179d3629d5479de685b5fb9c60214678dc0beda5c7fc175baa73ba35aec
+ ❯ readArtifact src/journal.ts:101:11
+     99|   const resolved = await realpath(file);
+    100|   if (resolved !== file)
+    101|     throw new Error(`Artifact symlink rejected: ${ref.sha256}`);
+       |           ^
+    102|   const data = await readFile(file);
+    103|   if (hash(data) !== ref.sha256 || data.length !== ref.bytes)
+ ❯ test/context-runtime.test.ts:72:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late permission change and preserves its evidence
+Error: Artifact symlink rejected: 5a2909850b59ab66639406e4be544774a37dd8131ce1a99a5ed27e7f5bec1d34
+ ❯ readArtifact src/journal.ts:101:11
+     99|   const resolved = await realpath(file);
+    100|   if (resolved !== file)
+    101|     throw new Error(`Artifact symlink rejected: ${ref.sha256}`);
+       |           ^
+    102|   const data = await readFile(file);
+    103|   if (hash(data) !== ref.sha256 || data.length !== ref.bytes)
+ ❯ test/context-runtime.test.ts:72:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late lifecycle change and preserves its evidence
+Error: Artifact symlink rejected: 16714f8f996340cc6e8e9ca261c95feb2b85fa7fd90cd97b38240fe92defcd03
+ ❯ readArtifact src/journal.ts:101:11
+     99|   const resolved = await realpath(file);
+    100|   if (resolved !== file)
+    101|     throw new Error(`Artifact symlink rejected: ${ref.sha256}`);
+       |           ^
+    102|   const data = await readFile(file);
+    103|   if (hash(data) !== ref.sha256 || data.length !== ref.bytes)
+ ❯ test/context-runtime.test.ts:72:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  3 failed | 18 passed (21)
+   Start at  07:54:12
+   Duration  24.06s (transform 375ms, setup 0ms, import 839ms, tests 28.46s, environment 0ms)
+

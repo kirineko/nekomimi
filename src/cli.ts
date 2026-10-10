@@ -41,11 +41,71 @@ async function main() {
   const [command, arg, ...rest] = positionals;
   if (values.help || !command) {
     console.log(
-      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>] [--no-open]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --provider <profile>, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCustomization: nekomimi extensions list|validate|trial|enable|disable|reload [resource-id].\nCandidates: nekomimi candidates create|inspect|trial|activate|rollback|sdk.\nPackages: nekomimi packages prepare|inspect|activate|list|rollback|export|uninstall|collect <JSON-options>.\nModels: nekomimi providers list|save|select|credential|migrate; nekomimi branch <session> --output <new-directory> [--omit-reasoning].\nMCP OAuth: nekomimi mcp-auth status|authorize|disconnect <resource-id>.\nWorkflows: nekomimi workflows list|inspect|start|resume|answer|resolve|cancel|migrate|evidence|artifact|recover|state-get|state-migrate <JSON-options>.\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
+      `Nekomimi — inspectable local coding agent\n\nnekomimi web [--workspace <dir>] [--port <port>] [--no-open]\n\nnekomimi run <prompt> [--workspace <dir>] [--session <dir>] [--json]\nnekomimi resume <session> <prompt> [--json]\nnekomimi replay <session>\nnekomimi export <session> --format html|bundle --output <path> [--redact <text>]\nnekomimi inspect <bundle>\nnekomimi import <bundle> --output <new-session-dir>\n\nOptions: --model, --provider <profile>, --base-url, --max-output-tokens, --max-turns, --instructions <file>, --tools <comma-list>, --image <file>\nCustomization: nekomimi extensions list|validate|trial|enable|disable|reload [resource-id].\nCandidates: nekomimi candidates create|inspect|trial|activate|rollback|sdk.\nInstalled SDK: nekomimi candidates sdk guide:cli.md --workspace <development-dir>.\nSDK 3 only; create-mode development uses a separate target. Installed guides are not core source.\nCore: nekomimi core preview|prepare|inspect|list|build-plan|build|inspect-build|validate|inspect-validation|launch-info|launch|recovery-info|reconcile|recover-plan|recover <JSON-options>; build, validate, launch, reconcile and recover require explicit authorization.\nPackages: nekomimi packages prepare|inspect|activate|list|rollback|export|uninstall|collect <JSON-options>.\nModels: nekomimi providers list|save|select|credential|migrate; nekomimi branch <session> --output <new-directory> [--omit-reasoning].\nMCP OAuth: nekomimi mcp-auth status|authorize|disconnect <resource-id>.\nWorkflows: nekomimi workflows list|inspect|start|resume|answer|resolve|cancel|migrate|evidence|artifact|recover|state-get|state-migrate <JSON-options>.\nConfiguration: nekomimi config; nekomimi migrate [--execute]; --home <directory>.\nShell executes locally with your OS permissions; only file tools enforce workspace boundaries.\nFull bundles contain task content; HTML is a redacted offline reading view.`,
     );
     return;
   }
   const store = new ConfigStore(values.home);
+  if (command === 'core') {
+    const { CoreCandidates } = await import('./core/candidates.js');
+    const candidates = new CoreCandidates(resolve(values.workspace ?? process.cwd()), values.home);
+    const input = rest[0] ? JSON.parse(rest[0]) : {};
+    if (arg === 'recovery-info' || arg === 'reconcile' || arg === 'recover-plan') {
+      const { CoreInstallation } = await import('./core/installation.js');
+      const { CoreRecovery } = await import('./core/recovery.js');
+      const recovery = new CoreRecovery(await CoreInstallation.locate());
+      console.log(JSON.stringify(arg === 'recovery-info' ? await recovery.preview() : arg === 'recover-plan' ? await recovery.launchPlan(input.selection) : await recovery.reconcile(input), null, 2));
+    }
+    else if (arg === 'launch-info' || arg === 'launch' || arg === 'recover') {
+      const { CoreBuilds } = await import('./core/builds.js');
+      const { CoreValidations } = await import('./core/validations.js');
+      const { coreLaunchInfo, launchManagedCore, resumeManagedCore } = await import('./core/managed.js');
+      const builds = new CoreBuilds(candidates);
+      if (arg === 'launch-info') console.log(JSON.stringify(await coreLaunchInfo(builds, String(input.buildId ?? '')), null, 2));
+      else {
+        const controller = new AbortController(), stop = () => controller.abort(new Error('Managed launcher stopped'));
+        process.once('SIGINT', stop); process.once('SIGTERM', stop);
+        try {
+          const managed = arg === 'recover' ? await resumeManagedCore(await (await import('./core/installation.js')).CoreInstallation.locate(), input, { signal: controller.signal }) : await launchManagedCore(new CoreValidations(builds), input, { signal: controller.signal });
+          if (!('done' in managed)) { console.log(JSON.stringify(managed)); return; }
+          console.log(JSON.stringify({ mode: 'managed', launchId: managed.launchId, installation: managed.installation.identity, identity: managed.identity, url: managed.url }));
+          const outcome = await managed.done;
+          console.log(JSON.stringify({ mode: 'managed', status: outcome.cleanup === 'confirmed' ? 'stopped' : 'unknown', cleanup: outcome.cleanup, outcome: outcome.status }));
+          if (!['passed', 'cancelled'].includes(outcome.status)) process.exitCode = 1;
+        } finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); }
+      }
+    }
+    else if (arg === 'validate' || arg === 'inspect-validation') {
+      const { CoreBuilds } = await import('./core/builds.js');
+      const { CoreValidations } = await import('./core/validations.js');
+      const validations = new CoreValidations(new CoreBuilds(candidates));
+      if (arg === 'inspect-validation') console.log(JSON.stringify(await validations.inspect(String(input.validationId ?? '')), null, 2));
+      else {
+        const controller = new AbortController(), stop = () => controller.abort(new Error('Core validation cancelled'));
+        process.once('SIGINT', stop); process.once('SIGTERM', stop);
+        try { const result = await validations.validate(input, { signal: controller.signal }); console.log(JSON.stringify(result, null, 2)); if (result.status !== 'passed') process.exitCode = 1; }
+        finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); }
+      }
+    }
+    else if (arg === 'build-plan' || arg === 'build' || arg === 'inspect-build') {
+      const { CoreBuilds } = await import('./core/builds.js');
+      const builds = new CoreBuilds(candidates);
+      if (arg === 'build-plan') console.log(JSON.stringify(await builds.plan(String(input.candidateId ?? '')), null, 2));
+      else if (arg === 'inspect-build') console.log(JSON.stringify(await builds.inspect(String(input.buildId ?? '')), null, 2));
+      else {
+        const controller = new AbortController(), stop = () => controller.abort(new Error('Core build cancelled'));
+        process.once('SIGINT', stop); process.once('SIGTERM', stop);
+        try { const result = await builds.build(input, { signal: controller.signal }); console.log(JSON.stringify(result, null, 2)); if (result.status !== 'passed') process.exitCode = 1; }
+        finally { process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop); }
+      }
+    }
+    else if (arg === 'preview') console.log(JSON.stringify(await candidates.preview(String(input.source ?? '')), null, 2));
+    else if (arg === 'prepare') console.log(JSON.stringify(await candidates.prepare(input), null, 2));
+    else if (arg === 'inspect') console.log(JSON.stringify(await candidates.inspect(String(input.id ?? '')), null, 2));
+    else if (arg === 'list') console.log(JSON.stringify(await candidates.list(), null, 2));
+    else throw Error('Core actions: preview|prepare|inspect|list|build-plan|build|inspect-build|validate|inspect-validation|launch-info|launch <JSON-options>; build, validate and launch require explicit authorization');
+    return;
+  }
   if (command === "config") {
     await configure(store);
     return;
@@ -139,7 +199,7 @@ async function main() {
       if (!values['credential-file']) throw new Error('Use --credential-file with a private file; credentials are not accepted as command arguments');
       await profiles.saveCredential(rest[0] ?? '', (await readFile(resolve(values['credential-file']), 'utf8')).trim()); console.log('Saved server-side credential reference.');
     } else if (arg === 'save') console.log(JSON.stringify(await profiles.save(JSON.parse(rest[0] ?? '{}'), current.revision)));
-    else if (arg === 'select') console.log(JSON.stringify(await profiles.select(rest[0] as 'main' | 'auxiliary' | 'naming', rest[1], current.revision)));
+    else if (arg === 'select') console.log(JSON.stringify(await profiles.select(rest[0] as Parameters<typeof profiles.select>[0], rest[1], current.revision)));
     else if (arg === 'migrate') console.log(JSON.stringify(await profiles.migrateLegacy(current.revision)));
     else if (!arg || arg === 'list') console.log(JSON.stringify(current, null, 2));
     else throw new Error('Unknown providers action');
@@ -261,8 +321,6 @@ async function main() {
   const settings = await store.snapshot();
   const apiKey = settings.apiKey ?? '';
   const { ProviderProfiles } = await import('./customization/provider-profiles.js');
-  if (!apiKey && !(await new ProviderProfiles(store.home).resolve('main', values.provider)))
-    throw new Error("请运行 nekomimi config 或在 Web 设置中保存 API key");
   const session =
     command === "resume"
       ? resolve(arg)
@@ -283,11 +341,13 @@ async function main() {
       ? ((await readSession(session)).events.find(
           (e) => e.type === "session.created",
         )?.payload as
-          | { workspace: string; model: string; baseUrl: string }
+          | { workspace: string; model: string; baseUrl: string; binding?: {mode:"work"|"create"} }
           | undefined)
       : undefined;
   const prompt =
     command === "resume" ? rest.join(" ") : [arg, ...rest].join(" ");
+  if (!apiKey && !(await new ProviderProfiles(store.home).resolve(/^\/compact(?:\s|$)/.test(prompt.trim())?"compaction":prior?.binding?.mode??"work", values.provider)))
+    throw new Error("请运行 nekomimi config 或在 Web 设置中保存 API key");
   const instructions = await Promise.all(
     (values.instructions ?? []).map(async (path) => ({
       source: resolve(path),

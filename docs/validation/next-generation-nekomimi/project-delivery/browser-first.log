@@ -1,0 +1,58 @@
+
+Running 9 tests using 2 workers
+
+(node:29313) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29314) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.3s)
+  ✓  3 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (696ms)
+  ✓  4 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (2.1s)
+  ✓  5 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (857ms)
+  ✓  6 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.3s)
+  ✓  7 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.2s)
+  ✘  1 test/browser/project-delivery.spec.ts:8:1 › project delivery reviews and authorizes the exact candidate, preserves the work draft and does not repeat a lost-response installation (8.5s)
+  ✓  8 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.8s)
+  ✓  9 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (1.1s)
+
+
+  1) test/browser/project-delivery.spec.ts:8:1 › project delivery reviews and authorizes the exact candidate, preserves the work draft and does not repeat a lost-response installation 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('installed project review', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('installed project review', { exact: true }) with timeout 5000ms
+      - waiting for getByText('installed project review', { exact: true })
+
+
+      50 |     await page.getByRole('button',{name:'刷新交接记录',exact:true}).click();await expect(card).toContainText('当前工作状态：可用');
+      51 |     await page.getByLabel('任务草稿',{exact:true}).fill('/review');await page.getByRole('button',{name:'发送',exact:true}).click();
+    > 52 |     await expect(page.getByText('installed project review',{exact:true})).toBeVisible();
+         |                                                                           ^
+      53 |   } finally {await app.close();}
+      54 | });
+      55 |
+        at /Users/kirineko/Github/nekomimi/test/browser/project-delivery.spec.ts:52:75
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/project-delivery-project-d-408d8--lost-response-installation/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/project-delivery-project-d-408d8--lost-response-installation/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/project-delivery-project-d-408d8--lost-response-installation/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/project-delivery-project-d-408d8--lost-response-installation/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/project-delivery.spec.ts:8:1 › project delivery reviews and authorizes the exact candidate, preserves the work draft and does not repeat a lost-response installation 
+  8 passed (12.0s)

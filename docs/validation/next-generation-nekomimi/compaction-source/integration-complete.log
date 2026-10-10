@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-runtime.test.ts (13 tests | 1 failed) 26153ms
+   × rejects a completed create summary after a late permission change and preserves its evidence 1438ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late permission change and preserves its evidence
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/context-runtime.test.ts:74:96
+     72|   const dispatched=events.filter(e=>e.type==='request.dispatched');exp…
+     73|   expect(JSON.parse((await readArtifact(result.session,(dispatched[0]!…
+     74|   expect(events.some(e=>e.type==='attempt.finished'&&(e.payload as any…
+       |                                                                                                ^
+     75|   expect(events.some(e=>e.type==='context.add'&&JSON.stringify(e.paylo…
+     76|   if(change==='none'){
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 23 passed (24)
+   Start at  07:55:56
+   Duration  26.88s (transform 415ms, setup 0ms, import 924ms, tests 32.34s, environment 0ms)
+

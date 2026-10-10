@@ -1,0 +1,17 @@
+
+Running 7 tests using 2 workers
+
+(node:17170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17169) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay (1.5s)
+  ✓  3 test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay (1.5s)
+  ✓  2 test/browser/workbench.spec.ts:49:1 › submits, observes tool diff, inspects request, reloads, continues and exports (5.9s)
+  ✓  4 test/browser/workbench.spec.ts:124:1 › cancels and remains usable on a narrow viewport (2.7s)
+180-row input fill and assertion: 10ms
+  ✓  5 test/browser/workbench.spec.ts:146:1 › windows long history and pages context sources beyond a raw artifact page (3.3s)
+  ✓  6 test/browser/workbench.spec.ts:209:1 › compact layout preserves controls and inspector focus at all target sizes (2.7s)
+  ✓  7 test/browser/workbench.spec.ts:228:1 › shows and downloads diagnostics even when durable cursor and status do not change (750ms)
+
+  7 passed (16.6s)

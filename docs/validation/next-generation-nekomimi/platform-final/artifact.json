@@ -1,0 +1,12 @@
+{
+  "tarball": "/tmp/nekomimi-platform-tar/nekomimi-0.2.1.tgz",
+  "sha256": "96e1029818569808f956eed34cc3cf522427417e90898b5ad6770334334e0632",
+  "build": {
+    "version": 1,
+    "sha256": "b136be4b97794a0e20b4583c0dd03b08e00494bed814026d965cae67362b1362"
+  },
+  "macos24": "passed",
+  "macos22": "passed",
+  "linux22": "passed on unchanged retry; first task timeout retained",
+  "linux24": "passed on diagnostic retry; first snapshot HTTP 500 retained; 10 additional global Web runs passed"
+}

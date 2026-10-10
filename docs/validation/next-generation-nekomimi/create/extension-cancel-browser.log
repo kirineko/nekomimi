@@ -1,0 +1,12 @@
+
+Running 5 tests using 1 worker
+
+(node:53370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/create-candidates.spec.ts:14:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (1.4s)
+  ✓  2 test/browser/create-candidates.spec.ts:29:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (1.7s)
+  ✓  3 test/browser/create-candidates.spec.ts:43:1 › 10.2 target creation and candidate loading failures remain distinct (489ms)
+  ✓  4 test/browser/create-candidates.spec.ts:51:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.5s)
+  ✓  5 test/browser/create-candidates.spec.ts:72:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (1.5s)
+
+  5 passed (7.9s)

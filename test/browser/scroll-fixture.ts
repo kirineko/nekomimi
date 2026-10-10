@@ -17,13 +17,16 @@ export async function scrollFixture(page: Page) {
     } finally { await journal.close(); }
   };
   await append(240);
+  let diffId='',panelId='';
   await page.route('**/snapshot*', async route => {
     const response = await route.fetch();
     if (!response.ok()) { await route.fulfill({ response }); return; }
     const snapshot = await response.json() as Snapshot;
+    diffId=snapshot.rows[10]?.id ?? diffId;panelId=snapshot.rows[20]?.id ?? panelId;
     snapshot.rows = snapshot.rows.map((row, i) => i === 10 ? {...row, kind:'tool',title:'edit',status:'completed',details:{patch:{sha256:'fixture-patch'},path:'fixture.ts'}} : i === 20 ? {...row, details:{kind:'panel',resourceId:'fixture',resourceRevision:'one',panelId:'delayed',bundleHash:'fixture',props:{},fallback:'延迟面板'}} : row);
     await route.fulfill({ response, json:snapshot });
   });
+  await page.route('**/runtime-ui?*',async route=>{const response=await route.fetch();const body=await response.json();await route.fulfill({response,json:{...body,panels:[{id:'delayed',resourceId:'fixture',revision:'one',bundleHash:'fixture',slot:'message-content',contractVersion:3,modes:['work'],targetScope:'current',resourceRevision:'one',match:{role:'fixture-only'},fallback:'延迟面板'}]}});});
   await page.route('**/diff/fixture-patch?*', route => route.fulfill({json:{lines:[{kind:'add',next:1,text:'const changed = true;'}],added:1,removed:0,total:1}}));
   await page.route('**/api/v1/customization', async route => {
     const body = route.request().postDataJSON();
@@ -36,16 +39,18 @@ export async function scrollFixture(page: Page) {
     parent.postMessage({kind:'ready',version:1,nonce:'scroll-nonce',instanceId:'scroll-panel'},'*');
     document.querySelector('button').onclick=()=>setTimeout(()=>port.postMessage({kind:'resize',instanceId:'scroll-panel',height:500}),200);
     </script>`}));
-  // Authenticate before opening a deep-linked session so the unrelated
-  // interactions poll cannot race the initial connection and add an error row.
-  await page.goto(app.url);
-  await expect(page.getByText('已连接',{exact:true})).toBeVisible();
-  await page.goto(`${app.origin}/?session=${session.id}`);
+  await page.goto(`${app.origin}/work/session/${session.id}#token=${app.token}`);
   await expect(page.locator('[data-row-id]')).toHaveCount(60);
-  const conversation = page.locator('.conversation');
+  const conversation = page.getByTestId('timeline');
   await expect.poll(()=>conversation.evaluate(el=>el.scrollHeight-el.clientHeight-el.scrollTop)).toBeLessThan(3);
+  await expect(conversation.locator('[class*="syn-c"]').first()).toBeVisible();
+  await settleScroll(page);
   let next = 240;
-  return { app, session, finish: async(status:string)=>{
+  return { app, session, async show(kind:'diff'|'panel') {
+    const id=kind==='diff'?diffId:panelId;
+    await conversation.evaluate((el,id)=>{el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,deltaY:-100}));const row=[...el.querySelectorAll<HTMLElement>('[data-row-id]')].find(row=>row.dataset.rowId===id)!;el.scrollTop+=row.getBoundingClientRect().top-el.getBoundingClientRect().top;},id);
+    await expect(page.locator(`[data-row-id="${id}"] article`)).toBeVisible();
+  }, finish: async(status:string)=>{
     const journal=await Journal.open(entry.directory);
     try {const runId=`finish-${status}`;await journal.append('run.started',{}, {runId});await journal.append('run.finished',{status},{runId});}
     finally {await journal.close();}
@@ -59,7 +64,7 @@ export async function scrollFixture(page: Page) {
 
 export async function sampleStart(page: Page) {
   await page.evaluate(()=>{
-    const el=document.querySelector('.conversation')!;
+    const el=document.querySelector('[data-reading-surface]')!;
     const data={frames:[] as {t:number;top:number;height:number}[],long:[] as number[],running:true};
     (window as any).__scrollSample=data;
     const observer=new PerformanceObserver(list=>data.long.push(...list.getEntries().map(e=>e.duration)));
@@ -70,4 +75,12 @@ export async function sampleStart(page: Page) {
 }
 export async function sampleStop(page:Page) {
   return page.evaluate(()=>{const data=(window as any).__scrollSample;data.running=false;return data as {frames:{t:number;top:number;height:number}[];long:number[]};});
+}
+
+/** Wait for native inertia and deferred virtual row measurement to finish. */
+export async function settleScroll(page:Page) {
+  await page.getByTestId('timeline').evaluate(el=>new Promise<void>(resolve=>{
+    let top=el.scrollTop,height=el.scrollHeight,stable=0;
+    const frame=()=>{stable=Math.abs(el.scrollTop-top)<.1&&el.scrollHeight===height?stable+1:0;top=el.scrollTop;height=el.scrollHeight;if(stable>=12)resolve();else requestAnimationFrame(frame);};requestAnimationFrame(frame);
+  }));
 }

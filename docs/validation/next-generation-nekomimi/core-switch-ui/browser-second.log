@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:74838) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/core-switch-real.spec.ts:19:1 › 10.8 browser confirmation replaces real compiled Web children and restores the receipt independently of the old candidate page (4.1s)
+  ✓  2 test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan (5.4s)
+  ✓  3 test/browser/core-switch-ui.spec.ts:66:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch (2.4s)
+  ✓  4 test/browser/core-switch-ui.spec.ts:85:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry (1.2s)
+
+  4 passed (14.4s)

@@ -1,0 +1,19 @@
+
+Running 12 tests using 1 worker
+
+(node:66677) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/basic-settings.spec.ts:11:1 › 10.4 settings preserve drafts across refresh and require explicit revision adoption after conflict (805ms)
+  ✓   2 test/browser/basic-settings.spec.ts:30:1 › 10.4 uncertain credential writes clear and redact input; clearing local key does not clear runtime override (587ms)
+  ✓   3 test/browser/basic-settings.spec.ts:49:1 › 10.4 custom profile without a key does not imply a default credential; narrow settings remain usable (381ms)
+  ✓   4 test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets (701ms)
+  ✓   5 test/browser/model-advanced.spec.ts:35:47 › 10.4 work history branch explicit retry after lost response preserves target and creates once (1.2s)
+  ✓   6 test/browser/model-advanced.spec.ts:35:47 › 10.4 create history branch explicit retry after lost response preserves target and creates once (1.9s)
+  ✓   7 test/browser/model-advanced.spec.ts:65:1 › 10.4 reasoning conversion needs explicit consent and keeps original evidence (1.2s)
+  ✓   8 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (712ms)
+  ✓   9 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (542ms)
+  ✓  10 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.5s)
+  ✓  11 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (354ms)
+  ✓  12 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.4s)
+
+  12 passed (12.9s)

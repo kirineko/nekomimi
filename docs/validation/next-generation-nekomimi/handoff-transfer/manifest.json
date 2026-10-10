@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-06T20:24:06.040630+00:00",
+  "node": "v24.15.0",
+  "platform": "Darwin arm64",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted apply; no release",
+  "files": {
+    "complete-build.log": "ab333073f27b5794d576ba167252f522fdeb78dc21a99e5cb727f436fb4a29dc",
+    "complete-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "crash-build.log": "6bcce91f1a0d4e067630086a472db54dd989c50c84b5bde71c3aa24cd8df2572",
+    "crash-final-tests.log": "263443d86251b0daecd6a851316a8f0662e107ab490cc643e6d33bf952c5f976",
+    "crash-first-tests.log": "c8f2620a5428149c9238dc89329a51e22faf665f596f8f98a3da8ebcd1923d1a",
+    "crash-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-admission-build.log": "247c5f75cda829cc70e8403ab4bb8b4c03763d01177dcb5096363a778711919a",
+    "final-admission-crash-tests.log": "397edfd285a61092a5a67a9c02fa82f6aba59d24ed16277f998ddd7df2351a85",
+    "final-admission-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "final-regression.log": "69cb5aef095433612729efbbbf03a11460a64131dd4d92296bd8c153c34474d9",
+    "final-spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "first-build.log": "f724bc4205840f72833b54969da2aaf91ef7ffb4ba7546f9ebd587b4a5edaf70",
+    "first-tests.log": "e5aa4168bcdcb2ab5e9174ba06ba218ac81b5af0f6139861151d8c5394587aba",
+    "first-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "regression.log": "0d46308f4187cdf38b5b600b8e4651e28080ec9f721fc3fed13528a2704f7340",
+    "second-tests.log": "c0153e349fedb8064fc99ec0983f47ef22459212e1a53ae5f9100d6263a68e3b",
+    "second-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "snapshot-integrity-tests.log": "b1833d791d9b4323447e2df5320e97c95b4289a8b2cc765192da6e9d8fbc3a1e",
+    "spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  },
+  "sourceFiles": {
+    "src/session/handoff-transfer.ts": "e45a3a6be6016076ae6cd7a0ac049d5b2fc8998a443ce70f7a945329920f0e6a",
+    "src/session/handoff.ts": "a3a4abcaab5f741c48d51ae0977107b7fa58a81a5895b657d4a094234a78b084",
+    "src/server/sessions.ts": "b835492041a0bf423f8a37c4739f497a9ce4e3582e266c4f8bf0514907d48d4a",
+    "src/server/app.ts": "115b6a59c72f95990da4bd56f437dafe6ffb29f4c4d62c1434b48936271f7bd9",
+    "src/shared/protocol.ts": "970b54fcb798b8d81425bd8dd185bcdcb7151d461b9c3af8523349bf455331ec",
+    "src/index.ts": "d392d88754c0eb8f790928d6b50ded05870709314df6eb81daadad0ba56bbbf2",
+    "test/handoff-transfer.test.ts": "ef7655b098131f1becfc43c36692ac7d14258fd858a1941898c3a7ccdebcde4a",
+    "test/handoff-crash-recovery.test.ts": "43b30f19b8c45d671ece8f6c9d1e746bdc3c1bf5d613356d88032ee50efa245d"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "23a726bf1101f4db4c3fc3aad70853e85c9eb84bd4cce36ce2ac3264020e1240"
+  }
+}

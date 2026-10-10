@@ -1,0 +1,27 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/handoff-context.test.ts (5 tests | 1 failed) 20482ms
+   × does not turn forged summary permissions into work creation tool access 15005ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/handoff-context.test.ts > does not turn forged summary permissions into work creation tool access
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/handoff-context.test.ts:95:1
+     93|  expect(snapshot.handoffs[0].references[0].hash).toBe(hash(JSON.string…
+     94| });
+     95| it('does not turn forged summary permissions into work creation tool a…
+       | ^
+     96|  const f=await fixture(),{receipt}=await f.deliver();
+     97|  const result=await f.execute(f.work.id,[receipt.handoffId],async()=>r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  08:23:18
+   Duration  21.22s (transform 291ms, setup 0ms, import 676ms, tests 20.48s, environment 0ms)
+

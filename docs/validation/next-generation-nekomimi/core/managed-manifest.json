@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-10-07T16:29:05.128046+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/core/installation.ts": "568fbc3f9774cc9268fb77da9f4960a7bdc4bd01b9f639890308b8b003713889",
+    "src/core/managed.ts": "d5f2f6a53c2c3eb6e28ed2ef29e115621c0eae20deded926c8945c29327cb674",
+    "src/core/managed-worker.ts": "ed786b3500c033c6fb39d70f7d9d961420524007e2e2d5b6153f753daca9d88f",
+    "src/core/build-process.ts": "2b14905c0ff84711c9710c3bbfee9e7952c70b11c01e953ffa5cf0dce329999c",
+    "src/cli.ts": "9183f643a138206c69011d751711a5711924b5829bbe94d4789223e801eb39cd",
+    "test/core-managed.test.ts": "fc92dd7fd76c86be5e1bb01d5ebcb67584fead4a5f6f10a3479d1411316e7f23",
+    "scripts/core-candidate-smoke.mjs": "b89ea55b20ec2afe814a592895abbff1192a838906476c8e341a635174d1a9b4",
+    "extension-docs/core-source.md": "c061fd77652721f5e9dfbc6bc5b91259d0c2e584a58ccf83dbaeec3d26a52bdd",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "1700fb021bf55a7d98257ec4942d326e751710346d3690a46038afe9acad0214",
+    "openspec/changes/next-generation-nekomimi/design.md": "6af267639f070ee8b9edbae9eb3060cdb5217fa5577328955c7ff169f042849f",
+    "docs/validation/next-generation-nekomimi/core/managed-source.log": "9a70ca7eb67c9d7cd0aff0772b26b6f456aacebcd0d127baba48d035dd7253d6",
+    "docs/validation/next-generation-nekomimi/core/managed-build.log": "16977c15fd0c4d7a796fb33b19e6511bb2d5d690885bf82500ace4b6edcab1ac",
+    "docs/validation/next-generation-nekomimi/core/managed.md": "20aa509755ae139269cf67bdf97c6a507900d5643ff4502e92fb4cd68e626581",
+    "docs/validation/next-generation-nekomimi/core/managed-final.log": "c3d82725fdd65ecd22d7ab21b20cb57efff096ca753a7025fbf0fd64f2ff34d4",
+    "docs/validation/next-generation-nekomimi/core/managed-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/core/managed-complete.log": "f1090023d0767efd22aa402427b3f09ca48c746e3e5ff579dc4b633d1e2ef1ef",
+    "docs/validation/next-generation-nekomimi/core/managed-first.log": "190c86785f1297d07d05214cbaaf0bbe6c60b1cb9ecc6382ad0b88bd44498195",
+    "docs/validation/next-generation-nekomimi/core/managed-build-validation-receipt.json": "2cbd4da2d5f80a7f8f97d315ee0fab6233eff45c44a3c71a3dec57bb8e72a11e",
+    "docs/validation/next-generation-nekomimi/core/managed-source-receipt.json": "fbdf7fdc31f7c50d07ea446543c707d2472e74297f1c030f98a3ea8b3cde9118",
+    "docs/validation/next-generation-nekomimi/core/managed-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

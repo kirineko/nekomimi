@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-08T04:43:24.191089+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "overallProgress": {
+    "total": 89,
+    "complete": 77,
+    "remaining": 12
+  },
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "distinctBrowserPassed": 51,
+    "finalFocusedPassed": 11,
+    "fullBrowserSuite": false
+  },
+  "size": {
+    "maxRawJsBytes": 254286,
+    "maxGzipJsBytes": 79456,
+    "gzip": "Node zlib default",
+    "coldStartBaselineComparison": "pending"
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-browser-before-focus-fix.log": "ca63c96c5da5b5463796f65772b3b8cdef3e4b5465f97c1c484fbaf42ba92eae",
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-browser.log": "b13532549f8f8d41ad6eb7c02b0c523339963678a4ae7f76460c878cbb3e00ef",
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-browser-focus-fixed.log": "9e00071ab247ff4d4e19e65409846fa3b354e125bbcfd204f9d40507081c2947",
+    "docs/validation/next-generation-nekomimi/feature-loading/README.md": "7b89a92f427d413c10aba445e273293b60f38c9f83d311aae35d301b4240ef1c",
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/feature-loading/nekomimi-lazy-build.log": "f5db00f5234084ab1250bb11954ae79703322c70cd5652753500180a281df86c",
+    "src/web/v2/deferred.tsx": "7189dc42768a83d81c4a4cc61fc8fb5276be23875275666e0c8062b4c08dca19",
+    "src/web/v2/router.tsx": "3658f8647785b3dafc4f7ae8c95cbe205a07b4f48912c61d8cd9387ce91df69d",
+    "src/web/v2/routes/details.tsx": "4894e86eb5e5ad8dc719c1aaae70eddee249443fff13ecc46e14d175ae8ac102",
+    "src/web/v2/routes/inspection.tsx": "5eb3e5a095c0be6531093267f5634901de573b232f5d18d7be97dbdf8c004cd0",
+    "src/web/v2/routes/inspection-button.tsx": "7fd8342a8b2f07c9ab72c9ddef8e6d6d7efcaa553770e90381e5758940ae60f5",
+    "src/web/v2/routes/session-export.tsx": "f322aa47f1a6896992a5cdeb717b4621ea31ec6ad70773e48e2e4c6fbea0a808",
+    "src/web/v2/routes/export-button.tsx": "b03e74e43e3915bf4d64eb267ed34c9f14a96804d9a1c45f7f7aaf7ec41dd7aa",
+    "src/web/v2/routes/work-session.tsx": "758d408a2995f0b4ce8ccd97796ace9ce0d889c133bee128792429c0406c0be7",
+    "src/web/v2/routes/create-conversation.tsx": "12f97300823d2a20d678c027bd49f01bc89fb6a6a402c003dc8b31942de1062d",
+    "test/browser/v2-feature-loading.spec.ts": "23bdf41ac0024cfc7ac4b6d0b0ef012f1fed12004f81a275f7facdbe16657474",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "01810dfca00ae0b0e0ae11b8a08eb9e0b369b59da74edcc45ccea116c312f415"
+  }
+}

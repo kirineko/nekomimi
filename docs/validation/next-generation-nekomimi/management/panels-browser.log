@@ -1,0 +1,53 @@
+
+Running 11 tests using 1 worker
+
+(node:65023) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (1.5s)
+(node:65051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (513ms)
+  ✓   3 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (294ms)
+  ✓   4 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (806ms)
+  ✓   5 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (260ms)
+  ✓   6 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (334ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (520ms)
+  ✓   8 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (599ms)
+  ✓   9 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.3s)
+  ✓  10 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (272ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.3s)
+
+
+  1) test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts 
+
+    Error: Invalid workflow ID
+
+       at ../../src/customization/workflows.ts:110
+
+      108 |   async create(resourceId: string, definitionId: string, input: Json, activation: Activation, workflowId = id(), causes: string[] = []) {
+      109 |     if (Buffer.byteLength(JSON.stringify(input)) > LIMITS.file) throw new Error("Workflow input limit");
+    > 110 |     if (!validId(workflowId)) throw new Error("Invalid workflow ID");
+          |                                     ^
+      111 |     const directory = await safePath(this.host.catalog.workspace, join(".nekomimi/workflows", workflowId));
+      112 |     if (await exists(directory)) {
+      113 |       const old = await this.inspect(workflowId);
+        at Workflows.create (/Users/kirineko/Github/nekomimi/src/customization/workflows.ts:110:37)
+        at /Users/kirineko/Github/nekomimi/src/server/sessions.ts:1166:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts 
+  10 passed (11.9s)

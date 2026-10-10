@@ -1,0 +1,42 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/core-candidate-view.test.ts (2 tests | 1 failed) 774ms
+   × reads persisted baseline text, candidate diff and output artifacts without invoking builds or validation 483ms
+Explicit trusted build authorization is required, including dependency and package lifecycle scripts
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/core-candidate-view.test.ts > reads persisted baseline text, candidate diff and output artifacts without invoking builds or validation
+AssertionError: expected [ { path: 'src/cli.ts', …(9) } ] to deeply equal [ ObjectContaining{…} ]
+
+- Expected
++ Received
+
+  [
+    {
+      "after": "export const current = \"edited candidate\";",
+-     "before": "export const baseline = \"saved baseline\";",
++     "afterBytes": 42,
++     "afterHash": "f1fa5742e6059f1c79b5f3d9e0287b1cc761059e3689ca30c67402799653cd9d",
++     "beforeBytes": 41,
++     "beforeError": "Error: Artifact symlink rejected: ab68ca6a81ed80292914164dab2a32cec95d66d3e008d5d4eda5a03a7608adbc",
++     "beforeHash": "ab68ca6a81ed80292914164dab2a32cec95d66d3e008d5d4eda5a03a7608adbc",
++     "binary": false,
+      "change": "modified",
+      "path": "src/cli.ts",
++     "truncated": false,
+    },
+  ]
+
+ ❯ test/core-candidate-view.test.ts:24:24
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 16 passed (17)
+   Start at  02:35:19
+   Duration  14.92s (transform 664ms, setup 0ms, import 1.43s, tests 21.82s, environment 0ms)
+

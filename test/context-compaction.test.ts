@@ -1,3 +1,5 @@
+import {openJournalStorage} from '../src/pi/journal-storage.js';
+import {BACKGROUND_CONTEXT} from '@earendil-works/chord/context';
 import {expect,it} from 'vitest';
 import {join} from 'node:path';
 import {Journal,readSession,hash} from '../src/journal.js';
@@ -9,7 +11,7 @@ import {ConfigStore} from '../src/config/store.js';
 import {temporary} from './helpers.js';
 const model={id:'fixture',provider:'test',contextWindow:20000,maxTokens:2000};
 const prompt=assemblePrompt([]);
-async function history(){const journal=await Journal.open(await temporary());await journal.append('session.created',{});for(let i=0;i<5;i++){await journal.append('context.add',{item:{role:'user',content:'task '+i+' 中'.repeat(1000)}});await journal.append('context.add',{items:[{type:'reasoning',id:'r'+i,content:[]},{role:'assistant',content:'answer '+i+' x'.repeat(1000)}]});}return journal;}
+async function history(){const journal=(await openJournalStorage(await temporary(),BACKGROUND_CONTEXT)).journal;await journal.append('session.created',{});for(let i=0;i<5;i++){await journal.append('context.add',{item:{role:'user',content:'task '+i+' 中'.repeat(1000)}});await journal.append('context.add',{items:[{type:'reasoning',id:'r'+i,content:[]},{role:'assistant',content:'answer '+i+' x'.repeat(1000)}]});}return journal;}
 const options=(journal:Journal)=>({journal,prompt,model,protocol:'responses',runId:'run',signal:new AbortController().signal,manual:true,notify:()=>{},summarize:async()=> 'Retain objectives and pending work.'});
 it('measures mixed content deterministically, image bytes bounded, unknown capacities and isolated usage',async()=>{
  const journal=await history();try{

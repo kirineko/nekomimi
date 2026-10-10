@@ -1,0 +1,45 @@
+
+Running 3 tests using 2 workers
+
+(node:1990) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1989) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview (281ms)
+  ✓  2 test/browser/runtime-ui.spec.ts:13:1 › applies a complete theme and shows user content with stable panel interaction and readable history (4.9s)
+  ✓  3 test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.0s)
+
+
+  1) test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 
+
+    Error: 创造任务需要独立开发目录
+
+       at ../../src/session/identity.ts:55
+
+      53 |     throw new ApiError(403, "target_scope", "工作目标不属于当前授权项目");
+      54 |   if (input.mode === "create" && root === owner)
+    > 55 |     throw new ApiError(422, "target_scope", "创造任务需要独立开发目录");
+         |           ^
+      56 |   const st = await stat(root, { bigint: true });
+      57 |   if (!st.isDirectory()) throw new ApiError(422, "target_unavailable", "目标必须是目录");
+      58 |   const host = input.mode === "create" ? await currentTargetHost() : undefined;
+        at createSessionBinding (/Users/kirineko/Github/nekomimi/src/session/identity.ts:55:11)
+        at Sessions.createInner (/Users/kirineko/Github/nekomimi/src/server/sessions.ts:795:42)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 
+  2 passed (10.4s)

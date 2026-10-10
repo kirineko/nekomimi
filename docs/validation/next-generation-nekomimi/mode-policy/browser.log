@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:72738) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (780ms)
+  ✓  2 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (328ms)
+  ✓  3 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.3s)
+
+  3 passed (5.2s)

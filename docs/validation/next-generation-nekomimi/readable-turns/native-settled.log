@@ -1,0 +1,35 @@
+
+Running 10 tests using 2 workers
+
+(node:15846) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15847) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✓   2 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+(node:15879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✓   3 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+(node:15909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15910) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✓   6 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+(node:15939) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+  ✓   7 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+(node:15973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15974) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✓   9 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+
+  10 passed (24.7s)

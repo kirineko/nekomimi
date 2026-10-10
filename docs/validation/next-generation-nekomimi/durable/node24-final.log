@@ -1,0 +1,32 @@
+[
+  {
+    "policy": "safe",
+    "killed": {
+      "code": null,
+      "signal": "SIGKILL"
+    },
+    "readOnlyReopenEffects": 1,
+    "resumedEffects": 2,
+    "resumedModelCalls": 1,
+    "productUnknownResultPolicy": "FAIL: native replay reruns an unknown effect"
+  },
+  {
+    "policy": "never",
+    "killed": {
+      "code": null,
+      "signal": "SIGKILL"
+    },
+    "readOnlyReopenEffects": 1,
+    "resumedEffects": 1,
+    "resumedModelCalls": 1,
+    "productUnknownResultPolicy": "no replay observed; interruption representation requires product mapping"
+  },
+  {
+    "scenario": "public Storage.commit ENOSPC rejection",
+    "poisonedUntilReopen": true,
+    "unchangedEntriesAfterReopen": true,
+    "modelCalls": 0,
+    "effects": 0,
+    "scope": "fault before backend commit; not fsync/partial-write/power-loss coverage"
+  }
+]

@@ -1,0 +1,14 @@
+
+Running 1 test using 1 worker
+
+(node:1927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+CLOSE_DEBUG [
+  { type: 'pointerdown', text: '关闭second-header', tag: 'BUTTON' },
+  { type: 'focusin', text: '关闭second-header', tag: 'BUTTON' },
+  { type: 'pointerup', text: '关闭second-header', tag: 'BUTTON' },
+  { type: 'click', text: '关闭second-header', tag: 'BUTTON' }
+]
+  ✓  1 test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.2s)
+
+  1 passed (5.5s)

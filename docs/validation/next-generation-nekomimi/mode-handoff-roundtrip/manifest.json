@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-06T21:13:02.466624+00:00",
+  "node": "v24.15.0",
+  "files": {
+    "first-tests.log": "f001531b44a821a61c223935fc93905b6743494a1bd7c163f02a3dba669e1412",
+    "final-receipt-tests.log": "7625e43eceb0e829382827bf2a6e8a6f4608efb5ff6b2ce4607d4f32e9572a04",
+    "second-tests.log": "fa3a8a3698b06f7f0fe580ecc49c00b2bf5ea036ea2ec1eb6e5d122c4998e739",
+    "final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "final-crash-tests.log": "6d0e3df48f08ae15e93251491349888b6595abff10f592c70bd9cbbfd70dc7d4",
+    "final-build.log": "ee31f627dc0ffc68087b25b3472379df304806fbfb864b6f4da765aac04aba72",
+    "receipt-tests.log": "d9c5d837fb206abff2d34222bae7c064ec65560ae7bbef308e21fa38d054ba83",
+    "final-regression.log": "a368cba6ae05e47e3fcdea82cc57003b831239dd774d236b8f3abc3ef6b48910",
+    "spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "third-tests.log": "3107d095b3bd0dd74fb92d0342224e2d278530540ed42a79d9f1acc9f140e408"
+  },
+  "sourceFiles": {
+    "src/runtime.ts": "276f69d4927aa94ef06f0bdc4b663b0ca712122650645231ed77105722161fe1",
+    "src/server/sessions.ts": "e58506600f6be35988b41803a717be5f4ac491c84bcbb0559c1d73c0c83852c0",
+    "src/session/handoff-transfer.ts": "bba3c2c11220ffb3f2272866430ca1e41c902256750308780a5929ead456b09b",
+    "src/session/delivery.ts": "a120ad63bdd1ec8c74394372408c60aff68bcfab5e2f9e38b27e543947dc83d4",
+    "test/headless-command-receipts.test.ts": "96771dadf4c8bb06b28150d4cf73c7abd046790cd19b67024244454b56c0ba52",
+    "test/mode-handoff-roundtrip.test.ts": "277bac9b0bf2f6a00ea2e12275e761e899e307fcb08b26df6abaad24cb0b3bbc"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "e80dd213244cd3c2ad355c98a59e60b00aff8c02848d7715900433c7b6a5d18e"
+  }
+}

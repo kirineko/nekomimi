@@ -1,0 +1,22 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-verification.test.ts (3 tests | 1 failed | 2 skipped) 2284ms
+   × records cancelled simulation against its exact environment and preserves the working version 2283ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-verification.test.ts > records cancelled simulation against its exact environment and preserves the working version
+Error: Trial settled before marker: Error: Error: Resource authorization or scope revoked, or source missing: extension:34db6e3d9e1b502cb430 (scope-changed)
+ ❯ test/customization-verification.test.ts:23:173
+
+ ❯ test/customization-verification.test.ts:23:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  23:10:08
+   Duration  3.02s (transform 307ms, setup 0ms, import 685ms, tests 2.28s, environment 0ms)
+

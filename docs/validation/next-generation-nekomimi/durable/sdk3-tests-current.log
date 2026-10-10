@@ -1,0 +1,54 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-failures.test.ts (11 tests | 2 failed) 9159ms
+   × retains state across runs and refuses a changed state schema 233ms
+   × rejects same-scope collisions and duplicate tool registration 220ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-failures.test.ts > retains state across runs and refuses a changed state schema
+Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-ZXDbrT/.nekomimi/extensions/test/extension.json: index.ts:1:196: type 2365: Operator '+' cannot be applied to types 'string | number | boolean | Json[] | { [key: string]: Json; }' and 'number'.
+index.ts:1:215: type 2365: Operator '+' cannot be applied to types 'string | number | boolean | Json[] | { [key: string]: Json; }' and 'number'.
+ ❯ CustomizationHost.activate src/customization/host.ts:423:36
+
+ ❯ src/customization/host.ts:290:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/customization-failures.test.ts > rejects same-scope collisions and duplicate tool registration
+AssertionError: expected [Function] to throw error including 'duplicate' but got '/private/var/folders/v9/tsjz4byn1mg90…'
+
+- Expected
++ Received
+
+- duplicate
++ /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-aXwsmR/.nekomimi/extensions/test/extension.json: index.ts:1:187: type 2345: Argument of type '{ name: string; description: string; parameters: { type: string; }; execute(): Promise<{ content: never[]; }>; }' is not assignable to parameter of type 'ExtensionTool'.
++   Types of property 'parameters' are incompatible.
++     Type '{ type: string; }' is not assignable to type '{ type: "object"; } & Record<string, Json>'.
++       Type '{ type: string; }' is not assignable to type '{ type: "object"; }'.
++         Types of property 'type' are incompatible.
++           Type 'string' is not assignable to type '"object"'.
++ index.ts:1:207: type 2345: Argument of type '{ name: string; description: string; parameters: { type: string; }; execute(): Promise<{ content: never[]; }>; }' is not assignable to parameter of type 'ExtensionTool'.
++   Types of property 'parameters' are incompatible.
++     Type '{ type: string; }' is not assignable to type '{ type: "object"; } & Record<string, Json>'.
++       Type '{ type: string; }' is not assignable to type '{ type: "object"; }'.
++         Types of property 'type' are incompatible.
++           Type 'string' is not assignable to type '"object"'.
+
+ ❯ test/customization-failures.test.ts:202:35
+    200|   );
+    201|   try {
+    202|     await expect(f.host.acquire()).rejects.toThrow("duplicate");
+       |                                   ^
+    203|     const second = join(f.workspace, ".nekomimi/extensions/second");
+    204|     await mkdir(second);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  2 failed | 38 passed (40)
+   Start at  01:24:53
+   Duration  17.45s (transform 418ms, setup 0ms, import 1.96s, tests 31.20s, environment 0ms)
+

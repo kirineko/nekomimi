@@ -1,0 +1,18 @@
+file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/session/session.js:377
+            throw new Error("Session is poisoned by a failed commit after storage admission; reopen it", {
+                  ^
+
+Error: Session is poisoned by a failed commit after storage admission; reopen it
+    at #assertHealthy (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/session/session.js:377:19)
+    at #assertUsable (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/session/session.js:373:28)
+    at HarnessImpl.readOnLine (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/session/session.js:64:31)
+    at ConversationImpl.entries (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/harness/harness.js:59:35)
+    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:88:33 {
+  [cause]: Error: fixture ENOSPC
+      at Proxy.<anonymous> (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:78:98)
+      at #runCommit (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/session/session.js:269:39) {
+    code: 'ENOSPC'
+  }
+}
+
+Node.js v24.15.0

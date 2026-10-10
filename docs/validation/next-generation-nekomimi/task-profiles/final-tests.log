@@ -1,0 +1,26 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/prompt-baseline.test.ts (1 test | 1 failed) 96ms
+   × captures comparable offline prompt scenarios 96ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/prompt-baseline.test.ts > captures comparable offline prompt scenarios
+AssertionError: expected 947 to be less than 939
+ ❯ test/prompt-baseline.test.ts:47:37
+     45|   expect(Object.values(metrics).every(m=>m.total>0)).toBe(true);
+     46|   expect(metrics.compaction!.total).toBeLessThan(baseline.metrics.comp…
+     47|   expect(metrics.restricted!.total).toBeLessThan(baseline.metrics.rest…
+       |                                     ^
+     48|   for(const definition of custom.definitions)expect(scenarios.coding!.…
+     49|   expect(scenarios.coding!.text).not.toContain('Project candidates are…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 105 passed (106)
+   Start at  05:18:02
+   Duration  50.86s (transform 570ms, setup 0ms, import 3.06s, tests 97.42s, environment 0ms)
+

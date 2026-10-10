@@ -1,0 +1,38 @@
+[
+  {
+    "action": "panel-mount",
+    "method": null,
+    "sequence": null,
+    "httpStatus": 200
+  },
+  {
+    "action": "panel-action",
+    "method": "state.subscribe",
+    "sequence": 1,
+    "httpStatus": 200
+  },
+  {
+    "action": "panel-action",
+    "method": "state.subscribe",
+    "sequence": 3,
+    "httpStatus": 200
+  },
+  {
+    "action": "panel-action",
+    "method": "draft.set",
+    "sequence": 2,
+    "httpStatus": 500
+  },
+  {
+    "action": "panel-action",
+    "method": "state.subscribe",
+    "sequence": 4,
+    "httpStatus": 200
+  },
+  {
+    "action": "panel-action",
+    "method": "state.subscribe",
+    "sequence": 5,
+    "httpStatus": 200
+  }
+]

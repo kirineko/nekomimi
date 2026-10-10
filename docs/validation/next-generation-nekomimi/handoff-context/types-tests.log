@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/handoff-context.test.ts(21,36): error TS2339: Property 'handoffConfirm' does not exist on type 'Sessions'.

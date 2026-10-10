@@ -1,0 +1,122 @@
+{
+  "phase": "switch-passed",
+  "from": "3fe4ef6d82800c94cfcdb76051e03d5477f463e0dcef4dc335563005119a91aa",
+  "to": "1414cc8c511113321337e23e220ee3e4073460d658137c7fae9ce00e66a32a55",
+  "receipt": {
+    "version": 1,
+    "commandId": "real-core-switch",
+    "planHash": "f8a7f7661dee93db3023ce8f199e7a16c07c739d9ccc5a65f22bdbb814f81a23",
+    "status": "applied",
+    "applied": true,
+    "actualBuild": "1414cc8c511113321337e23e220ee3e4073460d658137c7fae9ce00e66a32a55"
+  },
+  "secondBuild": {
+    "version": 1,
+    "commandId": "switch-target-build",
+    "buildId": "89438e28-78fc-4dda-bc7c-f0a4b05f6ad1",
+    "candidateId": "9eb79b7c-49ae-48a6-b480-49a41186a5fd",
+    "inputHash": "02967e2a3ad827a84121c1c07b83eb3a1cd194a6820e964196b65f9406bbfcdf",
+    "status": "passed",
+    "processes": [
+      {
+        "status": "passed",
+        "exitCode": 0,
+        "signal": null,
+        "cleanup": "confirmed",
+        "cleanupScope": "process-group",
+        "bytes": 120,
+        "dispatched": true,
+        "pid": 40501
+      },
+      {
+        "status": "passed",
+        "exitCode": 0,
+        "signal": null,
+        "cleanup": "confirmed",
+        "cleanupScope": "process-group",
+        "bytes": 2628,
+        "dispatched": true,
+        "pid": 40678
+      }
+    ],
+    "hostIntegration": "not_run",
+    "applied": false,
+    "artifact": {
+      "directory": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-VElhOq/home/core-builds/artifacts/02d6b663f1bee304e01439f4c38fbbfe4a6610c66a677d98bd779d780e8d1004",
+      "revision": "ed60a9478397c5a3adb5980b0fcef3329c93dcb62392cb1fb1df0759c24b71bf",
+      "manifest": {
+        "kind": "artifact",
+        "sha256": "ba4d9b271dc5831a03496a64e78438db7659b3f652e82297af5e4ebc7dcd3aba",
+        "bytes": 5860772
+      }
+    }
+  },
+  "secondValidation": {
+    "version": 1,
+    "validationId": "2b30806b-d025-4af3-b8e2-352d4a17ce2a",
+    "candidateId": "9eb79b7c-49ae-48a6-b480-49a41186a5fd",
+    "buildId": "89438e28-78fc-4dda-bc7c-f0a4b05f6ad1",
+    "commandId": "switch-target-validation",
+    "artifactRevision": "ed60a9478397c5a3adb5980b0fcef3329c93dcb62392cb1fb1df0759c24b71bf",
+    "status": "passed",
+    "checks": [
+      "legacy-byte-identical",
+      "ports-closed",
+      "host-storage-readback",
+      "no-business-execution",
+      "durable-host-readback"
+    ],
+    "ports": [
+      {
+        "port": 54369,
+        "closed": true
+      },
+      {
+        "port": 54376,
+        "closed": true
+      }
+    ],
+    "stage": "isolated-startup",
+    "hostIntegration": "not_run",
+    "applied": false,
+    "process": {
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "cleanup": "confirmed",
+      "cleanupScope": "process-group",
+      "bytes": 0,
+      "dispatched": true,
+      "pid": 40764
+    },
+    "report": {
+      "version": 1,
+      "stage": "isolated-startup",
+      "status": "passed",
+      "ports": [
+        54369,
+        54376
+      ],
+      "checks": [
+        "contracts",
+        "identity",
+        "durable-read",
+        "durable-restart",
+        "web-assets",
+        "no-credentials",
+        "host-storage-read",
+        "storage-write",
+        "core-switch-control",
+        "storage-restart",
+        "legacy-rejected",
+        "no-external-requests"
+      ],
+      "externalAttempts": 0,
+      "hostIntegration": "not_run",
+      "build": "1414cc8c511113321337e23e220ee3e4073460d658137c7fae9ce00e66a32a55",
+      "createdId": "8cf4bfc0f6e8623e07327ab7ed7ae301e7d792724e4702eeb998ac14f35da0aa"
+    }
+  },
+  "browserIdentity": "1414cc8c511113321337e23e220ee3e4073460d658137c7fae9ce00e66a32a55",
+  "duplicateSpawn": false
+}

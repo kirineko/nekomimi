@@ -1,0 +1,21 @@
+{
+  "recordedAt": "2026-10-07T15:01:40.575270+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/run.ts": "9199553cee7122f8b73e6e2711e9e3e7852546ac2a45c24c2ebed351aefc18b9",
+    "src/customization/process.ts": "bb867ee7333ccba4d20a8988b114e0129b6ce6d4d6c62b1e76a8926b05b64fa1",
+    "test/customization-process.test.ts": "55c16aafe2e84a365b746709dc11b8df7a4773fdc9b6f46ea941fcc7ce6cd055",
+    "test/headless-command-receipts.test.ts": "bed07e85de2e34948c9cdde1d3fc175a0aa629fddc05a97303160bac34520556",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services.md": "1d864aa4cd544dc9586e82310eafcacd02e4547ac5f6d0deb3c586b605502f73",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "102566d7c96f0a31b49e35fdee6816e3755283fe273deb81f219c298aa50a4cf",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-build.log": "eb4f480fa1e66b8c10f649aa3cc89e8b5641fcee88fb59b289a110b7b699da00",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-first.log": "cc0e55ef54847da0a1e7e01190963a645a435ea16a3e878890513165bbe47964",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-receipts.log": "d983558f900ff581e9c8a2b7272758cec3795b26416da8d9a62b85c797c6ac03",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-regression.log": "b016a4ad51abaed1dd48c72bed6ae60c9e4ccf4fae76019575dddb27c8c97642",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/services-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

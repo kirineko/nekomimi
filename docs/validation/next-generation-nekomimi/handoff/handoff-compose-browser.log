@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:55845) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/handoff-cards.spec.ts:22:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (944ms)
+  ✓  2 test/browser/handoff-cards.spec.ts:53:1 › 10.3 a failed relations read is local and delivery facts remain visible (636ms)
+  ✓  3 test/browser/handoff-cards.spec.ts:65:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (1.4s)
+  ✓  4 test/browser/handoff-cards.spec.ts:96:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (1.0s)
+
+  4 passed (5.4s)

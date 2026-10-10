@@ -1,0 +1,82 @@
+
+Running 3 tests using 1 worker
+
+(node:69126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (45.1s)
+(node:69205) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (45.4s)
+(node:69282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/context-details.spec.ts:49:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (16.6s)
+
+
+  1) test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.inputValue: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByLabel('请求快照', { exact: true })
+
+
+      37 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+      38 |     await dialog.getByRole('button',{name:'下一页选择',exact:true}).click();await expect(dialog).toContainText('选择清单偏移 40');
+    > 39 |     const pinned=await dialog.getByLabel('请求快照',{exact:true}).inputValue();expect(pinned).not.toBe('');
+         |                                                               ^
+      40 |     await dialog.getByLabel('选择结果',{exact:true}).selectOption('exclude');await expect(dialog).toContainText('选择清单偏移 0');expect(await dialog.getByLabel('请求快照',{exact:true}).inputValue()).toBe(pinned);
+      41 |     await dialog.getByText(/#\d+ · 已提交/).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 0');
+      42 |     await dialog.getByRole('button',{name:'下一页压缩来源',exact:true}).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 40');await expect(dialog.getByRole('button',{name:'下一页压缩来源',exact:true})).toBeDisabled();
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:39:63
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.inputValue: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByLabel('请求快照', { exact: true })
+
+
+      37 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+      38 |     await dialog.getByRole('button',{name:'下一页选择',exact:true}).click();await expect(dialog).toContainText('选择清单偏移 40');
+    > 39 |     const pinned=await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue();expect(pinned).not.toBe('');
+         |                                                               ^
+      40 |     await dialog.getByRole('combobox',{name:'选择结果',exact:true}).selectOption('exclude');await expect(dialog).toContainText('选择清单偏移 0');expect(await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue()).toBe(pinned);
+      41 |     await dialog.getByText(/#\d+ · 已提交/).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 0');
+      42 |     await dialog.getByRole('button',{name:'下一页压缩来源',exact:true}).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 40');await expect(dialog.getByRole('button',{name:'下一页压缩来源',exact:true})).toBeDisabled();
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:39:63
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+  1 passed (2.1m)

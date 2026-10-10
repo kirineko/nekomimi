@@ -1,0 +1,6 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/codemode-state.test.ts(20,109): error TS2339: Property 'x' does not exist on type 'Record<string, unknown> | {}'.
+  Property 'x' does not exist on type '{}'.

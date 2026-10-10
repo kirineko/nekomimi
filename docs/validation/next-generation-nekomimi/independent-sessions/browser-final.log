@@ -1,0 +1,12 @@
+
+Running 5 tests using 1 worker
+
+(node:77983) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/session-navigation.spec.ts:17:1 › discovers a real /moe extension before execution and completes navigation/delete loop (2.0s)
+  ✓  2 test/browser/session-navigation.spec.ts:60:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (4.9s)
+  ✓  3 test/browser/session-navigation.spec.ts:111:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.1s)
+  ✓  4 test/browser/session-navigation.spec.ts:152:1 › late command responses cannot replace a new catalog and failed submission retains draft (685ms)
+  ✓  5 test/browser/session-navigation.spec.ts:178:1 › date groups and long titles stay compact across midnight and list revision conflicts (938ms)
+
+  5 passed (12.0s)

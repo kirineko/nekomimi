@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-07T20:05:46.318482+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.3": "in-progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "browser": 20,
+    "unit": 58,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/handoff/handoff-recovery-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-recovery-browser.log": "cb57d3dc05525772f00dca52ec324a6cc4f64a1f6ccef1d4996128839069487f",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-recovery-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-recovery-unit.log": "0ed740c987e24b76b0a164653b46c3660b5e638094dbdc4b9ce99a33092abebb",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-recovery-build.log": "9d49f8cb877433537599cfc10be1bf1ae176805079ec3baba96c283fe0cac3bd",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-build.log": "ffff267db8731de05a19991e2b0a7f62eb911757a7d48ae724965cd8ebfb294f",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-final-build.log": "64ce20fcb508721197bb644dc3b2905d69b4e3ddbb35c563941ef9075bc3025f",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-gate-tests.log": "b35d67b7ea286189c958eeb499a959e2f1b4890944ea8af71f4f57e3f85657e9",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-browser.log": "cdd87a930437b384e88cb3b123081a59f09d11522b4a16da86dee4cc6e518074",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-final-browser.log": "f35351f843e2ed8e6c89072f853aabd241cb85c710f3ea043b3c1724fd2aaa94",
+    "docs/validation/next-generation-nekomimi/handoff/delivery-reference-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/recovery-and-references.md": "8568af8776610c6ac237a38c7e1cc072b111944df8a0912a93a844a8e555eff3",
+    "src/shared/handoff-view.ts": "0e3107589ab72c19666b8cad668340eb4f795674376fd8067dea6a42ebe7f997",
+    "src/server/sessions.ts": "4a9a7bdd1be8ddaf99c5122882c15426f8c44172ade86827b819d2db8313589c",
+    "src/web/v2/routes/handoff-recovery.tsx": "800c2b141ac41199e0ad0bcfa218a2687b86d2e6b2ab99c4489cab7b73c9e5b1",
+    "src/web/v2/routes/handoff-cards.tsx": "388f14810afa47383acc9c59c68d725f5fbc2535dcc0ce20b9bcb3f79409605b",
+    "src/web/v2/routes/handoff-compose.tsx": "28f6f1e59af394d58f42308770741f9aa0e7a920d43026245fcc66bed82688bc",
+    "src/web/v2/routes/work-session.tsx": "cbdee4f42f945d291b03654cbc1ed87bc8e144504f0b8fbf7b43b30c3468171f",
+    "src/web/v2/state/handoff.ts": "4859d755b546ddf3f2c60759c93410a4d6eb64642b2cf083b8e7b3a87d53bc11",
+    "src/web/v2/state/drafts.ts": "7c9303036c864551dfe123e18359d40d04e826241e9375650f11bce73d8d535d",
+    "test/browser/handoff-recovery.spec.ts": "e6c368047d1f4f888dfa8fd4fe1c87c541524009ff2ccd6574cd0c4232c5a67b",
+    "test/browser/handoff-cards.spec.ts": "2c4964008e1bde04d4fd880b1d6ac22045db157394a9d3f446896db22626b449",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "b9d828c62ad96b3fbbb63cc9a2c44759910b757d639c9b3456614b2f4fc37c60",
+    "openspec/changes/next-generation-nekomimi/design.md": "651959dd83d5842e00cd1446bb74417bcdde040bc2c771633e4f190b641843cc"
+  }
+}

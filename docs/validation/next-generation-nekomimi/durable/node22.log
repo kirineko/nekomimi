@@ -1,0 +1,19 @@
+file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:51
+      child.once('exit', code => { clearTimeout(timer); reject(new Error(`child exited before barrier: ${code}; ${stderr}`)); });
+                                                               ^
+
+Error: child exited before barrier: 1; file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:40
+  throw new Error('Child should have been killed before tool returned');
+        ^
+
+Error: Child should have been killed before tool returned
+    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:40:9
+
+Node.js v22.19.0
+
+    at ChildProcess.<anonymous> (file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/durable-probe.mjs:51:64)
+    at Object.onceWrapper (node:events:634:26)
+    at ChildProcess.emit (node:events:531:35)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
+
+Node.js v22.19.0

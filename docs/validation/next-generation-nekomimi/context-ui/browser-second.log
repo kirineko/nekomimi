@@ -1,0 +1,114 @@
+
+Running 3 tests using 1 worker
+
+(node:68947) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (45.1s)
+(node:69014) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (45.1s)
+(node:69060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (45.1s)
+
+
+  1) test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '上下文详情', exact: true })
+
+
+      26 |     await page.goto(`${f.app.origin}/v2/${mode}/session/${f.session.id}#token=${f.app.token}`);
+      27 |     await page.getByLabel('任务草稿',{exact:true}).fill('保留未发送草稿');
+    > 28 |     await page.getByRole('button',{name:'上下文详情',exact:true}).click();const dialog=page.getByRole('dialog');
+         |                                                              ^
+      29 |     await expect(dialog.getByRole('region',{name:'当前上下文统计'})).toContainText('估算');await expect(dialog).toContainText(f.session.binding!.target.id);
+      30 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+      31 |     await dialog.getByRole('button',{name:'下一页选择',exact:true}).click();await expect(dialog).toContainText('选择清单偏移 40');
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:28:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.fill: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByLabel('任务草稿', { exact: true })
+
+
+      25 |   try {
+      26 |     await page.goto(`${f.app.origin}/v2/${mode}/session/${f.session.id}#token=${f.app.token}`);
+    > 27 |     await page.getByLabel('任务草稿',{exact:true}).fill('保留未发送草稿');
+         |                                                ^
+      28 |     await page.getByRole('button',{name:'上下文详情',exact:true}).click();const dialog=page.getByRole('dialog');
+      29 |     await expect(dialog.getByRole('region',{name:'当前上下文统计'})).toContainText('估算');await expect(dialog).toContainText(f.session.binding!.target.id);
+      30 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:27:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '上下文详情', exact: true })
+
+
+      45 |     await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'上下文详情',exact:true})).toBeFocused();await expect(page.getByLabel('任务草稿',{exact:true})).toHaveValue('保留未发送草稿');
+      46 |     expect(writes).toBe(0);expect(f.calls()).toBe(priorCalls);expect(await readFile(join(f.directory,'journal.jsonl'))).toEqual(before);
+    > 47 |   } finally {await f.app.close();}
+         |                                   ^
+      48 | });
+      49 | test('10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics',async({page})=>{
+      50 |   await page.setViewportSize({width:360,height:800});const f=await fixture();
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:47:136
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics 

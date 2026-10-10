@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/candidate-executions.test.ts (5 tests | 1 failed) 3681ms
+   × exposes authenticated task reads and saved preview frames through the actual HTTP routes 220ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/candidate-executions.test.ts > exposes authenticated task reads and saved preview frames through the actual HTTP routes
+AssertionError: expected 403 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 403
+
+ ❯ test/candidate-executions.test.ts:93:29
+     91|     const denied = await fetch(`${app.origin}/api/v1/sessions/${f.sess…
+     92|     const accepted = await fetch(app.origin + '/api/v1/customization',…
+     93|     expect(accepted.status).toBe(200); expect(await accepted.json()).t…
+       |                             ^
+     94|     await expect.poll(async () => {
+     95|       const response = await fetch(`${app.origin}/api/v1/sessions/${f.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  03:31:18
+   Duration  4.39s (transform 299ms, setup 0ms, import 659ms, tests 3.68s, environment 0ms)
+

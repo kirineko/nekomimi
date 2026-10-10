@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-07T20:45:11.383770+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.4": "in progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "browser": 10,
+    "unit": 5,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/management/mcp-page-build-final.log": "16eee2a2a5bd561f5ec95752243be499675e38cdeed5c5e86df20ee76292fb0d",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-types-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-browser.log": "188b1855a754068252317cb6615c1c05de00fb01a9a6251266849b55c39f5110",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-build.log": "a2a33b03e3e12e4bbb6425d4004548f6ff5f2c24e22f7e664c3936ee0ec7f29d",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-unit.log": "8ffbac92d6bc876cf2c326b24b23ebd36fa946940174b09a0ae9a5907572bed0",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-browser-final.log": "e8b6fae79f8c2d950bf6d28a3ca4eb84f47a0d42da12f13f6e6b0853b12b3414",
+    "docs/validation/next-generation-nekomimi/management/mcp-page-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/mcp-progress.md": "8ac8bf05c4788b49425cfb9f9d3f869f323a993267601f90eb9467c839e5f388",
+    "src/web/v2/routes/mcp-management.tsx": "2c6d24da117042d4018be5d8312d9a506ed4de8e78fcf0517eb2c6d206282f27",
+    "src/web/v2/routes/management-confirm.tsx": "1e128dbd41cba75cd3f0c76e1eebeeeaeae9b7013fad27b86640d2ecf2155d68",
+    "src/web/v2/router.tsx": "435975236d0fead04add466f26c252c554f59d752ac631b5f80b23f501cb46e6",
+    "src/web/v2/routes/create.tsx": "8491afe13ba3e767a3ac6c4656759fd2f11a897b81ddd36d98c96c48ee14ba68",
+    "src/web/v2/state/create.ts": "be2950c614d7555def893725e47389faeedf94e73bb769c8c2e32fdff70c102a",
+    "src/server/sessions.ts": "316cb8a5420b99e3b50471ae81633e92bbca5e7439dbd9cf5e4f79ff2b07fb79",
+    "test/browser/mcp-management.spec.ts": "dfc7889d61d4e192ed25370a25272d49dbfe4b95d3490ac0eb0e54103bb99eca",
+    "openspec/changes/next-generation-nekomimi/design.md": "83cf0744118eb8f3161d7326e3a5d39e135a0a99411ebbc915425c275a669e2b",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "ba5f03b8a466540eaa2063919339bdf590a59eed1cf9689077d50b9fffb160cd"
+  }
+}

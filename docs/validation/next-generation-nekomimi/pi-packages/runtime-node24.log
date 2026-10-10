@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'object'
+- 'function'
+
+    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/probe.mjs:48:132 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'object',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

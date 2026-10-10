@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-07T15:23:17.016929+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/state-compatibility.ts": "521dc516b1eed32c828b1e1d7f7bf939ec33c84dcdfe9d57499fe3033c233bb3",
+    "src/customization/process.ts": "6a352c581978c349abfce70f739f77e9043862dac440551c204783b190a3fd27",
+    "src/customization/run.ts": "1166ac09df8f1f49552868b1dbf2456cf7d6f3dfaa826fba33a46f364d04036d",
+    "src/customization/workspace-state.ts": "a93121c5192bcd0ad9151a9c5e66577381acdd8ef36219a405c2af55c1c1b406",
+    "src/customization/candidates.ts": "fa6edfc41f613286c9c0a547dfed1746750e0c4e4e29c32b0924af8d3dca9e35",
+    "src/customization/packages.ts": "fd6cacb351dd927e820a89300892c7946e94c6b36e2097b18e68334a1913adc6",
+    "src/customization/host.ts": "dbdcb4adbb6fefe121d5a04bd5c5a938f4ccfb0e9c2f26571c9b824acd81955d",
+    "src/customization/package-management.ts": "e201b3e36ac48482b01cce359ed5484301316f118940f3882a824b21419d9b26",
+    "src/server/sessions.ts": "24a395623d9bcda22d2cf98961275eb5ac6e43ea3d827dbe09464e9192cdf332",
+    "src/web/components/Customization.tsx": "7ec5bb007d2a52c6f596981e19729b668ad1ebad916517a015a0d03ff54cf4fa",
+    "src/web/components/customization/types.ts": "a1db0472d4fc7410763dbb86150dfaec0caab0978bdcf8386171ffb2892b9918",
+    "test/customization-boundary.test.ts": "a28060eb8e8646d92798716c5b17a640d1bc9f238fc7021149ff46e2ca48144f",
+    "test/customization-packages.test.ts": "bb1155d3a29b5dfc114995b6bb573eec10712c634b1678ad37e0a746e2b63ddd",
+    "extension-docs/customization-lifecycle.md": "eb226da39a202349d0ba743dc77e344c66f1da749104eb2e5e8da8954e949918",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary.md": "bfac74abef6d8cec66f850afd43a14f38d21d311e4d9f9e09b628548f2c64dbc",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "f74617e07ec20321fdeb457b7e0113fa60d49e1c7376669cb7c5fa3132911e99",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-build.log": "a98c42daf01d78f35fed89d43a5b6ef015190f6b83e18f2caea87fea9603239f",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-final.log": "6b6e4c9e60582c77c9ad2db98056c48b162f512c54fa5b8d109349cb8be6354c",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-first.log": "79837c9b3e38cc124d4f3ac2255cfbb6fc06c52839bb5c1b2603f07767696823",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-regression.log": "161d9210c1c389e63aa7c803d5686990dc02a7e215b8d9122b617d775a0c4eaa",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/boundary-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

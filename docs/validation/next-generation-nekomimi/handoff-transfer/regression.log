@@ -1,0 +1,49 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"34f8c1d3-48b5-4d51-9d9c-cc9010d1158a","timestamp":"2026-10-06T20:11:44.808Z","sessionId":"11728f52a10b0624077c31cbdefbe9b5a4faa06282e45615f295ce2390eb264f","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1fe424bc-8fd4-4202-9442-cc9fce606275","timestamp":"2026-10-06T20:11:45.471Z","sessionId":"28f954f6ae2a757eb61c12a2a70934fffcb3043f2d6f675b3caac010220bf599","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"235d0014-369e-4d77-8ae3-6e437a532bb0","timestamp":"2026-10-06T20:11:45.878Z","sessionId":"6b632d2b75c60192a36a072bae35e46b3172be35b911afe34d27de55b18e5419","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"afc7fc30-0bfe-4d10-9b12-cc309b3ab7bd","timestamp":"2026-10-06T20:11:46.304Z","sessionId":"c5216c0d0163b2fb7cc57b11ebe25bdd16e552c035b2210b9ed8e0646e4c692c","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"63cdb91f-c99b-4cfd-86e0-874ff775bfe8","timestamp":"2026-10-06T20:11:46.803Z","sessionId":"066f6075ba09849b81c2ca365bd78d2735eddbffde224b4638f4b77d5840e8e7","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0bc07473-3799-4bde-95e1-c105ab08d205","timestamp":"2026-10-06T20:11:47.212Z","sessionId":"a7c473e2c5338c3c60f22034466febfe76080fbf7074f530b77e0145d1312972","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"acd45165-d05d-4fe1-b4c7-b152ebf34365","timestamp":"2026-10-06T20:11:47.653Z","sessionId":"6743b59dbd285aae5177e821e457ceecdd4ad41afc2e7006e067ecdb80ef078c","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"c836d198-fddb-488f-96f1-ab37b284d739","timestamp":"2026-10-06T20:11:48.100Z","sessionId":"965a1935248369a8dfab2c5c75e2806caafabe96f44705947a1f5d7eadfb55bc","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"81ba0850-0aee-405f-9da7-220906077dd2","timestamp":"2026-10-06T20:11:48.547Z","sessionId":"4f5dd9c8f91abc2e57cbf773fe0b263439c5e00bcb5fb29310d4aeafb6531c17","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3c266f21-ca16-4d45-b745-3e8eacef2970","timestamp":"2026-10-06T20:11:48.929Z","sessionId":"291f6c16007853641dffaa622230e585f36e028387359cca74d2c98c8dbdd88e","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"05071e95-34ff-4f52-a1c5-4267665fbceb","timestamp":"2026-10-06T20:11:49.254Z","sessionId":"a9630f37d20ba8f7a616d683cae65a20df9056e2074e1bfb8505f4032586cf91","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"85fbbfbc-b360-4e03-bcd8-fce24e9b3a49","timestamp":"2026-10-06T20:11:49.566Z","sessionId":"7ceda12873652f32115b7c7ff710664e3cbf8bd9d8b6e3de8f6eb95a8441803c","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/handoff-transfer.test.ts (31 tests | 3 failed) 22341ms
+   × recovers the metadata commit 1 after a 'sync' failure 403ms
+   × recovers the metadata commit 1 after a 'watermark.write' failure 406ms
+   × recovers the metadata commit 1 after a 'watermark.rename' failure 423ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/handoff-transfer.test.ts > recovers the metadata commit 1 after a 'sync' failure
+ FAIL  test/handoff-transfer.test.ts > recovers the metadata commit 1 after a 'watermark.write' failure
+ FAIL  test/handoff-transfer.test.ts > recovers the metadata commit 1 after a 'watermark.rename' failure
+AssertionError: {"error":{"code":"handoff_changed","message":"源版本已变化，请重新预览"}}: expected 409 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 409
+
+ ❯ test/handoff-transfer.test.ts:136:70
+    134|   expect((await f.request("handoff-confirm", f.confirmation)).status).…
+    135|   const result = step === 1 ? await f.request("handoff-confirm", f.con…
+    136|   expect(result.status, JSON.stringify(await result.clone().json())).t…
+       |                                                                      ^
+    137| });
+    138|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  3 failed | 66 passed (69)
+   Start at  04:11:26
+   Duration  23.13s (transform 1.05s, setup 0ms, import 2.89s, tests 65.37s, environment 0ms)
+

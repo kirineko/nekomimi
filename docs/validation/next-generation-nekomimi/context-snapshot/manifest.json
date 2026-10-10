@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-06T21:58:59.564593+00:00",
+  "node": "v24.15.0",
+  "files": {
+    "regression.log": "e826625f91254e541bc1f0e4eb3ecf53f9b07be3760eb5fb78314a30d6ea40de",
+    "first-tests.log": "1c48ef205eb5dfd7da1e5fd683e560e2f565f1889595b2eb3e6071bf831015df",
+    "complete-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "base-diagnostic.log": "1fa0230d84640f6b723e43fac0a59dc5208a1d2e1491556101a5c800f3dea6c9",
+    "final-build.log": "d81420b3148dd5f12aa1f41022d82bd64761f0f96b9f3ff96919c9c79bfe69fb",
+    "integrated-tests.log": "ce62a86c3b4fb5c1977529c84be4e5d12a467d1a304672ac31f06531d4abdc1a",
+    "base-tests.log": "c46bdb91e4317f1b58308467b3a0f718cae7254c0649065577fe3e77df500a1d",
+    "base-fixed-tests.log": "843f674af67c2cb96caa5908dc613ac32a911162703a0d1830e07ec4feebe937",
+    "first-types.log": "83b0274b4fa987c88b1b90b51a4bc2cd3597df91b92ebc4da7732fcb6e22c21f",
+    "custom-transform-tests.log": "ca7198c7cc456395856f0c26f5f80b80eb9502d5218838ae655fdbcf6620c938",
+    "complete-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "final-tests.log": "58cba0290ee81dc870f717dcea1d334ec8b0ac6cf8448d986b74d0da3e73bb84",
+    "fault-tests.log": "a22fa100c9ffcd211e208749c092df95a4373c7aae8a90941346f89c7ada6b14"
+  },
+  "sourceFiles": {
+    "src/context-snapshot.ts": "e8585e02435620424e591cd6cd5771a1ce0143f1345a37deff176cb67bf170e9",
+    "src/context.ts": "ceda34bd54f70c04ec3c2627feaf2a28ad390b08005042f3a9b1f39e53419e49",
+    "src/provider.ts": "1b3ef08953e2ee6dd884a06cc4365477c039afdf693adfbf3dd027f94ea7a43f",
+    "src/recorded-call.ts": "aa256bf04c8661e53f9722af6550c75f7095a4dcedcdb7d0029b1ffa293c86a0",
+    "src/customization/adapter-provider.ts": "fca9acfade8a790ef3a616e38b5ffe4c6d9d9fe15ba25b8184f65bcee6402f84",
+    "src/pi/model-stream.ts": "1a1276bd21b6691db704467b7ab48a747b669e1506bc8f4e622d54dbb3e56e38",
+    "src/pi/durable-loop.ts": "f65234fec6c9312880dbd95c0eb115163aa7ce426a586f7615872ead9838e865",
+    "src/runtime.ts": "80cb02e4302f070e3811def92de6ea9858ebd7401cd095d138af44069cf2ff5b",
+    "test/context-snapshot.test.ts": "e0713bda9501692d97f9f3f727374533df3d5d205e58980ba5dc10c8dd4d81e2",
+    "test/customization-provider.test.ts": "9d39e8a0056f19eef06be81e96dc2f6d3458d3598eabec4b94e82f2b76ecc6ba",
+    "test/task-profiles.test.ts": "24b06f300f2eef5e98dc57296d9b0bec80b454de34f64945d360c6e7d3289710"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "d3d04e25bc7d334dc4abc9d7593ecb69740b3a58d4c8785b276a08ed3488cba0"
+  }
+}

@@ -1,4 +1,4 @@
-import type { Cursor, Update } from "../shared/protocol";
+import type { Cursor, Update } from "../shared/protocol.js";
 export class ClientError extends Error {
   constructor(
     readonly code: string,
@@ -7,6 +7,9 @@ export class ClientError extends Error {
     super(message);
   }
 }
+export const AUTH_LOST = "nekomimi:auth-lost";
+export const AUTH_RESTORED = "nekomimi:auth-restored";
+
 export async function request(
   path: string,
   init?: RequestInit,
@@ -20,10 +23,14 @@ export async function request(
   });
   if (!response.ok) {
     const data = await response.json();
-    throw new ClientError(
+    const error = new ClientError(
       data.error?.code ?? "network",
       data.error?.message ?? "请求失败",
     );
+    // 401 auth：连接 cookie 失效或服务重启。通知根部显示整页引导，不自动重发写命令。
+    if (response.status === 401 && error.code === "auth")
+      window.dispatchEvent(new CustomEvent(AUTH_LOST));
+    throw error;
   }
   return response;
 }
@@ -50,6 +57,8 @@ export async function connect() {
       method: "POST",
       headers: { authorization: `Bearer ${token}` },
     });
+    // 终端链接重新授权成功：清除失效状态，关闭整页引导
+    window.dispatchEvent(new CustomEvent(AUTH_RESTORED));
   }
   return api<{ workspace: string; configured: boolean }>("/config");
 }

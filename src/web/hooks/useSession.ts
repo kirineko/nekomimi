@@ -1,6 +1,7 @@
+import { reduce } from "./session-projection.js";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Snapshot, TimelineRow } from "../../shared/protocol";
-import { api, ClientError, stream } from "../api";
+import type { Snapshot, TimelineRow } from "../../shared/protocol.js";
+import { api, ClientError, stream } from "../api.js";
 export function useSession(sessionId: string | undefined) {
   const [liveRows,setLiveRows]=useState<Set<string>>(new Set());
   const replayFloor = useRef(0);
@@ -65,10 +66,10 @@ export function useSession(sessionId: string | undefined) {
               if (!previous || update.cursor.seq < previous.cursor.seq)
                 return previous;
               if (history.current && !tailWindow.current) return { ...previous, context:update.context,compacting:update.compacting,session: update.session, cursor: update.cursor };
-              const rows = new Map(previous.rows.map((r) => [r.id, r]));
-              const added=update.rows.filter(row=>!rows.has(row.id)).length;
-              for (const row of update.rows) rows.set(row.id, row);
-              const list = [...rows.values()];
+              const previousIds = new Set(previous.rows.map(row => row.id));
+              const added = update.rows.filter(row => !previousIds.has(row.id)).length;
+              const projected = reduce({status: "connected", snapshot: previous}, {type: "update", update}).snapshot!;
+              const list = projected.rows;
               const overflow = Math.max(0, list.length - 180);
               const browsing = history.current;
               // Append live content without cropping the record being read. Once

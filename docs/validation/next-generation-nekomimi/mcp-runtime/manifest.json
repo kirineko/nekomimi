@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-07T14:29:07.542095+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/mcp.ts": "13ab75793a9f5e42c381220aa0aa0038526feb59fe63a9db394fb48686ffc4c4",
+    "test/pi-mcp-owner.test.ts": "e01c513a88f2e4d8965804f9a0e995b8de24cbe010fd4b86395c6b922dfa09dc",
+    "package.json": "bf7035a5be7d029f503dd5c4ef51af51a974354f42155c679d6056d0c9ce99e4",
+    "package-lock.json": "cc5806220b76562975e5d7f213437c505e9e2f65df9be2932b442065c7003a42",
+    "src/README.md": "4c32be0ab5edddd3fc9da1c6aed666ea4fddafdcf9387b04977cdac0990b418f",
+    "extension-docs/platform.md": "a367a823c68786665063a3d188518e131a0751e0bcb2f4195a1cb12caca9e5e7",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "c0497b12d9572f5891b667131fe081bd99229297f233d24745dab9e68ce2a000",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/regression.log": "b242df7fc4cd080ac91a1c364a56ecc30fd23ec901b73431c9f69c7d1394906d",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/first-tests.log": "828d2a4c3d539c49b7a7faab4e6454e7a827d1cb9f4f1ce7797cd7946b2bf265",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/README.md": "6851ad075c672c7611a3e4399be5df91a9da4e33f309ea7043632cf082120a07",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/install.log": "f7887a0cef55cdf71c81f526105975d9129008d8065ad174d31bb14b4dc95103",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/build.log": "d81420b3148dd5f12aa1f41022d82bd64761f0f96b9f3ff96919c9c79bfe69fb"
+  }
+}

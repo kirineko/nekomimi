@@ -1,0 +1,15 @@
+{"seq":1,"type":"message","message":{"role":"system","content":"CANONICAL_FROM_JOURNAL","tools":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}],"timestamp":0}}
+{"seq":2,"type":"message","message":{"role":"user","content":[{"type":"text","text":"fixture input"}],"timestamp":1791299165076}}
+{"seq":3,"type":"prepare","preparation":1}
+{"seq":4,"type":"request.persisted","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299165076}]}","sha256":"b99b15866fd339c9b1a5b53e14f3e034b53c9943802f4697cb71dd49bd946c78"}
+{"seq":5,"type":"wire.received","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299165076}]}","sha256":"b99b15866fd339c9b1a5b53e14f3e034b53c9943802f4697cb71dd49bd946c78"}
+{"seq":6,"type":"message","message":{"role":"assistant","content":[{"type":"toolCall","id":"forbidden","name":"effect","arguments":{"value":"forbidden"}}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"toolUse","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"thinkingLevel":"off"}}
+{"seq":7,"type":"message","message":{"role":"toolResult","toolCallId":"forbidden","toolName":"effect","content":[{"type":"text","text":"This operation was aborted"}],"details":{},"isError":true,"timestamp":1791299165105}}
+{"seq":8,"type":"finish","turns":1,"stopReason":"toolUse","toolResults":["forbidden"]}
+{"seq":9,"type":"turn_end"}
+{"seq":10,"type":"message","message":{"role":"system","content":"","timestamp":1791299165117,"toolsAdded":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}]}}
+{"seq":11,"type":"prepare","preparation":2}
+{"seq":12,"type":"message","message":{"role":"assistant","content":[{"type":"text","text":"done"}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"aborted","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"errorMessage":"fixture aborted","thinkingLevel":"off"}}
+{"seq":13,"type":"finish","turns":2,"stopReason":"aborted","toolResults":[]}
+{"seq":14,"type":"turn_end"}
+{"seq":15,"type":"agent_end"}

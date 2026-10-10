@@ -1,0 +1,223 @@
+
+Running 10 tests using 2 workers
+
+(node:14994) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14995) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+  ✓   1 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+(node:15029) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15030) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+(node:15059) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.1s)
+(node:15060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✘   6 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+(node:15093) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   8 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✘   7 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+(node:15121) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15122) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+  ✘   9 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.0s)
+
+
+  1) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    46
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    46
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    44
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat5/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat5/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat5/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat5/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    45
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat6/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat6/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat6/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat6/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    46
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat7/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat7/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat7/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat7/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    44
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat8/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat8/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat8/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms-repeat8/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+  4 passed (24.9s)

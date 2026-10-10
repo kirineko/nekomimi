@@ -1,0 +1,40 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/model-routing.test.ts (4 tests | 2 failed) 121ms
+   × rejects unsupported routing on save and restore without rewriting the source 77ms
+   × uses the explicit model by default and rejects runtime routing without fallback 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/model-routing.test.ts > rejects unsupported routing on save and restore without rewriting the source
+AssertionError: expected [Function] to throw error including 'Unsupported model routing' but got 'The "path" argument must be of type s…'
+
+Expected: "Unsupported model routing"
+Received: "The "path" argument must be of type string. Received undefined"
+
+ ❯ test/model-routing.test.ts:25:171
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/model-routing.test.ts > uses the explicit model by default and rejects runtime routing without fallback
+TypeError: The "path" argument must be of type string. Received undefined
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:91:21
+     89| export async function inspectJournalFormat(directory: string, expected…
+     90|   let exists = false;
+     91|   try { await lstat(join(directory, "journal.jsonl")); exists = true; }
+       |                     ^
+     92|   catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOEN…
+     93|   if (exists) {
+ ❯ run src/runtime.ts:86:9
+ ❯ test/model-routing.test.ts:54:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 16 passed (18)
+   Start at  22:11:48
+   Duration  3.78s (transform 721ms, setup 0ms, import 1.71s, tests 4.49s, environment 0ms)
+

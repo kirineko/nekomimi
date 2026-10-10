@@ -1,0 +1,12 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"051ee5c4-337f-4c2d-a372-ee039c42beb7","timestamp":"2026-10-06T18:31:15.637Z","sessionId":"4e82be76-ea7f-4c78-803a-42a3194bfc4c","runId":"c8c1f351-8ead-47fc-bb8d-21b3eb1f0086","attemptId":"b7bb0b9d-2ad9-4dc7-a5d7-660fb073b803","seq":18,"durableSeq":17,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a330c95a-362e-4625-893a-b1a4a80449ad","timestamp":"2026-10-06T18:31:28.891Z","sessionId":"093fc6fd-6270-40b7-a3ef-dec8397cb9bf","seq":0,"durableSeq":0,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"316cd04f-a4d5-42a8-9e42-66b50815d6ee","timestamp":"2026-10-06T18:31:30.107Z","sessionId":"ebefe490-8f7e-412e-89d0-b544d9b9bd79","runId":"d4febc18-c1fc-4c37-b184-0be26cfc687a","attemptId":"348408d1-9453-4007-9468-07417fb68da6","seq":17,"durableSeq":17,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+ Test Files  5 passed (5)
+      Tests  48 passed (48)
+   Start at  02:30:52
+   Duration  42.61s (transform 616ms, setup 0ms, import 2.24s, tests 78.05s, environment 0ms)
+

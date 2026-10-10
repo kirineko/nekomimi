@@ -1,0 +1,94 @@
+{
+  "scope": "First Linux Node 24 snapshot HTTP 500: retained synthetic fixture journal metadata only",
+  "journalPath": "/tmp/nekomimi-linux-pack-data/harness-pack-c9RcH5/isolated-home/workspaces/be19604a0389704e14d60000599521b647ec6c08c5c85e7a63ddb851548e52bd/sessions/74844ef3faf1c216c408abd1a12deb8341a51ea62045d73b89f3980397dd24d1/journal.jsonl",
+  "sha256": "575f91c1dfa3f4de4b838769af6c404161c2d1e41720afe5c67775df72175f31",
+  "eventCount": 16,
+  "events": [
+    {
+      "seq": 1,
+      "type": "durable.session",
+      "timestamp": "2026-10-08T18:00:28.900Z"
+    },
+    {
+      "seq": 2,
+      "type": "session.created",
+      "timestamp": "2026-10-08T18:00:28.906Z"
+    },
+    {
+      "seq": 3,
+      "type": "web.session",
+      "timestamp": "2026-10-08T18:00:28.917Z"
+    },
+    {
+      "seq": 4,
+      "type": "session.title",
+      "timestamp": "2026-10-08T18:00:28.957Z"
+    },
+    {
+      "seq": 5,
+      "type": "command.accepted",
+      "timestamp": "2026-10-08T18:00:28.959Z"
+    },
+    {
+      "seq": 6,
+      "type": "resources.activated",
+      "timestamp": "2026-10-08T18:00:28.967Z"
+    },
+    {
+      "seq": 7,
+      "type": "resources.context",
+      "timestamp": "2026-10-08T18:00:28.972Z"
+    },
+    {
+      "seq": 8,
+      "type": "capabilities.effective",
+      "timestamp": "2026-10-08T18:00:28.985Z"
+    },
+    {
+      "seq": 9,
+      "type": "run.started",
+      "timestamp": "2026-10-08T18:00:28.991Z"
+    },
+    {
+      "seq": 10,
+      "type": "context.add",
+      "timestamp": "2026-10-08T18:00:29.005Z"
+    },
+    {
+      "seq": 11,
+      "type": "durable.commit",
+      "timestamp": "2026-10-08T18:00:29.025Z"
+    },
+    {
+      "seq": 12,
+      "type": "durable.commit",
+      "timestamp": "2026-10-08T18:00:29.041Z"
+    },
+    {
+      "seq": 13,
+      "type": "context.add",
+      "timestamp": "2026-10-08T18:00:29.053Z"
+    },
+    {
+      "seq": 14,
+      "type": "resources.context",
+      "timestamp": "2026-10-08T18:00:29.108Z"
+    },
+    {
+      "seq": 15,
+      "type": "capabilities.effective",
+      "timestamp": "2026-10-08T18:00:29.121Z"
+    },
+    {
+      "seq": 16,
+      "type": "run.finished",
+      "timestamp": "2026-10-08T18:00:29.129Z"
+    }
+  ],
+  "terminal": {
+    "status": "cancelled",
+    "error": "Error: 服务正在停止",
+    "text": ""
+  },
+  "firstAttemptPresent": false
+}

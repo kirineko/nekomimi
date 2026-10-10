@@ -1,0 +1,20 @@
+[
+  {
+    "name": "正文",
+    "foreground": "rgb(23, 32, 51)",
+    "background": "rgb(248, 250, 252)",
+    "ratio": 15.54894049839323
+  },
+  {
+    "name": "辅助文字",
+    "foreground": "rgb(75, 85, 99)",
+    "background": "rgb(248, 250, 252)",
+    "ratio": 7.223122334738012
+  },
+  {
+    "name": "主按钮",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(90, 62, 200)",
+    "ratio": 7.099852854005083
+  }
+]

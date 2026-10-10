@@ -1,0 +1,7 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/web/v2/routes/handoff-compose.tsx(26,112): error TS2322: Type '{ title: string; creation: { target?: { kind: "extension" | "core"; root: string; scope: "project"; } | undefined; version: number; commandId: `${string}-${string}-${string}-${string}-${string}`; mode: "work" | "create"; }; }' is not assignable to type '{ sessionId: string; } | { title: string; creation: SessionCreation; }'.
+  Types of property 'creation' are incompatible.
+    Object literal may only specify known properties, and 'version' does not exist in type 'SessionCreation'.

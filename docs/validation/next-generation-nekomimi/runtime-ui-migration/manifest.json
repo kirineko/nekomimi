@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-08T05:51:54.283295+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "checks": {
+    "browserPassed": 17,
+    "typecheck": 0,
+    "strictSpecs": 43,
+    "productSourceChanged": false,
+    "buildRerun": false,
+    "fullBrowserSuite": false
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-lifecycle-final.log": "21495d2bb899910ff9432faa8bf381015a435ec91c359bf50f803017dec60dd0",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/runtime-ui-sakura.png": "232a73fef44fae0002544f5c3038fb22dc137c3b27f6dfa17a886643ffa5028e",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-lifecycle-target.log": "b653c802f977d18a95b1e632eee74af954c61249e2c36cb5c5b5e45622bbd731",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-migration.log": "606504cc396a5b838a07dde71dd0409df7fc617380d4c2f08970bbcc47c4faef",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-migration-close-debug.log": "e37b77431f648f1fd2430d9f485e980b53690f7f3e4dd18add3126d42a9ef1e9",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/strict.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/header-theme-menu.png": "bf14ccf6936fda1c76e42aab24c56141197aca91064ecfcbd95d636daf6ba6ef",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/header-theme-export.png": "fa4fa8eb2dd19346ee0bbb7e9b45aae1a4fa12e05a314ea5110dc0ca19217828",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/README.md": "89a1890147a150390953e298380d78007fbffe906e42dc9d55121793986e8528",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-lifecycle-migration.log": "c6b822ebb891d0f53aa7a020d0d1bb7266621db32f298466425163ecc0a8833b",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-lifecycle-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-lifecycle-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/customization-lifecycle-mobile.png": "b93158537d3d3559c208ac30b1477b18753eda62b425ac29c801fdcef1092bb9",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-lifecycle-confirmed.log": "1a7926cab186d34001f9e644010c56e9698d83d1764a12abdb057656b4b60c09",
+    "docs/validation/next-generation-nekomimi/runtime-ui-migration/nekomimi-runtime-migration-focus.log": "67ecf75bc8d96412a7f2a2efbfbcf5831da8445e3dfe4734e4b255d51bc2265f",
+    "test/browser/runtime-ui.spec.ts": "913b5044aff0b5dc81a1893b37b2eb2e1d89b155af57a951d52843048a84d225",
+    "test/browser/customization-lifecycle.spec.ts": "5d3bbea8c8ff66d28c7ff9e4efd0f47a1e82813a3b08bac82b69f732216e9cbb",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "0f106c00963a3498d1aeac4e6468399c35e16c5fcff350ee265d7fcf45fd244a"
+  }
+}

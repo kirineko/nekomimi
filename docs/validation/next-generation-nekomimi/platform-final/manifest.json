@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-08T18:06:00.920014+00:00",
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/platform-final/macos24.log": "c89feb6e207b39fad1f93cd8a9830bd806540a9556a8307c37cbcba4e422878a",
+    "docs/validation/next-generation-nekomimi/platform-final/installed-browser.json": "08088ebfac8c07a25d66d7293449cca7e002234520403d4296539669aebc01b7",
+    "docs/validation/next-generation-nekomimi/platform-final/macos22.log": "aed49537215b0ddc2667f67b1f37e69903494df2f96404fd2b2d0b6afb41bcd1",
+    "docs/validation/next-generation-nekomimi/platform-final/linux24-first-failure.log": "510c463c9ac0ec050103f1b589c59f8287ac5d0e230d00e7919469cc9f6c2c1a",
+    "docs/validation/next-generation-nekomimi/platform-final/linux22-first-failure.log": "63a5ad60b4d685baf3bec3878eb0468d3d71a59935ab72af3263d566e27dcc84",
+    "docs/validation/next-generation-nekomimi/platform-final/installed-browser.log": "4157ce9f4528e864bb8c1998cfddef34b86214cfb0c1f66c0d9942684603036f",
+    "docs/validation/next-generation-nekomimi/platform-final/image22.log": "6604085d7c8e75585ed10cd6a242c85a2983281a7ae42b1ad29975d9506d7d3f",
+    "docs/validation/next-generation-nekomimi/platform-final/npm-pack.json": "4ebe1836da5fbe92b3c331ceab5c0434e23d9030efbf6160c96c82455163d70c",
+    "docs/validation/next-generation-nekomimi/platform-final/linux24-global-repeat.log": "c5bfe099f93676410aceaaba55d828d6d9ff2d051f8bd19244348131ce95e98e",
+    "docs/validation/next-generation-nekomimi/platform-final/image24.log": "9f95449a03401e7f8f1ea2f1824e95a3660a83bd1a0ab3be4fd0e58c4bee384d",
+    "docs/validation/next-generation-nekomimi/platform-final/README.md": "136d600542f2099663b8b12d5b1ff6ad4f9dc96b1cffd4697e408056a208ee8a",
+    "docs/validation/next-generation-nekomimi/platform-final/linux24.log": "8dde56ff83b8be8c7d627567224c93a5680627cb892092fa8f8d983afeb561d6",
+    "docs/validation/next-generation-nekomimi/platform-final/linux22.log": "c7bd161f40775b7638af7f2481d9dcbbd01118bcb40020855bf385aec23873eb",
+    "docs/validation/next-generation-nekomimi/platform-final/build.log": "bf21acdf85786e9ce3d02259aa6a657aa3616b382f0944f7b35e1c7ca0e00cfd",
+    "docs/validation/next-generation-nekomimi/platform-final/artifact.json": "899879a3a6c3e3e04b5594fc40bb6f690112a9c31ad2cd81f063dbf1af44df9b",
+    "scripts/global-web-smoke.mjs": "993b9f64a12c9310cca2dc095206793bebde47538e71cb6763dc44e54738092b",
+    "scripts/pack-smoke.mjs": "baa14edf1dda9e685a7038812f92e6dc5e8c86913086f43e7582c4fefff1af7e",
+    "scripts/pack-optional-browser.mjs": "16625d6079ef9921121b7f6974c2ac1807d76f2d973714e509f3aff6df8be1fb"
+  }
+}

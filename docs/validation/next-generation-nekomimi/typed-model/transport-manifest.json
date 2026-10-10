@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-10-07T14:16:00.093643+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/pi/typed-model.ts": "66678cb52a6518c1b29f2460d4550f86c58e189ff9903446242fef4a85f349f2",
+    "test/typed-model.test.ts": "e53cb9cabb8809797bc8126744dacbde60ce7a042f905dc0f94222851cdb0ec6",
+    "docs/validation/next-generation-nekomimi/typed-model/transport-tests.log": "a8c43b69da2ef4bc157f7ac044aa78d29ab7edfc1ab13cd8cfaf837f2d5d72f0",
+    "docs/validation/next-generation-nekomimi/typed-model/transport-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/typed-model/transport-build.log": "ee31f627dc0ffc68087b25b3472379df304806fbfb864b6f4da765aac04aba72",
+    "docs/validation/next-generation-nekomimi/typed-model/transport-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/typed-model/transport.md": "81613bbbf9c8cb684536ff34a0f69a569d71508c7706d6ffe5604aa67d20b2bf"
+  }
+}

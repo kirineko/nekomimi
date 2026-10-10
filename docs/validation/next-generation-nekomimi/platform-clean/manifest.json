@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-10-08T18:38:01.912447+00:00",
+  "artifact": {
+    "tarball": "/tmp/nekomimi-final-clean-tar/nekomimi-0.2.1.tgz",
+    "sha256": "4e4e5a20223da0de09995ca59ccc615787620356f956fa71def84021acaa2135",
+    "build": {
+      "version": 1,
+      "sha256": "f7424580c8a12f881340ca43507c425c011e0f790cb7c566c67e0acf619eb2a3"
+    },
+    "distFileCount": 540,
+    "reason": "Removed raw HTTP debug error output; new privacy regression; all platform results below must use this fixed artifact",
+    "currentDistFilesVerified": 540,
+    "platforms": {
+      "macos": [
+        {
+          "platform": "macos",
+          "node": "24.15.0",
+          "exitCode": 0,
+          "log": "/tmp/nekomimi-clean-macos-24.15.0.log"
+        },
+        {
+          "platform": "macos",
+          "node": "22.19.0",
+          "exitCode": 0,
+          "log": "/tmp/nekomimi-clean-macos-22.19.0.log"
+        }
+      ],
+      "linux": [
+        {
+          "platform": "linux",
+          "node": "24.15.0",
+          "exitCode": 0,
+          "log": "/tmp/nekomimi-clean-linux-24.15.0.log"
+        },
+        {
+          "platform": "linux",
+          "node": "22.19.0",
+          "exitCode": 0,
+          "log": "/tmp/nekomimi-clean-linux-22.19.0.log"
+        }
+      ]
+    }
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/platform-clean/README.md": "b8e9b3f501ffbd433966d2f97b33ad3784264fdfe482bd6af585bf2c5cbc8ee4",
+    "docs/validation/next-generation-nekomimi/platform-clean/artifact.json": "5a0f9fcf1eba1e538ab7f128691ed1fadb7b513dfb636a9815dd4d29b02438b2",
+    "docs/validation/next-generation-nekomimi/platform-clean/installed-browser.json": "f7ef1e534996d66ee53188f0cf17cc090569aaa18b6125fbe025c2ea22022d7b",
+    "docs/validation/next-generation-nekomimi/platform-clean/installed-browser.log": "5fc1fcd16ccb9fa8ad6c265b77d757e24f953f8201d30322495ee743ec3485a9",
+    "docs/validation/next-generation-nekomimi/platform-clean/linux-22.19.0.log": "0dd891e4257bfab5a3c474fb44a4dcb3e7ff083deda5aacc08a617ab3f9e9617",
+    "docs/validation/next-generation-nekomimi/platform-clean/linux-24.15.0.log": "fe02a3c9bc63ff218984042739b733f346e41f978f0c0b415046a3bf8e996d69",
+    "docs/validation/next-generation-nekomimi/platform-clean/linux-results.json": "24ae40444685b5b1f07217a2411160e053f0bcf0789f55368a42a9ea36b3a217",
+    "docs/validation/next-generation-nekomimi/platform-clean/linux24-isolated-diagnostic.log": "28685ceb008d4efba4e7837d32c59027f5f19840861dd3f44d8d07831e15ea27",
+    "docs/validation/next-generation-nekomimi/platform-clean/linux24-shared-failure.log": "2f07800b3e008b19d6acf26f887c06dda3518100b8162fcd395945a3c648a2a1",
+    "docs/validation/next-generation-nekomimi/platform-clean/macos-22.19.0.log": "02f443c194e49b0a30ad25a06ec5ac0c44f8ab73597a86d0a89d466ef2dca55c",
+    "docs/validation/next-generation-nekomimi/platform-clean/macos-24.15.0.log": "7dd1132aa18c4bfe20ca6a2ddfeabf807d445d45bc2b3f7734fe3cb9b6f1bcff",
+    "docs/validation/next-generation-nekomimi/platform-clean/macos-results.json": "177fa47d0d141c8ae0e253729a2e79ed575400173bb36af7f4b64cbda1576afa",
+    "docs/validation/next-generation-nekomimi/platform-clean/npm-pack.json": "ad69dbebcdaebf19d31d0cd658b8b1da090f7947adab43485816d9d199c6c263",
+    "docs/validation/next-generation-nekomimi/platform-clean/platform-runner.py": "f89c16cb3c6909f8e4dc021f2532ad1799a8276d6cce31c76a92004e1e1c7ac9",
+    "docs/validation/next-generation-nekomimi/platform-clean/rename-probe.log": "2c5f8da9ff4bb6726c2d1e2483949b95f535eb1098423e955bbde0ecdb5f44c1",
+    "docs/validation/next-generation-nekomimi/platform-clean/rename-probe.mjs": "e697fcbfb8c629a81f803175ac9ca2e93e1ff39a3af44f3958e1df230c39a3f8"
+  }
+}

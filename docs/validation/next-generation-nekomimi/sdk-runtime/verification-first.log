@@ -1,0 +1,35 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-verification.test.ts (3 tests | 1 failed) 11117ms
+   × records cancelled simulation against its exact environment and preserves the working version 9768ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-verification.test.ts > records cancelled simulation against its exact environment and preserves the working version
+AssertionError: expected '' to be 'yes' // Object.is equality
+
+- Expected
++ Received
+
+- yes
+
+ ❯ test/customization-verification.test.ts:23:116
+     21|     const candidate = (await store.inspect(draft.id)).candidate;
+     22|     const pending = trialCandidate(workspace, home, draft.id, candidat…
+     23|     await expect.poll(() => readFile(join(workspace, 'trial-started'),…
+       |                                                                                                                    ^
+     24|     controller.abort(new Error('cancel verification'));
+     25|     const error = await pending;
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/customization-verification.test.ts:23:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 16 passed (17)
+   Start at  23:09:34
+   Duration  11.97s (transform 1.06s, setup 0ms, import 3.21s, tests 26.60s, environment 0ms)
+

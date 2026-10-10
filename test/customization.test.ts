@@ -1,3 +1,4 @@
+import {prepareDataHome} from "../src/storage/format.js";
 import { describe, it, expect } from "vitest";
 import { mkdir, writeFile, rm, symlink } from "node:fs/promises";
 import { join } from "node:path";
@@ -19,9 +20,9 @@ async function fixture() {
     join(root, "extension.json"),
     JSON.stringify({
       name: "test",
-      sdkVersion: 1,
+      sdkVersion: 3,
       entry: "index.ts",
-      requiredCapabilities: ["tools", "commands"],
+      requiredCapabilities: ["tools", "commands", "state", "ui", "hooks"],
     }),
   );
   return { workspace, home, root };
@@ -38,13 +39,13 @@ async function enable(host: CustomizationHost) {
   );
   return r;
 }
-const source = `export default api => { api.registerTool({ name:'greet', description:'Greeting', parameters:{type:'object',properties:{}}, async execute(args,ctx) { await ctx.state.set('used',1,true); return {content:[{type:'text',text:'hello'}]}; }}); api.registerCommand('review',{description:'Review',async handler(args,ctx) { const r = await ctx.callTool('ext_test_greet',{}); await ctx.ui({kind:'card',title:'Review',text:r.content[0].text}); return 'reviewed'; }}); }`;
+const source = `export default (api: import('nekomimi/extensions').ExtensionAPI)=> { api.registerTool({ name:'greet', description:'Greeting', parameters:{type:'object',properties:{}}, async execute(args,ctx) { await ctx.state.set('used',1,true); return {content:[{type:'text',text:'hello'}]}; }}); api.registerCommand('review',{description:'Review',async handler(args,ctx) { const r = await ctx.callTool('ext_test_greet',{}); await ctx.ui({kind:'card',title:'Review',text:r.content.filter(c=>c.type==='text').map(c=>c.text).join('')}); return 'reviewed'; }}); }`;
 describe("customization lifecycle", () => {
   it("rejects future SDK capabilities", () => {
     expect(() =>
       checkManifest({
         name: "future",
-        sdkVersion: 1,
+        sdkVersion: 3,
         entry: "a.ts",
         requiredCapabilities: ["provider"],
       }),
@@ -98,8 +99,9 @@ describe("customization lifecycle", () => {
       );
       const reload = await run({
         ...f,
+        mode: "create", ownerWorkspace: await temporary(), target: { kind: "extension", root: f.workspace },
         customization: host,
-        session,
+        session: join(f.workspace, "create-reload"),
         apiKey: key,
         prompt: "/reload",
       });
@@ -151,6 +153,7 @@ describe("customization lifecycle", () => {
   it("discovers skills with override and rejects outside root reads", async () => {
     const workspace = await temporary();
     const home = await temporary();
+    await prepareDataHome(home);
     for (const dir of [
       join(home, "skills/check"),
       join(workspace, ".agents/skills/check"),
@@ -173,7 +176,7 @@ describe("customization lifecycle", () => {
     const f = await fixture();
     await writeFile(
       join(f.root, "index.ts"),
-      `throw new Error('executed'); export default api=>{};`,
+      `throw new Error('executed'); export default (api: import('nekomimi/extensions').ExtensionAPI)=>{};`,
     );
     const r = (await new Resources(f.workspace, f.home).discover())[0]!;
     expect(await validateExtension(r)).toEqual([]);
@@ -188,7 +191,7 @@ it('loads the shipped SDK example and diagnoses missing imports without executin
   try {
     await enable(host); const active = await host.acquire();
     expect(active.extensions[0]!.tools).toHaveLength(1); expect(active.extensions[0]!.commands.has('inspect')).toBe(true); await host.release();
-    await writeFile(join(f.root, 'index.ts'), `import missing from './absent.js'; export default api=>{throw Error('must not execute')};`);
+    await writeFile(join(f.root, 'index.ts'), `import missing from './absent.js'; export default (api: import('nekomimi/extensions').ExtensionAPI)=>{throw Error('must not execute')};`);
     const resource = (await host.catalog.discover()).find(r => r.kind === 'extension')!;
     expect(await validateExtension(resource)).toEqual([expect.stringContaining('Missing or invalid import')]);
   } finally { await host.close(); }

@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-10-07T14:12:45.176752+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/model-routing.ts": "ca043933570076afd1679950fe788f50b5f05b57d87f8b30beede52bd76e1f49",
+    "src/provider.ts": "d97d86d309b455a42469b1437ce198ba517cd8ca619c5b014f95bc285f09f2d2",
+    "src/pi/model-service.ts": "1bc195611cf72c94a3049b8f2c7cd398aae2931912306cf07ff306f7c1ac8bb7",
+    "src/customization/adapter-provider.ts": "75431ce5566f554cca9133635f272857df319e1ada143e9ac262169ee6585715",
+    "src/customization/provider-profiles.ts": "cbc2bb60519a6306c16dc04ce306347ceb501fc8943047eeb600332ac36b441c",
+    "src/customization/provider-registry.ts": "871c59ab03f65ab7304587864bfb613ce203cb92fadc30bfe5efd39d7824480b",
+    "src/customization/model-catalog.ts": "acd128f45f49cda627f3a6ccdc08db4a1b7cfaea0d358cb7fd725623ccd38365",
+    "src/customization/sdk-contracts.ts": "e119c9bf4ea34f46284c2a648750d6d82c1c4aad571662f38a8a275a7eb38ffb",
+    "test/model-routing.test.ts": "1ad169cbb3b23e053d6c50a9d79863bf0fd85e0602abb3be8a006b52d4e6b235",
+    "extension-docs/platform.md": "05b1e7d24d1fb2072236dac6e0656b09da91628c01bd3d51ce3e991039eb6a65",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "df37a988212d4737001b558f7b015b1439ad6f990ee6f8a250916e2ade870fdb",
+    "openspec/changes/next-generation-nekomimi/design.md": "b6e1b171a076a8acc6d2906c2e0d2370daf3bbeea79ae6ccfc01e13a95391526",
+    "openspec/changes/next-generation-nekomimi/specs/model-operation-catalog/spec.md": "6d12eea134b759f60d490fff6916f6ee71c94d06aa1d9d03c66fcf117d71d29a",
+    "docs/validation/next-generation-nekomimi/model-routing/types.log": "6b60439fe501531657378788b070ef2d6f32c2ea2edee8bc5cc74bfbea455dbf",
+    "docs/validation/next-generation-nekomimi/model-routing/tests-fixed.log": "23546ac4d9fceba5a04a867fa0a946c702f59ada3d4d0cec8c1bd420082cbda2",
+    "docs/validation/next-generation-nekomimi/model-routing/README.md": "84f672cbd7962935f0b452f21d82d680e0f1c521da7564b48a51cace9e976137",
+    "docs/validation/next-generation-nekomimi/model-routing/types-fixed.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-routing/tests.log": "d1685fc75dc7bb78905d1ffe7e15432532745dba7b009b0ad876a89d7b859f06",
+    "docs/validation/next-generation-nekomimi/model-routing/specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/model-routing/build.log": "b507315e266f4deabb0273031f5369e7b801cf6d0557ff2df969541ac33957f2"
+  }
+}

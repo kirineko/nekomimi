@@ -1,0 +1,18 @@
+[
+  {
+    "label": "node24-final",
+    "command": [
+      "node",
+      "node_modules/nekomimi-codemode-validation/codemode.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "node22-final",
+    "command": [
+      "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+      "node_modules/nekomimi-codemode-validation/codemode.test.mjs"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,1582 @@
+
+Running 4 tests using 1 worker
+
+(node:70011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (7.4s)
+(node:70042) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (7.5s)
+(node:70072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.7s)
+  ✓  4 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (2.6s)
+
+
+  1) test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('dialog').getByRole('region', { name: '当前上下文统计' })
+    Timeout: 5000ms
+    - Expected  -  29
+    + Received  + 315
+
+    - 当前占用
+    -
+    - 估算 10,380 tokens · 1% / 1,000,000 tokens
+    -
+    - 这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。
+    -
+    - 模式 / 目标
+    - work / f8ea39e9afc1
+    - 模型 / Provider
+    - deepseek-flash / deepseek
+    - 系统 / 工具 / 消息
+    - 1,254 / 2,415 / 6,711
+    - 匹配请求样本
+    - 未知 tokens
+    - 预算策略
+    - 2
+    - 输出 / 安全 / 工具结果预留
+    - 131,072 / 20,000 / 2,048
+    - 可用输入 / 压力阈值
+    - 846,880 / 800,000
+    - 当前上下文与能力版本
+    - policy · 382 tokens
+    - tools · 347 tokens
+    - guidance · 525 tokens
+    - schemas · 2,415 tokens
+    - compaction · 6,116 tokens
+    - history · 444 tokens
+    - environment · 151 tokens
+    - 当前排除来源（57）
+    + 当前占用估算 10,380 tokens · 1% / 1,000,000 tokens这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标work / f8ea39e9afc1模型 / Providerdeepseek-flash / deepseek系统 / 工具 / 消息1,254 / 2,415 / 6,711匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 20,000 / 2,048可用输入 / 压力阈值846,880 / 800,000当前上下文与能力版本{
+    +   "mode": "work",
+    +   "targetId": "f8ea39e9afc16b2c5e1e4fd5c0a7a66a2bc1edbb126c1b3720cf2a0d0ac398d7",
+    +   "revision": "48be60056606dfca25e5e94143bbbe1c08a3a55070d867662a22dbb9e67811be",
+    +   "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+    +   "purpose": "work"
+    + }policy · 382 tokens原始估算 382，校准调整 0[
+    +   {
+    +     "source": "nekomimi:work:v3",
+    +     "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+    +   }
+    + ]tools · 347 tokens原始估算 347，校准调整 0[
+    +   {
+    +     "source": "tool-summary:bash",
+    +     "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+    +   },
+    +   {
+    +     "source": "tool-summary:codemode",
+    +     "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+    +   },
+    +   {
+    +     "source": "tool-summary:edit",
+    +     "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_catalog",
+    +     "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_classify",
+    +     "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_image",
+    +     "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+    +   },
+    +   {
+    +     "source": "tool-summary:read",
+    +     "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+    +   },
+    +   {
+    +     "source": "tool-summary:resource_list",
+    +     "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+    +   },
+    +   {
+    +     "source": "tool-summary:web_search",
+    +     "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+    +   },
+    +   {
+    +     "source": "tool-summary:write",
+    +     "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+    +   }
+    + ]guidance · 525 tokens原始估算 525，校准调整 0[
+    +   {
+    +     "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+    +     "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+    +   },
+    +   {
+    +     "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+    +     "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+    +   },
+    +   {
+    +     "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+    +     "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+    +     "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+    +   },
+    +   {
+    +     "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+    +     "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+    +   },
+    +   {
+    +     "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+    +     "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+    +     "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+    +   }
+    + ]schemas · 2,415 tokens原始估算 2,415，校准调整 0[
+    +   {
+    +     "source": "bash",
+    +     "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+    +   },
+    +   {
+    +     "source": "codemode",
+    +     "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+    +   },
+    +   {
+    +     "source": "edit",
+    +     "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+    +   },
+    +   {
+    +     "source": "model_catalog",
+    +     "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+    +   },
+    +   {
+    +     "source": "model_classify",
+    +     "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+    +   },
+    +   {
+    +     "source": "model_image",
+    +     "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+    +   },
+    +   {
+    +     "source": "read",
+    +     "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+    +   },
+    +   {
+    +     "source": "resource_list",
+    +     "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+    +   },
+    +   {
+    +     "source": "web_search",
+    +     "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+    +   },
+    +   {
+    +     "source": "write",
+    +     "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+    +   }
+    + ]compaction · 6,116 tokens原始估算 6,116，校准调整 0[
+    +   {
+    +     "source": "compaction:summary",
+    +     "hash": "40a84370123cf52ac69ccd2e44bc6de2f6bdee0bce12ef8e1eaa0ff25b844035",
+    +     "eventId": "bad25f42-8a54-463b-99ea-745d1883bed4"
+    +   }
+    + ]history · 444 tokens原始估算 444，校准调整 0[
+    +   {
+    +     "source": "fixture:55",
+    +     "hash": "a3aa573d9b4206fc28483978af6c9e4f5e5eccdc78a767d0b0c6a4edf7d311ed",
+    +     "eventId": "33e9ce77-3278-4a2c-ac5a-d000a7762b8d"
+    +   },
+    +   {
+    +     "source": "fixture:56",
+    +     "hash": "ac3f3d3fd375ff04e01c8770e9b689cc541da1e9ec79a68179a47ffbc51df7f7",
+    +     "eventId": "6a627129-d09f-47b1-a128-ec17b0ff4327"
+    +   },
+    +   {
+    +     "source": "fixture:57",
+    +     "hash": "642a499a2329524ce351d15e7454f3469bad9b8da540b4545461d417366a34d0",
+    +     "eventId": "c0917e70-f1c1-4d80-939a-ab088dbc7e50"
+    +   },
+    +   {
+    +     "source": "fixture:58",
+    +     "hash": "2dd719e55b14ac909c2ffa856149fcd5313093775e80cbe53432f412ae85ade0",
+    +     "eventId": "6bb3c45b-f79a-45f9-b8eb-94844ab949a3"
+    +   },
+    +   {
+    +     "source": "fixture:59",
+    +     "hash": "957197663fbdc687fedb525d59610b95eb253ca2799070d27a5b0212179771c1",
+    +     "eventId": "c414d13e-be6c-406e-8db4-4ed13a3c38d8"
+    +   },
+    +   {
+    +     "source": "fixture:60",
+    +     "hash": "56bc1cde552cd1c990e7469a9147f8283a55e289c3e99af5287861da6f9f4eb7",
+    +     "eventId": "709771f3-cd0f-49db-a173-209fc141cf8d"
+    +   },
+    +   {
+    +     "source": "fixture:61",
+    +     "hash": "c83860a8f76f40acaf2c56fcdbb1863b1d8235e0fe58169ef44b5ac926a0a847",
+    +     "eventId": "91a64774-3887-4e36-9003-85e3fb3c4494"
+    +   },
+    +   {
+    +     "source": "fixture:62",
+    +     "hash": "46910595fe6400279243007ac9f985b333af5b2a91ba10097634a3971f467b89",
+    +     "eventId": "9f8e74a5-db2b-4c6a-b83b-4e10d5a56bfc"
+    +   },
+    +   {
+    +     "source": "fixture:63",
+    +     "hash": "57132353d6ba5bce68634a6af0e63c3c992c8756e9db1d5878e1b6727131c7ea",
+    +     "eventId": "afabbf59-8c17-43aa-baaf-8353ff9d1e63"
+    +   },
+    +   {
+    +     "source": "fixture:64",
+    +     "hash": "7d7a2dc0806ea75b697a3bb5791f51dfe0fcf84b27a813759b0b3246b2fad5d8",
+    +     "eventId": "57c62066-f039-4784-b483-6047ffa11fcd"
+    +   },
+    +   {
+    +     "source": "user",
+    +     "hash": "89fbe5e8c86739da15c1d65d8fc84b629808f2e15fc1b9d1ce1c306a83ef0fff",
+    +     "eventId": "ce77691b-ece9-4c66-bcac-15d8906ef50a"
+    +   },
+    +   {
+    +     "source": "response:e70e19ca-746a-4de1-8acd-900d7a59133a",
+    +     "hash": "24febaf6aa742275401408eb3c0ec5bd8e27fa671d31d457b19ae4942cd7412c",
+    +     "eventId": "51bca2fc-0c46-43fb-94a3-8f8cf316c934"
+    +   }
+    + ]environment · 151 tokens原始估算 151，校准调整 0[
+    +   {
+    +     "source": "runtime:environment:v1",
+    +     "hash": "3d5779d31b65a219f0387664453bbdf2a0c95d831b98a40d84fd7df10065f2cc",
+    +     "eventId": "5451fca8-e932-4254-a733-668dca3f9bc2"
+    +   }
+    + ]当前排除来源（57）[
+    +   {
+    +     "source": "customization:delivery:v2",
+    +     "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+    +     "reason": "tool-dependency-unavailable"
+    +   },
+    +   {
+    +     "source": "customization:entry:v2",
+    +     "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+    +     "reason": "tool-dependency-unavailable"
+    +   },
+    +   {
+    +     "source": "fixture:0",
+    +     "hash": "6711e6f1ddf16d6973b8fb0353cf940103941017fa7c83c440dff15a805d934b",
+    +     "eventId": "5d605ca9-fe25-47f5-af00-77c5d65ce20d",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:1",
+    +     "hash": "b6243066d3172c23b58a5c8b81acd128518c76b9d48a56f9d7dc559c7de1c1bb",
+    +     "eventId": "372bed78-9b3a-4b06-bea0-6bf54e20bbc8",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:2",
+    +     "hash": "37ec30bf2887a770f913c912ceb692ff9bbbf16e633c6af9a7bd1fdeeceaf3a8",
+    +     "eventId": "11d4b029-253b-4ea2-80e1-6c5bd72f24cf",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:3",
+    +     "hash": "8226630e9494d41ee0822dbbd170e21771b426191a0753ae80e3df8660b6978c",
+    +     "eventId": "158a2c29-74db-419b-b095-d4e15226e2ee",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:4",
+    +     "hash": "68cefd750f3bb292fe6eb2725825b92c9b4853b8a6d16cee29f971cdb5e323db",
+    +     "eventId": "bd23db97-8103-4aca-9b03-d8d5c626174b",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:5",
+    +     "hash": "cca6392703d88bf32e46afc5ac7850703181bb5bc3723b46ae02dcab70213ae1",
+    +     "eventId": "b89cf5cb-062a-44f7-b35b-1a0d0a02a2c7",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:6",
+    +     "hash": "23bff4884864f43ec0e7921bfa014dc33de857959c9a96bebb034256f7568271",
+    +     "eventId": "f5887eac-8034-470e-a15f-afcea8c8b480",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:7",
+    +     "hash": "5b935bdcecbfebb4f33f52884eee12dea6069a2d7196e0dac4614e3201a4fa7b",
+    +     "eventId": "37a2acf1-5a4e-487d-92b3-8045b6805048",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:8",
+    +     "hash": "2ad510b810b0b0532732beccf1f794aea2727e41a1a7e9a5d61e52bca9fbe1b3",
+    +     "eventId": "024504d6-778a-4d2a-acbe-646b13c13279",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:9",
+    +     "hash": "14bdcf87ed42d13ce5f20b2ff00b1a1319a379d46a1a752a855d8d754e8135f8",
+    +     "eventId": "15e3d432-24a2-40cf-a29c-1c45d54e1b18",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:10",
+    +     "hash": "cd82d917a02285fa1f201b026290c32b668742e427846f283ed9ec753f029dad",
+    +     "eventId": "ae8715ac-e1b0-41c4-83eb-09387fb88c0c",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:11",
+    +     "hash": "746234fa1237a7438a24db97cba4946bd5ce3ed2210caddde69cca9db6fad124",
+    +     "eventId": "2031c4b0-08c1-4a10-b2a9-d6d6e81ac919",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:12",
+    +     "hash": "be733fb497596b9f9d5e36ff1bb7225de3efbe83ca304a7fd9831449f4c2a8ba",
+    +     "eventId": "2559ad45-87de-449c-9872-7270f3ad87d7",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:13",
+    +     "hash": "b6942be4d115a1e72f6fff6b1c8a3f47f5abbc0a797a2096f5193131547b3327",
+    +     "eventId": "449c4ce3-3e20-4b5a-8542-504fc1390a51",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:14",
+    +     "hash": "1668317f3905a2ee1e8b4803279d8447df8a2ce8d6edb66d0e84b7c52b7d7b21",
+    +     "eventId": "edc66f20-fb46-464f-8372-edd2a48b28b4",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:15",
+    +     "hash": "df88448402bd68edbe620ac72ccc89afead6c34ac3ab8aee69d42dd08d77f178",
+    +     "eventId": "7c9483c6-0d4e-47cc-abef-d8fbcd1bea9e",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:16",
+    +     "hash": "562ee166add17eddfecfe1965cc73b46bfc2a8d22aced3115e340139555ef06e",
+    +     "eventId": "0527e786-5808-4b9a-9973-dd3af64ab947",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:17",
+    +     "hash": "5d5149569639a948fd0a7bbdd95e6f30de6bba33a012b30c51949e29888ac376",
+    +     "eventId": "49e19f00-132d-4e1a-88ed-8f67e6969393",
+    +     "reason": "not-selected-in-current-projection"
+    +   }
+    + ]上一页来源1–20 / 57下一页来源
+
+    Call log:
+      - Expect "toHaveText" getByRole('dialog').getByRole('region', { name: '当前上下文统计' }) with timeout 5000ms
+      - waiting for getByRole('dialog').getByRole('region', { name: '当前上下文统计' })
+        14 × locator resolved to <section class="space-y-3" aria-label="当前上下文统计">…</section>
+           - unexpected value "当前占用估算 10,380 tokens · 1% / 1,000,000 tokens这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标work / f8ea39e9afc1模型 / Providerdeepseek-flash / deepseek系统 / 工具 / 消息1,254 / 2,415 / 6,711匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 20,000 / 2,048可用输入 / 压力阈值846,880 / 800,000当前上下文与能力版本{
+      "mode": "work",
+      "targetId": "f8ea39e9afc16b2c5e1e4fd5c0a7a66a2bc1edbb126c1b3720cf2a0d0ac398d7",
+      "revision": "48be60056606dfca25e5e94143bbbe1c08a3a55070d867662a22dbb9e67811be",
+      "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+      "purpose": "work"
+    }policy · 382 tokens原始估算 382，校准调整 0[
+      {
+        "source": "nekomimi:work:v3",
+        "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+      }
+    ]tools · 347 tokens原始估算 347，校准调整 0[
+      {
+        "source": "tool-summary:bash",
+        "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+      },
+      {
+        "source": "tool-summary:codemode",
+        "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+      },
+      {
+        "source": "tool-summary:edit",
+        "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+      },
+      {
+        "source": "tool-summary:model_catalog",
+        "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+      },
+      {
+        "source": "tool-summary:model_classify",
+        "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+      },
+      {
+        "source": "tool-summary:model_image",
+        "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+      },
+      {
+        "source": "tool-summary:read",
+        "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+      },
+      {
+        "source": "tool-summary:resource_list",
+        "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+      },
+      {
+        "source": "tool-summary:web_search",
+        "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+      },
+      {
+        "source": "tool-summary:write",
+        "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+      }
+    ]guidance · 525 tokens原始估算 525，校准调整 0[
+      {
+        "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+        "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+      },
+      {
+        "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+        "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+      },
+      {
+        "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+        "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+      },
+      {
+        "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+        "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+      },
+      {
+        "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+        "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+      },
+      {
+        "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+        "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+      },
+      {
+        "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+        "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+      }
+    ]schemas · 2,415 tokens原始估算 2,415，校准调整 0[
+      {
+        "source": "bash",
+        "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+      },
+      {
+        "source": "codemode",
+        "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+      },
+      {
+        "source": "edit",
+        "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+      },
+      {
+        "source": "model_catalog",
+        "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+      },
+      {
+        "source": "model_classify",
+        "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+      },
+      {
+        "source": "model_image",
+        "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+      },
+      {
+        "source": "read",
+        "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+      },
+      {
+        "source": "resource_list",
+        "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+      },
+      {
+        "source": "web_search",
+        "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+      },
+      {
+        "source": "write",
+        "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+      }
+    ]compaction · 6,116 tokens原始估算 6,116，校准调整 0[
+      {
+        "source": "compaction:summary",
+        "hash": "40a84370123cf52ac69ccd2e44bc6de2f6bdee0bce12ef8e1eaa0ff25b844035",
+        "eventId": "bad25f42-8a54-463b-99ea-745d1883bed4"
+      }
+    ]history · 444 tokens原始估算 444，校准调整 0[
+      {
+        "source": "fixture:55",
+        "hash": "a3aa573d9b4206fc28483978af6c9e4f5e5eccdc78a767d0b0c6a4edf7d311ed",
+        "eventId": "33e9ce77-3278-4a2c-ac5a-d000a7762b8d"
+      },
+      {
+        "source": "fixture:56",
+        "hash": "ac3f3d3fd375ff04e01c8770e9b689cc541da1e9ec79a68179a47ffbc51df7f7",
+        "eventId": "6a627129-d09f-47b1-a128-ec17b0ff4327"
+      },
+      {
+        "source": "fixture:57",
+        "hash": "642a499a2329524ce351d15e7454f3469bad9b8da540b4545461d417366a34d0",
+        "eventId": "c0917e70-f1c1-4d80-939a-ab088dbc7e50"
+      },
+      {
+        "source": "fixture:58",
+        "hash": "2dd719e55b14ac909c2ffa856149fcd5313093775e80cbe53432f412ae85ade0",
+        "eventId": "6bb3c45b-f79a-45f9-b8eb-94844ab949a3"
+      },
+      {
+        "source": "fixture:59",
+        "hash": "957197663fbdc687fedb525d59610b95eb253ca2799070d27a5b0212179771c1",
+        "eventId": "c414d13e-be6c-406e-8db4-4ed13a3c38d8"
+      },
+      {
+        "source": "fixture:60",
+        "hash": "56bc1cde552cd1c990e7469a9147f8283a55e289c3e99af5287861da6f9f4eb7",
+        "eventId": "709771f3-cd0f-49db-a173-209fc141cf8d"
+      },
+      {
+        "source": "fixture:61",
+        "hash": "c83860a8f76f40acaf2c56fcdbb1863b1d8235e0fe58169ef44b5ac926a0a847",
+        "eventId": "91a64774-3887-4e36-9003-85e3fb3c4494"
+      },
+      {
+        "source": "fixture:62",
+        "hash": "46910595fe6400279243007ac9f985b333af5b2a91ba10097634a3971f467b89",
+        "eventId": "9f8e74a5-db2b-4c6a-b83b-4e10d5a56bfc"
+      },
+      {
+        "source": "fixture:63",
+        "hash": "57132353d6ba5bce68634a6af0e63c3c992c8756e9db1d5878e1b6727131c7ea",
+        "eventId": "afabbf59-8c17-43aa-baaf-8353ff9d1e63"
+      },
+      {
+        "source": "fixture:64",
+        "hash": "7d7a2dc0806ea75b697a3bb5791f51dfe0fcf84b27a813759b0b3246b2fad5d8",
+        "eventId": "57c62066-f039-4784-b483-6047ffa11fcd"
+      },
+      {
+        "source": "user",
+        "hash": "89fbe5e8c86739da15c1d65d8fc84b629808f2e15fc1b9d1ce1c306a83ef0fff",
+        "eventId": "ce77691b-ece9-4c66-bcac-15d8906ef50a"
+      },
+      {
+        "source": "response:e70e19ca-746a-4de1-8acd-900d7a59133a",
+        "hash": "24febaf6aa742275401408eb3c0ec5bd8e27fa671d31d457b19ae4942cd7412c",
+        "eventId": "51bca2fc-0c46-43fb-94a3-8f8cf316c934"
+      }
+    ]environment · 151 tokens原始估算 151，校准调整 0[
+      {
+        "source": "runtime:environment:v1",
+        "hash": "3d5779d31b65a219f0387664453bbdf2a0c95d831b98a40d84fd7df10065f2cc",
+        "eventId": "5451fca8-e932-4254-a733-668dca3f9bc2"
+      }
+    ]当前排除来源（57）[
+      {
+        "source": "customization:delivery:v2",
+        "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+        "reason": "tool-dependency-unavailable"
+      },
+      {
+        "source": "customization:entry:v2",
+        "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+        "reason": "tool-dependency-unavailable"
+      },
+      {
+        "source": "fixture:0",
+        "hash": "6711e6f1ddf16d6973b8fb0353cf940103941017fa7c83c440dff15a805d934b",
+        "eventId": "5d605ca9-fe25-47f5-af00-77c5d65ce20d",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:1",
+        "hash": "b6243066d3172c23b58a5c8b81acd128518c76b9d48a56f9d7dc559c7de1c1bb",
+        "eventId": "372bed78-9b3a-4b06-bea0-6bf54e20bbc8",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:2",
+        "hash": "37ec30bf2887a770f913c912ceb692ff9bbbf16e633c6af9a7bd1fdeeceaf3a8",
+        "eventId": "11d4b029-253b-4ea2-80e1-6c5bd72f24cf",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:3",
+        "hash": "8226630e9494d41ee0822dbbd170e21771b426191a0753ae80e3df8660b6978c",
+        "eventId": "158a2c29-74db-419b-b095-d4e15226e2ee",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:4",
+        "hash": "68cefd750f3bb292fe6eb2725825b92c9b4853b8a6d16cee29f971cdb5e323db",
+        "eventId": "bd23db97-8103-4aca-9b03-d8d5c626174b",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:5",
+        "hash": "cca6392703d88bf32e46afc5ac7850703181bb5bc3723b46ae02dcab70213ae1",
+        "eventId": "b89cf5cb-062a-44f7-b35b-1a0d0a02a2c7",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:6",
+        "hash": "23bff4884864f43ec0e7921bfa014dc33de857959c9a96bebb034256f7568271",
+        "eventId": "f5887eac-8034-470e-a15f-afcea8c8b480",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:7",
+        "hash": "5b935bdcecbfebb4f33f52884eee12dea6069a2d7196e0dac4614e3201a4fa7b",
+        "eventId": "37a2acf1-5a4e-487d-92b3-8045b6805048",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:8",
+        "hash": "2ad510b810b0b0532732beccf1f794aea2727e41a1a7e9a5d61e52bca9fbe1b3",
+        "eventId": "024504d6-778a-4d2a-acbe-646b13c13279",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:9",
+        "hash": "14bdcf87ed42d13ce5f20b2ff00b1a1319a379d46a1a752a855d8d754e8135f8",
+        "eventId": "15e3d432-24a2-40cf-a29c-1c45d54e1b18",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:10",
+        "hash": "cd82d917a02285fa1f201b026290c32b668742e427846f283ed9ec753f029dad",
+        "eventId": "ae8715ac-e1b0-41c4-83eb-09387fb88c0c",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:11",
+        "hash": "746234fa1237a7438a24db97cba4946bd5ce3ed2210caddde69cca9db6fad124",
+        "eventId": "2031c4b0-08c1-4a10-b2a9-d6d6e81ac919",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:12",
+        "hash": "be733fb497596b9f9d5e36ff1bb7225de3efbe83ca304a7fd9831449f4c2a8ba",
+        "eventId": "2559ad45-87de-449c-9872-7270f3ad87d7",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:13",
+        "hash": "b6942be4d115a1e72f6fff6b1c8a3f47f5abbc0a797a2096f5193131547b3327",
+        "eventId": "449c4ce3-3e20-4b5a-8542-504fc1390a51",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:14",
+        "hash": "1668317f3905a2ee1e8b4803279d8447df8a2ce8d6edb66d0e84b7c52b7d7b21",
+        "eventId": "edc66f20-fb46-464f-8372-edd2a48b28b4",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:15",
+        "hash": "df88448402bd68edbe620ac72ccc89afead6c34ac3ab8aee69d42dd08d77f178",
+        "eventId": "7c9483c6-0d4e-47cc-abef-d8fbcd1bea9e",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:16",
+        "hash": "562ee166add17eddfecfe1965cc73b46bfc2a8d22aced3115e340139555ef06e",
+        "eventId": "0527e786-5808-4b9a-9973-dd3af64ab947",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:17",
+        "hash": "5d5149569639a948fd0a7bbdd95e6f30de6bba33a012b30c51949e29888ac376",
+        "eventId": "49e19f00-132d-4e1a-88ed-8f67e6969393",
+        "reason": "not-selected-in-current-projection"
+      }
+    ]上一页来源1–20 / 57下一页来源"
+
+
+      37 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+      38 |     const measurement=await dialog.getByRole('region',{name:'当前上下文统计'}).innerText();
+    > 39 |     await dialog.getByRole('button',{name:'下一页选择',exact:true}).click();await expect(dialog).toContainText('选择清单偏移 40');await expect(dialog.getByRole('region',{name:'当前上下文统计'})).toHaveText(measurement);
+         |                                                                                                                                                                                  ^
+      40 |     const pinned=await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue();expect(pinned).not.toBe('');
+      41 |     await dialog.getByRole('combobox',{name:'选择结果',exact:true}).selectOption('exclude');await expect(dialog).toContainText('选择清单偏移 0');expect(await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue()).toBe(pinned);
+      42 |     await dialog.getByText(/#\d+ · 已提交/).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 0');
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:39:178
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('dialog').getByRole('region', { name: '当前上下文统计' })
+    Timeout: 5000ms
+    - Expected  -  30
+    + Received  + 398
+
+    - 当前占用
+    -
+    - 估算 14,939 tokens · 1% / 1,000,000 tokens
+    -
+    - 这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。
+    -
+    - 模式 / 目标
+    - create / f708e78354f2
+    - 模型 / Provider
+    - deepseek-flash / deepseek
+    - 系统 / 工具 / 消息
+    - 3,510 / 4,718 / 6,711
+    - 匹配请求样本
+    - 未知 tokens
+    - 预算策略
+    - 2
+    - 输出 / 安全 / 工具结果预留
+    - 131,072 / 20,000 / 2,048
+    - 可用输入 / 压力阈值
+    - 846,880 / 800,000
+    - 当前上下文与能力版本
+    - policy · 602 tokens
+    - tools · 679 tokens
+    - guidance · 522 tokens
+    - resources · 1,707 tokens
+    - schemas · 4,718 tokens
+    - compaction · 6,116 tokens
+    - history · 444 tokens
+    - environment · 151 tokens
+    - 当前排除来源（55）
+    + 当前占用估算 14,939 tokens · 1% / 1,000,000 tokens这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标create / f708e78354f2模型 / Providerdeepseek-flash / deepseek系统 / 工具 / 消息3,510 / 4,718 / 6,711匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 20,000 / 2,048可用输入 / 压力阈值846,880 / 800,000当前上下文与能力版本{
+    +   "mode": "create",
+    +   "targetId": "f708e78354f2c005973683c5759c55957dd9d8132e283762972cebb20058215f",
+    +   "revision": "11a7fe91e3029f52d7e4b43567da7e35d69cb4b3b285ba0a5d573a9962d5ff74",
+    +   "capabilityRevision": "b89a103ddc2a48a8556cd6e06d9f3ec39331db192ac6376a84e7104eed9aeb1b",
+    +   "purpose": "create"
+    + }policy · 602 tokens原始估算 602，校准调整 0[
+    +   {
+    +     "source": "nekomimi:create:v3",
+    +     "hash": "38beb119bad333c7fe43305c40fa38dc14119ed0f4a016bc6ef4091aee7e5a6b"
+    +   }
+    + ]tools · 679 tokens原始估算 679，校准调整 0[
+    +   {
+    +     "source": "tool-summary:bash",
+    +     "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+    +   },
+    +   {
+    +     "source": "tool-summary:codemode",
+    +     "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_candidate",
+    +     "hash": "4098b408eafd704ea931ff716f58ef72af5a0b7cf5fbe47374bc199666d3592a"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_package",
+    +     "hash": "bed7338f20770873f970caf9b3eb1149be90ff53eb229e0a800642512c8d3aae"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_reload",
+    +     "hash": "25466129009b9b1a9c2bd4663cdd6a5120d86590d7835e5d1171002a3645e5b3"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_sdk",
+    +     "hash": "2522a233ea7f1323b3f0af37af36501d7fa5b96d69bb1b89ad9778b0356a45e2"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_status",
+    +     "hash": "0a4e8158187bb1e3b36e59e2caeb88f8c02fda3113d5ff7257d55f0236ab05fe"
+    +   },
+    +   {
+    +     "source": "tool-summary:customization_validate",
+    +     "hash": "006adad56e9fbb484690fd9b9cbb062510fc62a35b5663b6387e79791cf43f5c"
+    +   },
+    +   {
+    +     "source": "tool-summary:edit",
+    +     "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_catalog",
+    +     "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_classify",
+    +     "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_image",
+    +     "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+    +   },
+    +   {
+    +     "source": "tool-summary:read",
+    +     "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+    +   },
+    +   {
+    +     "source": "tool-summary:resource_list",
+    +     "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+    +   },
+    +   {
+    +     "source": "tool-summary:resource_read",
+    +     "hash": "71b52925500d9e019028e179575ac098d6a271f156cb6f3159c88236fa3164a4"
+    +   },
+    +   {
+    +     "source": "tool-summary:resource_write",
+    +     "hash": "a441c3e6247bf46c97d21eef99a4c4aac8b3a15d028e5bbb92d8bb2e50b2e613"
+    +   },
+    +   {
+    +     "source": "tool-summary:web_search",
+    +     "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+    +   },
+    +   {
+    +     "source": "tool-summary:write",
+    +     "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+    +   }
+    + ]guidance · 522 tokens原始估算 522，校准调整 0[
+    +   {
+    +     "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+    +     "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+    +   },
+    +   {
+    +     "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+    +     "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+    +   },
+    +   {
+    +     "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+    +     "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+    +     "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+    +   },
+    +   {
+    +     "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+    +     "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+    +   },
+    +   {
+    +     "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+    +     "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+    +     "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+    +   }
+    + ]resources · 1,707 tokens原始估算 1,707，校准调整 0[
+    +   {
+    +     "source": "customization:delivery:v2",
+    +     "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc"
+    +   },
+    +   {
+    +     "source": "customization:entry:v2",
+    +     "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0"
+    +   },
+    +   {
+    +     "source": "resource-directory-query:ee136d1401001ea3f7c94e19078b59e3892337b63061d622d6565caabe6084e8",
+    +     "hash": "f0a93476e7e8ff32fa15e2a6314f1e27998de87875cf396cc99899b587cf5807"
+    +   },
+    +   {
+    +     "source": "resources:ee136d1401001ea3f7c94e19078b59e3892337b63061d622d6565caabe6084e8",
+    +     "hash": "16f811113bdf24a88c75f6c8d371ee717f68ca3928a94121b619e0e7b3e89cf5"
+    +   }
+    + ]schemas · 4,718 tokens原始估算 4,718，校准调整 0[
+    +   {
+    +     "source": "bash",
+    +     "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+    +   },
+    +   {
+    +     "source": "codemode",
+    +     "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+    +   },
+    +   {
+    +     "source": "customization_candidate",
+    +     "hash": "f531d50bb197ce889f049c6b9d5d351201d7e1bc695b3b340278e9dc2b056953"
+    +   },
+    +   {
+    +     "source": "customization_package",
+    +     "hash": "4f15e71b2d2f3ccd121ba92b8c109b5ada73332a94e1c6f091c47c2c601bbb6d"
+    +   },
+    +   {
+    +     "source": "customization_reload",
+    +     "hash": "8fc5660c250f4c7967a5e38ae33daedce5e1b328a7b4eb06d11a03aca36ff1b6"
+    +   },
+    +   {
+    +     "source": "customization_sdk",
+    +     "hash": "19a77b9b453a685a291e2f5d536578731e0801f8c7bd1d9a71b9b3b192924119"
+    +   },
+    +   {
+    +     "source": "customization_status",
+    +     "hash": "1280386ed48db9237361c7f0477ee3248bf80af6eac30cd3ebd8f5c52ef23096"
+    +   },
+    +   {
+    +     "source": "customization_validate",
+    +     "hash": "040c096e5519e4c18f284191970afc75c62903725918344f243f8d53eb5361be"
+    +   },
+    +   {
+    +     "source": "edit",
+    +     "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+    +   },
+    +   {
+    +     "source": "model_catalog",
+    +     "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+    +   },
+    +   {
+    +     "source": "model_classify",
+    +     "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+    +   },
+    +   {
+    +     "source": "model_image",
+    +     "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+    +   },
+    +   {
+    +     "source": "read",
+    +     "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+    +   },
+    +   {
+    +     "source": "resource_list",
+    +     "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+    +   },
+    +   {
+    +     "source": "resource_read",
+    +     "hash": "e07e1f72a9ae0114bd397c7aa8f81c2611402b3c08b033865511fdd135f02c94"
+    +   },
+    +   {
+    +     "source": "resource_write",
+    +     "hash": "1cf63f67b5aef0ab54d1e05c96b476b446f052720e36f5fd5e80a3d55a348ed7"
+    +   },
+    +   {
+    +     "source": "web_search",
+    +     "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+    +   },
+    +   {
+    +     "source": "write",
+    +     "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+    +   }
+    + ]compaction · 6,116 tokens原始估算 6,116，校准调整 0[
+    +   {
+    +     "source": "compaction:summary",
+    +     "hash": "40a84370123cf52ac69ccd2e44bc6de2f6bdee0bce12ef8e1eaa0ff25b844035",
+    +     "eventId": "6656891b-f420-475c-a7c9-d7b60440f1e9"
+    +   }
+    + ]history · 444 tokens原始估算 444，校准调整 0[
+    +   {
+    +     "source": "fixture:55",
+    +     "hash": "a3aa573d9b4206fc28483978af6c9e4f5e5eccdc78a767d0b0c6a4edf7d311ed",
+    +     "eventId": "881127bd-8c5e-4fb5-9608-5671086b029c"
+    +   },
+    +   {
+    +     "source": "fixture:56",
+    +     "hash": "ac3f3d3fd375ff04e01c8770e9b689cc541da1e9ec79a68179a47ffbc51df7f7",
+    +     "eventId": "d8bb8af6-8902-4e01-9dcd-23e9fd4f1421"
+    +   },
+    +   {
+    +     "source": "fixture:57",
+    +     "hash": "642a499a2329524ce351d15e7454f3469bad9b8da540b4545461d417366a34d0",
+    +     "eventId": "98bcfb0a-1f0f-40e4-ad1e-246cbfa90977"
+    +   },
+    +   {
+    +     "source": "fixture:58",
+    +     "hash": "2dd719e55b14ac909c2ffa856149fcd5313093775e80cbe53432f412ae85ade0",
+    +     "eventId": "e9fd8e6e-f470-48e6-9dcd-eb4db8f634db"
+    +   },
+    +   {
+    +     "source": "fixture:59",
+    +     "hash": "957197663fbdc687fedb525d59610b95eb253ca2799070d27a5b0212179771c1",
+    +     "eventId": "7a9a822e-60ed-480d-ac2c-a7b4c354c203"
+    +   },
+    +   {
+    +     "source": "fixture:60",
+    +     "hash": "56bc1cde552cd1c990e7469a9147f8283a55e289c3e99af5287861da6f9f4eb7",
+    +     "eventId": "b0551e96-51c2-462e-96a5-b592ab0245df"
+    +   },
+    +   {
+    +     "source": "fixture:61",
+    +     "hash": "c83860a8f76f40acaf2c56fcdbb1863b1d8235e0fe58169ef44b5ac926a0a847",
+    +     "eventId": "b7aad001-ae53-47a1-ae60-60106c1828ef"
+    +   },
+    +   {
+    +     "source": "fixture:62",
+    +     "hash": "46910595fe6400279243007ac9f985b333af5b2a91ba10097634a3971f467b89",
+    +     "eventId": "b840e870-e133-4f4b-b7d3-a75466f78ae2"
+    +   },
+    +   {
+    +     "source": "fixture:63",
+    +     "hash": "57132353d6ba5bce68634a6af0e63c3c992c8756e9db1d5878e1b6727131c7ea",
+    +     "eventId": "7e1126d3-355b-4b80-bbdd-d6cdba01bdef"
+    +   },
+    +   {
+    +     "source": "fixture:64",
+    +     "hash": "7d7a2dc0806ea75b697a3bb5791f51dfe0fcf84b27a813759b0b3246b2fad5d8",
+    +     "eventId": "5a5a9804-5e1d-4379-9761-b0640b1e6034"
+    +   },
+    +   {
+    +     "source": "user",
+    +     "hash": "89fbe5e8c86739da15c1d65d8fc84b629808f2e15fc1b9d1ce1c306a83ef0fff",
+    +     "eventId": "f6b9ca63-7879-4ef0-8933-cdfdd9ce4be7"
+    +   },
+    +   {
+    +     "source": "response:9f9ecdcc-e3c9-43d4-9515-8e6d80ac4bef",
+    +     "hash": "24febaf6aa742275401408eb3c0ec5bd8e27fa671d31d457b19ae4942cd7412c",
+    +     "eventId": "487917ef-ee54-4638-9b87-853266120e9a"
+    +   }
+    + ]environment · 151 tokens原始估算 151，校准调整 0[
+    +   {
+    +     "source": "runtime:environment:v1",
+    +     "hash": "5bfe93f23806de3a9851b7b9f728a00718bda1b1ddcccab35725e32c85ea9ded",
+    +     "eventId": "986f0b2e-98cc-4a32-8305-c4e225a15b23"
+    +   }
+    + ]当前排除来源（55）[
+    +   {
+    +     "source": "fixture:0",
+    +     "hash": "6711e6f1ddf16d6973b8fb0353cf940103941017fa7c83c440dff15a805d934b",
+    +     "eventId": "2bd85a49-4052-452f-807a-416f5e8e34ad",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:1",
+    +     "hash": "b6243066d3172c23b58a5c8b81acd128518c76b9d48a56f9d7dc559c7de1c1bb",
+    +     "eventId": "d8e9e015-7dcd-4581-9b8b-1344834497c0",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:2",
+    +     "hash": "37ec30bf2887a770f913c912ceb692ff9bbbf16e633c6af9a7bd1fdeeceaf3a8",
+    +     "eventId": "14c6e4e4-b2f9-4916-8a10-73ed1f243155",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:3",
+    +     "hash": "8226630e9494d41ee0822dbbd170e21771b426191a0753ae80e3df8660b6978c",
+    +     "eventId": "55c556fc-58ec-45e7-bd1c-77dcb43e98a5",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:4",
+    +     "hash": "68cefd750f3bb292fe6eb2725825b92c9b4853b8a6d16cee29f971cdb5e323db",
+    +     "eventId": "672fd6fd-8b89-4085-98fe-ea7bf4048435",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:5",
+    +     "hash": "cca6392703d88bf32e46afc5ac7850703181bb5bc3723b46ae02dcab70213ae1",
+    +     "eventId": "865cbb07-ac0c-453c-90c4-a4b9862623c9",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:6",
+    +     "hash": "23bff4884864f43ec0e7921bfa014dc33de857959c9a96bebb034256f7568271",
+    +     "eventId": "497c9e84-48a8-4a2c-8d4e-ac21356240bf",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:7",
+    +     "hash": "5b935bdcecbfebb4f33f52884eee12dea6069a2d7196e0dac4614e3201a4fa7b",
+    +     "eventId": "bc540693-415e-42e9-88d9-1542797b07bc",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:8",
+    +     "hash": "2ad510b810b0b0532732beccf1f794aea2727e41a1a7e9a5d61e52bca9fbe1b3",
+    +     "eventId": "17700481-fed3-49d6-8db3-b9fb04e70c81",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:9",
+    +     "hash": "14bdcf87ed42d13ce5f20b2ff00b1a1319a379d46a1a752a855d8d754e8135f8",
+    +     "eventId": "cdf609fa-b0f8-4f65-98f2-ba6e27b51cf6",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:10",
+    +     "hash": "cd82d917a02285fa1f201b026290c32b668742e427846f283ed9ec753f029dad",
+    +     "eventId": "60ade13d-ac2c-485c-b66d-846b7f64c3a2",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:11",
+    +     "hash": "746234fa1237a7438a24db97cba4946bd5ce3ed2210caddde69cca9db6fad124",
+    +     "eventId": "4d8cf51f-4b61-448b-9074-7283426fd90e",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:12",
+    +     "hash": "be733fb497596b9f9d5e36ff1bb7225de3efbe83ca304a7fd9831449f4c2a8ba",
+    +     "eventId": "028e384a-56c2-4435-86ef-180205092725",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:13",
+    +     "hash": "b6942be4d115a1e72f6fff6b1c8a3f47f5abbc0a797a2096f5193131547b3327",
+    +     "eventId": "afd517d1-5a16-4f49-94ed-68cbe0eea506",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:14",
+    +     "hash": "1668317f3905a2ee1e8b4803279d8447df8a2ce8d6edb66d0e84b7c52b7d7b21",
+    +     "eventId": "94b4d98c-47a1-4c9c-aeb6-547d799a10f2",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:15",
+    +     "hash": "df88448402bd68edbe620ac72ccc89afead6c34ac3ab8aee69d42dd08d77f178",
+    +     "eventId": "de8e692b-f24e-4dba-9ee6-b68715d38692",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:16",
+    +     "hash": "562ee166add17eddfecfe1965cc73b46bfc2a8d22aced3115e340139555ef06e",
+    +     "eventId": "faef1a9e-7217-45bd-abc4-baef7faae4be",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:17",
+    +     "hash": "5d5149569639a948fd0a7bbdd95e6f30de6bba33a012b30c51949e29888ac376",
+    +     "eventId": "23a80fe2-a8ae-493d-8eb0-2cf65f729d14",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:18",
+    +     "hash": "ddaca5cb31b950c0821efb150340fb9d6a8f322c4c188075bbfff3b0bb5df516",
+    +     "eventId": "b58c069a-4b54-4118-b0b4-5e5faee68c18",
+    +     "reason": "not-selected-in-current-projection"
+    +   },
+    +   {
+    +     "source": "fixture:19",
+    +     "hash": "1b4db3fcb2d6712984a98357a46e7b0a3f8097cebd9c340be960efb8d57847ec",
+    +     "eventId": "ab506377-27d6-46a3-9301-5009ac9dcf45",
+    +     "reason": "not-selected-in-current-projection"
+    +   }
+    + ]上一页来源1–20 / 55下一页来源
+
+    Call log:
+      - Expect "toHaveText" getByRole('dialog').getByRole('region', { name: '当前上下文统计' }) with timeout 5000ms
+      - waiting for getByRole('dialog').getByRole('region', { name: '当前上下文统计' })
+        14 × locator resolved to <section class="space-y-3" aria-label="当前上下文统计">…</section>
+           - unexpected value "当前占用估算 14,939 tokens · 1% / 1,000,000 tokens这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标create / f708e78354f2模型 / Providerdeepseek-flash / deepseek系统 / 工具 / 消息3,510 / 4,718 / 6,711匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 20,000 / 2,048可用输入 / 压力阈值846,880 / 800,000当前上下文与能力版本{
+      "mode": "create",
+      "targetId": "f708e78354f2c005973683c5759c55957dd9d8132e283762972cebb20058215f",
+      "revision": "11a7fe91e3029f52d7e4b43567da7e35d69cb4b3b285ba0a5d573a9962d5ff74",
+      "capabilityRevision": "b89a103ddc2a48a8556cd6e06d9f3ec39331db192ac6376a84e7104eed9aeb1b",
+      "purpose": "create"
+    }policy · 602 tokens原始估算 602，校准调整 0[
+      {
+        "source": "nekomimi:create:v3",
+        "hash": "38beb119bad333c7fe43305c40fa38dc14119ed0f4a016bc6ef4091aee7e5a6b"
+      }
+    ]tools · 679 tokens原始估算 679，校准调整 0[
+      {
+        "source": "tool-summary:bash",
+        "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+      },
+      {
+        "source": "tool-summary:codemode",
+        "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+      },
+      {
+        "source": "tool-summary:customization_candidate",
+        "hash": "4098b408eafd704ea931ff716f58ef72af5a0b7cf5fbe47374bc199666d3592a"
+      },
+      {
+        "source": "tool-summary:customization_package",
+        "hash": "bed7338f20770873f970caf9b3eb1149be90ff53eb229e0a800642512c8d3aae"
+      },
+      {
+        "source": "tool-summary:customization_reload",
+        "hash": "25466129009b9b1a9c2bd4663cdd6a5120d86590d7835e5d1171002a3645e5b3"
+      },
+      {
+        "source": "tool-summary:customization_sdk",
+        "hash": "2522a233ea7f1323b3f0af37af36501d7fa5b96d69bb1b89ad9778b0356a45e2"
+      },
+      {
+        "source": "tool-summary:customization_status",
+        "hash": "0a4e8158187bb1e3b36e59e2caeb88f8c02fda3113d5ff7257d55f0236ab05fe"
+      },
+      {
+        "source": "tool-summary:customization_validate",
+        "hash": "006adad56e9fbb484690fd9b9cbb062510fc62a35b5663b6387e79791cf43f5c"
+      },
+      {
+        "source": "tool-summary:edit",
+        "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+      },
+      {
+        "source": "tool-summary:model_catalog",
+        "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+      },
+      {
+        "source": "tool-summary:model_classify",
+        "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+      },
+      {
+        "source": "tool-summary:model_image",
+        "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+      },
+      {
+        "source": "tool-summary:read",
+        "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+      },
+      {
+        "source": "tool-summary:resource_list",
+        "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+      },
+      {
+        "source": "tool-summary:resource_read",
+        "hash": "71b52925500d9e019028e179575ac098d6a271f156cb6f3159c88236fa3164a4"
+      },
+      {
+        "source": "tool-summary:resource_write",
+        "hash": "a441c3e6247bf46c97d21eef99a4c4aac8b3a15d028e5bbb92d8bb2e50b2e613"
+      },
+      {
+        "source": "tool-summary:web_search",
+        "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+      },
+      {
+        "source": "tool-summary:write",
+        "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+      }
+    ]guidance · 522 tokens原始估算 522，校准调整 0[
+      {
+        "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+        "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+      },
+      {
+        "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+        "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+      },
+      {
+        "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+        "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+      },
+      {
+        "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+        "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+      },
+      {
+        "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+        "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+      },
+      {
+        "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+        "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+      },
+      {
+        "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+        "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+      }
+    ]resources · 1,707 tokens原始估算 1,707，校准调整 0[
+      {
+        "source": "customization:delivery:v2",
+        "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc"
+      },
+      {
+        "source": "customization:entry:v2",
+        "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0"
+      },
+      {
+        "source": "resource-directory-query:ee136d1401001ea3f7c94e19078b59e3892337b63061d622d6565caabe6084e8",
+        "hash": "f0a93476e7e8ff32fa15e2a6314f1e27998de87875cf396cc99899b587cf5807"
+      },
+      {
+        "source": "resources:ee136d1401001ea3f7c94e19078b59e3892337b63061d622d6565caabe6084e8",
+        "hash": "16f811113bdf24a88c75f6c8d371ee717f68ca3928a94121b619e0e7b3e89cf5"
+      }
+    ]schemas · 4,718 tokens原始估算 4,718，校准调整 0[
+      {
+        "source": "bash",
+        "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+      },
+      {
+        "source": "codemode",
+        "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+      },
+      {
+        "source": "customization_candidate",
+        "hash": "f531d50bb197ce889f049c6b9d5d351201d7e1bc695b3b340278e9dc2b056953"
+      },
+      {
+        "source": "customization_package",
+        "hash": "4f15e71b2d2f3ccd121ba92b8c109b5ada73332a94e1c6f091c47c2c601bbb6d"
+      },
+      {
+        "source": "customization_reload",
+        "hash": "8fc5660c250f4c7967a5e38ae33daedce5e1b328a7b4eb06d11a03aca36ff1b6"
+      },
+      {
+        "source": "customization_sdk",
+        "hash": "19a77b9b453a685a291e2f5d536578731e0801f8c7bd1d9a71b9b3b192924119"
+      },
+      {
+        "source": "customization_status",
+        "hash": "1280386ed48db9237361c7f0477ee3248bf80af6eac30cd3ebd8f5c52ef23096"
+      },
+      {
+        "source": "customization_validate",
+        "hash": "040c096e5519e4c18f284191970afc75c62903725918344f243f8d53eb5361be"
+      },
+      {
+        "source": "edit",
+        "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+      },
+      {
+        "source": "model_catalog",
+        "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+      },
+      {
+        "source": "model_classify",
+        "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+      },
+      {
+        "source": "model_image",
+        "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+      },
+      {
+        "source": "read",
+        "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+      },
+      {
+        "source": "resource_list",
+        "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+      },
+      {
+        "source": "resource_read",
+        "hash": "e07e1f72a9ae0114bd397c7aa8f81c2611402b3c08b033865511fdd135f02c94"
+      },
+      {
+        "source": "resource_write",
+        "hash": "1cf63f67b5aef0ab54d1e05c96b476b446f052720e36f5fd5e80a3d55a348ed7"
+      },
+      {
+        "source": "web_search",
+        "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+      },
+      {
+        "source": "write",
+        "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+      }
+    ]compaction · 6,116 tokens原始估算 6,116，校准调整 0[
+      {
+        "source": "compaction:summary",
+        "hash": "40a84370123cf52ac69ccd2e44bc6de2f6bdee0bce12ef8e1eaa0ff25b844035",
+        "eventId": "6656891b-f420-475c-a7c9-d7b60440f1e9"
+      }
+    ]history · 444 tokens原始估算 444，校准调整 0[
+      {
+        "source": "fixture:55",
+        "hash": "a3aa573d9b4206fc28483978af6c9e4f5e5eccdc78a767d0b0c6a4edf7d311ed",
+        "eventId": "881127bd-8c5e-4fb5-9608-5671086b029c"
+      },
+      {
+        "source": "fixture:56",
+        "hash": "ac3f3d3fd375ff04e01c8770e9b689cc541da1e9ec79a68179a47ffbc51df7f7",
+        "eventId": "d8bb8af6-8902-4e01-9dcd-23e9fd4f1421"
+      },
+      {
+        "source": "fixture:57",
+        "hash": "642a499a2329524ce351d15e7454f3469bad9b8da540b4545461d417366a34d0",
+        "eventId": "98bcfb0a-1f0f-40e4-ad1e-246cbfa90977"
+      },
+      {
+        "source": "fixture:58",
+        "hash": "2dd719e55b14ac909c2ffa856149fcd5313093775e80cbe53432f412ae85ade0",
+        "eventId": "e9fd8e6e-f470-48e6-9dcd-eb4db8f634db"
+      },
+      {
+        "source": "fixture:59",
+        "hash": "957197663fbdc687fedb525d59610b95eb253ca2799070d27a5b0212179771c1",
+        "eventId": "7a9a822e-60ed-480d-ac2c-a7b4c354c203"
+      },
+      {
+        "source": "fixture:60",
+        "hash": "56bc1cde552cd1c990e7469a9147f8283a55e289c3e99af5287861da6f9f4eb7",
+        "eventId": "b0551e96-51c2-462e-96a5-b592ab0245df"
+      },
+      {
+        "source": "fixture:61",
+        "hash": "c83860a8f76f40acaf2c56fcdbb1863b1d8235e0fe58169ef44b5ac926a0a847",
+        "eventId": "b7aad001-ae53-47a1-ae60-60106c1828ef"
+      },
+      {
+        "source": "fixture:62",
+        "hash": "46910595fe6400279243007ac9f985b333af5b2a91ba10097634a3971f467b89",
+        "eventId": "b840e870-e133-4f4b-b7d3-a75466f78ae2"
+      },
+      {
+        "source": "fixture:63",
+        "hash": "57132353d6ba5bce68634a6af0e63c3c992c8756e9db1d5878e1b6727131c7ea",
+        "eventId": "7e1126d3-355b-4b80-bbdd-d6cdba01bdef"
+      },
+      {
+        "source": "fixture:64",
+        "hash": "7d7a2dc0806ea75b697a3bb5791f51dfe0fcf84b27a813759b0b3246b2fad5d8",
+        "eventId": "5a5a9804-5e1d-4379-9761-b0640b1e6034"
+      },
+      {
+        "source": "user",
+        "hash": "89fbe5e8c86739da15c1d65d8fc84b629808f2e15fc1b9d1ce1c306a83ef0fff",
+        "eventId": "f6b9ca63-7879-4ef0-8933-cdfdd9ce4be7"
+      },
+      {
+        "source": "response:9f9ecdcc-e3c9-43d4-9515-8e6d80ac4bef",
+        "hash": "24febaf6aa742275401408eb3c0ec5bd8e27fa671d31d457b19ae4942cd7412c",
+        "eventId": "487917ef-ee54-4638-9b87-853266120e9a"
+      }
+    ]environment · 151 tokens原始估算 151，校准调整 0[
+      {
+        "source": "runtime:environment:v1",
+        "hash": "5bfe93f23806de3a9851b7b9f728a00718bda1b1ddcccab35725e32c85ea9ded",
+        "eventId": "986f0b2e-98cc-4a32-8305-c4e225a15b23"
+      }
+    ]当前排除来源（55）[
+      {
+        "source": "fixture:0",
+        "hash": "6711e6f1ddf16d6973b8fb0353cf940103941017fa7c83c440dff15a805d934b",
+        "eventId": "2bd85a49-4052-452f-807a-416f5e8e34ad",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:1",
+        "hash": "b6243066d3172c23b58a5c8b81acd128518c76b9d48a56f9d7dc559c7de1c1bb",
+        "eventId": "d8e9e015-7dcd-4581-9b8b-1344834497c0",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:2",
+        "hash": "37ec30bf2887a770f913c912ceb692ff9bbbf16e633c6af9a7bd1fdeeceaf3a8",
+        "eventId": "14c6e4e4-b2f9-4916-8a10-73ed1f243155",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:3",
+        "hash": "8226630e9494d41ee0822dbbd170e21771b426191a0753ae80e3df8660b6978c",
+        "eventId": "55c556fc-58ec-45e7-bd1c-77dcb43e98a5",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:4",
+        "hash": "68cefd750f3bb292fe6eb2725825b92c9b4853b8a6d16cee29f971cdb5e323db",
+        "eventId": "672fd6fd-8b89-4085-98fe-ea7bf4048435",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:5",
+        "hash": "cca6392703d88bf32e46afc5ac7850703181bb5bc3723b46ae02dcab70213ae1",
+        "eventId": "865cbb07-ac0c-453c-90c4-a4b9862623c9",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:6",
+        "hash": "23bff4884864f43ec0e7921bfa014dc33de857959c9a96bebb034256f7568271",
+        "eventId": "497c9e84-48a8-4a2c-8d4e-ac21356240bf",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:7",
+        "hash": "5b935bdcecbfebb4f33f52884eee12dea6069a2d7196e0dac4614e3201a4fa7b",
+        "eventId": "bc540693-415e-42e9-88d9-1542797b07bc",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:8",
+        "hash": "2ad510b810b0b0532732beccf1f794aea2727e41a1a7e9a5d61e52bca9fbe1b3",
+        "eventId": "17700481-fed3-49d6-8db3-b9fb04e70c81",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:9",
+        "hash": "14bdcf87ed42d13ce5f20b2ff00b1a1319a379d46a1a752a855d8d754e8135f8",
+        "eventId": "cdf609fa-b0f8-4f65-98f2-ba6e27b51cf6",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:10",
+        "hash": "cd82d917a02285fa1f201b026290c32b668742e427846f283ed9ec753f029dad",
+        "eventId": "60ade13d-ac2c-485c-b66d-846b7f64c3a2",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:11",
+        "hash": "746234fa1237a7438a24db97cba4946bd5ce3ed2210caddde69cca9db6fad124",
+        "eventId": "4d8cf51f-4b61-448b-9074-7283426fd90e",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:12",
+        "hash": "be733fb497596b9f9d5e36ff1bb7225de3efbe83ca304a7fd9831449f4c2a8ba",
+        "eventId": "028e384a-56c2-4435-86ef-180205092725",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:13",
+        "hash": "b6942be4d115a1e72f6fff6b1c8a3f47f5abbc0a797a2096f5193131547b3327",
+        "eventId": "afd517d1-5a16-4f49-94ed-68cbe0eea506",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:14",
+        "hash": "1668317f3905a2ee1e8b4803279d8447df8a2ce8d6edb66d0e84b7c52b7d7b21",
+        "eventId": "94b4d98c-47a1-4c9c-aeb6-547d799a10f2",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:15",
+        "hash": "df88448402bd68edbe620ac72ccc89afead6c34ac3ab8aee69d42dd08d77f178",
+        "eventId": "de8e692b-f24e-4dba-9ee6-b68715d38692",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:16",
+        "hash": "562ee166add17eddfecfe1965cc73b46bfc2a8d22aced3115e340139555ef06e",
+        "eventId": "faef1a9e-7217-45bd-abc4-baef7faae4be",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:17",
+        "hash": "5d5149569639a948fd0a7bbdd95e6f30de6bba33a012b30c51949e29888ac376",
+        "eventId": "23a80fe2-a8ae-493d-8eb0-2cf65f729d14",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:18",
+        "hash": "ddaca5cb31b950c0821efb150340fb9d6a8f322c4c188075bbfff3b0bb5df516",
+        "eventId": "b58c069a-4b54-4118-b0b4-5e5faee68c18",
+        "reason": "not-selected-in-current-projection"
+      },
+      {
+        "source": "fixture:19",
+        "hash": "1b4db3fcb2d6712984a98357a46e7b0a3f8097cebd9c340be960efb8d57847ec",
+        "eventId": "ab506377-27d6-46a3-9301-5009ac9dcf45",
+        "reason": "not-selected-in-current-projection"
+      }
+    ]上一页来源1–20 / 55下一页来源"
+
+
+      37 |     await expect(dialog.getByLabel('请求选择清单')).toHaveText(/选入/);
+      38 |     const measurement=await dialog.getByRole('region',{name:'当前上下文统计'}).innerText();
+    > 39 |     await dialog.getByRole('button',{name:'下一页选择',exact:true}).click();await expect(dialog).toContainText('选择清单偏移 40');await expect(dialog.getByRole('region',{name:'当前上下文统计'})).toHaveText(measurement);
+         |                                                                                                                                                                                  ^
+      40 |     const pinned=await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue();expect(pinned).not.toBe('');
+      41 |     await dialog.getByRole('combobox',{name:'选择结果',exact:true}).selectOption('exclude');await expect(dialog).toContainText('选择清单偏移 0');expect(await dialog.getByRole('combobox',{name:'请求快照',exact:true}).inputValue()).toBe(pinned);
+      42 |     await dialog.getByText(/#\d+ · 已提交/).click();await expect(dialog).toContainText('原始节点引用 55 · 偏移 0');
+        at /Users/kirineko/Github/nekomimi/test/browser/context-details.spec.ts:39:178
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+  2 passed (23.1s)

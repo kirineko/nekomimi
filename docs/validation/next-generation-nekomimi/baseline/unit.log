@@ -1,0 +1,73 @@
+
+> nekomimi@0.2.1 test
+> npm run build && vitest run
+
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 326 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/assets/nekomimi-CMII8_56.svg        0.44 kB │ gzip:   0.27 kB
+dist/web-dist/index.html                          0.50 kB │ gzip:   0.33 kB
+dist/web-dist/assets/asset-manifest.json          2.02 kB │ gzip:   0.45 kB
+dist/web-dist/assets/diff-woXpYk--.js             2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js             2.81 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js            41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js          69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js     174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js  175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js            175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js     181.07 kB
+dist/web-dist/assets/index-DmX0wVpL.css          75.15 kB │ gzip:  15.11 kB
+dist/web-dist/assets/ExportDialog-C2pp-A-I.js     1.79 kB │ gzip:   0.94 kB
+dist/web-dist/assets/Changes-CFmq53NR.js          2.15 kB │ gzip:   1.08 kB
+dist/web-dist/assets/FileBrowser-xtq4NmVU.js      4.67 kB │ gzip:   2.12 kB
+dist/web-dist/assets/jsx-runtime-D3jfb0Ew.js      8.90 kB │ gzip:   3.38 kB
+dist/web-dist/assets/Inspector-qnS-e8mA.js       11.11 kB │ gzip:   3.39 kB
+dist/web-dist/assets/Customization-QN3wSnq9.js   42.32 kB │ gzip:  12.63 kB
+dist/web-dist/assets/index-fS2URQ1p.js          471.24 kB │ gzip: 146.49 kB
+
+✓ built in 208ms
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-workflow.test.ts (1 test | 1 failed) 30004ms
+   × creates a review extension through recorded model tools, then uses skills, rules and MCP across reload and restart 30004ms
+{"nekomimiDiagnostic":{"version":1,"id":"7ee2995c-9471-4986-b1b5-de96c8990615","timestamp":"2026-10-06T14:44:32.183Z","sessionId":"b991437b-c625-4f11-8a52-b2d34be72276","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1b28d2e8-bdc2-4baf-88a8-55ccde991d3c","timestamp":"2026-10-06T14:44:36.715Z","sessionId":"93e81ef4-74e8-4dc9-8ca5-bea055b7818a","runId":"ce7f1b0b-3c1f-49d8-a86d-1ea5e3ed5649","attemptId":"fa658354-4e2f-4f6c-bb93-f46ff2592f06","seq":11,"durableSeq":10,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-package-source.test.ts (6 tests | 1 failed) 35716ms
+   × bounds Git object history even when the selected commit has a tiny working tree 30012ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-package-source.test.ts > bounds Git object history even when the selected commit has a tiny working tree
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-package-source.test.ts:102:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/customization-workflow.test.ts > creates a review extension through recorded model tools, then uses skills, rules and MCP across reload and restart
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/customization-workflow.test.ts:8:1
+      6| import { run } from "../src/runtime.js";
+      7| import { readSession, hash } from "../src/journal.js";
+      8| it("creates a review extension through recorded model tools, then uses…
+       | ^
+      9|   const workspace = await temporary();
+     10|   const home = await temporary();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 52 passed (54)
+      Tests  2 failed | 320 passed (322)
+   Start at  22:43:56
+   Duration  84.22s (transform 4.09s, setup 0ms, import 20.68s, tests 869.62s, environment 2ms)
+

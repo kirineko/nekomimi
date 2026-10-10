@@ -1,0 +1,48 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/independent-sessions.test.ts (7 tests | 1 failed) 10223ms
+   × a new task preempts only naming on its own target, without rerunning old naming 1753ms
+{"nekomimiDiagnostic":{"version":1,"id":"70ab8e46-71d1-41de-9e89-30654cbabc94","timestamp":"2026-10-06T21:04:05.679Z","sessionId":"c615a9189d6c0d8c0bc22bbf34f06416725462e7b9c490e49df88dafd53ce2fa","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ad495cf6-b1d2-4229-bd75-c4f447a01042","timestamp":"2026-10-06T21:04:06.265Z","sessionId":"c08eb4065c6ff4862217a08204876470f50ca87a832b9681e1748d096295e85b","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1cb13fd4-d852-47c0-a9cc-ab30a4c39db5","timestamp":"2026-10-06T21:04:06.695Z","sessionId":"03ae76fedc29a699f0b9a44f0572ded6b3635c28efa2cc440688d2de2f412cb1","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"15dffada-3bd2-4c10-bd35-462f20ba0b6a","timestamp":"2026-10-06T21:04:07.475Z","sessionId":"10da125c8f567e78200334fb157dddd5538ac7dc2f8f996d6b3eb78836f059c7","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1796e7e9-147a-44d4-a302-d84d9ade65a3","timestamp":"2026-10-06T21:04:08.435Z","sessionId":"8659a5a498d5dc59efdaaa7bc0032fcd44eb6cfe7f73ad780baef5f03f687ca7","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ea1243bd-ea8a-4c80-9222-650ad60da530","timestamp":"2026-10-06T21:04:09.099Z","sessionId":"8a50123529aa4937d3d78a9320a27bb91a275ef0c31be627c0e3baceea5ad499","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5a9c10a6-8f9e-4692-a85f-b20291760da9","timestamp":"2026-10-06T21:04:09.798Z","sessionId":"41108ea38c6649f8f1db5d49f0792015988c59f0d729702391f1277266721228","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ed3923b8-7579-450e-8e19-ca89d1b6c341","timestamp":"2026-10-06T21:04:10.299Z","sessionId":"f4b908f3196a2a1af209cc13f2e871dbcaa9c00f0e16fc10e0833bcc4cf34911","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e1dce9ea-b0a9-40fc-9a01-b510acd39477","timestamp":"2026-10-06T21:04:11.146Z","sessionId":"7562453525b9e28b8520ade0f2dbd1378054ccfea74779682d61975e2de95890","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4ae47e09-c016-45dd-8fdb-1f2aa50a0315","timestamp":"2026-10-06T21:04:11.871Z","sessionId":"60fd2e61d26530cc669eef17ceff23e241634351a5efbb68a1a7d5aef48d5436","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"472af503-dc6d-4437-b0c1-9aad302af071","timestamp":"2026-10-06T21:04:12.453Z","sessionId":"4be5d379a98e5a4cea91dea4f3d44f3f46a52b2125104e920d93faa146cbee0e","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"19355ef0-3ce2-4924-8d8b-2695d7000496","timestamp":"2026-10-06T21:04:12.802Z","sessionId":"841eea0907015c8fafc4e47a64b8513afce5f55cede9320adc4dda331cc87f66","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/independent-sessions.test.ts > a new task preempts only naming on its own target, without rerunning old naming
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ test/independent-sessions.test.ts:91:45
+     89| it("a new task preempts only naming on its own target, without rerunni…
+     90|   const f = await fixture(true, false); await f.submit(f.work.id, "fir…
+     91|   await expect.poll(() => f.pending.length).toBe(2);
+       |                                             ^
+     92|   const own = f.app.sessions.namingFor(f.work.id)!, other = f.app.sess…
+     93|   await f.submit(f.work.id, "second");
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/independent-sessions.test.ts:91:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 132 passed (133)
+   Start at  05:03:50
+   Duration  49.57s (transform 574ms, setup 0ms, import 3.59s, tests 94.85s, environment 0ms)
+

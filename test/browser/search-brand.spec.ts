@@ -27,14 +27,15 @@ test.beforeEach(async () => {
 test.afterEach(async () => { await app?.close(); });
 test("favicon shares the brand resource and search evidence survives reload", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
-  await page.goto(app.url);
+  const session=await app.sessions.create('搜索品牌验证',{mode:'work',commandId:'search-brand'});
+  await page.goto(`${app.origin}/work/session/${session.id}#token=${app.token}`);
   const favicon = page.locator('link[rel="icon"]');
   const href = await favicon.getAttribute("href"); expect(href).toMatch(/^\/assets\/nekomimi-.*\.svg$/);
   const icon = await page.request.get(new URL(href!, app.url).href);
   expect(icon.status()).toBe(200); expect(icon.headers()["content-type"]).toBe("image/svg+xml");
   expect(await icon.text()).toContain('fill="#7952ce"');
-  await expect(page.locator("img.cat-mark").first()).toHaveAttribute("src", href!);
-  expect(await page.locator("img.cat-mark").first().evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+  await expect(page.locator("img[data-brand-mark]").first()).toHaveAttribute("src", href!);
+  expect(await page.locator("img[data-brand-mark]").first().evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
   // Decode at a real favicon size, rather than merely checking the resource exists.
   expect(await page.evaluate(async (url) => {
     const image = new Image(); image.src = url; await image.decode();
@@ -42,9 +43,9 @@ test("favicon shares the brand resource and search evidence survives reload", as
     const ctx = canvas.getContext("2d")!; ctx.drawImage(image, 0, 0, 16, 16);
     return [...ctx.getImageData(0, 0, 16, 16).data].filter((_, i) => i % 4 === 3).some(alpha => alpha > 0);
   }, href!)).toBe(true);
-  await page.getByRole("textbox", { name: "任务内容" }).fill("搜索示例");
-  await page.getByRole("button", { name: "发送任务" }).click();
-  await expect(page.locator(".conversation-heading")).toContainText("已完成");
+  await page.getByRole("textbox", { name: "任务草稿" }).fill("搜索示例");
+  await page.getByRole("button", { name: "发送",exact:true }).click();
+  await expect(page.getByTestId("timeline")).toContainText("搜索完成，参考");
   const sources = page.getByRole("region", { name: "搜索来源" });
   await expect(sources).toContainText("示例网页");
   expect(searches).toBe(1);

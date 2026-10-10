@@ -1,0 +1,128 @@
+
+Running 5 tests using 1 worker
+
+(node:74722) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/core-status.spec.ts:6:1 › shows the observed service build and diagnoses an unmanaged launcher (406ms)
+  ✓  2 test/browser/core-status.spec.ts:15:1 › refreshes managed build identity and never labels cached identity current after a connection failure (6.3s)
+  ✘  3 test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan (10.2s)
+(node:74749) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 test/browser/core-switch-ui.spec.ts:67:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch (5.9s)
+(node:74767) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 test/browser/core-switch-ui.spec.ts:86:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry (6.0s)
+
+
+  1) test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '已确认运行目标构建', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: '已确认运行目标构建', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: '已确认运行目标构建', exact: true })
+
+
+      61 |     await expect(page.getByRole('button',{name:'审阅另一次切换',exact:true})).toBeEnabled();
+      62 |     await page.getByRole('button',{name:'审阅另一次切换',exact:true}).click();await f.review();await f.confirm();
+    > 63 |     await expect(page.getByRole('heading',{name:'已确认运行目标构建',exact:true})).toBeVisible();expect(f.effects).toBe(1);
+         |                                                                           ^
+      64 |   }finally{await f.close();}
+      65 | });
+      66 |
+        at /Users/kirineko/Github/nekomimi/test/browser/core-switch-ui.spec.ts:63:75
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/core-switch-ui.spec.ts:67:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      70 |     await page.route('**/api/v1/core/switch',async route=>{await route.fetch();await route.abort('connectionreset');});
+      71 |     await f.review();await f.confirm();
+    > 72 |     await expect.poll(()=>f.effects).toBe(1);await expect(page.getByRole('heading',{name:'已确认运行目标构建',exact:true})).toBeVisible();
+         |                                      ^
+      73 |     const intents=f.journal.events.filter(event=>event.type==='core.switch.intent');expect(intents).toHaveLength(1);
+      74 |     // The old candidate binding may legitimately become invalid under the new host.
+      75 |     await page.route('**/core-candidate',route=>route.fulfill({status:409,json:{error:{code:'host_changed',message:'创造目标宿主已变化'}}}));
+        at /Users/kirineko/Github/nekomimi/test/browser/core-switch-ui.spec.ts:72:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-lost-r-c4ebc-ithout-replaying-the-switch/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-switch-ui-10-8-lost-r-c4ebc-ithout-replaying-the-switch/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-lost-r-c4ebc-ithout-replaying-the-switch/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-switch-ui-10-8-lost-r-c4ebc-ithout-replaying-the-switch/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/core-switch-ui.spec.ts:86:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '切换失败', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: '切换失败', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: '切换失败', exact: true })
+
+
+      88 |   try{
+      89 |     f.setFailure();await f.review();await f.confirm();
+    > 90 |     await expect(page.getByRole('heading',{name:'切换失败',exact:true})).toBeVisible();
+         |                                                                      ^
+      91 |     await expect(page.getByRole('region',{name:'切换结果'})).toContainText(f.candidate.targetHost.build);
+      92 |     await page.getByRole('button',{name:'审阅另一次切换',exact:true}).click();f.setUnknown();await f.review();await f.confirm();
+      93 |     await expect(page.getByRole('heading',{name:'切换结果未知',exact:true})).toBeVisible();
+        at /Users/kirineko/Github/nekomimi/test/browser/core-switch-ui.spec.ts:90:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-failed-63707--build-and-never-auto-retry/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-switch-ui-10-8-failed-63707--build-and-never-auto-retry/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-failed-63707--build-and-never-auto-retry/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-switch-ui-10-8-failed-63707--build-and-never-auto-retry/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan 
+    test/browser/core-switch-ui.spec.ts:67:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch 
+    test/browser/core-switch-ui.spec.ts:86:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry 
+  2 passed (31.9s)

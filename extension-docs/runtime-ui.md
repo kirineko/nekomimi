@@ -14,7 +14,9 @@
 
 `registerView` 需要 `views`，使用 PanelDefinition 加 title、order、match。区域为 session-header、message-content、tool-result、composer-toolbar、sidebar-widget、page。消息匹配 role，工具匹配 tool；同一结果的替代 renderer 由用户选择，无选择使用宿主默认。普通挂件按 order、resourceId、id 稳定排序。
 
-基础 registerPanel 继续支持 result/sidebar；清单需要 panels，通过 `ctx.ui({kind:"panel",title,panelId,summary,props})` 记录结果。summary 是给用户看的结果摘要，fallback 应包含仍可理解结果的信息，不要只提示“查看 JSON”。props 必须满足 schema，结构化证据仍被保存。
+registerPanel 使用 tool-result/sidebar-widget；清单需要 panels，通过 `ctx.ui({kind:"panel",title,panelId,summary,props})` 记录结果。summary 是给用户看的结果摘要，fallback 应包含仍可理解结果的信息，不要只提示“查看 JSON”。props 必须满足 schema，结构化证据仍被保存。
+
+所有面板/视图声明必须提供 `contractVersion:3`、`modes:['work','create']`（或只选其中一种）、`targetScope:'current'` 和非空 title。`current` 表示绑定挂载时的会话及其目标，不是全局实例；不支持任意目标或跨模式访问。旧 result/sidebar 名称和缺失字段在注册时拒绝。iframe 传输协议仍为 `uiVersion:1`，与插槽契约版本分离。资源 revision 由宿主从不可变包内容填充，扩展不能自行指定授权版本。挂载、读取文档、操作和卸载均校验绑定会话，伪造请求不消耗合法请求序号。
 
 浏览器默认导出 `PanelModule`，mount(root,context) 只操作 iframe 内 DOM。上下文提供 props、request、subscribe 和 onThemeChange；可返回清理函数。不要依赖宿主 React、cookie、网络 API 或任意 CSS。内容高度自动通知宿主并受上限约束。
 

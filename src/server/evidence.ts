@@ -2,13 +2,18 @@ import { mkdtemp, readFile, rm, open, realpath } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
+import { create as createArchive } from "tar";
 import { artifactRefs, type Artifact } from "../journal.js";
 import { exportSession } from "../export.js";
 import { ApiError } from "../shared/protocol.js";
 import type { Entry } from "./sessions.js";
-export async function artifactPage(
+export async function artifactPage(entry:Entry,digest:string,offset:number,limit:number){
+  try{return await readArtifactPage(entry,digest,offset,limit);}catch(error){
+    if((error as NodeJS.ErrnoException).code==='ENOENT')throw new ApiError(404,'artifact_missing','已记录的附件缺失，无法读取原始证据');
+    throw error;
+  }
+}
+async function readArtifactPage(
   entry: Entry,
   digest: string,
   offset: number,
@@ -95,9 +100,9 @@ export async function prepareDownload(
         type: "text/html; charset=utf-8",
         name: "session.html",
       };
-    // tar packages an existing verified bundle; no shell interpolation or source paths from clients.
+    // Package only the verified bundle, without native tar's AppleDouble or host metadata.
     const archive = join(directory, "session.tar");
-    await promisify(execFile)("tar", ["-cf", archive, "-C", output, "."]);
+    await createArchive({ file: archive, cwd: output, portable: true, noMtime: true }, ["."]);
     return {
       file: archive,
       directory,

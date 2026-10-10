@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-10-08T05:37:14.948459+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "progress": {
+    "total": 89,
+    "complete": 78,
+    "remaining": 11
+  },
+  "checks": {
+    "browserPassed": 9,
+    "typecheck": 0,
+    "strictSpecs": 43,
+    "productSourceChanged": false,
+    "buildRerun": false,
+    "fullBrowserSuite": false
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-final-evidence.log": "0119c15ceeeb8e1a018bac24f16686b391b1261872dae3e8c174abc9b6b8ed31",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-browser.log": "3b10a79423a2e66a04cbd70cb107ec25abf3f1bc7b45fe34e57b741520a7bccc",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-final.log": "fcd9a1aa3bf1aa674f4ed2a2ccacdf0f2b9244d23e1b8fd603c653d7276e1550",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration.log": "4535e8ec8f9a12437bd016f7a26c683e920eb283f917a239948504547db9042c",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-two.log": "a5115405b438e31dcd752f776976f6e50adcc4c1361458ef3c3d5a2e0f01d98d",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/nekomimi-workbench-migration-fixed.log": "931016b104ae6bd16f0e998c96379fcbddf10ad9dcc1bcedbfa59b4c863dfa5a",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/trace-mobile.png": "82bb87574c30c5ef112ac907385d904723d9c8b30258eb61bc7944941df69b69",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/trace.png": "6e21de97f31d5b723f5f27db9d6bbe6cbee552c132ae48c2a91a013b43a5ed9d",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/workbench.png": "abf1851b16a1e85b356264bb36f64ee283cc757aba74d766884c892578f2f360",
+    "docs/validation/next-generation-nekomimi/workbench-integration-migration/README.md": "7ef57acfaeec728efe87fd96278779a20550707137b030b51cb23cb298ad3fe3",
+    "test/browser/workbench.spec.ts": "035f794dec7d5a9e3a79b6c3239db66d3621717b243a2710c698696e9984aff5",
+    "test/browser/workbench-upgrade.spec.ts": "0313a91b6fbb390af473744d24ca8c1659f7765664d5945fddd7ae542f92a214",
+    "test/browser/read-artifact.ts": "2f22b8e912de405dfddb71cd2d58144bde801a2d41d8f75329c5707f004b2f02",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "67cc8d37132cfb33ba42dc12c4a7a56f2c833de934910c4a7371c8cc697fd0f2"
+  }
+}

@@ -1,0 +1,47 @@
+
+Running 5 tests using 1 worker
+
+(node:78558) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (2.3s)
+(node:78576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.6s)
+  ✓  3 test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.8s)
+  ✓  4 test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.5s)
+  ✓  5 test/browser/v2-runtime-slots.spec.ts:103:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.4s)
+
+
+  1) test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-OTRYSQ/src/result.ts"
+    Received: "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-OTRYSQ/src/result.ts"
+
+      41 |     expect(f.opened).toEqual([]);
+      42 |     await page.getByRole('treeitem',{name:/result.ts/}).dblclick();await expect.poll(()=>f.opened.length).toBe(1);
+    > 43 |     expect(f.opened[0]).toBe(join(f.workspace,'src/result.ts'));
+         |                         ^
+      44 |     await page.getByRole('tab',{name:'变更',exact:true}).click();await expect(page.getByRole('region',{name:'会话文件修改'})).toContainText('const after = 2;');
+      45 |     await page.getByRole('tab',{name:'文件',exact:true}).click();await page.getByLabel('显示隐藏文件',{exact:true}).check();await expect(page.getByRole('treeitem',{name:'.hidden',exact:true})).toBeVisible();
+      46 |     await expect(page.getByLabel('任务草稿',{exact:true})).toHaveValue('Keep this draft');
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-content-files.spec.ts:43:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay 
+  4 passed (11.6s)

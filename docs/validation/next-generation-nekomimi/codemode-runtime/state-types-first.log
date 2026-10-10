@@ -1,0 +1,6 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/codemode.ts(70,10): error TS7034: Variable 'state' implicitly has type 'any' in some locations where its type cannot be determined.
+src/codemode.ts(79,96): error TS7005: Variable 'state' implicitly has an 'any' type.

@@ -1,0 +1,51 @@
+
+Running 2 tests using 1 worker
+
+(node:1840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/runtime-ui.spec.ts:13:1 › applies a complete theme and shows user content with stable panel interaction and readable history (5.0s)
+  ✘  2 test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (9.5s)
+
+
+  1) test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe') with timeout 5000ms
+      - waiting for getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe')
+        14 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      61 |   const message=page.frameLocator('iframe[title="面板 second-message"]');await expect(message.getByText('second visible',{exact:true})).toBeVisible();await expect(message.getByText('completed',{exact:true})).toBeVisible();await waitForPanelLayout(renderer.locator('iframe'));
+      62 |   const opened=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/customization')&&r.request().postDataJSON()?.method==='view.open');await first.getByRole('button',{name:'打开页面',exact:true}).click();expect((await opened).ok()).toBe(true);await expect(page.getByRole('dialog',{name:'first-page',exact:true})).toBeVisible();await expect(page.frameLocator('iframe[title="面板 first-page"]').getByText('first visible',{exact:true})).toBeVisible();await waitForPanelLayout(page.locator('iframe[title="面板 first-page"]'));await page.getByRole('button',{name:'关闭扩展页面',exact:true}).click();await expect(page.getByRole('dialog',{name:'first-page',exact:true})).toHaveCount(0);await expect(page.locator('iframe[title="面板 first-header"]')).toBeFocused();
+    > 63 |   await header.getByRole('button',{name:'关闭second-header',exact:true}).click();await expect(header.locator('iframe')).toHaveCount(1);await appearance(page);await page.getByRole('button',{name:'恢复默认界面',exact:true}).click();await expect(page.locator('iframe')).toHaveCount(0);
+         |                                                                                                                       ^
+      64 |  }finally{await app.close();}
+      65 | });
+      66 |
+        at /Users/kirineko/Github/nekomimi/test/browser/runtime-ui.spec.ts:63:119
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close 
+  1 passed (15.9s)

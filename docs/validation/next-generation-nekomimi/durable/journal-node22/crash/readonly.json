@@ -1,0 +1,191 @@
+{
+  "entries": {
+    "items": [
+      {
+        "model": [
+          {
+            "role": "assistant",
+            "content": [
+              {
+                "type": "toolCall",
+                "id": "external-call",
+                "name": "effect",
+                "arguments": {}
+              }
+            ],
+            "api": "faux:1791303093777:5pp5xg97ddg",
+            "provider": "faux",
+            "model": "faux-1",
+            "usage": {
+              "input": 7,
+              "output": 3,
+              "cacheRead": 0,
+              "cacheWrite": 7,
+              "totalTokens": 17,
+              "cost": {
+                "input": 0,
+                "output": 0,
+                "cacheRead": 0,
+                "cacheWrite": 0,
+                "total": 0
+              }
+            },
+            "stopReason": "toolUse",
+            "timestamp": 1791303093936
+          }
+        ],
+        "kind": "pi.assistant",
+        "id": 11,
+        "conversationId": 1,
+        "byTaskId": 9
+      },
+      {
+        "model": [
+          {
+            "role": "system",
+            "content": "",
+            "toolsAdded": [
+              {
+                "name": "effect",
+                "description": "Local counted fixture effect",
+                "parameters": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            ],
+            "timestamp": 1791303093859
+          }
+        ],
+        "kind": "pi.system",
+        "id": 10,
+        "conversationId": 1,
+        "byTaskId": 9
+      },
+      {
+        "model": [
+          {
+            "role": "user",
+            "content": "kill fixture",
+            "timestamp": 1791303093809
+          }
+        ],
+        "kind": "pi.user",
+        "id": 7,
+        "conversationId": 1
+      }
+    ]
+  },
+  "inspection": {
+    "scheduling": "paused",
+    "tasks": [
+      {
+        "record": {
+          "id": 12,
+          "conversationId": 1,
+          "kind": "pi.tool",
+          "version": 1,
+          "input": {
+            "assistant": 11,
+            "callId": "external-call"
+          },
+          "owner": 9,
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "pending",
+            "checkpoint": {
+              "phase": "execute",
+              "arguments": {},
+              "replay": "never"
+            }
+          }
+        },
+        "state": {
+          "kind": "ready",
+          "migrates": false
+        }
+      },
+      {
+        "record": {
+          "id": 9,
+          "conversationId": 1,
+          "kind": "pi.generation",
+          "version": 1,
+          "input": {},
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "waiting",
+            "checkpoint": {
+              "phase": "tools",
+              "assistant": 11,
+              "tools": [
+                12
+              ],
+              "pending": []
+            },
+            "on": [
+              12
+            ],
+            "policy": "allSettled"
+          }
+        },
+        "state": {
+          "kind": "waiting",
+          "on": [
+            12
+          ]
+        }
+      }
+    ],
+    "submissions": [
+      {
+        "conversationId": 1,
+        "requestId": "original",
+        "type": "input",
+        "status": "placed",
+        "entry": 7,
+        "id": 8
+      }
+    ]
+  },
+  "mappings": [
+    {
+      "frameworkSeq": 1,
+      "journalSeq": 1
+    },
+    {
+      "frameworkSeq": 2,
+      "journalSeq": 2
+    },
+    {
+      "frameworkSeq": 3,
+      "journalSeq": 3
+    },
+    {
+      "frameworkSeq": 4,
+      "journalSeq": 4
+    },
+    {
+      "frameworkSeq": 5,
+      "journalSeq": 5
+    },
+    {
+      "frameworkSeq": 6,
+      "journalSeq": 7
+    },
+    {
+      "frameworkSeq": 7,
+      "journalSeq": 8
+    },
+    {
+      "frameworkSeq": 8,
+      "journalSeq": 9
+    },
+    {
+      "frameworkSeq": 9,
+      "journalSeq": 10
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+
+Running 9 tests using 2 workers
+
+(node:575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:574) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports (9.0s)
+(node:753) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/workbench.spec.ts:89:1 › cancels and remains usable on a narrow viewport (2.8s)
+180-row input fill and assertion: 12ms
+  ✓  4 test/browser/workbench.spec.ts:94:1 › windows long history and pages context sources beyond a raw artifact page (3.2s)
+  ✓  5 test/browser/workbench.spec.ts:108:1 › compact layout preserves controls and inspector focus at all target sizes (2.6s)
+  ✓  6 test/browser/workbench.spec.ts:112:1 › shows and downloads diagnostics even when durable cursor and status do not change (762ms)
+  ✘  1 test/browser/workbench-upgrade.spec.ts:79:1 › search, diff, locate, open and reload preserve evidence and draft (45.1s)
+(node:835) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  7 test/browser/workbench-upgrade.spec.ts:136:1 › workspace API authentication and side effect boundary (57ms)
+  ✓  8 test/browser/workbench-upgrade.spec.ts:161:1 › files and settings remain usable at all viewports (1.2s)
+  ✓  9 test/browser/workbench-upgrade.spec.ts:174:1 › changes keep expanded history while new journal events arrive (3.0s)
+
+
+  1) test/browser/workbench-upgrade.spec.ts:79:1 › search, diff, locate, open and reload preserve evidence and draft 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: '调用证据', exact: true }).getByRole('button', { name: 'search · 完成', exact: true })
+
+
+      114 |   await inspection.getByRole('button',{name:'web_search · 完成',exact:true}).click();
+      115 |   await inspection.getByRole('button',{name:'展开子调用（1）',exact:true}).last().click();
+    > 116 |   await inspection.getByRole('button',{name:'search · 完成',exact:true}).click();
+          |                                                                        ^
+      117 |   const selected=inspection.getByRole('region',{name:'所选调用证据'});
+      118 |   await selected.getByRole('combobox',{name:'证据分组',exact:true}).selectOption('request');
+      119 |   await selected.getByText(/#\d+ · attempt.started/).click();await selected.getByRole('button',{name:'读取原始附件 1',exact:true}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/workbench-upgrade.spec.ts:116:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-upgrade-search-d-cea22-preserve-evidence-and-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workbench-upgrade-search-d-cea22-preserve-evidence-and-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-upgrade-search-d-cea22-preserve-evidence-and-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-upgrade-search-d-cea22-preserve-evidence-and-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '调用证据', exact: true }).getByRole('region', { name: '所选调用证据' })
+    Timeout: 5000ms
+    - Expected substring  -  1
+    + Received string     + 56
+
+    - tool_choice
+    + work · 完成调用身份与归属{
+    +   "id": "model:4b82c9df-7973-4674-8f7a-f25dd90998bb",
+    +   "kind": "model",
+    +   "mode": "work",
+    +   "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+    +   "label": "work",
+    +   "seq": 49,
+    +   "status": "completed",
+    +   "children": 0,
+    +   "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb",
+    +   "model": "deepseek-flash",
+    +   "purpose": "work"
+    + }网络尝试全部 attempts 与调用来源60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成Attempt 60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成输入 20 / 输出 5 / 缓存读取 4 tokens延迟 291 ms · 首字节 257 ms · HTTP 200{
+    +   "id": "60583958-271a-40e0-9c9a-9d65bd4d85ad",
+    +   "seq": 50,
+    +   "status": "completed",
+    +   "model": "deepseek-flash",
+    +   "purpose": "work",
+    +   "input": 20,
+    +   "output": 5,
+    +   "cacheRead": 4,
+    +   "elapsedMs": 291,
+    +   "firstByteMs": 257,
+    +   "httpStatus": 200,
+    +   "retry": {}
+    + }证据分组全部事件实际请求与转换原始响应与归一化结果上下文及来源用量、重试与终态以下为持久事件的有界预览；请求、原始响应、归一化结果及工具证据分别保留。展开或读取附件不会重放调用。#50 · attempt.started2026-10-08T05:31:21.581Z{
+    +   "eventId": "769ea4eb-0e81-435a-bac9-18be78c366d8",
+    +   "links": {
+    +     "mode": "work",
+    +     "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+    +     "frameworkTaskId": 14,
+    +     "runId": "f095fc9c-1c68-493c-9ee4-3d7e10adc720",
+    +     "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb"
+    +   },
+    +   "payload": {
+    +     "purpose": "work",
+    +     "profile": {
+    +       "id": "work",
+    +       "version": "3",
+    +       "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+    +     },
+    +     "contextSnapshot": {
+    +       "eventId": "90e396ef-60bb-4a3a-acdd-34e4abd5fddc",
+    +       "revision": "348d52f42bb88be5459b656a997223d01127e4c39938094949cee20b8d0647a5",
+    +       "artifact": {
+    +         "kind": "artifact",
+    +         "sha256": "76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c",
+    +         "bytes": 61462
+    +       }
+    +     },
+    +     "protocol": "responses",
+    +     "attempt": 1,
+    +     "model": "deepseek-flash",
+    +     "adapter": "pi-responses-1.0.4/journal-1"
+    +   }
+    + }查看此请求的上下文收起原始附件 1SHA256 76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c偏移 0 / 61462 bytes · utf8{"version":1,"contextRevision":"6764d12beb8ffb9b203a5b356a5bce25117d60f3d93971e9d29b60dc95243b32","purpose":"work","mode":"work","target":{"id":"44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4","kind":"project","root":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","rootIdentity":{"device":"16777231","inode":"99572976"},"scope":"project"},"model":{"id":"deepseek-flash","provider":"deepseek","protocol":"responses","contextWindow":1000000,"maxTokens":131072,"baseUrl":"https://api.deepseek.com","historyCompatibility":"deepseek-responses-v1"},"activationRevision":"59edd14f8705a2838dfc21a60bce4b20fecf2f0aab80f890e04c42fb67584e3d","capabilityRevision":"982e0e9fd20d9a79aff3d9baf5f22167d9b14a82cda27ddcfb4aba94f71b1b51","selection":[{"id":"snapshot:model","source":"deepseek:deepseek-flash","hash":"68efadba82aa5bd87598b1b49a4545bc77d60a58b7adbe2d3ab9144b80f9ebdb","role":"model-selection","layer":"model","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"selected-model"},{"id":"instruction:0","source":"nekomimi:work:v3","hash":"c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6","role":"instruction","layer":"policy","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"3","sources":["nekomimi:work:v3"],"transformations":["host-framing"]},{"id":"instruction:1","source":"tool-summary:bash","hash":"724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:bash:v2"],"transformations":["host-framing"]},{"id":"instruction:2","source":"tool-summary:codemode","hash":"979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["builtin:codemode:v1"],"transformations":["host-framing"]},{"id":"instruction:3","source":"tool-summary:edit","hash":"cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:edit:v2"],"transformations":["host-framing"]},{"id":"instruction:4","source":"tool-summary:model_catalog","hash":"dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_catalog:2"],"transformations":["host-framing"]},{"id":"instruction:5","source":"tool-summary:model_classify","hash":"543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_classify:2"],"transformations":["host-framing"]},{"id":"instruction:6","source":"tool-summary:model_image","hash":"d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_image:2"],"transformations":["host-framing"]},{"id":"instruction:7","source":"tool-summary:read","hash":"ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:8","source":"tool-summary:resource_list","hash":"28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:resource_list:2"],"transformations":["host-framing"]},{"id":"instruction:9","source":"tool-summary:web_search","hash":"74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:web_search:v2"],"transformations":["host-framing"]},{"id":"instruction:10","source":"tool-summary:write","hash":"6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:write:v2"],"transformations":["host-framing"]},{"id":"instruction:11","source":"tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546","hash":"344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:12","source":"tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a","hash":"14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["builtin:codemode:v1"],"transformations":["host-framing"]},{"id":"instruction:13","source":"tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489","hash":"3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:bash:v2"],"transformations":["host-framing"]},{"id":"instruction:14","source":"tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c","hash":"d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:edit:v2"],"transformations":["host-framing"]},{"id":"instruction:15","source":"tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d","hash":"43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:write:v2"],"transformations":["host-framing"]},{"id":"instruction:16","source":"tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65","hash":"7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:17","source":"tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89","hash":"d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:web_search:v2"],"transformations":["host-framing"]},{"id":"schema:0","source":"bash","hash":"b1a58188f48eec785ace0e370366ef1154724474fae70f7a34406e5c106301ee","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:1","source":"codemode","hash":"74f27645676d6a8c58bc0ab61c8ab6be972439aa26730c71f84a946a0318c6dc","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:2","source":"edit","hash":"8e39b57b9a44b05618c965b7d899f3db57b0f6495167849f51356ea09c7afffc","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:3","source":"model_catalog","hash":"30ad1300d6506cbd2b29763286a5cc56d09817c362ba53bfdbf4da22182282a5","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:4","source":"model_classify","hash":"3262209e71ea9d2e36ba4c6bdbf3d248d71c7f29be80be0759782d09acb60c88","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:5","source":"model_image","hash":"85c60ce3d461d3e8062f22214baeb44e473fc9dcceed37cc381e6b29988e71a9","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:6","source":"read","hash":"12e41d56b4ef8906a24c5395da4fa363b99710b157313661f5ab10a32a5f22dd","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:7","source":"resource_list","hash":"fb4b3d4ce328b7593f5bf7a19d3648362d5daba1e1f9152ae0a0739352a85c69","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:8","source":"web_search","hash":"25e9b8b6d6be06bd971754c8607aaefc85012f8a54ce1df8db2efc977edf6701","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:9","source":"write","hash":"c1afd42f306e8c65cf730d03561ec5d7ecf7271e951ebbe5ee1edb2bb2afd940","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"excluded-instruction:807b6a6c7d417c82d32f345433cb8d8e46f96f7cf7d218b9d7f76e6444cb24e4","source":"customization:delivery:v2","hash":"1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc","role":"instruction","layer":"resources","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","version":"2","decision":"exclude","reason":"tool-dependency-unavailable"},{"id":"excluded-instruction:903120aac2fb1facb6f077d850974d370fa85d5f18dcbb4cabf2d002fd22f74d","source":"customization:entry:v2","hash":"f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0","role":"instruction","layer":"resources","scope":"/privat附件开头继续读取附件#51 · request.transform#52 · request.dispatched事件偏移 0 / 3上一页事件下一页事件
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '调用证据', exact: true }).getByRole('region', { name: '所选调用证据' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '调用证据', exact: true }).getByRole('region', { name: '所选调用证据' })
+        - locator resolved to <section aria-label="所选调用证据" class="min-w-0 space-y-3 rounded-lg border border-line p-3">…</section>
+        - unexpected value "work · 完成调用身份与归属{
+      "id": "model:4b82c9df-7973-4674-8f7a-f25dd90998bb",
+      "kind": "model",
+      "mode": "work",
+      "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+      "label": "work",
+      "seq": 49,
+      "status": "completed",
+      "children": 0,
+      "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb",
+      "model": "deepseek-flash",
+      "purpose": "work"
+    }网络尝试全部 attempts 与调用来源60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成Attempt 60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成输入 20 / 输出 5 / 缓存读取 4 tokens延迟 291 ms · 首字节 257 ms · HTTP 200{
+      "id": "60583958-271a-40e0-9c9a-9d65bd4d85ad",
+      "seq": 50,
+      "status": "completed",
+      "model": "deepseek-flash",
+      "purpose": "work",
+      "input": 20,
+      "output": 5,
+      "cacheRead": 4,
+      "elapsedMs": 291,
+      "firstByteMs": 257,
+      "httpStatus": 200,
+      "retry": {}
+    }证据分组全部事件实际请求与转换原始响应与归一化结果上下文及来源用量、重试与终态以下为持久事件的有界预览；请求、原始响应、归一化结果及工具证据分别保留。展开或读取附件不会重放调用。#50 · attempt.started2026-10-08T05:31:21.581Z{
+      "eventId": "769ea4eb-0e81-435a-bac9-18be78c366d8",
+      "links": {
+        "mode": "work",
+        "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+        "frameworkTaskId": 14,
+        "runId": "f095fc9c-1c68-493c-9ee4-3d7e10adc720",
+        "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb"
+      },
+      "payload": {
+        "purpose": "work",
+        "profile": {
+          "id": "work",
+          "version": "3",
+          "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+        },
+        "contextSnapshot": {
+          "eventId": "90e396ef-60bb-4a3a-acdd-34e4abd5fddc",
+          "revision": "348d52f42bb88be5459b656a997223d01127e4c39938094949cee20b8d0647a5",
+          "artifact": {
+            "kind": "artifact",
+            "sha256": "76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c",
+            "bytes": 61462
+          }
+        },
+        "protocol": "responses",
+        "attempt": 1,
+        "model": "deepseek-flash",
+        "adapter": "pi-responses-1.0.4/journal-1"
+      }
+    }查看此请求的上下文收起原始附件 1SHA256 76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c读取附件…#51 · request.transform#52 · request.dispatched事件偏移 0 / 3上一页事件下一页事件"
+        13 × locator resolved to <section aria-label="所选调用证据" class="min-w-0 space-y-3 rounded-lg border border-line p-3">…</section>
+           - unexpected value "work · 完成调用身份与归属{
+      "id": "model:4b82c9df-7973-4674-8f7a-f25dd90998bb",
+      "kind": "model",
+      "mode": "work",
+      "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+      "label": "work",
+      "seq": 49,
+      "status": "completed",
+      "children": 0,
+      "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb",
+      "model": "deepseek-flash",
+      "purpose": "work"
+    }网络尝试全部 attempts 与调用来源60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成Attempt 60583958-271a-40e0-9c9a-9d65bd4d85ad · 完成输入 20 / 输出 5 / 缓存读取 4 tokens延迟 291 ms · 首字节 257 ms · HTTP 200{
+      "id": "60583958-271a-40e0-9c9a-9d65bd4d85ad",
+      "seq": 50,
+      "status": "completed",
+      "model": "deepseek-flash",
+      "purpose": "work",
+      "input": 20,
+      "output": 5,
+      "cacheRead": 4,
+      "elapsedMs": 291,
+      "firstByteMs": 257,
+      "httpStatus": 200,
+      "retry": {}
+    }证据分组全部事件实际请求与转换原始响应与归一化结果上下文及来源用量、重试与终态以下为持久事件的有界预览；请求、原始响应、归一化结果及工具证据分别保留。展开或读取附件不会重放调用。#50 · attempt.started2026-10-08T05:31:21.581Z{
+      "eventId": "769ea4eb-0e81-435a-bac9-18be78c366d8",
+      "links": {
+        "mode": "work",
+        "targetId": "44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4",
+        "frameworkTaskId": 14,
+        "runId": "f095fc9c-1c68-493c-9ee4-3d7e10adc720",
+        "modelCallId": "4b82c9df-7973-4674-8f7a-f25dd90998bb"
+      },
+      "payload": {
+        "purpose": "work",
+        "profile": {
+          "id": "work",
+          "version": "3",
+          "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+        },
+        "contextSnapshot": {
+          "eventId": "90e396ef-60bb-4a3a-acdd-34e4abd5fddc",
+          "revision": "348d52f42bb88be5459b656a997223d01127e4c39938094949cee20b8d0647a5",
+          "artifact": {
+            "kind": "artifact",
+            "sha256": "76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c",
+            "bytes": 61462
+          }
+        },
+        "protocol": "responses",
+        "attempt": 1,
+        "model": "deepseek-flash",
+        "adapter": "pi-responses-1.0.4/journal-1"
+      }
+    }查看此请求的上下文收起原始附件 1SHA256 76304df7c784e157feea00b7c908ac8c13c182a86596ae551069a8fc53826d9c偏移 0 / 61462 bytes · utf8{"version":1,"contextRevision":"6764d12beb8ffb9b203a5b356a5bce25117d60f3d93971e9d29b60dc95243b32","purpose":"work","mode":"work","target":{"id":"44378ef3efd23c36d8749b32e6ae8219eba3bc881bb32d39eafe0f451f5760e4","kind":"project","root":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","rootIdentity":{"device":"16777231","inode":"99572976"},"scope":"project"},"model":{"id":"deepseek-flash","provider":"deepseek","protocol":"responses","contextWindow":1000000,"maxTokens":131072,"baseUrl":"https://api.deepseek.com","historyCompatibility":"deepseek-responses-v1"},"activationRevision":"59edd14f8705a2838dfc21a60bce4b20fecf2f0aab80f890e04c42fb67584e3d","capabilityRevision":"982e0e9fd20d9a79aff3d9baf5f22167d9b14a82cda27ddcfb4aba94f71b1b51","selection":[{"id":"snapshot:model","source":"deepseek:deepseek-flash","hash":"68efadba82aa5bd87598b1b49a4545bc77d60a58b7adbe2d3ab9144b80f9ebdb","role":"model-selection","layer":"model","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"selected-model"},{"id":"instruction:0","source":"nekomimi:work:v3","hash":"c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6","role":"instruction","layer":"policy","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"3","sources":["nekomimi:work:v3"],"transformations":["host-framing"]},{"id":"instruction:1","source":"tool-summary:bash","hash":"724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:bash:v2"],"transformations":["host-framing"]},{"id":"instruction:2","source":"tool-summary:codemode","hash":"979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["builtin:codemode:v1"],"transformations":["host-framing"]},{"id":"instruction:3","source":"tool-summary:edit","hash":"cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:edit:v2"],"transformations":["host-framing"]},{"id":"instruction:4","source":"tool-summary:model_catalog","hash":"dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_catalog:2"],"transformations":["host-framing"]},{"id":"instruction:5","source":"tool-summary:model_classify","hash":"543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_classify:2"],"transformations":["host-framing"]},{"id":"instruction:6","source":"tool-summary:model_image","hash":"d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:model_image:2"],"transformations":["host-framing"]},{"id":"instruction:7","source":"tool-summary:read","hash":"ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:8","source":"tool-summary:resource_list","hash":"28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["harness:resource_list:2"],"transformations":["host-framing"]},{"id":"instruction:9","source":"tool-summary:web_search","hash":"74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:web_search:v2"],"transformations":["host-framing"]},{"id":"instruction:10","source":"tool-summary:write","hash":"6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08","role":"instruction","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:write:v2"],"transformations":["host-framing"]},{"id":"instruction:11","source":"tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546","hash":"344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:12","source":"tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a","hash":"14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["builtin:codemode:v1"],"transformations":["host-framing"]},{"id":"instruction:13","source":"tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489","hash":"3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:bash:v2"],"transformations":["host-framing"]},{"id":"instruction:14","source":"tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c","hash":"d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:edit:v2"],"transformations":["host-framing"]},{"id":"instruction:15","source":"tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d","hash":"43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:write:v2"],"transformations":["host-framing"]},{"id":"instruction:16","source":"tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65","hash":"7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:read:v2"],"transformations":["host-framing"]},{"id":"instruction:17","source":"tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89","hash":"d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89","role":"instruction","layer":"guidance","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"effective-instruction","version":"2","sources":["tool:web_search:v2"],"transformations":["host-framing"]},{"id":"schema:0","source":"bash","hash":"b1a58188f48eec785ace0e370366ef1154724474fae70f7a34406e5c106301ee","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:1","source":"codemode","hash":"74f27645676d6a8c58bc0ab61c8ab6be972439aa26730c71f84a946a0318c6dc","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:2","source":"edit","hash":"8e39b57b9a44b05618c965b7d899f3db57b0f6495167849f51356ea09c7afffc","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:3","source":"model_catalog","hash":"30ad1300d6506cbd2b29763286a5cc56d09817c362ba53bfdbf4da22182282a5","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:4","source":"model_classify","hash":"3262209e71ea9d2e36ba4c6bdbf3d248d71c7f29be80be0759782d09acb60c88","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:5","source":"model_image","hash":"85c60ce3d461d3e8062f22214baeb44e473fc9dcceed37cc381e6b29988e71a9","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:6","source":"read","hash":"12e41d56b4ef8906a24c5395da4fa363b99710b157313661f5ab10a32a5f22dd","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:7","source":"resource_list","hash":"fb4b3d4ce328b7593f5bf7a19d3648362d5daba1e1f9152ae0a0739352a85c69","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:8","source":"web_search","hash":"25e9b8b6d6be06bd971754c8607aaefc85012f8a54ce1df8db2efc977edf6701","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"schema:9","source":"write","hash":"c1afd42f306e8c65cf730d03561ec5d7ecf7271e951ebbe5ee1edb2bb2afd940","role":"tool-schema","layer":"tools","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","decision":"include","reason":"declared-tool"},{"id":"excluded-instruction:807b6a6c7d417c82d32f345433cb8d8e46f96f7cf7d218b9d7f76e6444cb24e4","source":"customization:delivery:v2","hash":"1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc","role":"instruction","layer":"resources","scope":"/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-k03zVF","version":"2","decision":"exclude","reason":"tool-dependency-unavailable"},{"id":"excluded-instruction:903120aac2fb1facb6f077d850974d370fa85d5f18dcbb4cabf2d002fd22f74d","source":"customization:entry:v2","hash":"f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0","role":"instruction","layer":"resources","scope":"/privat附件开头继续读取附件#51 · request.transform#52 · request.dispatched事件偏移 0 / 3上一页事件下一页事件"
+
+
+      77 |   await inspection.getByRole('button',{name:'work · 完成',exact:true}).last().click();
+      78 |   await selected.getByRole('combobox',{name:'证据分组',exact:true}).selectOption('request');await selected.getByText(/#\d+ · attempt.started/).click();
+    > 79 |   await selected.getByRole('button',{name:'读取原始附件 1',exact:true}).click();await expect(selected).toContainText('tool_choice');await expect(selected).toContainText('write a greeting');
+         |                                                                                                  ^
+      80 |   await selected.getByRole('combobox',{name:'证据分组',exact:true}).selectOption('sources');await selected.getByText(/#\d+ · context.view/).click();await selected.getByRole('button',{name:'查看此请求的上下文',exact:true}).click();
+      81 |   const details=page.getByRole('dialog',{name:'上下文详情',exact:true});await expect(details.getByLabel('请求选择清单')).toContainText('选入');await page.keyboard.press('Escape');await expect(inspection).toBeVisible();
+      82 |   await page.screenshot({path:info.outputPath('trace.png')});await page.setViewportSize({width:390,height:844});await expect(inspection).toBeInViewport();expect(await inspection.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);await page.screenshot({path:info.outputPath('trace-mobile.png')});await page.setViewportSize({width:1440,height:1000});
+        at /Users/kirineko/Github/nekomimi/test/browser/workbench.spec.ts:79:98
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workbench-submits-observes-a410f-loads-continues-and-exports/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/workbench-upgrade.spec.ts:79:1 › search, diff, locate, open and reload preserve evidence and draft 
+    test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+  7 passed (51.7s)

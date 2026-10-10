@@ -1,4 +1,5 @@
 import { renderSessionHtml } from "./export/html.js";
+import { inspectJournalFormat } from "./pi/journal-storage.js";
 import { readFile, mkdir, realpath } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import {
@@ -188,6 +189,7 @@ export async function importBundle(
     throw new Error(
       "This bundle is not resumable; use inspect for the diagnostic view",
     );
+  await inspectJournalFormat(source);
   destination = resolve(destination);
   await mkdir(destination, { recursive: false, mode: 0o700 });
   await mkdir(join(destination, "artifacts"));

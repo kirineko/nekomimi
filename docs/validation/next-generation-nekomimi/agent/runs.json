@@ -1,0 +1,26 @@
+[
+  {
+    "node": "node24",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "agent.test.mjs"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-06T15:06:03.238104+00:00",
+    "seconds": 1.039236
+  },
+  {
+    "node": "node22",
+    "command": [
+      "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "agent.test.mjs"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-06T15:06:04.278870+00:00",
+    "seconds": 0.984029
+  }
+]

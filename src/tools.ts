@@ -23,7 +23,7 @@ import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 import { Type } from "typebox";
 import { createPatch } from "diff";
-import type { AgentTool, AgentToolResult } from "@earendil-works/pi-agent-core";
+import type { RuntimeTool, RuntimeToolResult } from "./tool-contracts.js";
 import {
   Journal,
   hash,
@@ -54,7 +54,7 @@ const failure = (message: string): never => {
 const message = (
   text: string,
   details: unknown = {},
-): AgentToolResult<unknown> => ({ content: [{ type: "text", text }], details });
+): RuntimeToolResult<unknown> => ({ content: [{ type: "text", text }], details });
 function within(root: string, target: string): boolean {
   const path = relative(root, target);
   return (
@@ -100,7 +100,8 @@ export class CoreTools {
       }
     return tools;
   }
-  environment() { return { cwd: this.workspace, platform: process.platform, shell: this.shell }; }
+  environment() { return { cwd: this.workspace, platform: process.platform, shell: this.shell,
+    isolation: { controlledFiles: "Workspace path and symlink checks", shell: "Trusted process with host OS permissions; cwd is not an OS sandbox" } }; }
   async path(input: string): Promise<string> {
     const candidate = resolve(this.workspace, input);
     if (!within(this.workspace, candidate))
@@ -138,7 +139,7 @@ export class CoreTools {
     return readFile(path);
   }
   private async read(
-    input: { path: string; offset?: number; limit?: number },
+    input: { path: string; offset?: number; limit?: number; imageIndex?: number },
     links: Links,
   ) {
     let bytes: Buffer;
@@ -158,6 +159,13 @@ export class CoreTools {
       bytes = await this.bytes(path);
       ref = await this.journal.artifact(bytes);
       await this.snapshot(path, bytes, links);
+    }
+    if (input.imageIndex !== undefined) {
+      if (!input.path.startsWith("artifact:") || !Number.isSafeInteger(input.imageIndex) || input.imageIndex < 0) throw new Error("imageIndex requires a saved tool-result artifact and a non-negative content index");
+      const result = JSON.parse(bytes.toString("utf8")) as { content?: Array<{ type: string; data?: string; mimeType?: string }> };
+      const image = result.content?.[input.imageIndex];
+      if (image?.type !== "image" || typeof image.data !== "string" || !["image/png", "image/jpeg", "image/gif", "image/webp"].includes(image.mimeType ?? "")) throw new Error("Image entry unavailable or unsupported in saved tool result");
+      return { content: [{ type: "image" as const, data: image.data, mimeType: image.mimeType! }], details: { artifact: ref, imageIndex: input.imageIndex, imageHash: hash(image.data) } };
     }
     const mime = (
       {
@@ -225,9 +233,11 @@ export class CoreTools {
   ) {
     const path = await this.path(input.path);
     const managed = relative(this.workspace, path).split("\\").join("/");
-    if (/^\.nekomimi\/(?:content|package-content|package-candidates|customization-journal|package-journal|workflow-content|workflows|workspace-state|panel-history|state-management)(?:\/|$)/.test(managed) || /^\.nekomimi\/(?:active-customizations|packages)\.json(?:$|\.)/.test(managed))
+    if (/^\.nekomimi\/(?:v2\/)?(?:content|package-content|package-candidates|customization-journal|package-journal|workflow-content|workflows|workspace-state|panel-history|state-management)(?:\/|$)/.test(managed) || /^\.nekomimi\/(?:v2\/)?(?:active-customizations|packages|nekomimi-format)\.json(?:$|\.)/.test(managed))
       throw new Error("Managed customization content is read-only; edit a candidate and use activation tools");
     const previous = this.writes.get(path) ?? Promise.resolve();
+    // Capture the caller's observed version before waiting behind another mutation.
+    const expected = this.snapshots.get(path);
     const task = previous
       .catch(() => {})
       .then(async () => {
@@ -243,7 +253,7 @@ export class CoreTools {
         } catch (e) {
           if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
         }
-        if (before && this.snapshots.get(path) !== hash(before))
+        if (before && expected !== hash(before))
           throw new Error(
             "File is unread or has changed externally; read it again before writing",
           );
@@ -523,12 +533,12 @@ export class CoreTools {
     const build = (
       name: string,
       description: string,
-      parameters: AgentTool["parameters"],
+      parameters: RuntimeTool["parameters"],
       run: (
         args: any,
         links: Links,
         signal?: AbortSignal,
-      ) => Promise<AgentToolResult<unknown>>,
+      ) => Promise<RuntimeToolResult<unknown>>,
       guidance: string[],
     ): ToolDefinition => ({
       snippet: ({read:"Inspect a workspace file or saved evidence",edit:"Apply precise non-overlapping replacements",write:"Create or fully replace a file",bash:"Execute a shell command",powershell:"Execute a PowerShell command",web_search:"Find current web information"} as Record<string,string>)[name]!,
@@ -549,9 +559,10 @@ export class CoreTools {
         "read",
         `Read a workspace UTF-8 file or PNG/JPEG/GIF/WebP image (file limit ${this.options.maxFileBytes??DEFAULT_FILE_BYTES} bytes); artifact:<sha256> reads saved evidence. Text offset/limit are bytes, not lines. Default limit ${Math.min(DEFAULT_READ_BYTES,this.options.outputBytes??DEFAULT_OUTPUT_BYTES)} bytes; effective cap ${this.options.outputBytes??DEFAULT_OUTPUT_BYTES}. Follow returned nextOffset to continue, never calculate character offsets. Workspace paths cannot escape through symlinks.`,
         Type.Object({
-          path: Type.String({ description: "Workspace-relative or absolute path within the workspace, or artifact:<sha256> for saved evidence." }),
-          offset: Type.Optional(Type.Integer({ minimum: 0, description: "Zero-based UTF-8 byte offset; default 0. Use the previous result nextOffset for continuation." })),
-          limit: Type.Optional(Type.Integer({ minimum: 1, description: `Maximum bytes to read; default ${Math.min(DEFAULT_READ_BYTES,this.options.outputBytes??DEFAULT_OUTPUT_BYTES)}, capped at ${this.options.outputBytes??DEFAULT_OUTPUT_BYTES}. Images are returned as attachments.` })),
+          path: Type.String({ description: "Workspace path or artifact:<sha256>." }),
+          imageIndex: Type.Optional(Type.Integer({ minimum: 0, description: "Original image index in an artifact:<sha256> result." })),
+          offset: Type.Optional(Type.Integer({ minimum: 0, description: "Zero-based UTF-8 byte offset; default 0. Continue at nextOffset." })),
+          limit: Type.Optional(Type.Integer({ minimum: 1, description: `Byte limit; default ${Math.min(DEFAULT_READ_BYTES,this.options.outputBytes??DEFAULT_OUTPUT_BYTES)}, cap ${this.options.outputBytes??DEFAULT_OUTPUT_BYTES}. Images remain attachments.` })),
         }),
         (a, l) => this.read(a, l),
         [

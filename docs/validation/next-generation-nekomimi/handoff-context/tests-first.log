@@ -1,0 +1,58 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/handoff-context.test.ts (5 tests | 5 failed) 1329ms
+   × quotes confirmed create input with ordered source hashes and no native calls or automatic effects 307ms
+   × requires an explicit work delivery selection and excludes SDK guidance while keeping the complete snapshot 270ms
+   × keeps captured input after source deletion and marks missing original evidence in the next real request 271ms
+   × bounds quoted reference text in UTF-8 and exposes the unchanged full confirmed artifact 248ms
+   × does not turn forged summary permissions into work creation tool access 233ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/handoff-context.test.ts > quotes confirmed create input with ordered source hashes and no native calls or automatic effects
+TypeError: app.sessions.handoffConfirm is not a function
+ ❯ Object.handoff test/handoff-context.test.ts:21:36
+
+ ❯ test/handoff-context.test.ts:39:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  test/handoff-context.test.ts > requires an explicit work delivery selection and excludes SDK guidance while keeping the complete snapshot
+TypeError: app.sessions.handoffConfirm is not a function
+ ❯ handoff test/handoff-context.test.ts:21:36
+
+ ❯ test/handoff-context.test.ts:57:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  test/handoff-context.test.ts > keeps captured input after source deletion and marks missing original evidence in the next real request
+TypeError: app.sessions.handoffConfirm is not a function
+ ❯ handoff test/handoff-context.test.ts:21:36
+
+ ❯ test/handoff-context.test.ts:73:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  test/handoff-context.test.ts > bounds quoted reference text in UTF-8 and exposes the unchanged full confirmed artifact
+TypeError: app.sessions.handoffConfirm is not a function
+ ❯ Object.handoff test/handoff-context.test.ts:21:36
+
+ ❯ test/handoff-context.test.ts:89:2
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  test/handoff-context.test.ts > does not turn forged summary permissions into work creation tool access
+TypeError: app.sessions.handoffConfirm is not a function
+ ❯ handoff test/handoff-context.test.ts:21:36
+
+ ❯ test/handoff-context.test.ts:96:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  08:21:25
+   Duration  2.05s (transform 284ms, setup 0ms, import 665ms, tests 1.33s, environment 0ms)
+

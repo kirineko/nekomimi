@@ -1,0 +1,15 @@
+{
+  "docs/validation/next-generation-nekomimi/durable/pack-format-fixture-failure.log": "25565138912c3c223f2e23e6583fb15fbfd5a6974e0c4f9e936e6bd52e25d162",
+  "docs/validation/next-generation-nekomimi/durable/pack-canonical-fixture-failure.log": "e386d5a9f60f4c97703fb59375263ffcbc2af5abbfdacd9d8e586c9d98c2e919",
+  "docs/validation/next-generation-nekomimi/durable/pack-first-failure.log": "1def69396c8af2164217acc9b7682884a1fc6fba350c0a37661541380bca8990",
+  "docs/validation/next-generation-nekomimi/durable/pack-sdk-fixture-failure.log": "1a254f44cf488d6bb0905c1992fafce2e1d8e1a83c10cbb1d9fcf138a7936e24",
+  "docs/validation/next-generation-nekomimi/durable/pack-verified.log": "e5c96aaddeeec738d054eef85ea72bc7ad5640dc36c3fd5f345f526ad6413693",
+  "docs/validation/next-generation-nekomimi/durable/runtime-pack-node22.log": "c6613a41855ec2b2e32e2662e5daab4ac45333f94b7fea1756fd30df063b927d",
+  "docs/validation/next-generation-nekomimi/durable/runtime-pack-node24.log": "b76cdd953c229dceb2ae5622709e972bbbe5dfadfea1c96e5d68c426159ea168",
+  "docs/validation/next-generation-nekomimi/durable/runtime-pack-validation.md": "fff9631b8d9330c8be8fdca9a4ddf7f5aeb3ce01c913a8a91815491103038b78",
+  "docs/validation/next-generation-nekomimi/durable/auxiliary-regression.log": "6efd6daaf6e0879af1beeb5be0700622f939dcc117bc878477375893d1d48e7b",
+  "scripts/pack-durable-fixture.mjs": "0f552b0255b0a5c8f158bb5401542eed0700c8d67012dea4265788d860aa4647",
+  "scripts/pack-smoke.mjs": "0e4e123e4718c60b1778cfa672e8fe9e306066622f76a2fe322ba418630df2a0",
+  "scripts/global-web-smoke.mjs": "90ef66ddfc7ff7ef019cc629c96cf09f4b17885b00df41083af51761f685965c",
+  "scripts/pack-customization-fixture.mjs": "33f6178c831da09c2bb98be1ddf12bea391bc0c21e1b23a93752d7f8f39bbf63"
+}

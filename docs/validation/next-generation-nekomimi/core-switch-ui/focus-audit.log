@@ -1,0 +1,49 @@
+
+Running 1 test using 1 worker
+
+(node:75741) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan (6.0s)
+
+
+  1) test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: '审阅版本切换计划', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: '审阅版本切换计划', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '审阅版本切换计划', exact: true })
+        14 × locator resolved to <button data-slot="button" data-size="default" data-variant="outline" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border border-line bg-b…>审阅版本切换计划</button>
+           - unexpected value "inactive"
+
+
+      50 |     await f.review(); const dialog=page.getByRole('dialog');
+      51 |     await expect(page.getByRole('button',{name:'取消切换',exact:true})).toBeFocused();
+    > 52 |     await page.keyboard.press('Escape'); await expect(page.getByRole('button',{name:'审阅版本切换计划',exact:true})).toBeFocused(); await f.review();
+         |                                                                                                              ^
+      53 |     await expect(page.getByRole('button',{name:'确认切换核心版本',exact:true})).toBeDisabled();
+      54 |     await expect(dialog).toContainText(f.workspace);await expect(dialog).toContainText(f.home);await expect(dialog).toContainText('d'.repeat(64));await expect(dialog).toContainText('c'.repeat(64));
+      55 |     f.setBlocked(true);await expect(dialog.getByRole('region',{name:'切换阻碍'})).toBeVisible({timeout:6000});
+        at /Users/kirineko/Github/nekomimi/test/browser/core-switch-ui.spec.ts:52:110
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-switch-ui-10-8-explic-3ac13--and-rejects-a-changed-plan/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan 

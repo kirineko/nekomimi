@@ -1,0 +1,120 @@
+
+> nekomimi@0.2.1 test
+> npm run build && vitest run --maxWorkers=2
+
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 576 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/index.html                               0.35 kB │ gzip:   0.27 kB
+dist/web-dist/assets/nekomimi-CMII8_56.svg             0.44 kB │ gzip:   0.27 kB
+dist/web-dist/assets/diff-woXpYk--.js                  2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js                  2.81 kB
+dist/web-dist/assets/asset-manifest.json              14.90 kB │ gzip:   1.92 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js                 41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js               69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js          174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js       175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js                 175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js          181.07 kB
+dist/web-dist/assets/app-DZ0PaA6i.css                 24.47 kB │ gzip:   5.67 kB
+dist/web-dist/assets/protocol-BVobqEOb.js              0.05 kB │ gzip:   0.07 kB
+dist/web-dist/assets/useRouter-FxgnsQDe.js             0.14 kB │ gzip:   0.14 kB
+dist/web-dist/assets/useNavigate-Cuix6Co9.js           0.22 kB │ gzip:   0.18 kB
+dist/web-dist/assets/Badge-BJD3HJfl.js                 0.54 kB │ gzip:   0.32 kB
+dist/web-dist/assets/Tabs-9RDC0x1C.js                  1.18 kB │ gzip:   0.67 kB
+dist/web-dist/assets/create-CBX76QEm.js                1.27 kB │ gzip:   0.63 kB
+dist/web-dist/assets/create-details-BmHFWfJ4.js        1.32 kB │ gzip:   0.73 kB
+dist/web-dist/assets/api-BZVUjpGh.js                   1.50 kB │ gzip:   0.89 kB
+dist/web-dist/assets/runtime-dialogs-6S4qfSHs.js       1.62 kB │ gzip:   0.88 kB
+dist/web-dist/assets/Menu-Bnq6tSaS.js                  1.76 kB │ gzip:   0.97 kB
+dist/web-dist/assets/session-export-CGRToY66.js        1.95 kB │ gzip:   1.15 kB
+dist/web-dist/assets/Changes-BjTJHXO9.js               2.32 kB │ gzip:   1.16 kB
+dist/web-dist/assets/session-delete-D17Z683Q.js        2.55 kB │ gzip:   1.34 kB
+dist/web-dist/assets/deferred-DUstQeYO.js              2.70 kB │ gzip:   1.45 kB
+dist/web-dist/assets/management-confirm-DwhZqsqi.js    2.85 kB │ gzip:   1.52 kB
+dist/web-dist/assets/index-CQ8HxMEy.js                 2.86 kB │ gzip:   1.43 kB
+dist/web-dist/assets/work-session-BuFhSNS2.js          2.94 kB │ gzip:   1.53 kB
+dist/web-dist/assets/more-dialog-ClzNjoNI.js           3.18 kB │ gzip:   1.64 kB
+dist/web-dist/assets/mutation-0wMQ_3ad.js              3.44 kB │ gzip:   1.14 kB
+dist/web-dist/assets/themes-CK7GSNab.js                3.66 kB │ gzip:   1.68 kB
+dist/web-dist/assets/panels-CME8rYI8.js                3.77 kB │ gzip:   1.77 kB
+dist/web-dist/assets/DiffView-C_U-TVeP.js              3.91 kB │ gzip:   1.88 kB
+dist/web-dist/assets/useSelector-C5blEMR5.js           4.71 kB │ gzip:   2.05 kB
+dist/web-dist/assets/ui-contract-DC4Xsd68.js           4.94 kB │ gzip:   2.18 kB
+dist/web-dist/assets/FileBrowser-CI7MEP-o.js           5.03 kB │ gzip:   2.26 kB
+dist/web-dist/assets/delivery-candidate-CZttEGqs.js    5.14 kB │ gzip:   2.26 kB
+dist/web-dist/assets/dev-ui-DdnX3fC0.js                5.51 kB │ gzip:   2.16 kB
+dist/web-dist/assets/mcp-management-BW088k4j.js        5.57 kB │ gzip:   2.45 kB
+dist/web-dist/assets/link-Yjki_DlL.js                  6.24 kB │ gzip:   3.04 kB
+dist/web-dist/assets/query-BVghO7Yc.js                 7.11 kB │ gzip:   2.25 kB
+dist/web-dist/assets/core-recovery-Cp4T-mru.js         7.31 kB │ gzip:   3.11 kB
+dist/web-dist/assets/presentation-C6rTv5_x.js          7.32 kB │ gzip:   3.09 kB
+dist/web-dist/assets/resources-OKo64qzS.js             8.22 kB │ gzip:   3.30 kB
+dist/web-dist/assets/package-management-Yl2Lksae.js    9.03 kB │ gzip:   3.17 kB
+dist/web-dist/assets/slots-DsZi83UV.js                 9.40 kB │ gzip:   4.00 kB
+dist/web-dist/assets/settings-B2WLWrVF.js              9.51 kB │ gzip:   3.29 kB
+dist/web-dist/assets/workflows-BW4lYTuI.js            11.12 kB │ gzip:   3.77 kB
+dist/web-dist/assets/inspection-CvKoaRy7.js           12.04 kB │ gzip:   4.14 kB
+dist/web-dist/assets/context-details-Mkm3b666.js      13.08 kB │ gzip:   4.20 kB
+dist/web-dist/assets/models-BW57qpyL.js               15.99 kB │ gzip:   5.60 kB
+dist/web-dist/assets/useQuery-DJQIPop0.js             22.69 kB │ gzip:   7.54 kB
+dist/web-dist/assets/core-candidate-Bp_o-4kK.js       25.35 kB │ gzip:   7.79 kB
+dist/web-dist/assets/create-DVAmnEBu.js               29.45 kB │ gzip:   8.80 kB
+dist/web-dist/assets/Dialog-CtWcET6x.js               37.45 kB │ gzip:  12.80 kB
+dist/web-dist/assets/Button-C-QFE-EU.js               41.67 kB │ gzip:  13.96 kB
+dist/web-dist/assets/handoff-cards-JjUZzk6J.js       259.59 kB │ gzip:  78.71 kB
+dist/web-dist/assets/app-knJrX_xq.js                 361.26 kB │ gzip: 115.71 kB
+
+✓ built in 171ms
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"53e0a726-1543-46a3-b6a8-8f0683347f63","timestamp":"2026-10-08T18:00:01.639Z","sessionId":"7376e148c7752efdc1eb972da14a6c3be9f99da270002792736b8c6cf26fc1fb","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"bab4812e-c2e2-46bc-8f1c-fe670b306dc3","timestamp":"2026-10-08T18:00:02.621Z","sessionId":"07b811ec49028231bc68266d461f5c96de953ab8983089a1b73e8cb4315bf56a","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0ef9447d-041b-489b-814f-a1e2c90ec581","timestamp":"2026-10-08T18:00:03.702Z","sessionId":"eb872ecf597d5ef190b8a9647d245c14d79bd0cac40591d8dacb003569bfbbc7","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"74819925-aee5-4489-b21a-7dbdfd85d330","timestamp":"2026-10-08T18:00:04.357Z","sessionId":"fbb9bce7c0136788d61c2937cb11e698d07662e245dc1361da136fa9fe03c069","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1d1d6d2d-7218-4c63-942a-be963294298f","timestamp":"2026-10-08T18:00:05.544Z","sessionId":"8b99b24f63533981793999c94bff26ef76723a1900b938492af96d5400ec8ae1","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a2a0ceba-8de3-40c8-9623-e6d07cd80051","timestamp":"2026-10-08T18:00:06.567Z","sessionId":"ad52b953481f35972fcd813d4c8a1799d817465040c27395ea9464f28f539ac9","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"dad67dde-1604-4526-a11a-8025d4b49517","timestamp":"2026-10-08T18:00:07.569Z","sessionId":"6907f54270098f74cd83d912a5a60c66c881d6a5733e515a60fe83a598a21fc2","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4d212ae3-439d-4656-ac45-1357e32d09d7","timestamp":"2026-10-08T18:00:08.255Z","sessionId":"0d7eaba55fc2ccd47623607134fba030de46275ac91ca31e7edf92e8287ffa53","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e323b1ed-e598-402d-b81e-3f841ae87017","timestamp":"2026-10-08T18:00:09.474Z","sessionId":"e41b3c02cbaf7c160f5b78c4c3f27c5045c723d25b68c2859affb92af793ca2a","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"7bc9c573-0647-4859-9b4d-22541d061fee","timestamp":"2026-10-08T18:00:10.549Z","sessionId":"6183a72ed2714bf03e6b6188d56ef65a703181bdf3feb0a169f3937c1efb7bf9","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"bae75e54-0080-45d6-a30a-692137414d82","timestamp":"2026-10-08T18:00:11.113Z","sessionId":"e9e0ce07dc4d8ab38c62a0c348a12f9363392fb72564b48860f78601bf4a65e9","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"adcb8c24-336c-4d5f-ad99-f8ffa01b4a42","timestamp":"2026-10-08T18:00:11.639Z","sessionId":"7222189907b163bff1a96012c65d79635e97732732a2588161b6e40c80c7191e","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"926f9ccd-2565-4e5f-a929-462b41e02c85","timestamp":"2026-10-08T18:00:16.501Z","sessionId":"b07aa1b8-36b8-40bb-a058-fca2c9facf89","runId":"c05903cd-643d-425d-9f0d-4113fe0fc185","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"047a83d0-c9c4-442d-b6c2-7e6cec4314b6","timestamp":"2026-10-08T18:00:18.288Z","sessionId":"3a396bac-4639-4bd2-9298-3321046ab768","runId":"7b475c89-c0ec-4de4-8320-60a14bfa1e58","seq":33,"durableSeq":32,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"617ad627-8c2a-4946-9c62-f9faddcda56b","timestamp":"2026-10-08T18:00:19.313Z","sessionId":"7cdf37f6-fd00-42f4-aa29-1e43531c070a","runId":"bfac8f76-bb86-4166-928f-eeb1a4e42501","seq":33,"durableSeq":32,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"95aa9123-1ab4-4ef4-bddb-cef40e662b8c","timestamp":"2026-10-08T18:00:20.318Z","sessionId":"92305066-3e77-4066-9f71-1d82f01f3860","runId":"76cefcf6-f0e6-4525-b45b-933a96a8ceea","seq":32,"durableSeq":31,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"c9868e6c-3791-4d2e-b5aa-5e958e1aaf68","timestamp":"2026-10-08T18:00:21.486Z","sessionId":"93abe72a-cc75-4cc4-9001-de3f665654f5","runId":"99480bab-872c-4928-a4c7-0a49c021f0dd","attemptId":"d6a2dae2-e13f-4dda-bdf7-d28d51cb8def","seq":35,"durableSeq":35,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"572b0f6e-40c7-490e-b58c-cbe577b3e050","timestamp":"2026-10-08T18:00:22.485Z","sessionId":"ea9fd04b-686f-4ffd-a836-e6a4862df93e","runId":"8ee9d9e0-94c8-44a4-80ff-4fc0318557e2","attemptId":"b64d11ba-d616-44d8-94ec-3fdd7e62be84","seq":35,"durableSeq":34,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"dbd3717a-8ab2-40c9-a515-6cf3b5861270","timestamp":"2026-10-08T18:00:23.477Z","sessionId":"30017f9a-9acb-40e6-a563-04f60c5d1385","runId":"de19f886-3554-48fe-ad3a-cf60d71aa17b","attemptId":"add816ed-29de-4507-96bb-f854c6b87b66","seq":35,"durableSeq":34,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d0eaebb2-5fe7-4ac3-ab6c-e7999684a896","timestamp":"2026-10-08T18:00:24.529Z","sessionId":"ac3e0dc5-cfab-458b-9ca3-c90916bbaaea","runId":"48842e8e-08db-4093-8bd6-9aec41fce840","attemptId":"b738fa84-bb7c-4206-8e3e-300e8f4bf2aa","seq":35,"durableSeq":34,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0e903e86-942c-45c3-97d1-3d1670aef7cf","timestamp":"2026-10-08T18:01:59.785Z","sessionId":"278f8e3c-4f5a-4d30-8573-47ac6ccfe238","runId":"800421b5-15c4-4664-96e6-90ea8bef3378","attemptId":"373da1a9-7e6b-4b6e-adc0-5ba1300b5389","seq":24,"durableSeq":23,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0d24ff67-3b8f-48c7-9131-54c9ed10aa44","timestamp":"2026-10-08T18:02:00.629Z","sessionId":"33b5398e-f872-4ad3-a99a-23e198fcb06c","runId":"066a5ead-72de-47a9-a086-5d338e46900e","attemptId":"e7aeffd0-b883-4920-897a-0a9d2a18a3b7","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"2c64bd54-9f1c-45e0-b235-c6b87cc9375d","timestamp":"2026-10-08T18:02:01.750Z","sessionId":"fcb00912-9e80-4f61-accc-23b9b9881bbf","runId":"51aa01b1-dad7-474f-971e-667c6d1afb12","attemptId":"50cc2a16-4b5d-4f90-8451-cffe5ff000f3","seq":34,"durableSeq":33,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d08bf0f3-3206-4b16-91b9-c21e571bd5c5","timestamp":"2026-10-08T18:02:02.848Z","sessionId":"50f167a0-0537-4861-a5aa-a3774bf74387","runId":"9e01ce4d-1cf6-4160-a38c-b3ac8fe4e75d","attemptId":"a6c164d4-10da-4a60-a148-4b0d4b883b00","seq":34,"durableSeq":33,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3b0c31dc-3bec-48cb-b1a7-70f3507051e5","timestamp":"2026-10-08T18:02:03.931Z","sessionId":"db3329c8-1e22-4777-b9bc-3a4037d1c553","runId":"888d3d0a-27c3-409b-9aff-b39b3a75b047","attemptId":"36c78150-a3b2-404f-8811-949b19c3bde8","seq":34,"durableSeq":33,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+Explicit trusted build authorization is required, including dependency and package lifecycle scripts
+{"nekomimiDiagnostic":{"version":1,"id":"f0d013d4-725b-4d23-933c-edb0eb53716d","timestamp":"2026-10-08T18:03:29.271Z","sessionId":"99c5fcf6-c10c-4e74-ba49-4bdb29973385","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"343890b9-2e10-4560-af3d-f58d01665c5c","timestamp":"2026-10-08T18:03:38.896Z","sessionId":"f6e66c10-74ef-4c6c-8e94-89951b732a04","seq":0,"durableSeq":0,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"c203bfbd-3ac2-45d6-a13f-b35a52a95f2d","timestamp":"2026-10-08T18:03:39.242Z","sessionId":"628ca0e2-2ede-4386-b65d-703182cc71d0","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"237ecf5d-0af3-4eaa-a8b5-0c1b83f1a904","timestamp":"2026-10-08T18:03:39.326Z","sessionId":"f9401ad7-674f-4851-a8a4-5e6ddc900d52","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6260b0a0-2384-4bb5-aaea-cf6cf239aedc","timestamp":"2026-10-08T18:03:39.487Z","sessionId":"7602a926-c03a-4107-a43a-521683d57f22","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"8dbb3289-ef12-4f5a-a02f-b69319dfb716","timestamp":"2026-10-08T18:03:39.627Z","sessionId":"f3074309-d286-46a6-b330-84c2e92ae648","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4d90b7dc-6170-4fdc-a651-d122664054a6","timestamp":"2026-10-08T18:03:40.028Z","sessionId":"895d12f5-e9d3-42b1-964c-2bd553d7cbb8","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5782473d-e9c3-47aa-a73b-bcc4d27045bc","timestamp":"2026-10-08T18:03:40.066Z","sessionId":"a3b36afa-fa88-41d6-aace-942d4341bff1","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d0228c43-db6f-4827-b2ec-d94e43582812","timestamp":"2026-10-08T18:03:40.077Z","sessionId":"a3b36afa-fa88-41d6-aace-942d4341bff1","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"838a5db3-0b06-4a2d-a766-5870e22e5d29","timestamp":"2026-10-08T18:03:40.116Z","sessionId":"97c7a1b3-0550-4702-9c66-c22bab279683","runId":"741fa83c-1f2e-43ac-b3f1-f634fe53324c","attemptId":"57a91c34-081d-4d14-bda9-6d9ee59b5487","seq":23,"durableSeq":23,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ccfc336a-9b80-40aa-9bf4-aacda1f3d986","timestamp":"2026-10-08T18:04:20.511Z","sessionId":"5d825386-63c1-476b-987a-8cff5d67ae85","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+ Test Files  132 passed (132)
+      Tests  787 passed (787)
+   Start at  01:56:26
+   Duration  476.54s (transform 1.47s, setup 0ms, import 36.20s, tests 909.07s, environment 5ms)
+

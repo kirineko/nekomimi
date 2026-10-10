@@ -1,0 +1,51 @@
+
+Running 4 tests using 1 worker
+
+(node:84631) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.5s)
+  ✓  2 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓  3 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (845ms)
+  ✘  4 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (6.8s)
+
+
+  1) test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/延迟提交失败/)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText(/延迟提交失败/) with timeout 5000ms
+      - waiting for getByText(/延迟提交失败/)
+
+
+      50 |     await input.fill('等待响应');await send.focus();await page.keyboard.press('Enter');await expect(input).toBeFocused();
+      51 |     await input.fill('收到旧响应之前的新草稿');await page.getByRole('button',{name:'导出会话',exact:true}).click();const dialog=page.getByRole('dialog',{name:'导出对话'});await expect(dialog).toBeVisible();
+    > 52 |     const focused=await page.evaluate(()=>document.activeElement?.textContent);release();await expect(page.getByText(/延迟提交失败/)).toBeVisible();
+         |                                                                                                                                 ^
+      53 |     expect(await page.evaluate(()=>document.activeElement?.textContent)).toBe(focused);await expect(dialog).toBeVisible();
+      54 |     await page.keyboard.press('Escape');await expect(input).toHaveJSProperty('textContent','收到旧响应之前的新草稿');
+      55 |   }finally{release();await app.close();}
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-run-recovery.spec.ts:52:129
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+  3 passed (13.8s)

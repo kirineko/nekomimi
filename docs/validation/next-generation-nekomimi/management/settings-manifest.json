@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-10-07T21:25:03.760631+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.4": "in progress",
+  "checks": {
+    "fullTypecheck": 0,
+    "build": 0,
+    "browser": 12,
+    "unit": 30,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/management/settings-types-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/settings-build.log": "36b8d666172d8f7ad0db54e131fa909e637687668c83cb64cb9fb8ed63ed46d4",
+    "docs/validation/next-generation-nekomimi/management/settings-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/settings-browser.log": "1579469b061213b7f963bfd9de405ce5d2a7bc7555e9ee2124de2fdce4a4598c",
+    "docs/validation/next-generation-nekomimi/management/settings-unit.log": "e14ae003a38cf50ec36733e28d9b8a33663b8139b30fc0c19ba32be955794aa0",
+    "docs/validation/next-generation-nekomimi/management/settings-types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/validation/next-generation-nekomimi/management/settings-progress.md": "47abbd5965d91ffdd8961af18d15febf23961ce60f58fc14bf877d8d443477fa",
+    "src/server/app.ts": "fa3cf8e226fc9541b5b151eb90e48c0319b6de6f995daec0a251d474ba43c858",
+    "src/web/v2/routes/settings.tsx": "8bc52a1f50f95b7a68a8956ad8f58c553ae018b5a31b7419e1b15dc1adbbd696",
+    "src/web/v2/routes/models.tsx": "b270f50fb553c24827973bb482990ee5f9acb703fdd36ea19fcff8700f7c63cb",
+    "src/web/v2/routes/create.tsx": "29cf6f89ae504057342269ac8858baf4b8960010247cb8cb8545c90d1a43fc71",
+    "src/web/v2/routes/work-nav.tsx": "a25b69778630dbe33af07aad6b9e6a728b1105a992b3ab112451b28b34877b8e",
+    "src/web/v2/router.tsx": "d28a320196c9c46e77e7981f537792e3395125fc235e2cb5b09f223256d5572f",
+    "test/browser/basic-settings.spec.ts": "9f140f70aa3291fec7dc21143631656253d829605405b9c91af38fe1e875a399",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "74c66995c1b3d55f8b8e343555800f563ac6db8185c148a38bc3d82f21b49b2e",
+    "openspec/changes/next-generation-nekomimi/design.md": "4b2e42106b5789d487b7c3adfd9cc306f139889f8baeb184124e96f59b7d7cab",
+    "openspec/changes/next-generation-nekomimi/specs/web-customization/spec.md": "d4156a712d22fc07c17b44173f559ab9d1e2567787790f46aabeb5d23f592081"
+  }
+}

@@ -1,0 +1,44 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/core-builds.test.ts (5 tests | 2 failed) 6030ms
+   × records actual lifecycle scripts and sealed artifacts without inheriting credentials or replaying a command 1439ms
+   × cancels a real script process group and preserves partial output and completed effects 2219ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/core-builds.test.ts > records actual lifecycle scripts and sealed artifacts without inheriting credentials or replaying a command
+AssertionError: Error: EACCES: permission denied, rename '/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-nJEaaJ/core-builds/tasks/34af93f2-756a-4173-accc-989501f353e7/source' -> '/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-nJEaaJ/core-builds/artifacts/f95b9d0cf41158a08360950aca8921cef38f296e5ec1b4ca162e6b42b44b5396': expected 'failed' to be 'passed' // Object.is equality
+
+Expected: "passed"
+Received: "failed"
+
+ ❯ test/core-builds.test.ts:42:39
+     40|   vi.stubEnv('OPENAI_API_KEY', 'synthetic-private-key'); vi.stubEnv('N…
+     41|   const f = await fixture(), request = await f.request(), result = awa…
+     42|   expect(result.status, result.error).toBe('passed'); expect(result.pr…
+       |                                       ^
+     43|   expect(result.processes.every(p => p.status === 'passed' && p.cleanu…
+     44|   expect(JSON.parse(await readFile(join(result.artifact!.directory, 'e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/core-builds.test.ts > cancels a real script process group and preserves partial output and completed effects
+Error: Artifact symlink rejected: 81592d93d689d669c29c8aee6cf225a40fb3bb9e58aac2bfd8598e049c74657f
+ ❯ readArtifact src/journal.ts:101:11
+     99|   const resolved = await realpath(file);
+    100|   if (resolved !== file)
+    101|     throw new Error(`Artifact symlink rejected: ${ref.sha256}`);
+       |           ^
+    102|   const data = await readFile(file);
+    103|   if (hash(data) !== ref.sha256 || data.length !== ref.bytes)
+ ❯ test/core-builds.test.ts:75:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  23:53:07
+   Duration  6.32s (transform 103ms, setup 0ms, import 232ms, tests 6.03s, environment 0ms)
+

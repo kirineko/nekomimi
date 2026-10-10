@@ -1,0 +1,92 @@
+
+Running 12 tests using 2 workers
+
+(node:3235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (686ms)
+  ✓   3 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (453ms)
+  ✓   4 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.3s)
+  ✓   5 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (321ms)
+  ✓   6 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+  ✘   2 test/browser/customization-studio.spec.ts:53:1 › empty management pages recover reads and modal choices contain keyboard focus without writes (45.1s)
+(node:3300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 test/browser/customization-studio.spec.ts:76:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes (10.7s)
+
+
+  1) test/browser/customization-studio.spec.ts:53:1 › empty management pages recover reads and modal choices contain keyboard focus without writes 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '导航与详情', exact: true })
+
+
+      35 | async function tab(page: Page, name: string) {
+      36 |   const link=page.getByRole("link", {name: name === "资源" ? "能力与权限" : name === "工作流与面板" ? "持久工作流管理" : "模型用途与配置", exact:true});
+    > 37 |   await link.waitFor({state:"attached"});
+         |                                          ^
+      38 |   if(!await link.isVisible()) await page.getByRole("button",{name:"导航与详情",exact:true}).click();
+      39 |   await link.click();
+      40 | }
+        at tab (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:37:88)
+        at open (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:34:35)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:56:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-empty-9a88e-yboard-focus-without-writes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-empty-9a88e-yboard-focus-without-writes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-empty-9a88e-yboard-focus-without-writes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-empty-9a88e-yboard-focus-without-writes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/customization-studio.spec.ts:76:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+
+    Test was interrupted.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for getByRole('button', { name: '导航与详情', exact: true })
+
+
+      35 | async function tab(page: Page, name: string) {
+      36 |   const link=page.getByRole("link", {name: name === "资源" ? "能力与权限" : name === "工作流与面板" ? "持久工作流管理" : "模型用途与配置", exact:true});
+    > 37 |   await link.waitFor({state:"attached"});
+         |                                          ^
+      38 |   if(!await link.isVisible()) await page.getByRole("button",{name:"导航与详情",exact:true}).click();
+      39 |   await link.click();
+      40 | }
+        at tab (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:37:88)
+        at open (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:34:35)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:84:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization-studio.spec.ts:53:1 › empty management pages recover reads and modal choices contain keyboard focus without writes 
+  1 interrupted
+    test/browser/customization-studio.spec.ts:76:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+  5 did not run
+  5 passed (58.0s)

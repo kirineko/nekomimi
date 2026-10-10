@@ -8,7 +8,8 @@ import { readSession, hash } from "../src/journal.js";
 it("creates a review extension through recorded model tools, then uses skills, rules and MCP across reload and restart", async () => {
   const workspace = await temporary();
   const home = await temporary();
-  const session = join(workspace, "session");
+  const session = join(workspace, "work-session");
+  const createSession = join(workspace, "create-session"), ownerWorkspace = await temporary();
   await mkdir(join(workspace, ".agents/skills/review"), { recursive: true });
   await writeFile(
     join(workspace, "AGENTS.md"),
@@ -33,7 +34,7 @@ it("creates a review extension through recorded model tools, then uses skills, r
       },
     }),
   );
-  const source = `export default api=>{api.registerCommand('review',{description:'Review',async handler(_,ctx){const list=await ctx.callTool('resource_list',{});const skill=list.details.find(r=>r.kind==='skill');await ctx.callTool('resource_read',{id:skill.id}); await ctx.callTool('mcp_review_${hash("check").slice(0, 8)}',{}); const file=await ctx.callTool('read',{path:'target.txt'}); const value=(await ctx.state.get('count',1)??0)+1;await ctx.state.set('count',1,value);await ctx.ui({kind:'card',title:'Review',text:file.content[0].text});return 'review-'+value;}});}`;
+  const source = `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('review',{description:'Review',async handler(_,ctx){const list=await ctx.callTool('resource_list',{});const skill=(list.details as {items:Array<{kind:string;id:string}>}).items.find(r=>r.kind==='skill')!;await ctx.callTool('resource_read',{id:skill.id}); const server=(list.details as {items:Array<{kind:string;id:string}>}).items.find(r=>r.kind==='mcp')!;const discovered=await ctx.callTool('mcp_discover',{server:server.id});const catalog=discovered.details as {revision:string;items:Array<{id:string}>};await ctx.callTool('mcp_call',{server:server.id,tool:catalog.items[0].id,revision:catalog.revision,args:{}}); const file=await ctx.callTool('read',{path:'target.txt'}); const value=Number(await ctx.state.get('count',1)??0)+1;await ctx.state.set('count',1,value);await ctx.ui({kind:'card',title:'Review',text:file.content.filter(c=>c.type==='text').map(c=>c.text).join('')});return 'review-'+value;}});}`;
   const outputs = [
     callItem('write', { path: '.agents/skills/review/SKILL.md', content: '---\nname: review\ndescription: Review checklist\n---\nCheck evidence first.' }, 'skill'),
     callItem(
@@ -42,7 +43,7 @@ it("creates a review extension through recorded model tools, then uses skills, r
         path: ".nekomimi/extensions/review/extension.json",
         content: JSON.stringify({
           name: "review",
-          sdkVersion: 1,
+          sdkVersion: 3, requiredCapabilities: ['commands', 'tools', 'state', 'ui'],
           entry: "index.ts",
         }),
       },
@@ -62,7 +63,8 @@ it("creates a review extension through recorded model tools, then uses skills, r
       workspace,
       home,
       customization: host,
-      session,
+      mode: "create", ownerWorkspace, target: { kind: "extension", root: workspace },
+      session: createSession,
       apiKey: key,
       prompt: "Create /review",
       fetch: async () => response([outputs.shift()!]),

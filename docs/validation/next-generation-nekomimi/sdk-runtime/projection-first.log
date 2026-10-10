@@ -1,0 +1,39 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/delivery-receipts.test.ts (17 tests | 1 failed) 11270ms
+   × uses the owning project for creation provenance and shares environment-bound delivery facts across both modes 327ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/delivery-receipts.test.ts > uses the owning project for creation provenance and shares environment-bound delivery facts across both modes
+AssertionError: expected { …(23) } to match object { changeOrigin: 'controlled', …(3) }
+(31 matching properties omitted from actual)
+
+- Expected
++ Received
+
+@@ -1,10 +1,10 @@
+  {
+    "changeKind": "created",
+    "changeOrigin": "controlled",
+    "origin": {
+-     "ownerWorkspace": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-NIPSEb",
++     "ownerWorkspace": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-NIPSEb",
+      "scope": "project",
+      "sessionId": "153dafc48acb7dce173ff4740cd87fb9b0bdeb45c82ade390941fa83d2bdfcb3",
+      "target": {
+        "host": {
+          "build": "66140c160acda3adb88d2ba6e00a0967bf0bdbaff360cc1b8a02ac0bc33e5e1e",
+
+ ❯ test/delivery-receipts.test.ts:184:19
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 25 passed (26)
+   Start at  23:25:50
+   Duration  12.10s (transform 957ms, setup 0ms, import 2.78s, tests 24.14s, environment 0ms)
+

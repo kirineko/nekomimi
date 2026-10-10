@@ -1,0 +1,4 @@
+{"phase":"prepare","root":"/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-pU7PqW","node":"v24.15.0","platform":"darwin","arch":"arm64"}
+{"phase":"build","candidateId":"ad57d1eb-6024-46b5-a400-8dd5497dff1c","inputHash":"bf84d06d922833f5b32ee1c3ab3bf38d40e0ab790d500c22189377cdb7591807"}
+{"phase":"validate","buildId":"88e509a8-65a8-454e-8660-2ae05e7d22e7","artifactRevision":"87716ab9aa0378ce746a3913a4b249bd1c7c836750aed01dc7da07d58e0e7277"}
+{"phase":"passed","receipt":"/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-pU7PqW/receipt.json","validationId":"edf13a22-b4f8-4517-9d9c-87bdfac895c4","checks":["legacy-byte-identical","ports-closed","host-storage-readback","no-business-execution","durable-host-readback"],"ports":[{"port":50531,"closed":true},{"port":50536,"closed":true}]}

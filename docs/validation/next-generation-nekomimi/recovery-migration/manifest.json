@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-08T00:22:03.896948+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "task10.9": "in progress; recovery and search migration verified",
+  "overallProgress": {
+    "total": 89,
+    "complete": 77,
+    "remaining": 12
+  },
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "browserPassed": 18,
+    "browserFailed": 0,
+    "unitPassed": 2,
+    "unitFailed": 0
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-browser.log": "f25e63673b8d2c27a753f18d610e305ad67088a755231fc4827c375c6c845063",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-browser-fixed.log": "839db2fd0df179cc0793e3a452b6cf7951d497b5b4a43153c21a4ba66cf3ab4a",
+    "docs/validation/next-generation-nekomimi/recovery-migration/README.md": "844e9408c21b8ecd670eec57bb78e8aa529ef443e66ea302de13c83201a53c1d",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-browser-final.log": "07672d449621cb69419766d686c87eaeff570b40b32a2a9e30f59fe6b66446e4",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-build.log": "dc524a336c37ef23a23ddd901c4f2600fd75d2ef8a8f299416137a4c3ad6bd2c",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/recovery-migration/nekomimi-recovery-unit.log": "9309aa6e86197d6a4c37590e3aa4d5f70dddafac586e716df1b8b9a4f979ed9a",
+    "src/web/presentation.ts": "b61d6d2ebeeab539b64b51817e7e3880eb8ddeae269622010dfdffdda473943d",
+    "src/web/components/Timeline.tsx": "91febdc303a25ba442588509b7e1f67f277c6c21ba7e76dba6626fe0e0e10eec",
+    "src/web/components/DiagnosticNotice.tsx": "077c361c7a61af50e36de9c4a459621e8f2049cc01326552730d791af0fee3a5",
+    "src/web/v2/routes/run-recovery.tsx": "83b020bee20513ea1fe4069a8c45efc6760031da2518bc19f50c3d428de58bd3",
+    "src/web/v2/routes/search-sources.tsx": "f033ef863e8ecf121fac5ac05ad6f25e47982d246ae60a733e1c35aa88865621",
+    "src/web/v2/routes/message-content.tsx": "854993791605cb7406a69509aedd262ff0010623ee05183eda9a98392715ce3c",
+    "src/web/v2/routes/session-timeline.tsx": "bc1456d1fa5b957f4557bc103a585118e8ffc66a680ff78a55cc608fb88d3f3a",
+    "src/web/v2/routes/session-composer.tsx": "b07080e86f7c2f4eac314f48efe07f93632ff3a61e724827756741ce82453f6e",
+    "src/web/v2/routes/task-input.tsx": "0cf5106c31a47372c3973134794a367f844f9f6ec4d1d71cb1c795bb99f61694",
+    "src/web/v2/routes/work-session.tsx": "b0654f4e7f5d21c49e4ad0d7a5fd82faa8a47546512bff9fc8c04cd1c0be73f0",
+    "src/web/v2/routes/create-conversation.tsx": "f6a7bc7d875b038ee2e831904cc871ee66f345852956931a5126037206b70c1d",
+    "src/web/v2/shell.tsx": "c8af6d597ce85bf4e7ec8ea75fdb391ba1d70296b15dca4afc0c4c34f5468cc7",
+    "test/browser/v2-run-recovery.spec.ts": "e09c59f2858f2985d6306206363c920dd098f1343f043d9123b7e25e5aa4ecb6",
+    "test/browser/search-brand.spec.ts": "86f647c16d0eaa04b9d711304a5641d5c9feb6a87da5658156b62e15243d2ec1",
+    "test/web-search-evidence.test.tsx": "062821db67bcd5974565fe13c4caa17878ffffc2cf22efd0fd6e6c2b1d3c2c60",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "ae80ca4ce5cfb897f4d0068355d3f8db8f8c5aabf58dc9bdad64a46788627c63"
+  }
+}

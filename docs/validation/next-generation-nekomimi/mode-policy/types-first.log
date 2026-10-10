@@ -1,0 +1,8 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/customization/commands.ts(14,56): error TS2339: Property 'cmd' does not exist on type '{ ext: LoadedExtension; name: string; cmd: ExtensionCommand; } | { ext: LoadedExtension; name: string; workflow: RegisteredWorkflow; }'.
+  Property 'cmd' does not exist on type '{ ext: LoadedExtension; name: string; workflow: RegisteredWorkflow; }'.
+src/customization/commands.ts(14,77): error TS2339: Property 'workflow' does not exist on type '{ ext: LoadedExtension; name: string; cmd: ExtensionCommand; } | { ext: LoadedExtension; name: string; workflow: RegisteredWorkflow; }'.
+  Property 'workflow' does not exist on type '{ ext: LoadedExtension; name: string; cmd: ExtensionCommand; }'.

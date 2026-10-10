@@ -1,0 +1,49 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"1999167e-b1b3-40ff-8f02-98ac583f2943","timestamp":"2026-10-06T23:49:44.968Z","sessionId":"1f7d4121-df58-4044-9901-600e3ef85fe3","runId":"0f0c5d32-f3f2-4d04-88b0-eaf0a6da110d","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"27ecba2f-6f61-4e9c-a9dd-48bbe90eec36","timestamp":"2026-10-06T23:49:45.903Z","sessionId":"9d206443-a787-463c-8d2f-116aa64344f0","runId":"f40739f1-0b84-49da-ad79-4de479b964e2","seq":33,"durableSeq":32,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"7d7872b7-83bd-402f-a9d7-1ef337705c77","timestamp":"2026-10-06T23:49:46.649Z","sessionId":"ead3212d-0d7e-433c-a1c2-4451c77ab36b","runId":"cfc1e211-60d1-432d-a13a-d7cdc8bafb0d","seq":32,"durableSeq":31,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ae1a4c5a-0a16-4edd-9e30-7fcfd6555879","timestamp":"2026-10-06T23:49:47.606Z","sessionId":"bfb02dd5-dca4-4c3c-b552-463ca17889c4","runId":"5a252222-8a68-44a5-8eba-2097f9e75d77","seq":32,"durableSeq":31,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1b7c3d81-80b9-482d-84ed-834272230841","timestamp":"2026-10-06T23:49:48.808Z","sessionId":"db1ba1b9-9b8f-4c49-b3fd-5dfc3d7434cc","runId":"ee2419e2-073e-4e9b-adef-8bde2ef32acc","attemptId":"ffc4536f-5629-4f9e-bfcd-9b63b404d477","seq":35,"durableSeq":35,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a9490e98-847f-4c5b-a29b-03010310dabc","timestamp":"2026-10-06T23:49:49.815Z","sessionId":"6a247a6c-799b-44c3-b373-941194e8c997","runId":"71130d08-c58b-4db8-9f54-1c7e66c25d62","attemptId":"7a5f2f8a-c7c7-410a-9fe8-d5a1860503e9","seq":36,"durableSeq":35,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"535de30f-75f1-480a-a14f-6ca41d6ca055","timestamp":"2026-10-06T23:49:50.938Z","sessionId":"c54ab470-72b5-4427-b77e-f412ce66f3c2","runId":"643ebb90-b7c1-4ea4-a4d3-182e466d49e1","attemptId":"318a53f9-b435-48d7-a097-d9a3fb50d074","seq":36,"durableSeq":35,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"64df6ce5-8820-442d-aded-588682923f66","timestamp":"2026-10-06T23:49:51.802Z","sessionId":"78a880ff-84df-4512-9395-719090f081e4","runId":"b0baf834-569a-4ef1-8384-d180a2a2c8c0","attemptId":"9be7523d-53ec-40e9-8fec-9836c400c9bf","seq":35,"durableSeq":34,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ce68481e-7a14-4cb5-82b0-c150085a9a4e","timestamp":"2026-10-06T23:49:56.289Z","sessionId":"89918924-dfe5-4944-b00c-8731e32aa3a2","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3f36167a-2220-4858-b3c5-731aa914ab1a","timestamp":"2026-10-06T23:49:56.391Z","sessionId":"c8fe714e-54df-4cdc-844d-b6c491e92022","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ae561fd4-cbfa-462e-bcf4-fd83fbfc49c9","timestamp":"2026-10-06T23:49:56.576Z","sessionId":"b471c738-9638-4588-b72d-cc099b841da3","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"06daa242-64fc-45b2-b497-b88ec8a2b09d","timestamp":"2026-10-06T23:49:56.754Z","sessionId":"4a25877c-c0ac-4a4d-8084-8b26cddb2176","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a2a37382-c9cf-464c-988d-cff963b3211c","timestamp":"2026-10-06T23:49:57.086Z","sessionId":"b6866cae-2de5-4076-8e8a-53b7dbc24c52","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ed889c65-850f-4225-81d0-4f39d9b3c997","timestamp":"2026-10-06T23:49:57.127Z","sessionId":"f3788115-e006-4665-831d-e9343bf664a3","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"55712e97-7279-42fe-8655-f619e3b44e87","timestamp":"2026-10-06T23:49:57.142Z","sessionId":"f3788115-e006-4665-831d-e9343bf664a3","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d7fb2983-d992-45f0-8287-3dbacf28718e","timestamp":"2026-10-06T23:50:00.858Z","sessionId":"ab591621-74ff-4509-badf-be76c7339f5a","runId":"compact-run","seq":16,"durableSeq":16,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+ ❯ test/compaction-source.test.ts (9 tests | 1 failed) 4743ms
+   × refuses a late queue-authorization change even when conversation nodes are unchanged 306ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/compaction-source.test.ts > refuses a late queue-authorization change even when conversation nodes are unchanged
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ test/compaction-source.test.ts:63:70
+     61|     expect(f.journal.events.some(e=>e.type==='compaction.completed')).…
+     62|     expect(contextView(f.journal.events,f.prompt).revision).toBe(origi…
+     63|     expect(f.journal.events.filter(e=>e.type==='compaction.failed')).t…
+       |                                                                      ^
+     64|   } finally {await f.journal.close();}
+     65| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 63 passed (64)
+   Start at  07:49:29
+   Duration  32.80s (transform 451ms, setup 0ms, import 1.85s, tests 61.28s, environment 0ms)
+

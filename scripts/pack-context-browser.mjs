@@ -9,7 +9,7 @@ const {CustomizationHost}=await import(pathToFileURL(join(entry,'dist/customizat
 const {ProviderProfiles}=await import(pathToFileURL(join(entry,'dist/customization/provider-profiles.js')).href);
 const suffix=Date.now(),workspace=join(installation,'context-workspace-'+suffix),home=join(installation,'context-home-'+suffix),root=join(workspace,'.nekomimi/extensions/provider');
 await mkdir(root,{recursive:true});
-await writeFile(join(root,'extension.json'),JSON.stringify({name:'provider',sdkVersion:2,entry:'index.ts',requiredCapabilities:['providers']}));
+await writeFile(join(root,'extension.json'),JSON.stringify({name:'provider',sdkVersion:3,entry:'index.ts',requiredCapabilities:['providers']}));
 await writeFile(join(root,'index.ts'),(await readFile(join(entry,'extension-docs/http-providers.ts'),'utf8')).replace('contextWindow: 128000','contextWindow: 20000').replace('maxOutputTokens: 4096','maxOutputTokens: 2000'));
 const setup=new CustomizationHost(workspace,home),resource=(await setup.catalog.discover()).find(r=>r.kind==='extension');await setup.catalog.decide(resource.id,true,true,0);
 const profiles=new ProviderProfiles(home);await profiles.save({id:'fixture',providerId:'example-responses',resourceId:resource.id,model:'fixture-model',baseUrl:'https://fixture.invalid',paths:['/responses']},0);await profiles.select('main','fixture',1);await setup.close();

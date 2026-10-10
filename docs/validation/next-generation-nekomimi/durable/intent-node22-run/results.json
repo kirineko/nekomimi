@@ -1,0 +1,33 @@
+{
+  "node": "v22.19.0",
+  "results": [
+    {
+      "failurePoint": "append",
+      "intentReached": true,
+      "effects": 0,
+      "reliablePublicationsOnly": true,
+      "noUnconfirmedIntentRecovered": true
+    },
+    {
+      "failurePoint": "sync",
+      "intentReached": true,
+      "effects": 0,
+      "reliablePublicationsOnly": true,
+      "noUnconfirmedIntentRecovered": true
+    },
+    {
+      "failurePoint": "watermark.write",
+      "intentReached": true,
+      "effects": 0,
+      "reliablePublicationsOnly": true,
+      "noUnconfirmedIntentRecovered": true
+    },
+    {
+      "failurePoint": "watermark.rename",
+      "intentReached": true,
+      "effects": 0,
+      "reliablePublicationsOnly": true,
+      "noUnconfirmedIntentRecovered": true
+    }
+  ]
+}

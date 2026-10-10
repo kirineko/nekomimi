@@ -1,0 +1,59 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-v2-composite.test.ts (1 test | 1 failed) 6172ms
+   × generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers 6172ms
+ ❯ test/context-runtime.test.ts (9 tests | 1 failed) 14899ms
+   × selected built-in profile auto-compacts and sends the exact effective projection 231ms
+ ❯ test/customization-lifecycle.test.ts (3 tests | 1 failed) 1370ms
+   × loaded evidence excludes unauthorized, disabled and shadowed extensions 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > selected built-in profile auto-compacts and sends the exact effective projection
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:56:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/customization-lifecycle.test.ts > loaded evidence excludes unauthorized, disabled and shadowed extensions
+Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-N6DmoI 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖
+ ❯ inspectDataHome src/storage/format.ts:47:19
+     45|     const value = record(JSON.parse(await readFile(file, "utf8")));
+     46|     if (value?.product !== marker.product || value.formatVersion !== m…
+     47|   } catch { throw new IncompatibleFormatError(path); }
+       |                   ^
+     48|   return "supported";
+     49| }
+ ❯ Resources.decisions src/customization/resources.ts:122:5
+ ❯ Resources.discover src/customization/resources.ts:201:22
+ ❯ test/customization-lifecycle.test.ts:54:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/customization-v2-composite.test.ts > generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers
+AssertionError: Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-tydlMl 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖: expected 'failed' to be 'activated' // Object.is equality
+
+Expected: "activated"
+Received: "failed"
+
+ ❯ test/customization-v2-composite.test.ts:35:131
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 3 passed (6)
+      Tests  3 failed | 34 passed (37)
+   Start at  01:36:10
+   Duration  31.35s (transform 378ms, setup 0ms, import 1.99s, tests 59.25s, environment 0ms)
+

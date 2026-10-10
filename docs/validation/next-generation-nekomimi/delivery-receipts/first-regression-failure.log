@@ -1,0 +1,46 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"f710c6b7-8707-41bc-963c-f37a1140a258","timestamp":"2026-10-06T20:46:40.325Z","sessionId":"fddf4ba11e52484dabd8e7fc605dc2c87c20c50e14a593d5c052cc75f77986bd","runId":"8e15d68e-5892-4022-96be-1ff65213e215","seq":3,"durableSeq":3,"operation":"background.run","code":"delivery_reference","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+ ❯ test/delivery-receipts.test.ts (14 tests | 1 failed) 22482ms
+   × rejects unreceived, duplicate and cross-session work references before a request or callback 1282ms
+{"nekomimiDiagnostic":{"version":1,"id":"6d065d35-952a-49ed-b6ed-c4913fe70084","timestamp":"2026-10-06T20:46:44.500Z","sessionId":"98a02103c7687a4b1a39f77540f0aa46c3202f4b526a09eb4172ee72a4c11c98","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"b35e653b-f30b-4a09-9a2b-660026ea956c","timestamp":"2026-10-06T20:46:44.887Z","sessionId":"2013e5c0d3ba77d6b998d745ee40877ecd6371a449599175d75000080d58b40c","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3f5252dd-706c-4a43-bc96-05eae9048190","timestamp":"2026-10-06T20:46:45.589Z","sessionId":"bee0d1c4982468141c4556ffabc7e1bd1f4019fe282461853fbdb917b9dfbbd4","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3170b04c-84d8-4ef7-a670-a14e2cd7ae12","timestamp":"2026-10-06T20:46:46.023Z","sessionId":"d5202f58e27f7f6751b2e58d109d3ecf2c8ec97976e8385f3e1f780db4fa2866","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"521bd28b-a1c0-48a6-a8de-94cff37074e2","timestamp":"2026-10-06T20:46:46.887Z","sessionId":"a2e8ffce4f6bc71ab681e30cc2387ba7f642cea9fef92183ff11bc28453e5822","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6a746140-fe15-445b-befc-1d4f8bf99eb8","timestamp":"2026-10-06T20:46:47.609Z","sessionId":"432aeb1501897a2ac79eaf64da79e61bc75d625e874b6c9636312213aafb86d3","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"409ee05b-76de-408b-b831-03545fd44a01","timestamp":"2026-10-06T20:46:48.033Z","sessionId":"38062e52a7dd6cf198584937184d000989fee445aae0cfcd9e9eebe9d3c1c26b","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"88116b89-d86c-4270-8267-4e243381d24c","timestamp":"2026-10-06T20:46:48.707Z","sessionId":"044a36706d1611d985eae7309b83564ba59720a8ebb01e6a5aa2a521e45f9a54","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"2837a5aa-c07e-46db-82d7-ed51ccc9f501","timestamp":"2026-10-06T20:46:49.440Z","sessionId":"9ee85103a60096e44786a870fdf21535b1e201107167bc4d8bd370fe7e0bb491","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"190a52de-f6b8-4621-9d11-6bf7afb6baae","timestamp":"2026-10-06T20:46:50.014Z","sessionId":"8641d282df3adac08f3e89035c2da68005a51089d97c56d89d6ffcb1a0a4ac8e","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"30d2bf28-323c-4a35-8e69-c7777fe8b1f5","timestamp":"2026-10-06T20:46:50.490Z","sessionId":"d0ef805a783124b5a6cf94fce6bd9fb1dd8df9bae0227fec6aa6238c096d31ac","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"821ff206-7e7c-4b37-b56e-3017d75a4e7d","timestamp":"2026-10-06T20:46:50.894Z","sessionId":"6c7b7405855797b943a84aaf5a9d8a6f3df8266f6ee2e359b4e2e322a9e9cf07","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/delivery-receipts.test.ts > rejects unreceived, duplicate and cross-session work references before a request or callback
+AssertionError: expected 409 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 409
+
+ ❯ test/delivery-receipts.test.ts:130:66
+    128|   expect((await f.request(other.id, "submit", value)).status).toBe(404…
+    129|   expect((await f.request(f.work.id, "submit", { ...value, handoffIds:…
+    130|   expect((await f.request(f.create.id, "submit", value)).status).toBe(…
+       |                                                                  ^
+    131|   expect((await f.request(f.work.id, "submit", { ...value, handoffIds:…
+    132|   await expect(readFile(join(f.development, "FACTORY"))).rejects.toThr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 75 passed (76)
+   Start at  04:46:19
+   Duration  31.34s (transform 1.22s, setup 0ms, import 3.64s, tests 117.19s, environment 0ms)
+

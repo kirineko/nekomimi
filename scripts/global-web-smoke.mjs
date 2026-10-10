@@ -34,7 +34,7 @@ async function start(cwd) {
   const endpoint=new URL(url), token=endpoint.hash.slice(7);
   return { async request(path,body) {
     const r=await fetch(endpoint.origin+'/api/v1'+path,{method:body===undefined?'GET':'POST',headers:{authorization:`Bearer ${token}`,origin:endpoint.origin,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});
-    if(!r.ok)throw new Error(await r.text()); return r.json();
+    if(!r.ok)throw new Error(`${path}: ${await r.text()}\nInstalled service output:\n${output}`); return r.json();
   }, async stop(){if(child.exitCode!==null||child.signalCode!==null)return;const done=once(child,'exit');child.kill('SIGTERM');await done;
     // Windows kill forcibly terminates Node without running SIGTERM cleanup.
     // Allow the service's 10-second writer lease to expire before reopening it.
@@ -46,11 +46,15 @@ try {
   app=await start(a);
   const page=await fetch(app.origin); if(!page.ok)throw new Error('Homepage rejected');
   const html=await page.text(); const asset=html.match(/src="([^"]+\.js)"/)[1];
-  const css=html.match(/href="([^"]+\.css)"/)[1];
+  // Both workbenches load their styles through route chunks. Verify all
+  // emitted styles from the installed manifest, including lazy CSS assets.
+  const manifest=JSON.parse(await readFile(join(installedRoot,'dist/web-dist/assets/asset-manifest.json'),'utf8'));
+  const styles=new Set(Object.values(manifest).flatMap(entry=>[...(entry.css??[]),...(entry.file?.endsWith('.css')?[entry.file]:[])]));
+  if(!styles.size)throw new Error('Missing installed CSS manifest entries');
   const iconPath=html.match(/rel="icon"[^>]*href="([^"]+)"/)[1];
   const icon=await fetch(app.origin+iconPath);
   if(!icon.ok || icon.headers.get('content-type')!=='image/svg+xml' || !(await icon.text()).includes('fill="#7952ce"'))throw new Error('Missing installed brand favicon');
-  if(!(await fetch(app.origin+css)).ok)throw new Error('Missing CSS');
+  for(const css of styles){const response=await fetch(app.origin+'/'+css);if(!response.ok||!response.headers.get('content-type')?.includes('text/css')||!(await response.text()).trim())throw new Error('Missing CSS: '+css);}
   if(!(await fetch(app.origin+asset)).ok)throw new Error('Missing installed web asset');
   await app.request('/settings',{kind:'auth',revision:0,apiKey:'synthetic-global-key'});
   await app.request('/settings',{kind:'settings',revision:0,model:'fixture',baseUrl:`http://127.0.0.1:${model.address().port}`});

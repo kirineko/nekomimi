@@ -1,0 +1,10 @@
+{"seq":1,"type":"message","message":{"role":"system","content":"CANONICAL_FROM_JOURNAL","tools":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}],"timestamp":0}}
+{"seq":2,"type":"message","message":{"role":"user","content":[{"type":"text","text":"fixture input"}],"timestamp":1791299163383}}
+{"seq":3,"type":"prepare","preparation":1}
+{"seq":4,"type":"request.persisted","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299163383}]}","sha256":"257ed80a7170287592aa5730fa3949e2cd048dce73b2cd4e78b532b4a23ff687"}
+{"seq":5,"type":"wire.received","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299163383}]}","sha256":"257ed80a7170287592aa5730fa3949e2cd048dce73b2cd4e78b532b4a23ff687"}
+{"seq":6,"type":"message","message":{"role":"assistant","content":[{"type":"text","text":"done"}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"stop","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"thinkingLevel":"off"}}
+{"seq":7,"type":"finish","turns":1,"stopReason":"stop","toolResults":[]}
+{"seq":8,"type":"turn_end"}
+{"seq":9,"type":"agent_end"}
+{"seq":10,"type":"probe.passed","requests":1,"effects":[],"preparation":1,"turns":1}

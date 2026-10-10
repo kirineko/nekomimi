@@ -1,0 +1,159 @@
+
+Running 23 tests using 2 workers
+
+(node:14530) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14529) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (2.1s)
+  ✓   3 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.6s)
+  ✓   4 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.3s)
+  ✘   1 test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay (6.5s)
+(node:14568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (2.1s)
+{"count":60,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.001355,"RecalcStyleDuration":0.000742,"ScriptDuration":0.027339000000000002},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+{"count":180,"p95":16.800000000000182,"longTasks":[],"metrics":{"LayoutDuration":0.0015150000000000007,"RecalcStyleDuration":0.0006550000000000002,"ScriptDuration":0.033533999999999994},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓   6 test/browser/scrolling.spec.ts:4:1 › scroll trajectory and performance sample (3.7s)
+{"height":696,"historyHeight":696,"remaining":30}
+  ✓   8 test/browser/scrolling.spec.ts:29:1 › bottom boundary and return control do not move the viewport (1.2s)
+  ✘   7 test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay (6.0s)
+(node:14598) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 test/browser/scrolling.spec.ts:47:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (3.5s)
+  ✓  10 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓  11 test/browser/scrolling.spec.ts:73:1 › layout growth preserves the current anchor including movement in the same frame (1.2s)
+  ✓  13 test/browser/scrolling.spec.ts:99:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.8s)
+  ✓  12 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.5s)
+  ✓  15 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (826ms)
+  ✓  14 test/browser/scrolling.spec.ts:122:1 › fixture supports a delayed panel and diff without model or tool execution (1.7s)
+  ✓  17 test/browser/scrolling.spec.ts:137:1 › narrow and zoomed history controls stay bounded without overlapping the reading surface (1.7s)
+  ✓  16 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (2.1s)
+(node:14642) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"count":180,"streaming":true,"p95":16.799999999999727,"longTasks":[],"metrics":{"LayoutDuration":0.001306,"RecalcStyleDuration":0.000679,"ScriptDuration":0.071715}}
+  ✓  18 test/browser/scrolling.spec.ts:155:1 › streaming history performance sample (3.2s)
+  ✘  19 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.8s)
+  ✓  20 test/browser/scrolling.spec.ts:171:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.4s)
+  ✓  21 test/browser/scrolling.spec.ts:209:1 › horizontal code scrolling does not leave latest mode (1.0s)
+  ✓  22 test/browser/scrolling.spec.ts:222:1 › completion failure and cancellation do not pull history to the bottom (1.8s)
+  ✓  23 test/browser/scrolling.spec.ts:237:1 › new content is readable by scrolling, including a full historical window (2.1s)
+
+
+  1) test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '调用证据' })
+    Expected substring: "session-title"
+    Received string:    "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。刷新只读证据运行最新运行#25 · turn-unknown#20 · turn-cancelled#15 · turn-incomplete#10 · turn-completed最新运行列表更早运行列表费用与用量1 次模型尝试，仅逐 attempt 计入，父工具和脚本不再次累加。已知输入 0 / 输出 0 / 缓存读取 0 tokens缺少统计：输入 1 次、输出 1 次、缓存 1 次。费用未知 · 1 次尝试没有已验证价格；已知用量小计不代表完整总成本。调用树父调用失败不代表子调用副作用已回滚。work · 结果未知#22 · saved-model选择调用查看各 attempt 和原始证据。"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '调用证据' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '调用证据' })
+        - locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_p_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_q_" aria-describedby="radix-_r_r_" class="ds fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background text-foreground shadow-floating max-h-[85dvh] w-[min(960px,calc(100vw-32px))] overflow-y-auto break-words p-4">…</div>
+        - unexpected value "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。正在加载调用证据…关闭加载"
+        13 × locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_p_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_q_" aria-describedby="radix-_r_r_" class="ds fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background text-foreground shadow-floating max-h-[85dvh] w-[min(960px,calc(100vw-32px))] overflow-y-auto break-words p-4">…</div>
+           - unexpected value "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。刷新只读证据运行最新运行#25 · turn-unknown#20 · turn-cancelled#15 · turn-incomplete#10 · turn-completed最新运行列表更早运行列表费用与用量1 次模型尝试，仅逐 attempt 计入，父工具和脚本不再次累加。已知输入 0 / 输出 0 / 缓存读取 0 tokens缺少统计：输入 1 次、输出 1 次、缓存 1 次。费用未知 · 1 次尝试没有已验证价格；已知用量小计不代表完整总成本。调用树父调用失败不代表子调用副作用已回滚。work · 结果未知#22 · saved-model选择调用查看各 attempt 和原始证据。"
+
+
+      31 |   await expect(completed.getByText('会话命名 · 已完成',{exact:true})).toBeHidden();
+      32 |   await completed.getByText('全部调用 · 2',{exact:true}).click();await expect(completed.getByText('会话命名 · 已完成',{exact:true})).toBeVisible();
+    > 33 |   await completed.getByRole('button',{name:'调用证据',exact:true}).click();await expect(page.getByRole('dialog',{name:'调用证据'})).toContainText('session-title');await page.keyboard.press('Escape');
+         |                                                                                                                             ^
+      34 |   await expect(timeline.getByText('本次回复未完整生成。可以继续任务；具体原因可在调用证据中查看。',{exact:true})).toHaveCount(1);
+      35 |   await expect(timeline).not.toContainText('Response incomplete');
+      36 |   await expect(timeline.locator('[data-row-kind="status"]').filter({hasText:'已停止'})).toHaveCount(1);
+        at /Users/kirineko/Github/nekomimi/test/browser/readable-turns.spec.ts:33:125
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/readable-turns-work-readab-a3965-ary-evidence-without-replay/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/readable-turns-work-readab-a3965-ary-evidence-without-replay/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/readable-turns-work-readab-a3965-ary-evidence-without-replay/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/readable-turns-work-readab-a3965-ary-evidence-without-replay/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '调用证据' })
+    Expected substring: "session-title"
+    Received string:    "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。刷新只读证据运行最新运行#25 · turn-unknown#20 · turn-cancelled#15 · turn-incomplete#10 · turn-completed最新运行列表更早运行列表费用与用量1 次模型尝试，仅逐 attempt 计入，父工具和脚本不再次累加。已知输入 0 / 输出 0 / 缓存读取 0 tokens缺少统计：输入 1 次、输出 1 次、缓存 1 次。费用未知 · 1 次尝试没有已验证价格；已知用量小计不代表完整总成本。调用树父调用失败不代表子调用副作用已回滚。work · 结果未知#22 · saved-model选择调用查看各 attempt 和原始证据。"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '调用证据' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '调用证据' })
+        - locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_r_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_s_" aria-describedby="radix-_r_t_" class="ds fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background text-foreground shadow-floating max-h-[85dvh] w-[min(960px,calc(100vw-32px))] overflow-y-auto break-words p-4">…</div>
+        - unexpected value "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。正在加载调用证据…关闭加载"
+        13 × locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_r_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_s_" aria-describedby="radix-_r_t_" class="ds fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background text-foreground shadow-floating max-h-[85dvh] w-[min(960px,calc(100vw-32px))] overflow-y-auto break-words p-4">…</div>
+           - unexpected value "调用证据关闭调用证据检查嵌套调用、逐次请求与响应，读取已有证据不会执行代码。刷新只读证据运行最新运行#25 · turn-unknown#20 · turn-cancelled#15 · turn-incomplete#10 · turn-completed最新运行列表更早运行列表费用与用量1 次模型尝试，仅逐 attempt 计入，父工具和脚本不再次累加。已知输入 0 / 输出 0 / 缓存读取 0 tokens缺少统计：输入 1 次、输出 1 次、缓存 1 次。费用未知 · 1 次尝试没有已验证价格；已知用量小计不代表完整总成本。调用树父调用失败不代表子调用副作用已回滚。work · 结果未知#22 · saved-model选择调用查看各 attempt 和原始证据。"
+
+
+      31 |   await expect(completed.getByText('会话命名 · 已完成',{exact:true})).toBeHidden();
+      32 |   await completed.getByText('全部调用 · 2',{exact:true}).click();await expect(completed.getByText('会话命名 · 已完成',{exact:true})).toBeVisible();
+    > 33 |   await completed.getByRole('button',{name:'调用证据',exact:true}).click();await expect(page.getByRole('dialog',{name:'调用证据'})).toContainText('session-title');await page.keyboard.press('Escape');
+         |                                                                                                                             ^
+      34 |   await expect(timeline.getByText('本次回复未完整生成。可以继续任务；具体原因可在调用证据中查看。',{exact:true})).toHaveCount(1);
+      35 |   await expect(timeline).not.toContainText('Response incomplete');
+      36 |   await expect(timeline.locator('[data-row-kind="status"]').filter({hasText:'已停止'})).toHaveCount(1);
+        at /Users/kirineko/Github/nekomimi/test/browser/readable-turns.spec.ts:33:125
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/readable-turns-create-read-8987d-ary-evidence-without-replay/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/readable-turns-create-read-8987d-ary-evidence-without-replay/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/readable-turns-create-read-8987d-ary-evidence-without-replay/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/readable-turns-create-read-8987d-ary-evidence-without-replay/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    45
+
+      30 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      31 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 32 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      33 |   }finally{await fixture.app.close();}
+      34 | });
+      35 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:32:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay 
+    test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay 
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+  20 passed (33.9s)

@@ -1,0 +1,90 @@
+
+Running 2 tests using 1 worker
+
+(node:1709) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/runtime-ui.spec.ts:13:1 › applies a complete theme and shows user content with stable panel interaction and readable history (8.3s)
+(node:1740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (9.6s)
+
+
+  1) test/browser/runtime-ui.spec.ts:13:1 › applies a complete theme and shows user content with stable panel interaction and readable history 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('option', { name: /draft-reference.txt/ })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('option', { name: /draft-reference.txt/ }) with timeout 5000ms
+      - waiting for getByRole('option', { name: /draft-reference.txt/ })
+
+
+      30 |   await frame.getByLabel('面板便签').fill('保持输入');await appearance(page);await page.getByRole('button',{name:'预览默认风格',exact:true}).click();await page.getByRole('button',{name:'取消主题预览',exact:true}).click();await page.getByRole('button',{name:'关闭外观',exact:true}).click();await expect(frame.getByLabel('面板便签')).toHaveValue('保持输入');await expect(frame.locator('body')).toHaveCSS('font-size','15px');await waitForPanelLayout(page.locator('iframe[title="面板 今日元气"]'));
+      31 |   await frame.getByRole('button',{name:'写入草稿',exact:true}).click();await expect(input).toHaveJSProperty('textContent','保持输入');await frame.getByLabel('面板便签').fill('第二条');await frame.getByRole('button',{name:'已提供草稿',exact:true}).click();await expect(page.getByRole('dialog',{name:'如何处理面板草稿？',exact:true})).toBeVisible();await page.getByRole('button',{name:'保留原草稿',exact:true}).click();await expect(input).toHaveJSProperty('textContent','保持输入');
+    > 32 |   await writeFile(join(workspace,'draft-reference.txt'),'fixture');await input.fill('@draft-reference');await expect(page.getByRole('option',{name:/draft-reference.txt/})).toBeVisible();await input.press('Enter');await expect(input.locator('[data-reference-id]')).toHaveCount(1);await frame.getByLabel('面板便签').fill('追加内容');await frame.getByRole('button',{name:'已提供草稿',exact:true}).click();await page.getByRole('button',{name:'追加到草稿',exact:true}).click();await expect(input.locator('[data-reference-id]')).toHaveCount(1);await expect(input).toContainText('追加内容');
+         |                                                                                                                                                                             ^
+      33 |   const panel=page.getByRole('region',{name:'自定义面板 今日元气',exact:true});await panel.getByRole('button',{name:'收起',exact:true}).click();await expect(page.locator('iframe[title="面板 今日元气"]')).toHaveCount(0);await panel.getByRole('button',{name:'重新打开',exact:true}).click();await expect(frame.getByRole('heading')).toContainText('小猫咪');
+      34 |   await page.getByRole('button',{name:'打开灵感便签',exact:true}).click();await expect(page.frameLocator('iframe[title="面板 灵感便签"]').getByRole('heading')).toContainText('灵感便签');await page.getByRole('button',{name:'关闭灵感便签',exact:true}).click();await expect(page.locator('iframe[title="面板 灵感便签"]')).toHaveCount(0);await page.screenshot({path:info.outputPath('runtime-ui-sakura.png')});
+      35 |   await appearance(page);const toggle=page.getByRole('switch',{name:'显示扩展内容',exact:true});await expect(toggle).toHaveCSS('border-radius','12px');await expect(toggle.locator('span').first()).toHaveCSS('background-color','rgb(160, 79, 144)');await page.screenshot({path:info.outputPath('header-theme-menu.png')});await page.keyboard.press('Escape');
+        at /Users/kirineko/Github/nekomimi/test/browser/runtime-ui.spec.ts:32:173
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/runtime-ui-applies-a-compl-21929-action-and-readable-history/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/runtime-ui-applies-a-compl-21929-action-and-readable-history/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/runtime-ui-applies-a-compl-21929-action-and-readable-history/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/runtime-ui-applies-a-compl-21929-action-and-readable-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe') with timeout 5000ms
+      - waiting for getByRole('region', { name: '扩展区域 session-header', exact: true }).locator('iframe')
+        14 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      61 |   const message=page.frameLocator('iframe[title="面板 second-message"]');await expect(message.getByText('second visible',{exact:true})).toBeVisible();await expect(message.getByText('completed',{exact:true})).toBeVisible();await waitForPanelLayout(renderer.locator('iframe'));
+      62 |   const opened=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/customization')&&r.request().postDataJSON()?.method==='view.open');await first.getByRole('button',{name:'打开页面',exact:true}).click();expect((await opened).ok()).toBe(true);await expect(page.getByRole('dialog',{name:'first-page',exact:true})).toBeVisible();await expect(page.frameLocator('iframe[title="面板 first-page"]').getByText('first visible',{exact:true})).toBeVisible();await waitForPanelLayout(page.locator('iframe[title="面板 first-page"]'));await page.getByRole('button',{name:'关闭扩展页面',exact:true}).click();await expect(page.getByRole('dialog',{name:'first-page',exact:true})).toHaveCount(0);
+    > 63 |   await header.getByRole('button',{name:'关闭second-header',exact:true}).click();await expect(header.locator('iframe')).toHaveCount(1);await appearance(page);await page.getByRole('button',{name:'恢复默认界面',exact:true}).click();await expect(page.locator('iframe')).toHaveCount(0);
+         |                                                                                                                       ^
+      64 |  }finally{await app.close();}
+      65 | });
+      66 |
+        at /Users/kirineko/Github/nekomimi/test/browser/runtime-ui.spec.ts:63:119
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/runtime-ui-combines-ordere-a4411-ases-subscriptions-on-close/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/runtime-ui.spec.ts:13:1 › applies a complete theme and shows user content with stable panel interaction and readable history 
+    test/browser/runtime-ui.spec.ts:43:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close 

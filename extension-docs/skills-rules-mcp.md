@@ -12,17 +12,17 @@ description: 审查修改的行为、错误路径和测试覆盖
 
 正文通过 resource_read 按 ID 加载，或用户显式 /skill:review-checklist。名称冲突需要消歧；项目覆盖用户版本。仅元数据常驻，不自动载入全部正文。
 
-Rules 使用 ~/.nekomimi/AGENTS.md 和工作区 AGENTS.md、嵌套目录 AGENTS.md。文件工具按目标目录加载，更具体规则只对该路径适用；变化后先向模型呈现再重新请求操作。shell 的任意隐含目标不能全面静态分析，只使用已知 cwd 规则。规则不授予文件访问权限。
+先查询 `customization_sdk().scopes.paths` 获取实际路径。Rules 使用 `<home>/AGENTS.md` 和工作区 AGENTS.md、嵌套目录 AGENTS.md。文件工具按目标目录加载，更具体规则只对该路径适用；变化后先向模型呈现再重新请求操作。shell 的任意隐含目标不能全面静态分析，只使用已知 cwd 规则。规则不授予文件访问权限。
 
-MCP 项目配置：.nekomimi/mcp.json；用户配置：~/.nekomimi/mcp.json。使用以下结构：
+MCP 项目配置：.nekomimi/mcp.json；用户配置：`<home>/mcp.json`，home 以 SDK 目录返回值为准。使用以下结构：
 
 ```json
 {"version":1,"servers":{"local":{"transport":"stdio","command":"node","args":["./server.mjs"],"env":{"SERVICE_TOKEN":"SERVICE_TOKEN"}},"remote":{"transport":"http","url":"https://example.com/mcp","credentialEnv":"MCP_TOKEN"}}}
 ```
 
-env 的值是服务端环境变量名称，credentialEnv 是 Bearer token 的环境变量名称，不要填入密钥。HTTP 仅支持 HTTPS 或本机 HTTP，拒绝 URL 中的凭证和查询参数。OAuth-only 服务不受 兼容基础模式 支持。
+env 的值是服务端环境变量名称，credentialEnv 是 Bearer token 的环境变量名称，不要填入密钥。HTTP 仅支持 HTTPS 或本机 HTTP，拒绝 URL 中的凭证和查询参数。OAuth 服务使用下述平台指南的授权流程，不能把 token 写入配置文件。
 
 用户启用连接后发现 tools；模型名称带服务器标识和工具名称摘要，具体原名在描述中。content/structuredContent/isError 保留在证据，资源引用不会自动读取。工具列表更新在运行结束后重载。断线或取消后的 unknown 不自动重跑；取消并不保证远端副作用撤销。
 
 
-HTTP MCP 的 OAuth、资源、模板和 Prompt 当前支持方式见 [平台指南](platform.md)。上述兼容基础模式说明不限制当前宿主的 OAuth 能力。
+HTTP MCP 的 OAuth、资源、模板和 Prompt 当前支持方式见 [平台指南](platform.md)。内容读取和 Prompt 展开均需显式调用，不会自动注入工作上下文。

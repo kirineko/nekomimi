@@ -1,0 +1,26 @@
+{
+  "source": "/Users/kirineko/Github/nekomimi",
+  "revision": "79c1dc051d6868279564a89f7a97588b75709864169d7e49729553b95bf72e5a",
+  "files": 1861,
+  "directories": 500,
+  "bytes": 9475759,
+  "excluded": [
+    ".git",
+    ".harness",
+    ".nekomimi",
+    "artifacts",
+    "dist",
+    "node_modules",
+    "output",
+    "reference",
+    "test-results"
+  ],
+  "targetHost": {
+    "id": "c0263b95253051eb7f21f269fa0ab05ca995e961a5eec4b999848864d646a04d",
+    "build": "59556245f84455479b1f3cc946dd1b22a8454f62c19a759bfb630dd350839cce",
+    "sdkVersion": 3,
+    "dataFormatVersion": 2
+  },
+  "runsScripts": false,
+  "operation": "read-only preview of working tree; no candidate prepared from actual checkout"
+}

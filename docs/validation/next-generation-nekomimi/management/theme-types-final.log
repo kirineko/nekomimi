@@ -1,0 +1,8 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/web/v2/theme-css.ts(1,32): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../../shared/color.js'?
+src/web/v2/theme-css.ts(2,48): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../../customization/ui-contract.js'?
+src/web/v2/theme-css.ts(6,216): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/web/v2/theme-css.ts(21,97): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ none: string; soft: string; floating: string; }'.

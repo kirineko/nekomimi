@@ -1,0 +1,143 @@
+{
+  "items": [
+    {
+      "model": [
+        {
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": "recovered"
+            }
+          ],
+          "api": "faux:1791300142969:lj2hxrawcf",
+          "provider": "faux",
+          "model": "faux-1",
+          "usage": {
+            "input": 69,
+            "output": 3,
+            "cacheRead": 0,
+            "cacheWrite": 69,
+            "totalTokens": 141,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "total": 0
+            }
+          },
+          "stopReason": "stop",
+          "timestamp": 1791300142969
+        }
+      ],
+      "kind": "pi.assistant",
+      "id": 15,
+      "conversationId": 1,
+      "byTaskId": 14
+    },
+    {
+      "model": [
+        {
+          "role": "toolResult",
+          "toolCallId": "external-call",
+          "toolName": "effect",
+          "content": [
+            {
+              "type": "text",
+              "text": "<harness>\n[error] Tool effect was interrupted and may have partially run\n</harness>"
+            }
+          ],
+          "isError": true,
+          "timestamp": 1791300142980
+        }
+      ],
+      "data": {
+        "diagnostics": [
+          {
+            "severity": "error",
+            "code": "interrupted",
+            "message": "Tool effect was interrupted and may have partially run"
+          }
+        ]
+      },
+      "kind": "pi.tool-result",
+      "id": 13,
+      "conversationId": 1,
+      "byTaskId": 12
+    },
+    {
+      "model": [
+        {
+          "role": "assistant",
+          "content": [
+            {
+              "type": "toolCall",
+              "id": "external-call",
+              "name": "effect",
+              "arguments": {}
+            }
+          ],
+          "api": "faux:1791300142884:wkbnx77n9t",
+          "provider": "faux",
+          "model": "faux-1",
+          "usage": {
+            "input": 38,
+            "output": 3,
+            "cacheRead": 0,
+            "cacheWrite": 38,
+            "totalTokens": 79,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "total": 0
+            }
+          },
+          "stopReason": "toolUse",
+          "timestamp": 1791300142884
+        }
+      ],
+      "kind": "pi.assistant",
+      "id": 11,
+      "conversationId": 1,
+      "byTaskId": 9
+    },
+    {
+      "model": [
+        {
+          "role": "system",
+          "content": "",
+          "toolsAdded": [
+            {
+              "name": "effect",
+              "description": "Fake external effect with observable count",
+              "parameters": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          ],
+          "timestamp": 1791300142918
+        }
+      ],
+      "kind": "pi.system",
+      "id": 10,
+      "conversationId": 1,
+      "byTaskId": 9
+    },
+    {
+      "model": [
+        {
+          "role": "user",
+          "content": "fixture",
+          "timestamp": 1791300142896
+        }
+      ],
+      "kind": "pi.user",
+      "id": 7,
+      "conversationId": 1
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+
+Running 37 tests using 2 workers
+
+(node:32149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/core-status.spec.ts:6:1 › shows the observed service build and diagnoses an unmanaged launcher (448ms)
+  ✓   1 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (3.0s)
+  ✓   4 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (2.8s)
+  ✓   3 test/browser/core-status.spec.ts:15:1 › refreshes managed build identity and never labels cached identity current after a connection failure (6.7s)
+  ✓   5 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.8s)
+  ✓   7 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (2.4s)
+  ✓   6 test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan (5.6s)
+  ✓   8 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (2.2s)
+  ✓   9 test/browser/core-switch-ui.spec.ts:67:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch (2.4s)
+  ✓  10 test/browser/header-recovery.spec.ts:36:1 › export is disabled without a session or while the durable run is active (2.5s)
+  ✓  11 test/browser/core-switch-ui.spec.ts:86:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry (1.4s)
+  ✓  13 test/browser/core-switch-ui.spec.ts:105:1 › 10.8 a receipt for another command cannot become successful UI evidence (2.4s)
+  ✓  12 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.0s)
+  ✓  15 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.2s)
+  ✓  16 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.6s)
+  ✓  14 test/browser/session-navigation.spec.ts:22:1 › discovers a real /moe extension before execution and completes navigation/delete loop (6.9s)
+  ✓  17 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.8s)
+  ✓  19 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.5s)
+  ✓  18 test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (4.7s)
+  ✓  20 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.2s)
+  ✓  21 test/browser/session-navigation.spec.ts:116:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.2s)
+  ✓  23 test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft (590ms)
+  ✓  22 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.6s)
+  ✓  25 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓  26 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.7s)
+  ✓  27 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (573ms)
+  ✘  28 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (448ms)
+(node:32282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  24 test/browser/session-navigation.spec.ts:183:1 › date groups and long titles stay compact across midnight and list revision conflicts (6.0s)
+  ✓  29 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (1.0s)
+  ✓  31 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (524ms)
+  ✓  32 test/browser/v2-feature-loading.spec.ts:110:1 › 10.9 host recovery stays available when appearance code cannot load (587ms)
+  ✓  30 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.8s)
+(node:32311) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  33 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.7s)
+  ✓  35 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.4s)
+  ✓  34 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.8s)
+  ✓  36 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.1s)
+  ✓  37 test/browser/v2-runtime-slots.spec.ts:138:1 › 10.9 hiding extensions unmounts open slots and restoring visibility never remounts (1.9s)
+
+
+  1) test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('status')
+    Expected substring: "正在加载会话导出"
+    Error: strict mode violation: getByRole('status') resolved to 2 elements:
+        1) <p role="status">正在加载对话框…</p> aka getByText('正在加载对话框…')
+        2) <span role="status" class="text-xs text-muted"></span> aka getByTestId('main').getByRole('status')
+
+    Call log:
+      - Expect "toContainText" getByRole('status') with timeout 5000ms
+      - waiting for getByRole('status')
+
+
+      55 |     await draft.fill('Keep editing');
+      56 |     await page.getByRole('button', { name: '更多操作' }).click();await page.getByRole('menuitem', { name: '导出会话' }).click();
+    > 57 |     await expect(page.getByRole('status')).toContainText('正在加载会话导出');
+         |                                            ^
+      58 |     await page.getByRole('button', { name: '关闭加载' }).click();
+      59 |     await expect(page.getByRole('button', { name: '更多操作' })).toBeFocused();
+      60 |     await draft.focus();
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-feature-loading.spec.ts:57:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-feature-loading-10-9-cl-bc247-late-reopen-and-focus-theft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-feature-loading-10-9-cl-bc247-late-reopen-and-focus-theft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-feature-loading-10-9-cl-bc247-late-reopen-and-focus-theft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-feature-loading-10-9-cl-bc247-late-reopen-and-focus-theft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft 
+  36 passed (49.7s)

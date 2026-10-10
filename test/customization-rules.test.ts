@@ -1,3 +1,4 @@
+import {prepareDataHome} from "../src/storage/format.js";
 import { it, expect } from "vitest";
 import { mkdir, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
@@ -12,6 +13,7 @@ it("keeps scoped rules separate, withdraws removed user rules and bounds repeate
   await mkdir(join(workspace, "b"));
   await writeFile(join(workspace, "a/AGENTS.md"), "A_ONLY");
   await writeFile(join(workspace, "b/AGENTS.md"), "B_ONLY");
+  await prepareDataHome(home);
   await writeFile(join(home, "AGENTS.md"), "USER_RULE");
   const host = new CustomizationHost(workspace, home);
   const journal = await Journal.open(join(workspace, "session"));

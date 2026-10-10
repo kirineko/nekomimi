@@ -3,7 +3,7 @@ import type {ResourceIdentity} from "./sdk-contracts.js";
 export * from "./sdk-contracts.js";
 export {SDK_CAPABILITIES,V2_CAPABILITIES} from "./capabilities.js";
 export type {Capability} from "./capabilities.js";
-export const CONTRACT_VERSIONS = Object.freeze({sdk:2,package:1,lock:1,rpc:1,ui:1});
+export const CONTRACT_VERSIONS = Object.freeze({sdk:3,package:1,lock:1,rpc:1,ui:1});
 export function legacyIdentity(resourceId: string, revision: string): ResourceIdentity {
   return { resourceId, revision, stateNamespace: resourceId };
 }

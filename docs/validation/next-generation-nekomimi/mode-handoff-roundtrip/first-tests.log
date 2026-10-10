@@ -1,0 +1,23 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/mode-handoff-roundtrip.test.ts (2 tests | 2 failed) 5446ms
+   × http confirms creation, records validation, confirms delivery and continues work without duplicate effects 2690ms
+   × headless confirms creation, records validation, confirms delivery and continues work without duplicate effects 2756ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/mode-handoff-roundtrip.test.ts > http confirms creation, records validation, confirms delivery and continues work without duplicate effects
+ FAIL  test/mode-handoff-roundtrip.test.ts > headless confirms creation, records validation, confirms delivery and continues work without duplicate effects
+TypeError: Cannot read properties of undefined (reading 'passed')
+ ❯ test/mode-handoff-roundtrip.test.ts:47:108
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  05:06:29
+   Duration  6.42s (transform 531ms, setup 0ms, import 917ms, tests 5.45s, environment 0ms)
+

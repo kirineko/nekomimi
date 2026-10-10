@@ -1,0 +1,80 @@
+
+Running 30 tests using 2 workers
+
+(node:13558) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13557) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (775ms)
+  ✓   3 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (594ms)
+  ✓   4 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (923ms)
+  ✓   5 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (525ms)
+  ✓   6 test/browser/v2-feature-loading.spec.ts:110:1 › 10.9 host recovery stays available when appearance code cannot load (552ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (405ms)
+  ✓   8 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (562ms)
+  ✓   9 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (824ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (293ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (405ms)
+  ✓  12 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (549ms)
+  ✓   2 test/browser/customization.spec.ts:33:1 › previews an unactivated candidate panel and preserves its recorded result and sidebar declaration (6.6s)
+  ✓  13 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (526ms)
+  ✓  15 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  16 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (270ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.5s)
+  ✓  14 test/browser/customization.spec.ts:82:1 › reconciles an unknown workflow result in the browser without repeating its external effect (4.8s)
+  ✘  18 test/browser/v2-workbench.spec.ts:274:1 › 10.9 default entry opens the workbench and obsolete experiment routes stay read-only (457ms)
+(node:13649) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  19 test/browser/customization.spec.ts:116:1 › restores a durable workflow form after service restart and continues only after an explicit answer (5.5s)
+  ✓  20 test/browser/workbench.spec.ts:49:1 › submits, observes tool diff, inspects request, reloads, continues and exports (5.3s)
+  ✓  22 test/browser/workbench.spec.ts:124:1 › cancels and remains usable on a narrow viewport (3.2s)
+  ✓  21 test/browser/customization.spec.ts:157:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (4.2s)
+180-row input fill and assertion: 14ms
+  ✓  23 test/browser/workbench.spec.ts:146:1 › windows long history and pages context sources beyond a raw artifact page (3.2s)
+  ✓  24 test/browser/customization.spec.ts:204:1 › reviews a package, installs its command and uninstalls without erasing history (4.2s)
+  ✓  25 test/browser/workbench.spec.ts:208:1 › compact layout preserves controls and inspector focus at all target sizes (2.6s)
+  ✓  27 test/browser/workbench.spec.ts:227:1 › shows and downloads diagnostics even when durable cursor and status do not change (746ms)
+  ✓  26 test/browser/customization.spec.ts:243:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (11.2s)
+  ✓  28 test/browser/customization.spec.ts:298:1 › enable extension, use form, reload a changed command and retain history (6.9s)
+  ✓  29 test/browser/customization.spec.ts:357:1 › isolates custom panels, preserves host controls, and rejects conflicting workflow answers across windows (4.1s)
+  ✓  30 test/browser/customization.spec.ts:481:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (2.4s)
+
+
+  1) test/browser/v2-workbench.spec.ts:274:1 › 10.9 default entry opens the workbench and obsolete experiment routes stay read-only 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:50860/api/v1/connect",
+    + ]
+
+      285 |     await page.goto(app.origin+'/v2/work');
+      286 |     await expect(page.getByText('页面不存在',{exact:true})).toBeVisible();
+    > 287 |     expect(writes).toEqual([]);expect(calls).toBe(0);
+          |                    ^
+      288 |   } finally {await app.close();}
+      289 | });
+      290 |
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-workbench.spec.ts:287:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-workbench-10-9-default--3a8f6-iment-routes-stay-read-only/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-workbench-10-9-default--3a8f6-iment-routes-stay-read-only/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-workbench-10-9-default--3a8f6-iment-routes-stay-read-only/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-workbench-10-9-default--3a8f6-iment-routes-stay-read-only/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-workbench.spec.ts:274:1 › 10.9 default entry opens the workbench and obsolete experiment routes stay read-only 
+  29 passed (51.4s)

@@ -1,0 +1,114 @@
+
+> nekomimi@0.2.1 test:browser
+> npm run build && playwright test
+
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 326 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/assets/nekomimi-CMII8_56.svg        0.44 kB │ gzip:   0.27 kB
+dist/web-dist/index.html                          0.50 kB │ gzip:   0.33 kB
+dist/web-dist/assets/asset-manifest.json          2.02 kB │ gzip:   0.45 kB
+dist/web-dist/assets/diff-woXpYk--.js             2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js             2.81 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js            41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js          69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js     174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js  175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js            175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js     181.07 kB
+dist/web-dist/assets/index-DmX0wVpL.css          75.15 kB │ gzip:  15.11 kB
+dist/web-dist/assets/ExportDialog-C2pp-A-I.js     1.79 kB │ gzip:   0.94 kB
+dist/web-dist/assets/Changes-CFmq53NR.js          2.15 kB │ gzip:   1.08 kB
+dist/web-dist/assets/FileBrowser-xtq4NmVU.js      4.67 kB │ gzip:   2.12 kB
+dist/web-dist/assets/jsx-runtime-D3jfb0Ew.js      8.90 kB │ gzip:   3.38 kB
+dist/web-dist/assets/Inspector-qnS-e8mA.js       11.11 kB │ gzip:   3.39 kB
+dist/web-dist/assets/Customization-QN3wSnq9.js   42.32 kB │ gzip:  12.63 kB
+dist/web-dist/assets/index-fS2URQ1p.js          471.24 kB │ gzip: 146.49 kB
+
+✓ built in 130ms
+
+Running 67 tests using 1 worker
+
+  ✓   1 test/browser/chat-loading-focus.spec.ts:7:1 › optional features load on demand, cancel delayed load, retry network failure and keep draft (1.6s)
+  ✓   2 test/browser/chat-loading-focus.spec.ts:31:1 › submit restores focus for mouse and keyboard and failure retains draft (2.0s)
+  ✓   3 test/browser/chat-loading-focus.spec.ts:46:1 › late submit never steals focus or clears a new context draft (1.7s)
+  ✓   4 test/browser/chat-loading-focus.spec.ts:64:1 › latest follows new messages and delayed layout, while deliberate history reading stays anchored (2.3s)
+  ✓   5 test/browser/chat-loading-focus.spec.ts:90:1 › running task allows next draft without submitting it or clearing it at completion (1.1s)
+  ✓   6 test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact (1.8s)
+  ✓   7 test/browser/customization-lifecycle.spec.ts:7:1 › compact capability catalog, local feedback, permissions and theme preview (2.8s)
+  ✓   8 test/browser/customization-studio.spec.ts:52:1 › empty studio has explicit loading recovery, safe navigation and keyboard focus containment (536ms)
+  ✓   9 test/browser/customization-studio.spec.ts:82:1 › model selection supports search, keyboard, cancellation, failures and independent persisted purposes (699ms)
+  ✓  10 test/browser/customization-studio.spec.ts:113:1 › draft survives polling, revision failure and partial credential success but cancellation clears it (2.9s)
+  ✓  11 test/browser/customization-studio.spec.ts:152:1 › closing during a submitted save reads its result on reopen without submitting twice (622ms)
+  ✓  12 test/browser/customization-studio.spec.ts:169:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion (2.4s)
+  ✓  13 test/browser/customization-studio.spec.ts:235:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write (807ms)
+  ✓  14 test/browser/customization-studio.spec.ts:265:1 › resource diagnostics preserve active versions and display deferred changes without hidden writes (430ms)
+  ✓  15 test/browser/customization.spec.ts:13:1 › previews an unactivated candidate panel and places its recorded contribution in the sidebar (4.7s)
+  ✓  16 test/browser/customization.spec.ts:29:1 › reconciles an unknown workflow result in the browser without repeating its external effect (6.3s)
+  ✓  17 test/browser/customization.spec.ts:44:1 › restores a durable workflow form after service restart and continues only after an explicit answer (7.2s)
+  ✓  18 test/browser/customization.spec.ts:78:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (4.3s)
+  ✓  19 test/browser/customization.spec.ts:118:1 › reviews a package, installs its command and uninstalls without erasing history (3.6s)
+  ✓  20 test/browser/customization.spec.ts:151:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (7.2s)
+  ✓  21 test/browser/customization.spec.ts:212:1 › enable extension, use form, reload a changed command and retain history (5.2s)
+  ✓  22 test/browser/customization.spec.ts:280:1 › isolates custom panels, preserves host controls, and rejects conflicting workflow answers across windows (7.3s)
+  ✓  23 test/browser/customization.spec.ts:343:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (4.4s)
+  ✓  24 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (1.8s)
+  ✓  25 test/browser/history-navigation.spec.ts:7:1 › bounded history reaches earliest and returns to latest with unchanged cursor (1.5s)
+  ✓  26 test/browser/local-experience.spec.ts:7:1 › configures, sends with Enter, names, exports offline and deletes across windows (3.0s)
+  ✓  27 test/browser/references.spec.ts:22:1 › reference chips choose files and whole directories, drill, edit and send path-only context (2.2s)
+  ✓  28 test/browser/references.spec.ts:45:1 › clipboard preserves special paths, atomic deletion, undo and untrusted paste fallback (499ms)
+  ✓  29 test/browser/references.spec.ts:66:1 › query cancellation, IME, errors and responsive chips preserve the draft (1.1s)
+  ✓  30 test/browser/references.spec.ts:82:1 › reference APIs authenticate, bound directories and reject external symlinks (604ms)
+  ✓  31 test/browser/references.spec.ts:97:1 › native composition, adjacent chip deletion and cancelled selection preserve editing (829ms)
+{"referenceSearch":{"cold":{"duration":11.399999976158142,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}},"warm":{"duration":3,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}}},"inputMs":8,"browser":"154.0.8037.98"}
+  ✓  32 test/browser/references.spec.ts:119:1 › large workspace discovery is bounded and input stays responsive during lookup (440ms)
+  ✓  33 test/browser/references.spec.ts:135:1 › long mixed references and candidate controls fit a keyboard-sized viewport (703ms)
+  ✓  34 test/browser/references.spec.ts:151:1 › removing a chip after native IME insertion preserves adjacent prose and undo (484ms)
+  ✓  35 test/browser/references.spec.ts:168:1 › late clipboard validation cannot replace active native IME input (433ms)
+  ✓  36 test/browser/runtime-ui.spec.ts:7:1 › applies a complete theme and shows user content with stable panel interaction and readable history (6.0s)
+  ✓  37 test/browser/runtime-ui.spec.ts:72:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (7.3s)
+{"count":60,"p95":16.700000000000045,"longTasks":[],"metrics":{"LayoutDuration":0.000119,"RecalcStyleDuration":0.000167,"ScriptDuration":0.004157},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+{"count":180,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0,"RecalcStyleDuration":0,"ScriptDuration":0.003148999999999999},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓  38 test/browser/scrolling.spec.ts:5:1 › scroll trajectory and performance baseline (3.6s)
+{"height":762,"historyHeight":762,"remaining":30}
+  ✓  39 test/browser/scrolling.spec.ts:30:1 › bottom boundary and return control do not move the viewport (1.0s)
+  ✓  40 test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (2.8s)
+  ✓  41 test/browser/scrolling.spec.ts:68:1 › layout growth preserves the current anchor including movement in the same frame (957ms)
+  ✓  42 test/browser/scrolling.spec.ts:94:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.4s)
+  ✓  43 test/browser/scrolling.spec.ts:117:1 › fixture supports a delayed panel and diff without model or tool execution (1.1s)
+  ✓  44 test/browser/scrolling.spec.ts:132:1 › narrow and zoomed return overlay stays bounded and transparent outside controls (1.2s)
+{"count":180,"streaming":true,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.000147,"RecalcStyleDuration":0.000063,"ScriptDuration":0.019561}}
+  ✓  45 test/browser/scrolling.spec.ts:152:1 › streaming history performance sample (3.0s)
+  ✓  46 test/browser/scrolling.spec.ts:168:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.1s)
+  ✓  47 test/browser/scrolling.spec.ts:206:1 › horizontal code scrolling does not leave latest mode (675ms)
+  ✓  48 test/browser/scrolling.spec.ts:219:1 › completion failure and cancellation do not pull history to the bottom (1.4s)
+  ✓  49 test/browser/scrolling.spec.ts:234:1 › new content is readable by scrolling, including a full historical window (2.0s)
+  ✓  50 test/browser/search-brand.spec.ts:28:1 › favicon shares the brand resource and search evidence survives reload (1.6s)
+  ✓  51 test/browser/session-navigation.spec.ts:17:1 › discovers a real /moe extension before execution and completes navigation/delete loop (1.7s)
+  ✓  52 test/browser/session-navigation.spec.ts:58:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (2.3s)
+  ✓  53 test/browser/session-navigation.spec.ts:108:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.1s)
+  ✓  54 test/browser/session-navigation.spec.ts:149:1 › late command responses cannot replace a new catalog and failed submission retains draft (419ms)
+  ✓  55 test/browser/session-navigation.spec.ts:175:1 › date groups and long titles stay compact across midnight and list revision conflicts (579ms)
+{"browser":"","cacheViewMs":205,"workerJobs":2}
+  ✓  56 test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline (2.0s)
+{"browser":"","first100LinesMs":816,"inputFillDuringStreamMs":24}
+  ✓  57 test/browser/syntax.spec.ts:67:1 › streaming code stays interactive and stale highlighting cannot cross sessions (7.0s)
+  ✓  58 test/browser/workbench-upgrade.spec.ts:79:1 › search, diff, locate, open and reload preserve evidence and draft (2.8s)
+  ✓  59 test/browser/workbench-upgrade.spec.ts:132:1 › workspace API authentication and side effect boundary (28ms)
+  ✓  60 test/browser/workbench-upgrade.spec.ts:157:1 › files and settings remain usable at all viewports (1.2s)
+  ✓  61 test/browser/workbench-upgrade.spec.ts:194:1 › changes keep expanded history while new journal events arrive (2.4s)
+  ✓  62 test/browser/workbench.spec.ts:59:1 › submits, observes tool diff, inspects request, reloads, continues and exports (3.6s)
+  ✓  63 test/browser/workbench.spec.ts:161:1 › cancels and remains usable on a narrow viewport (2.4s)
+180-row input fill and assertion: 12ms
+  ✓  64 test/browser/workbench.spec.ts:193:1 › windows long history and pages context sources beyond a raw artifact page (1.5s)
+  ✓  65 test/browser/workbench.spec.ts:296:1 › compact layout preserves controls and inspector focus at all target sizes (1.8s)
+  ✓  66 test/browser/workbench.spec.ts:316:1 › shows and downloads diagnostics even when durable cursor and status do not change (954ms)
+  ✓  67 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.2s)
+
+  67 passed (2.7m)

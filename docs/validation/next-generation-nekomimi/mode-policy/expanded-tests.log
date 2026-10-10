@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/mode-policy.test.ts (22 tests | 1 failed) 20180ms
+   × requires a persisted create identity for a new HTTP grant despite a forged mode 741ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/mode-policy.test.ts > requires a persisted create identity for a new HTTP grant despite a forged mode
+AssertionError: {"error":{"code":"resource","message":"资源操作无效"}}: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ test/mode-policy.test.ts:144:64
+    142|   const resource = description.resources.find(resource => resource.kin…
+    143|   const granted = await request({ action: "set", id: resource.id, enab…
+    144|   expect(granted.status, JSON.stringify(await granted.json())).toBe(20…
+       |                                                                ^
+    145|   expect((await app.sessions.customization.catalog.decisions()).revisi…
+    146| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 21 passed (22)
+   Start at  03:33:34
+   Duration  20.84s (transform 234ms, setup 0ms, import 606ms, tests 20.18s, environment 0ms)
+

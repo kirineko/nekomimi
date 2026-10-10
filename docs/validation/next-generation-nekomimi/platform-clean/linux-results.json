@@ -1,0 +1,14 @@
+[
+  {
+    "platform": "linux",
+    "node": "24.15.0",
+    "exitCode": 0,
+    "log": "/tmp/nekomimi-clean-linux-24.15.0.log"
+  },
+  {
+    "platform": "linux",
+    "node": "22.19.0",
+    "exitCode": 0,
+    "log": "/tmp/nekomimi-clean-linux-22.19.0.log"
+  }
+]

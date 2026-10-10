@@ -14,3 +14,11 @@ UI 验收：激活 → 应用完整主题 → 实际执行命令 → 直接看�
 面板未出现时先检查当前/历史状态和是否收起，再查看开发详情中的授权、版本、props schema、构建、握手或实例失效原因。不要通过重复执行原命令来重试挂载。不要把 credentials 放进 props 或调试截图。
 
 全局样式异常可使用「恢复默认界面」；主题素材失败使用文本和系统字体回退。工作流 unknown 需人工核对真实外部结果，恢复或导入不自动重跑副作用。真实模型密钥不是离线验证和 CI 的前提。
+
+## 版本与环境
+
+验证结果记录 `stage`、`status`、`resourceId`、`resourceRevision` 和 `environment`。静态检查包含 Node/平台/架构、SDK 版本、TypeScript 版本和实际 SDK 类型图摘要；运行阶段包含宿主构建。不同环境的旧结果仅保留为历史证据，不能直接作为当前版本通过。
+
+模拟试验成功、失败和取消均保存独立 `trial.finished` 事实；错误携带试验 `session` 与 `verification`，取消不会应用候选。`hostIntegration: not_run` 表示没有执行宿主集成验收。面板预览仅证明隔离 frame 已构建，不能证明真实挂载或交互通过。
+
+主题 `theme-verify` 回报样式表已挂载时，只保存 `theme-stylesheet-mounted` 观察，状态为 `observed`，不记作完整宿主验收通过。字体/图片加载、真实交互与完整工作流仍需分别验证。

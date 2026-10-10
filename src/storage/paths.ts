@@ -1,9 +1,9 @@
-import { homedir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { mkdir, realpath, lstat, readFile } from "node:fs/promises";
 import { hash, atomicFile } from "../journal.js";
+import { newDataHome, prepareDataHome, requireNewContract, DATA_FORMAT_VERSION } from "./format.js";
 export const userHome = (home?: string) =>
-  resolve(home ?? join(homedir(), ".nekomimi"));
+  newDataHome(home);
 export async function directory(path: string) {
   await mkdir(path, { recursive: true, mode: 0o700 });
   if ((await lstat(path)).isSymbolicLink())
@@ -12,18 +12,20 @@ export async function directory(path: string) {
 }
 export async function workspacePaths(workspace: string, home?: string) {
   const canonical = await realpath(workspace);
-  const base = await directory(userHome(home));
+  const base = await prepareDataHome(userHome(home));
   const parent = await directory(join(base, "workspaces"));
   const root = await directory(join(parent, hash(canonical)));
   const meta = join(root, "workspace.json");
   try {
-    if (JSON.parse(await readFile(meta, "utf8")).workspace !== canonical)
+    const identity = JSON.parse(await readFile(meta, "utf8"));
+    requireNewContract(identity, "config", meta);
+    if (identity.version !== 2 || identity.workspace !== canonical)
       throw new Error("Workspace identity mismatch");
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
     await atomicFile(
       meta,
-      JSON.stringify({ version: 1, workspace: canonical }),
+      JSON.stringify({ version: 2, formatVersion: DATA_FORMAT_VERSION, workspace: canonical }),
     );
   }
   return {

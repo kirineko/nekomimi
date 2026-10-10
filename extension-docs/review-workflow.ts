@@ -1,11 +1,16 @@
-import type {ExtensionFactory2,Json,ToolResult} from 'nekomimi/extensions';
+import type {ExtensionFactory3,Json,ToolResult} from 'nekomimi/extensions';
 const json=(value:unknown):Json=>JSON.parse(JSON.stringify(value));
 export default ((api)=>{
   api.registerTool({name:'diff',description:'读取合成 Git diff',parameters:{type:'object',properties:{path:{type:'string'}},required:['path']},async execute(args,ctx){try{return await ctx.callTool('read',{path:String(args.path)});}catch(error){if(!String(error).includes('Rules were loaded or changed'))throw error;await ctx.model('Read the newly loaded scoped rules before reading the synthetic diff at '+String(args.path));return ctx.callTool('read',{path:String(args.path)});}}});
-  api.registerPanel({id:'review',uiVersion:1,entry:'review-panel.ts',slot:'result',propsSchema:{type:'object',properties:{items:{type:'array',items:{type:'string'}}},required:['items'],additionalProperties:false},actions:['workflow.state','workflow.answer','workflow.cancel'],fallback:'审查报告保存在工作流 Journal。面板不可用时使用宿主表单确认。',theme:{background:'#ffffff',foreground:'#111111',accent:'#2255bb'}});
+  api.registerPanel({id:'review',title:'审查面板',uiVersion:1,contractVersion:3,modes:['work','create'],targetScope:'current',entry:'review-panel.ts',slot:'tool-result',propsSchema:{type:'object',properties:{items:{type:'array',items:{type:'string'}}},required:['items'],additionalProperties:false},actions:['workflow.state','workflow.answer','workflow.cancel'],fallback:'审查报告保存在工作流 Journal。面板不可用时使用宿主表单确认。',theme:{background:'#ffffff',foreground:'#111111',accent:'#2255bb'}});
   api.registerWorkflow({id:'review',schemaVersion:1,inputSchema:{type:'object',properties:{diffFile:{type:'string'}},required:['diffFile'],additionalProperties:false},triggers:[{kind:'command',name:'review'}],entry:'analyze',steps:{
     analyze:{transitions:['finish'],async execute(input,ctx){
-      const resources=(await ctx.callTool('resource_list',{})).details as Array<{id:string;kind:string;name:string}>;
+      const resources:Array<{id:string;kind:string;name:string}>=[];
+      let offset:number|undefined=0,revision:string|undefined;
+      while(offset!==undefined){
+        const page=(await ctx.callTool('resource_list',{offset,...(revision?{revision}:{})})).details as {items:typeof resources;next?:number;revision:string};
+        resources.push(...page.items);offset=page.next;revision=page.revision;
+      }
       const skill=resources.find(r=>r.kind==='skill'&&r.name==='review-checklist'),mcp=resources.find(r=>r.kind==='mcp'&&r.name==='review-context');
       if(!skill||!mcp)throw new Error('Review package resources unavailable');
       await ctx.callTool('resource_read',{id:skill.id});
@@ -23,4 +28,4 @@ export default ((api)=>{
       return {kind:'complete',output:json(value)};
     }}
   }});
-}) satisfies ExtensionFactory2;
+}) satisfies ExtensionFactory3;

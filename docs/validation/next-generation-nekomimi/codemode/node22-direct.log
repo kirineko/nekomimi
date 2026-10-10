@@ -1,0 +1,12 @@
+file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-codemode-pack-8yitgk5x/consumer/node_modules/nekomimi-codemode-validation/codemode.test.mjs:24
+  };
+   ^
+
+SyntaxError: Unexpected token ';'
+    at compileSourceTextModule (node:internal/modules/esm/utils:346:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:107:18)
+    at #translate (node:internal/modules/esm/loader:540:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:587:27)
+    at async ModuleJob._link (node:internal/modules/esm/module_job:162:19)
+
+Node.js v22.19.0

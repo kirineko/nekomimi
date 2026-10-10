@@ -1,3 +1,5 @@
+import {openJournalStorage} from '../src/pi/journal-storage.js';
+import {BACKGROUND_CONTEXT} from '@earendil-works/chord/context';
 import {afterAll, expect, test} from 'vitest';
 import {highlight} from '../src/presentation/syntax/core.js';
 import {nodeSyntax} from '../src/presentation/syntax/node.js';
@@ -67,7 +69,7 @@ test('Node worker SSR escapes HTML, preserves unknown language and uses no inlin
   expect(html).toContain('syn-c');expect(html).not.toContain('<script>');expect(html).not.toContain('style=');expect(html).toContain('raw');
 });
 test('historical diff ignores disk changes and safely degrades a damaged or redacted side',async()=>{
-  const journal=await Journal.open(await temporary());
+  const journal=(await openJournalStorage(await temporary(),BACKGROUND_CONTEXT)).journal;
   try{
     const before=await journal.artifact('/*\nold\n*/\n'),after=await journal.artifact('/*\nnew\n*/\n');
     const patch=await journal.artifact(createPatch('a.ts','/*\nold\n*/\n','/*\nnew\n*/\n'));

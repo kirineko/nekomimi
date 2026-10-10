@@ -1,0 +1,77 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-rules.test.ts (2 tests | 2 failed) 546ms
+   × keeps scoped rules separate, withdraws removed user rules and bounds repeated changes 433ms
+   × reads a skill from the captured run revision even if its source changes 113ms
+ ❯ test/context-revalidation.test.ts (7 tests | 2 failed) 23148ms
+   × rechecks after reliable tool intent and records a known blocked result with zero effects 15005ms
+   × withdraws loaded skills after source scope becomes escape and leaves prior read artifacts intact 203ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-revalidation.test.ts > rechecks after reliable tool intent and records a known blocked result with zero effects
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/context-revalidation.test.ts:73:1
+     71|   }finally{await journal.close();await f.host.release();await f.host.c…
+     72| });
+     73| it('rechecks after reliable tool intent and records a known blocked re…
+       | ^
+     74|   const f=await extensionFixture();let revoked=false;
+     75|   try{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/context-revalidation.test.ts > withdraws loaded skills after source scope becomes escape and leaves prior read artifacts intact
+Error: Resource symlink escapes root
+ ❯ safePath src/customization/resources.ts:46:15
+     44|     try {
+     45|       if (!inside(base, await realpath(ancestor)))
+     46|         throw new Error("Resource symlink escapes root");
+       |               ^
+     47|       break;
+     48|     } catch (e) {
+ ❯ walk src/customization/resources.ts:325:26
+ ❯ walk src/customization/resources.ts:328:35
+ ❯ Resources.discover src/customization/resources.ts:362:9
+ ❯ ResourceAccess.inspect src/customization/resource-access.ts:19:28
+ ❯ CustomRun.refreshContext src/customization/run.ts:113:20
+ ❯ test/context-revalidation.test.ts:95:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/customization-rules.test.ts > keeps scoped rules separate, withdraws removed user rules and bounds repeated changes
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ test/customization-rules.test.ts:47:71
+     45|     ).toContain("scope: a");
+     46|     await rm(join(home, "AGENTS.md"));
+     47|     expect(await custom.checkRules("bash", { command: "echo test" })).…
+       |                                                                       ^
+     48|       "Rules were loaded",
+     49|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/customization-rules.test.ts > reads a skill from the captured run revision even if its source changes
+AssertionError: expected [Function] to throw error including 'missing' but got 'Resource authorization or scope revok…'
+
+Expected: "missing"
+Received: "Resource authorization or scope revoked: skill:d6184229783cd48b25f1 (unavailable)"
+
+ ❯ test/customization-rules.test.ts:80:56
+     78|     expect(custom.instructions.some(i=>i.text.includes(source))).toBe(…
+     79|     expect(custom.instructions.some(i=>i.text.includes("CHANGED_SKILL"…
+     80|     await rm(path); await expect(custom.load(skill.id)).rejects.toThro…
+       |                                                        ^
+     81|   } finally { await journal.close(); await host.release(); await host.…
+     82| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 2 passed (4)
+      Tests  4 failed | 13 passed (17)
+   Start at  06:28:56
+   Duration  23.76s (transform 386ms, setup 0ms, import 1.67s, tests 30.16s, environment 0ms)
+

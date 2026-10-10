@@ -1,0 +1,15 @@
+{
+  "name": "nekomimi-pi-package-probe",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "1.0.4",
+    "@earendil-works/pi-ai": "1.0.4",
+    "@earendil-works/pi-codemode": "1.0.4",
+    "@earendil-works/pi-durable": "1.0.4",
+    "@earendil-works/pi-mcp": "1.0.4"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

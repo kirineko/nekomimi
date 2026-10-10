@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/mode-policy.test.ts(143,119): error TS2339: Property 'revision' does not exist on type '{ version: number; resources: ResourceDescriptor[]; abilities: Ability[]; settingsRevision: number; userWrites: boolean; oauth: ({ server: string; issuer: string; clientId: string | undefined; dynamicRegistration: boolean; status: string; expiresAt: number | undefined; } | { ...; })[]; ... 15 more ...; workflows: { ...'.

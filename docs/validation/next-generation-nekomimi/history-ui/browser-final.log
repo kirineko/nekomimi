@@ -1,0 +1,19 @@
+
+Running 10 tests using 1 worker
+
+(node:74062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor (1.8s)
+  ✓   2 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.2s)
+  ✓   3 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (1.0s)
+  ✓   4 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (907ms)
+  ✓   5 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (968ms)
+  ✓   6 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.0s)
+  ✓   7 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (751ms)
+  ✓   8 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (987ms)
+  ✓   9 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (628ms)
+(node:74102) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.2s)
+
+  10 passed (14.8s)

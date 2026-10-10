@@ -1,0 +1,14 @@
+{
+  "task": "4.8",
+  "relatedTests": 45,
+  "passedAcrossRecordedRuns": 45,
+  "baselineSha256": "5fce734b10a7d384a82aa06ad80a0795403bc8936a338f8c9e315adb90207ed7",
+  "files": {
+    "types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "wire-comparison.json": "2b886acacffe286076dd4b63dc5cf2803cd5e08adc7c61f806503e2f9e165f29",
+    "tests-first.log": "faf58db166c1e457ebd2d8ccccd17041129f993e37a5a436d615a7e763b6cac1",
+    "comparison.json": "824d3678998067a823ef6cf9155a6ed3c1e8680212adc03cdd45cf925615ab76",
+    "README.md": "02eb83d9309c2eed61287dbd7f237ca9c9ca643ab96fe06f802e1143e09f32c0",
+    "matched-fixed.log": "abc67cd53214fcc40c1923efbeaa58b7d76e03176480cbc1d1b0a8d570f5b2ed"
+  }
+}

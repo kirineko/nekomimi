@@ -1,0 +1,81 @@
+
+Running 5 tests using 1 worker
+
+(node:77586) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/session-navigation.spec.ts:17:1 › discovers a real /moe extension before execution and completes navigation/delete loop (302ms)
+(node:77602) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/session-navigation.spec.ts:58:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (45.1s)
+(node:77684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/session-navigation.spec.ts:108:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.2s)
+  ✓  4 test/browser/session-navigation.spec.ts:149:1 › late command responses cannot replace a new catalog and failed submission retains draft (573ms)
+  ✓  5 test/browser/session-navigation.spec.ts:175:1 › date groups and long titles stay compact across midnight and list revision conflicts (748ms)
+
+
+  1) test/browser/session-navigation.spec.ts:17:1 › discovers a real /moe extension before execution and completes navigation/delete loop 
+
+    Error: 创造管理操作需要绑定的创造会话；模式不授予额外权限
+
+       at ../../src/server/sessions.ts:508
+
+      506 |       await journal.append("operation.blocked", { action, sourceSessionId: sessionId, reason, mode: binding?.mode }, { mode: binding?.mode, targetId: binding?.target.id });
+      507 |     } finally { await journal.close(); }
+    > 508 |     throw new ApiError(403, "mode_permission", reason);
+          |           ^
+      509 |   }
+      510 |   private async creationEvents() {
+      511 |     try { return (await readSession(join(this.paths.root, "session-catalog"))).events; }
+        at Sessions.managementBlocked (/Users/kirineko/Github/nekomimi/src/server/sessions.ts:508:11)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-discove-c5066-etes-navigation-delete-loop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-discove-c5066-etes-navigation-delete-loop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-discove-c5066-etes-navigation-delete-loop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-discove-c5066-etes-navigation-delete-loop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/session-navigation.spec.ts:58:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByText('删除会话记录与附件，保留工作区文件。')
+
+
+      76 |     await expect(page.locator(".session-menu")).toHaveCount(0);
+      77 |     await openDelete(page,"分页期间新建");
+    > 78 |     await page.getByRole("dialog").getByText("删除会话记录与附件，保留工作区文件。").click();
+         |                                                                    ^
+      79 |     await expect(page.getByRole("dialog")).toBeVisible();
+      80 |     await page.locator(".delete-backdrop").click({position:{x:3,y:3}});
+      81 |     await expect(page.getByRole("dialog")).toHaveCount(0);
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:78:68
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/session-navigation.spec.ts:17:1 › discovers a real /moe extension before execution and completes navigation/delete loop 
+    test/browser/session-navigation.spec.ts:58:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+  3 passed (51.2s)

@@ -1,0 +1,114 @@
+{
+  "root": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-cB4D3q",
+  "sourceRevision": "221bd320238e5c9571222e8cf23ab9673fcbde42a2bfadeca179f6894b47437a",
+  "built": {
+    "version": 1,
+    "commandId": "real-core-build",
+    "buildId": "29461294-556a-4b8e-9320-10958ebf4305",
+    "candidateId": "2de94e43-cc3b-4c08-aefb-c826eeb3b5f8",
+    "inputHash": "ca29d185eb276696c4900d74c3cfffda7f49bed91c1ebb98f35f963a58a8e002",
+    "status": "passed",
+    "processes": [
+      {
+        "status": "passed",
+        "exitCode": 0,
+        "signal": null,
+        "cleanup": "confirmed",
+        "cleanupScope": "process-group",
+        "bytes": 120,
+        "dispatched": true,
+        "pid": 36052
+      },
+      {
+        "status": "passed",
+        "exitCode": 0,
+        "signal": null,
+        "cleanup": "confirmed",
+        "cleanupScope": "process-group",
+        "bytes": 2628,
+        "dispatched": true,
+        "pid": 36654
+      }
+    ],
+    "hostIntegration": "not_run",
+    "applied": false,
+    "artifact": {
+      "directory": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-cB4D3q/home/core-builds/artifacts/4c3546215131c2bf54330b1776184604a97a20c00d99527a94ca72c4c73a4337",
+      "revision": "0e92f8c72e84879a1a6ec7c545f5774e87c3a5310fd4e6e3927b573bdd52cb00",
+      "manifest": {
+        "kind": "artifact",
+        "sha256": "e38d81e2639d6ac6ffe38efec4acac001b93c540d9220e702d9800a1636ea752",
+        "bytes": 5852870
+      }
+    }
+  },
+  "validated": {
+    "version": 1,
+    "validationId": "85faad88-024b-42ef-a1fa-a54261555814",
+    "candidateId": "2de94e43-cc3b-4c08-aefb-c826eeb3b5f8",
+    "buildId": "29461294-556a-4b8e-9320-10958ebf4305",
+    "commandId": "real-core-validation",
+    "artifactRevision": "0e92f8c72e84879a1a6ec7c545f5774e87c3a5310fd4e6e3927b573bdd52cb00",
+    "status": "passed",
+    "checks": [
+      "legacy-byte-identical",
+      "ports-closed",
+      "host-storage-readback",
+      "no-business-execution",
+      "durable-host-readback"
+    ],
+    "ports": [
+      {
+        "port": 51226,
+        "closed": true
+      },
+      {
+        "port": 51231,
+        "closed": true
+      }
+    ],
+    "stage": "isolated-startup",
+    "hostIntegration": "not_run",
+    "applied": false,
+    "process": {
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "cleanup": "confirmed",
+      "cleanupScope": "process-group",
+      "bytes": 0,
+      "dispatched": true,
+      "pid": 36757
+    },
+    "report": {
+      "version": 1,
+      "stage": "isolated-startup",
+      "status": "passed",
+      "ports": [
+        51226,
+        51231
+      ],
+      "checks": [
+        "contracts",
+        "identity",
+        "durable-read",
+        "durable-restart",
+        "web-assets",
+        "no-credentials",
+        "host-storage-read",
+        "storage-write",
+        "storage-restart",
+        "legacy-rejected",
+        "no-external-requests"
+      ],
+      "externalAttempts": 0,
+      "hostIntegration": "not_run",
+      "build": "df15bd1ff91940dc2357df5f4b21955775ba67179c9fcc4ef1a501a745ff87e2",
+      "createdId": "252e04d55fb59bfd157f0b7d856d6271405f13c956784547806121837c393776"
+    }
+  },
+  "node": "v24.15.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "scope": "real isolated source build and startup; production host integration not run"
+}

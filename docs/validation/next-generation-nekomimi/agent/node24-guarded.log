@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: first request uses persisted canonical projection; no-tool response ends
+ok 1 - first request uses persisted canonical projection; no-tool response ends
+  ---
+  duration_ms: 60.844542
+  type: 'test'
+  ...
+# Subtest: tool continuation is prepared, persisted and sent exactly once even with continue
+ok 2 - tool continuation is prepared, persisted and sent exactly once even with continue
+  ---
+  duration_ms: 92.82775
+  type: 'test'
+  ...
+# Subtest: continue without tools forces one context-only request
+ok 3 - continue without tools forces one context-only request
+  ---
+  duration_ms: 70.774
+  type: 'test'
+  ...
+# Subtest: end skips queued steering/followup and next prepare
+ok 4 - end skips queued steering/followup and next prepare
+  ---
+  duration_ms: 42.204709
+  type: 'test'
+  ...
+# Subtest: host maximum turns ends repeated tool loop at three, without fourth dispatch
+ok 5 - host maximum turns ends repeated tool loop at three, without fourth dispatch
+  ---
+  duration_ms: 163.097083
+  type: 'test'
+  ...
+# Subtest: error ignores continue and queued input; does not execute embedded tool
+ok 6 - error ignores continue and queued input; does not execute embedded tool
+  ---
+  duration_ms: 52.328209
+  type: 'test'
+  ...
+# Subtest: aborted ignores continue and queued input; does not execute embedded tool
+ok 7 - aborted ignores continue and queued input; does not execute embedded tool
+  ---
+  duration_ms: 52.952458
+  type: 'test'
+  ...
+# Subtest: abort during prepare prevents provider and tools
+ok 8 - abort during prepare prevents provider and tools
+  ---
+  duration_ms: 36.591667
+  type: 'test'
+  ...
+# Subtest: abort in provider stops continuation
+ok 9 - abort in provider stops continuation
+  ---
+  duration_ms: 43.915625
+  type: 'test'
+  ...
+# Subtest: abort after assistant persistence prevents tool side effects
+ok 10 - abort after assistant persistence prevents tool side effects
+  ---
+  duration_ms: 51.084416
+  type: 'test'
+  ...
+# Subtest: abort during first sequential tool prevents second tool and next request
+ok 11 - abort during first sequential tool prevents second tool and next request
+  ---
+  duration_ms: 66.961
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 845.702459

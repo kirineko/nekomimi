@@ -1,0 +1,111 @@
+
+Running 3 tests using 1 worker
+
+(node:68821) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (237ms)
+(node:68837) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (212ms)
+(node:68850) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (216ms)
+
+
+  1) test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+
+    Error: 创建命令或模式无效
+
+       at ../../src/session/identity.ts:13
+
+      11 |   const input = object(value);
+      12 |   if (typeof input.commandId !== "string" || !validId(input.commandId) || !["work", "create"].includes(String(input.mode)))
+    > 13 |     throw new ApiError(400, "session_identity", "创建命令或模式无效");
+         |           ^
+      14 |   let target: SessionCreation["target"];
+      15 |   if (input.target !== undefined) {
+      16 |     const t = object(input.target);
+        at parseSessionCreation (/Users/kirineko/Github/nekomimi/src/session/identity.ts:13:11)
+        at Sessions.createInner (/Users/kirineko/Github/nekomimi/src/server/sessions.ts:752:19)
+        at /Users/kirineko/Github/nekomimi/src/server/sessions.ts:748:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-work--172cd-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+
+    Error: 创建命令或模式无效
+
+       at ../../src/session/identity.ts:13
+
+      11 |   const input = object(value);
+      12 |   if (typeof input.commandId !== "string" || !validId(input.commandId) || !["work", "create"].includes(String(input.mode)))
+    > 13 |     throw new ApiError(400, "session_identity", "创建命令或模式无效");
+         |           ^
+      14 |   let target: SessionCreation["target"];
+      15 |   if (input.target !== undefined) {
+      16 |     const t = object(input.target);
+        at parseSessionCreation (/Users/kirineko/Github/nekomimi/src/session/identity.ts:13:11)
+        at Sessions.createInner (/Users/kirineko/Github/nekomimi/src/server/sessions.ts:752:19)
+        at /Users/kirineko/Github/nekomimi/src/server/sessions.ts:748:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-creat-10b9f-es-and-readonly-attachments/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics 
+
+    Error: 创建命令或模式无效
+
+       at ../../src/session/identity.ts:13
+
+      11 |   const input = object(value);
+      12 |   if (typeof input.commandId !== "string" || !validId(input.commandId) || !["work", "create"].includes(String(input.mode)))
+    > 13 |     throw new ApiError(400, "session_identity", "创建命令或模式无效");
+         |           ^
+      14 |   let target: SessionCreation["target"];
+      15 |   if (input.target !== undefined) {
+      16 |     const t = object(input.target);
+        at parseSessionCreation (/Users/kirineko/Github/nekomimi/src/session/identity.ts:13:11)
+        at Sessions.createInner (/Users/kirineko/Github/nekomimi/src/server/sessions.ts:752:19)
+        at /Users/kirineko/Github/nekomimi/src/server/sessions.ts:748:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-details-10-5-unkno-15f92-orical-artifact-diagnostics/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/context-details.spec.ts:21:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:21:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments 
+    test/browser/context-details.spec.ts:42:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics 

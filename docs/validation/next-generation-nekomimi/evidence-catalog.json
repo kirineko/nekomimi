@@ -1,0 +1,425 @@
+{
+  "codemode-execution": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/codemode-runtime/README.md",
+      "docs/validation/next-generation-nekomimi/codemode-runtime/pipeline-state.md",
+      "docs/validation/next-generation-nekomimi/codemode-runtime/partial-failure.md"
+    ],
+    "tests": [
+      "test/codemode-concurrency.test.ts",
+      "test/codemode-partial-failure.test.ts",
+      "test/codemode-pipeline.test.ts",
+      "test/codemode-sandbox.test.ts",
+      "test/codemode-state.test.ts"
+    ]
+  },
+  "context-compaction": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/compaction-source/README.md",
+      "docs/validation/next-generation-nekomimi/context-ui/README.md"
+    ],
+    "tests": [
+      "test/browser/context-details.spec.ts",
+      "test/compaction-source.test.ts",
+      "test/context-compaction.test.ts"
+    ]
+  },
+  "context-occupancy": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/context-ui/README.md"
+    ],
+    "tests": [
+      "test/browser/context-details.spec.ts",
+      "test/context-details.test.ts"
+    ]
+  },
+  "context-selection-policy": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/resource-context/README.md",
+      "docs/validation/next-generation-nekomimi/handoff-context/README.md"
+    ],
+    "tests": [
+      "test/context-compaction.test.ts",
+      "test/context-details.test.ts",
+      "test/context-projection.test.ts",
+      "test/context-revalidation.test.ts",
+      "test/context-runtime.test.ts",
+      "test/context-service.test.ts",
+      "test/context-snapshot.test.ts",
+      "test/resource-context.test.ts"
+    ]
+  },
+  "core-change-candidates": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/core/source.md",
+      "docs/validation/next-generation-nekomimi/core/build.md",
+      "docs/validation/next-generation-nekomimi/core/validation.md",
+      "docs/validation/next-generation-nekomimi/core/switch-gates.md",
+      "docs/validation/next-generation-nekomimi/core/recovery.md",
+      "docs/validation/next-generation-nekomimi/core-switch-ui/README.md"
+    ],
+    "tests": [
+      "test/browser/core-candidate.spec.ts",
+      "test/browser/core-launch-info.spec.ts",
+      "test/browser/core-status.spec.ts",
+      "test/browser/core-switch-real.spec.ts",
+      "test/browser/core-switch-ui.spec.ts",
+      "test/core-build-process.test.ts",
+      "test/core-builds.test.ts",
+      "test/core-candidate-view.test.ts",
+      "test/core-candidates-cli.test.ts",
+      "test/core-candidates.test.ts",
+      "test/core-control-view.test.ts",
+      "test/core-managed-child.test.ts",
+      "test/core-managed.test.ts",
+      "test/core-operation-fence.test.ts",
+      "test/core-operations.test.ts",
+      "test/core-recovery.test.ts",
+      "test/core-rollback.test.ts",
+      "test/core-storage-compatibility.test.ts",
+      "test/core-switch-crash.test.ts",
+      "test/core-switch-gate.test.ts",
+      "test/core-switches.test.ts",
+      "test/core-validation.test.ts"
+    ]
+  },
+  "customization-development": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/sdk-runtime/guides.md",
+      "docs/validation/next-generation-nekomimi/sdk-runtime/verification.md",
+      "docs/validation/next-generation-nekomimi/project-delivery/README.md",
+      "docs/validation/next-generation-nekomimi/creation-roundtrip/README.md"
+    ],
+    "tests": [
+      "test/browser/project-delivery.spec.ts",
+      "test/candidate-assets.test.ts",
+      "test/candidate-delivery.test.ts",
+      "test/candidate-executions.test.ts",
+      "test/candidate-origin.test.ts",
+      "test/candidate-view.test.ts",
+      "test/customization-verification.test.ts",
+      "test/project-delivery.test.ts"
+    ]
+  },
+  "customization-lifecycle": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin.md",
+      "docs/validation/next-generation-nekomimi/create/candidate-executions.md",
+      "docs/validation/next-generation-nekomimi/project-delivery/README.md"
+    ],
+    "tests": [
+      "test/browser/candidate-management.spec.ts",
+      "test/candidate-origin.test.ts",
+      "test/candidate-view.test.ts",
+      "test/customization-validation-cancel.test.ts"
+    ]
+  },
+  "customization-release-readiness": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/compatibility-audit.md",
+      "docs/validation/next-generation-nekomimi/creation-roundtrip/README.md",
+      "docs/validation/next-generation-nekomimi/platform-matrix.md",
+      "docs/validation/next-generation-nekomimi/final-regression/README.md",
+      "docs/validation/next-generation-nekomimi/platform-clean/README.md"
+    ],
+    "tests": [
+      "test/data-format.test.ts",
+      "test/sdk-admission.test.ts",
+      "test/http-error-privacy.test.ts"
+    ]
+  },
+  "execution-journal": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/durable/causality-and-recovery.md",
+      "docs/validation/next-generation-nekomimi/privacy-admission/README.md"
+    ],
+    "tests": [
+      "test/durable-journal-storage.test.ts",
+      "test/durable-model-service.test.ts",
+      "test/durable-recovery.test.ts",
+      "test/durable-runtime-recovery.test.ts",
+      "test/durable-tool-adapter.test.ts",
+      "test/journal-causality.test.ts",
+      "test/journal.test.ts"
+    ]
+  },
+  "extension-runtime": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/sdk-runtime/contracts.md",
+      "docs/validation/next-generation-nekomimi/sdk-runtime/services.md",
+      "docs/validation/next-generation-nekomimi/sdk-runtime/boundary.md"
+    ],
+    "tests": [
+      "test/customization-boundary.test.ts",
+      "test/customization-process.test.ts",
+      "test/sdk-admission.test.ts",
+      "test/sdk-v3-contract.test.ts"
+    ]
+  },
+  "extension-process-host": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/sdk-runtime/contracts.md",
+      "docs/validation/next-generation-nekomimi/compatibility-audit.md"
+    ],
+    "tests": [
+      "test/customization-process.test.ts",
+      "test/sdk-admission.test.ts"
+    ]
+  },
+  "local-user-configuration": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/format-admission.md",
+      "docs/validation/next-generation-nekomimi/privacy-admission/README.md",
+      "docs/validation/next-generation-nekomimi/final-regression/README.md"
+    ],
+    "tests": [
+      "test/browser/local-experience.spec.ts",
+      "test/data-format.test.ts",
+      "test/local-experience.test.ts",
+      "test/http-error-privacy.test.ts"
+    ]
+  },
+  "mcp-context-and-auth": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/mcp-runtime/content.md",
+      "docs/validation/next-generation-nekomimi/mcp-runtime/oauth.md"
+    ],
+    "tests": [
+      "test/customization-mcp-oauth.test.ts",
+      "test/mcp-demand.test.ts",
+      "test/mcp-discovery.test.ts",
+      "test/mcp-fault-recovery.test.ts",
+      "test/mcp-oauth-rotation.test.ts",
+      "test/mcp-snapshots.test.ts",
+      "test/mcp-version-runtime.test.ts"
+    ]
+  },
+  "mcp-tool-integration": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/mcp-runtime/README.md",
+      "docs/validation/next-generation-nekomimi/mcp-runtime/discovery.md",
+      "docs/validation/next-generation-nekomimi/mcp-runtime/versions.md",
+      "docs/validation/next-generation-nekomimi/mcp-runtime/fault-recovery.md"
+    ],
+    "tests": [
+      "test/mcp-demand.test.ts",
+      "test/mcp-discovery.test.ts",
+      "test/mcp-fault-recovery.test.ts",
+      "test/mcp-oauth-rotation.test.ts",
+      "test/mcp-snapshots.test.ts",
+      "test/mcp-version-runtime.test.ts",
+      "test/pi-mcp-owner.test.ts"
+    ]
+  },
+  "mode-session-handoff": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/handoff/completion.md",
+      "docs/validation/next-generation-nekomimi/project-delivery/README.md",
+      "docs/validation/next-generation-nekomimi/mode-handoff-roundtrip/README.md"
+    ],
+    "tests": [
+      "test/browser/handoff-cards.spec.ts",
+      "test/browser/handoff-recovery.spec.ts",
+      "test/browser/handoff-summary.spec.ts",
+      "test/handoff-context.test.ts",
+      "test/handoff-crash-recovery.test.ts",
+      "test/handoff-preparation.test.ts",
+      "test/handoff-transfer.test.ts",
+      "test/mode-handoff-roundtrip.test.ts"
+    ]
+  },
+  "model-call-evidence": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/durable/pipeline-and-model-policy.md",
+      "docs/validation/next-generation-nekomimi/typed-model/transport.md"
+    ],
+    "tests": [
+      "test/durable-model-service.test.ts",
+      "test/model-routing.test.ts",
+      "test/typed-model.test.ts"
+    ]
+  },
+  "model-operation-catalog": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/model-routing/README.md",
+      "docs/validation/next-generation-nekomimi/typed-model/README.md",
+      "docs/validation/next-generation-nekomimi/typed-model/transport.md"
+    ],
+    "tests": [
+      "test/model-catalog.test.ts",
+      "test/model-operations.test.ts",
+      "test/model-routing.test.ts",
+      "test/typed-model.test.ts"
+    ]
+  },
+  "pi-platform-integration": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/durable/causality-and-recovery.md",
+      "docs/validation/next-generation-nekomimi/creation-roundtrip/README.md",
+      "docs/validation/next-generation-nekomimi/privacy-admission/README.md",
+      "docs/validation/next-generation-nekomimi/platform-clean/README.md"
+    ],
+    "tests": [
+      "test/durable-journal-storage.test.ts",
+      "test/durable-model-service.test.ts",
+      "test/durable-recovery.test.ts",
+      "test/durable-runtime-recovery.test.ts",
+      "test/durable-tool-adapter.test.ts",
+      "test/sdk-admission.test.ts"
+    ]
+  },
+  "prompt-context-provenance": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/resource-context/README.md",
+      "docs/validation/next-generation-nekomimi/compaction-source/README.md",
+      "docs/validation/next-generation-nekomimi/handoff-context/README.md"
+    ],
+    "tests": [
+      "test/context-compaction.test.ts",
+      "test/context-details.test.ts",
+      "test/context-projection.test.ts",
+      "test/context-revalidation.test.ts",
+      "test/context-runtime.test.ts",
+      "test/context-service.test.ts",
+      "test/context-snapshot.test.ts",
+      "test/handoff-context.test.ts",
+      "test/resource-context.test.ts"
+    ]
+  },
+  "prompt-task-profiles": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/task-profiles/README.md"
+    ],
+    "tests": [
+      "test/context-projection.test.ts",
+      "test/task-profiles.test.ts"
+    ]
+  },
+  "runtime-ui-extensions": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/runtime-slots/README.md",
+      "docs/validation/next-generation-nekomimi/live-panels/README.md"
+    ],
+    "tests": [
+      "test/browser/live-panels.spec.ts",
+      "test/browser/v2-runtime-slots.spec.ts",
+      "test/panel-session-scope.test.ts",
+      "test/v2-slots.test.tsx"
+    ]
+  },
+  "self-customization-workflow": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/creation-roundtrip/README.md",
+      "docs/validation/next-generation-nekomimi/sdk-runtime/guides.md",
+      "docs/validation/next-generation-nekomimi/platform-clean/README.md"
+    ],
+    "tests": [
+      "test/browser/project-delivery.spec.ts",
+      "test/customization-workflow.test.ts",
+      "test/project-delivery.test.ts"
+    ]
+  },
+  "session-lifecycle": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/independent-sessions/README.md",
+      "docs/validation/next-generation-nekomimi/durable/causality-and-recovery.md"
+    ],
+    "tests": [
+      "test/durable-recovery.test.ts",
+      "test/independent-sessions.test.ts",
+      "test/session-identity.test.ts"
+    ]
+  },
+  "web-customization": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/create/candidate-executions.md",
+      "docs/validation/next-generation-nekomimi/studio-migration/README.md",
+      "docs/validation/next-generation-nekomimi/loading-performance/README.md"
+    ],
+    "tests": [
+      "test/browser/candidate-management.spec.ts",
+      "test/browser/create-candidates.spec.ts",
+      "test/browser/create-conversation.spec.ts",
+      "test/browser/mcp-management.spec.ts",
+      "test/browser/package-management.spec.ts",
+      "test/browser/panel-management.spec.ts",
+      "test/browser/resource-management.spec.ts",
+      "test/browser/theme-management.spec.ts",
+      "test/browser/v2-feature-loading.spec.ts",
+      "test/browser/workflow-management.spec.ts"
+    ]
+  },
+  "web-design-system": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/history-ui/README.md",
+      "docs/validation/next-generation-nekomimi/compact-header/README.md",
+      "docs/validation/next-generation-nekomimi/default-entry/README.md",
+      "docs/validation/next-generation-nekomimi/loading-performance/README.md"
+    ],
+    "tests": [
+      "test/browser/header-recovery.spec.ts",
+      "test/browser/theme-management.spec.ts",
+      "test/browser/v2-workbench.spec.ts",
+      "test/v2-theme.test.ts"
+    ]
+  },
+  "web-evidence-inspector": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/context-ui/README.md",
+      "docs/validation/next-generation-nekomimi/inspection/README.md"
+    ],
+    "tests": [
+      "test/browser/context-details.spec.ts",
+      "test/browser/inspection.spec.ts",
+      "test/context-details.test.ts",
+      "test/inspection.test.ts"
+    ]
+  },
+  "web-session-stream": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/history-ui/README.md",
+      "docs/validation/next-generation-nekomimi/runtime-performance/README.md"
+    ],
+    "tests": [
+      "test/browser/history-navigation.spec.ts",
+      "test/browser/scrolling-native.spec.ts",
+      "test/browser/scrolling.spec.ts",
+      "test/browser/v2-history.spec.ts",
+      "test/v2-session-stream.test.ts"
+    ]
+  },
+  "web-task-workbench": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/navigation-migration/README.md",
+      "docs/validation/next-generation-nekomimi/input-editing/README.md",
+      "docs/validation/next-generation-nekomimi/core-switch-ui/README.md"
+    ],
+    "tests": [
+      "test/browser/core-switch-ui.spec.ts",
+      "test/browser/session-navigation.spec.ts",
+      "test/browser/v2-interactions.spec.ts"
+    ]
+  },
+  "work-create-modes": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/mode-policy/README.md",
+      "docs/validation/next-generation-nekomimi/independent-sessions/README.md",
+      "docs/validation/next-generation-nekomimi/mode-handoff-roundtrip/README.md"
+    ],
+    "tests": [
+      "test/browser/create-conversation.spec.ts",
+      "test/create-target-scope.test.ts",
+      "test/independent-sessions.test.ts",
+      "test/mode-policy.test.ts"
+    ]
+  },
+  "workspace-references": {
+    "reports": [
+      "docs/validation/next-generation-nekomimi/input-editing/README.md"
+    ],
+    "tests": [
+      "test/session-references.test.ts",
+      "test/browser/references.spec.ts"
+    ]
+  }
+}

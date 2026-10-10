@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-06T19:55:41.836804+00:00",
+  "node": "v24.15.0",
+  "platform": "Darwin arm64",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted apply; no release",
+  "files": {
+    "build.log": "617a9ad8eb2ee96ff9829e7c1d884161ce4907fc0bfe6315e4866498832b2e51",
+    "complete-build.log": "f724bc4205840f72833b54969da2aaf91ef7ffb4ba7546f9ebd587b4a5edaf70",
+    "complete-spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "complete-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "final-build.log": "40a3f954399e280c8b8ec8e54726dd9eb9c06d7677c27bb28bfcc0e8bbba3aeb",
+    "final-regression.log": "23e7df6517e5e69f12ec34c7e51a2385a49c52340740f08a710d253921f77194",
+    "final-tests.log": "9a1579807ff36049f976b4863ad964ae17345b3a6c237153a407a390d1f7574a",
+    "final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "first-tests.log": "cf4a7a2f26c0509cede5d3e9adfe818839ea902f9d6a058c77a5ba778df9dd9d",
+    "first-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "regression.log": "1fce96dd7ba086507273c38dc5a30917b5b4dc834b77b85ceadeda2b591b0cc7",
+    "second-tests.log": "d538efaa1b37ec29f22311a810a68feafd6ae681ffa1576514f5273627bdf479",
+    "second-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "secret-diagnostic.log": "8d27fc52fa7d30b66d3a0fd3fc9f8bf9ebffe0cc4f66964135f82c481c6b59da",
+    "spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "types.log": "b9a0188dc21aef900968e4b6d9ef909b8718b58b5491daea817892ecd8d45434"
+  }
+}

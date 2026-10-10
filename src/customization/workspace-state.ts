@@ -1,3 +1,4 @@
+import { StateCompatibilityError } from "./state-compatibility.js";
 import { join } from "node:path";
 import { Journal, id, readArtifact, type JournalOptions } from "../journal.js";
 import { safePath } from "./resources.js";
@@ -21,7 +22,7 @@ export class WorkspaceState {
       const found = journal.events.findLast(e => e.type === "workspace.state.updated" && e.resourceId === resourceId && (e.payload as any).key === key);
       if (!found) return undefined;
       const p = found.payload as any;
-      if (p.schemaVersion !== schemaVersion) throw new Error("Workspace state schema incompatible; explicit migration required");
+      if (p.schemaVersion !== schemaVersion) throw new StateCompatibilityError("workspace");
       return { revision: p.revision as number, value: JSON.parse((await readArtifact(journal.directory, p.value)).toString()) as Json };
     } finally { await journal.close(); }
   }
@@ -34,7 +35,7 @@ export class WorkspaceState {
       if (duplicate) return (duplicate.payload as any).revision as number;
       const old = journal.events.findLast(e => e.type === "workspace.state.updated" && e.resourceId === write.resourceId && (e.payload as any).key === write.key)?.payload as any;
       if ((old?.revision ?? 0) !== write.expectedRevision) throw new Error("Workspace state CAS conflict");
-      if (old && old.schemaVersion !== (write.fromSchemaVersion ?? write.schemaVersion)) throw new Error("Workspace state schema incompatible; explicit migration required");
+      if (old && old.schemaVersion !== (write.fromSchemaVersion ?? write.schemaVersion)) throw new StateCompatibilityError("workspace");
       const revision = write.expectedRevision + 1;
       await journal.append("workspace.state.updated", { messageId, key: write.key, schemaVersion: write.schemaVersion, revision, value: await journal.artifact(JSON.stringify(write.value)), ...(write.fromSchemaVersion ? { migration: { from: write.fromSchemaVersion, previous: old?.value } } : {}) }, { resourceId: write.resourceId });
       return revision;

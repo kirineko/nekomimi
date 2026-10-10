@@ -3,8 +3,9 @@ import { Socket } from "node:net";
 import { createJiti } from "jiti";
 import { RpcPeer, PROCESS_LIMITS } from "./rpc.js";
 import type { RpcIdentity } from "./contracts.js";
+import { SDK_VERSION } from "./types.js";
 import type { ExtensionContext, Hook } from "./types.js";
-import type { ExtensionAPI2 } from "./contracts.js";
+import type { ExtensionAPI3 } from "./contracts.js";
 
 const { identity, resourceIds }: { identity: RpcIdentity; resourceIds: string[] } = JSON.parse(process.argv[1]!);
 const channel = new Socket({ fd: 3, readable: true, writable: true });
@@ -17,7 +18,7 @@ let nextHandler = 0;
 peer.handle = async (method, value, callId) => {
   if (method === "initialize") {
     if (initialized) throw new Error("Already initialized");
-    if (!Array.isArray(value.entries) || !value.entries.length || value.entries.some((e: any) => ![1, 2].includes(e.sdkVersion) || !resourceIds.includes(e.resourceId))) throw new Error("Unsupported sdkVersion or resource");
+    if (!Array.isArray(value.entries) || !value.entries.length || value.entries.some((e: any) => e.sdkVersion !== SDK_VERSION || !resourceIds.includes(e.resourceId))) throw new Error("Unsupported sdkVersion or resource");
     initialized = true;
     const descriptions: unknown[] = [];
     const names = new Set<string>();
@@ -35,9 +36,9 @@ peer.handle = async (method, value, callId) => {
       handlers.set(handlerId, { resourceId: entry.resourceId, handler });
       descriptions.push({ kind, ...descriptor, handlerId, resourceId: entry.resourceId });
     };
-    const api: ExtensionAPI2 = {
+    const api: ExtensionAPI3 = {
       registerProvider(provider) {
-        if (entry.sdkVersion !== 2 || typeof provider.serialize !== "function" || typeof provider.parse !== "function") throw new Error("Provider requires SDK 2 serialize and parse callbacks");
+        if (entry.sdkVersion !== 3 || typeof provider.serialize !== "function" || typeof provider.parse !== "function") throw new Error("Provider requires SDK 3 serialize and parse callbacks");
         add("provider", { id: provider.id, models: provider.models }, (argument: any) => {
           if (argument.method === "serialize") return provider.serialize(argument.input);
           if (argument.method === "parse") return provider.parse(argument.input);
@@ -45,7 +46,7 @@ peer.handle = async (method, value, callId) => {
         });
       },
       registerWorkflow(workflow) {
-        if (entry.sdkVersion !== 2 || !workflow.steps || Object.values(workflow.steps).some(step => typeof step.execute !== "function")) throw new Error("Invalid workflow handlers");
+        if (entry.sdkVersion !== 3 || !workflow.steps || Object.values(workflow.steps).some(step => typeof step.execute !== "function")) throw new Error("Invalid workflow handlers");
         const { steps, ...descriptor } = workflow;
         add("workflow", { ...descriptor, steps: Object.fromEntries(Object.entries(steps).map(([name, step]) => [name, { transitions: step.transitions }])) }, (argument: any, context: any) => {
           const step = Object.hasOwn(steps, argument.step) && steps[argument.step];
@@ -53,15 +54,15 @@ peer.handle = async (method, value, callId) => {
           return step.execute(argument.input, context);
         });
       },
-      registerTheme(theme) { if (entry.sdkVersion !== 2) throw new Error("Theme requires current SDK"); add("theme", theme, () => null); },
-      registerView(view) { if (entry.sdkVersion !== 2) throw new Error("View requires current SDK"); add("view", view, () => null); },
-      registerPanel(panel) { if (entry.sdkVersion !== 2) throw new Error("Panel requires SDK 2"); add("panel", panel, () => null); },
+      registerTheme(theme) { if (entry.sdkVersion !== 3) throw new Error("Theme requires current SDK"); add("theme", theme, () => null); },
+      registerView(view) { if (entry.sdkVersion !== 3) throw new Error("View requires current SDK"); add("view", view, () => null); },
+      registerPanel(panel) { if (entry.sdkVersion !== 3) throw new Error("Panel requires SDK 3"); add("panel", panel, () => null); },
       registerTool(tool) {
         const { execute, ...descriptor } = tool;
         if (tool.parameters?.type !== "object" || !tool.description) throw new Error("Invalid tool definition");
         add("tool", descriptor, execute);
       },
-      registerCommand(name, command) { add("command", { name, description: command.description }, command.handler); },
+      registerCommand(name, command) { add("command", { name, description: command.description, modes: command.modes }, command.handler); },
       on(event, handler) {
         if (!["beforeRun", "beforeTool", "afterTool", "afterRun"].includes(event)) throw new Error("Unsupported hook");
         add("hook", { event }, handler);

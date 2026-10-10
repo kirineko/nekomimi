@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:78650) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (3.3s)
+  ✓  2 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+
+  2 passed (5.9s)

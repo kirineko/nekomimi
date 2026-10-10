@@ -1,0 +1,90 @@
+
+Running 2 tests using 2 workers
+
+(node:98336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98337) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact (7.1s)
+  ✘  2 test/browser/local-experience.spec.ts:7:1 › configures, sends with Enter, names, exports offline and deletes across windows (7.4s)
+
+
+  1) test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog', { name: '上下文详情', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog', { name: '上下文详情', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '上下文详情', exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      15 |   await expect(measurement.getByText('系统 / 工具 / 消息',{exact:true})).toBeVisible();await expect(measurement).toContainText('输出 / 安全 / 工具结果预留');
+      16 |   await page.keyboard.press('Escape');await expect(trigger).toBeFocused();await expect(trigger).toHaveAttribute('aria-expanded','false');await expect(input).toHaveJSProperty('textContent','保留草稿');
+    > 17 |   await trigger.click();await page.mouse.click(2,2);await expect(dialog).toHaveCount(0);await expect(trigger).toBeFocused();
+         |                                                                          ^
+      18 |   await page.getByRole('link',{name:'基础设置',exact:true}).click();
+      19 |   const toggle=page.getByRole('switch',{name:/^自动整理上下文/});await expect(toggle).toHaveAttribute('aria-checked','true');await toggle.click();await expect(toggle).toHaveAttribute('aria-checked','false');
+      20 |   await page.getByRole('button',{name:'审阅并保存设置',exact:true}).click();await page.getByRole('button',{name:'确认保存设置',exact:true}).click();await expect(page.getByText('设置已保存。',{exact:true})).toBeVisible();
+        at /Users/kirineko/Github/nekomimi/test/browser/context-meter.spec.ts:17:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/context-meter-context-deta-5dc26-keeps-drafts-across-compact/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/context-meter-context-deta-5dc26-keeps-drafts-across-compact/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/context-meter-context-deta-5dc26-keeps-drafts-across-compact/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/context-meter-context-deta-5dc26-keeps-drafts-across-compact/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/local-experience.spec.ts:7:1 › configures, sends with Enter, names, exports offline and deletes across windows 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      72 |     await input.fill("继续");
+      73 |     await input.press("Enter");
+    > 74 |     await expect.poll(() => taskCalls).toBe(2);
+         |                                        ^
+      75 |     expect(titleCalls).toBe(1);
+      76 |     await expect(page.getByRole('button',{name:'停止',exact:true})).toHaveCount(0);
+      77 |     await page.getByRole('button',{name:'更多操作'}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/local-experience.spec.ts:74:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/local-experience-configure-07ec6--and-deletes-across-windows/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/local-experience-configure-07ec6--and-deletes-across-windows/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/local-experience-configure-07ec6--and-deletes-across-windows/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/local-experience-configure-07ec6--and-deletes-across-windows/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/local-experience-configure-07ec6--and-deletes-across-windows/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact 
+    test/browser/local-experience.spec.ts:7:1 › configures, sends with Enter, names, exports offline and deletes across windows 

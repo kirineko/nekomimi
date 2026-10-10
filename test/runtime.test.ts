@@ -21,9 +21,21 @@ describe('application integration', () => {
     expect(bodies[0].tool_choice).toBe('auto'); expect(bodies[0].instructions).toBeTruthy();
     expect(bodies[0].input.some((x: any) => x.role === 'developer' || x.role === 'system')).toBe(false);
     expect(bodies[0].tools.map((x: any) => x.name)).toEqual(['write']);
+    expect(bodies[0].tools[0].parameters.properties.path.type).toBe('string');
+    expect(bodies[0].tools[0].parameters.required).toEqual(expect.arrayContaining(['path', 'content']));
     expect((await run({ ...options, prompt: 'Continue' })).status).toBe('completed');
     expect(bodies[2].input).toContainEqual(reasoning);
     const snapshot = await readSession(session);
+    const nativeTasks = snapshot.events.filter(e => e.type === 'durable.commit').flatMap(e => (e.payload as { writes: Array<{ type: string; value: { id: number; kind?: string; state?: { status: string } } }> }).writes).filter(write => write.type === 'task');
+    expect(nativeTasks.some(write => write.value.kind === 'pi.generation' && write.value.state?.status === 'terminal')).toBe(true);
+    expect(nativeTasks.some(write => write.value.kind === 'pi.tool' && write.value.state?.status === 'terminal')).toBe(true);
+    for (const event of snapshot.events.filter(e => ['request.dispatched', 'tool.intent', 'tool.completed', 'tool.result'].includes(e.type))) {
+      expect(event.conversationId).toBe(1);
+      expect(event.modelCallId).toBeTypeOf('string');
+      expect(event.attemptId).toBeTypeOf('string');
+      const task = nativeTasks.find(write => write.value.id === event.frameworkTaskId);
+      expect(task?.value.kind).toBe(event.type === 'request.dispatched' ? 'pi.generation' : 'pi.tool');
+    }
     const requests = snapshot.events.filter(e => e.type === 'request.dispatched');
     for (let i = 0; i < requests.length; i++) {
       const p = requests[i]!.payload as any; const bytes = await readArtifact(snapshot.directory, p.body);
@@ -99,3 +111,23 @@ it('stops at 64 turns by default while respecting an explicit turn cap',async()=
   expect(calls).toBe(cap??64);expect(result.status).toBe('failed');expect(result.error).toContain('轮数上限');
  }
 },60000);
+
+
+it('does not retry a model request whose network outcome is unknown', async () => {
+ const workspace=await temporary();let calls=0;
+ const result=await run({workspace,session:join(workspace,'unknown'),apiKey:key,prompt:'hi',maxAttempts:3,fetch:async()=>{calls++;throw new Error('fetch failed after remote dispatch');}});
+ expect(result.status).toBe('failed');expect(calls).toBe(1);
+ const snapshot=await readSession(result.session);expect(snapshot.events.filter(e=>e.type==='attempt.started')).toHaveLength(1);
+});
+it('retains a completed network attempt but does not publish a value cancelled during its commit', async () => {
+ const workspace=await temporary(),session=join(workspace,'late'),controller=new AbortController();let cancelled=false;
+ const result=await run({workspace,session,apiKey:key,prompt:'write',signal:controller.signal,fetch:async()=>response([callItem('write',{path:'never',content:'late'})]),journalOptions:{beforeIO:async operation=>{
+  if(cancelled||operation!=='sync')return;
+  const raw=await readFile(join(session,'journal.jsonl'),'utf8').catch(()=>'');const line=raw.trim().split('\n').at(-1);if(!line)return;const event=JSON.parse(line);
+  if(event.type==='attempt.finished'&&event.payload.status==='completed'){cancelled=true;controller.abort();}
+ }}});
+ expect(cancelled).toBe(true);expect(result.status).toBe('cancelled');
+ const snapshot=await readSession(session);expect(snapshot.events.filter(e=>e.type==='attempt.finished')).toHaveLength(1);
+ expect(snapshot.events.find(e=>e.type==='attempt.finished')?.payload).toMatchObject({status:'completed'});
+ expect(snapshot.events.some(e=>e.type==='tool.intent'||(e.type==='context.add'&&String((e.payload as any).source).startsWith('response:')))).toBe(false);
+});

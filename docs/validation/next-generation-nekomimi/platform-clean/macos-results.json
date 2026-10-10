@@ -1,0 +1,14 @@
+[
+  {
+    "platform": "macos",
+    "node": "24.15.0",
+    "exitCode": 0,
+    "log": "/tmp/nekomimi-clean-macos-24.15.0.log"
+  },
+  {
+    "platform": "macos",
+    "node": "22.19.0",
+    "exitCode": 0,
+    "log": "/tmp/nekomimi-clean-macos-22.19.0.log"
+  }
+]

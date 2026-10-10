@@ -1,0 +1,234 @@
+
+Running 11 tests using 2 workers
+
+(node:97411) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97410) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/chat-loading-focus.spec.ts:13:1 › optional features load on demand, cancel delayed load, retry network failure and keep draft (2.0s)
+  ✓   3 test/browser/chat-loading-focus.spec.ts:38:1 › submit restores focus for mouse and keyboard and failure retains draft (2.2s)
+  ✘   1 test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor (6.1s)
+(node:97450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 test/browser/chat-loading-focus.spec.ts:53:1 › late submit never steals focus or clears a new context draft (5.6s)
+(node:97469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 test/browser/chat-loading-focus.spec.ts:76:1 › latest follows new messages and delayed layout, while deliberate history reading stays anchored (2.5s)
+  ✓   5 test/browser/session-navigation.spec.ts:22:1 › discovers a real /moe extension before execution and completes navigation/delete loop (7.0s)
+  ✘   7 test/browser/chat-loading-focus.spec.ts:102:1 › running task allows next draft without submitting it or clearing it at completion (6.2s)
+  ✘   8 test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (45.3s)
+(node:97513) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 test/browser/session-navigation.spec.ts:116:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.4s)
+  ✘  10 test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft (5.5s)
+(node:97541) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 test/browser/session-navigation.spec.ts:183:1 › date groups and long titles stay compact across midnight and list revision conflicts (6.0s)
+
+
+  1) test/browser/chat-loading-focus.spec.ts:53:1 › late submit never steals focus or clears a new context draft 
+
+    Error: expect(locator).not.toBeFocused() failed
+
+    Locator: getByRole('textbox', { name: '任务草稿', exact: true })
+    Expected: not focused
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toBeFocused" getByRole('textbox', { name: '任务草稿', exact: true }) with timeout 5000ms
+      - waiting for getByRole('textbox', { name: '任务草稿', exact: true })
+
+
+      67 |    const settled=page.waitForResponse(response=>response.url().endsWith('/submit'));release();await settled;
+      68 |    if(target!=='session')await expect(page.getByText(/提交失败：延迟失败/)).toBeVisible();
+    > 69 |    await expect(input).not.toBeFocused();await expect(input).toHaveJSProperty('textContent',target==='session'?'其他会话的新草稿':'较新的草稿 '+target);
+         |                            ^
+      70 |    if(target==='modal')await page.keyboard.press('Escape');
+      71 |    if(target==='session'){await page.getByRole('link',{name:'交互检查',exact:true}).click();await expect(page).toHaveURL(new RegExp(original.id));await expect(input).toHaveJSProperty('textContent','较新的草稿 session');}
+      72 |   }
+        at /Users/kirineko/Github/nekomimi/test/browser/chat-loading-focus.spec.ts:69:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/chat-loading-focus-late-su-7cf39--clears-a-new-context-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/chat-loading-focus-late-su-7cf39--clears-a-new-context-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chat-loading-focus-late-su-7cf39--clears-a-new-context-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chat-loading-focus-late-su-7cf39--clears-a-new-context-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/chat-loading-focus.spec.ts:102:1 › running task allows next draft without submitting it or clearing it at completion 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: getByRole('button', { name: '发送', exact: true })
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeAttached" getByRole('button', { name: '发送', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '发送', exact: true })
+
+
+      107 |   await expect(page.getByRole('button',{name:'停止',exact:true})).toBeVisible();await expect(input).toBeFocused();await input.fill('下一条草稿');await input.press('Enter');await expect.poll(()=>calls).toBe(1);
+      108 |   await appearance(page);await expect(page.getByRole('dialog',{name:'外观',exact:true})).toBeVisible();release();
+    > 109 |   await expect(page.getByRole('button',{name:'发送',exact:true})).toBeAttached();await expect(input).toHaveJSProperty('textContent', '下一条草稿');await expect(input).not.toBeFocused();
+          |                                                                 ^
+      110 |   await page.keyboard.press('Escape');await expect(page.getByText('完成后保留草稿',{exact:true})).toBeVisible();expect(calls).toBe(1);
+      111 |  }finally{release();await app.close();}
+      112 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/chat-loading-focus.spec.ts:109:65
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/chat-loading-focus-running-b4d38-r-clearing-it-at-completion/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/chat-loading-focus-running-b4d38-r-clearing-it-at-completion/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chat-loading-focus-running-b4d38-r-clearing-it-at-completion/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chat-loading-focus-running-b4d38-r-clearing-it-at-completion/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   85
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      23 |   const anchor=await page.getByTestId('timeline').evaluate(el=>{const top=el.getBoundingClientRect().top;const row=[...el.querySelectorAll<HTMLElement>('[data-row-id]')].find(r=>r.getBoundingClientRect().bottom>top+40)!;return {id:row.dataset.rowId!,offset:row.getBoundingClientRect().top-top};});
+      24 |   await page.locator('[data-row-id]').first().evaluate(el=>{(el as HTMLElement).style.minHeight=`${el.getBoundingClientRect().height+240}px`;});
+    > 25 |   await expect.poll(()=>page.getByTestId('timeline').evaluate((el,anchor)=>{const row=[...el.querySelectorAll<HTMLElement>('[data-row-id]')].find(r=>r.dataset.rowId===anchor.id)!;return Math.abs(row.getBoundingClientRect().top-el.getBoundingClientRect().top-anchor.offset);},anchor)).toBeLessThan(2);
+         |                                                                                                                                                                                                                                                                                             ^
+      26 |   await page.getByRole('button',{name:'查看更早',exact:true}).click();
+      27 |   await expect(page.getByRole('button',{name:'查看更早',exact:true})).toHaveCount(0);
+      28 |   expect(await page.locator('[data-row-id]').count()).toBeLessThanOrEqual(180);
+        at /Users/kirineko/Github/nekomimi/test/browser/history-navigation.spec.ts:25:285
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByLabel('会话操作 会话 32', { exact: true })
+        - locator resolved to <button data-size="sm" data-slot="button" aria-haspopup="menu" aria-expanded="false" data-variant="outline" aria-label="会话操作 会话 32" class="shrink-0 justify-center text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bor…>···</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button type="button" role="menuitem" data-danger="true" class="flex w-full items-center rounded-sm border-0 bg-transparent px-3 py-1.5 text-left text-sm text-foreground hover:bg-wash focus-visible:bg-wash disabled:opacity-50 data-[danger]:text-danger">删除会话 分页期间新建</button> from <li class="min-w-0">…</li> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button type="button" role="menuitem" data-danger="true" class="flex w-full items-center rounded-sm border-0 bg-transparent px-3 py-1.5 text-left text-sm text-foreground hover:bg-wash focus-visible:bg-wash disabled:opacity-50 data-[danger]:text-danger">删除会话 分页期间新建</button> from <li class="min-w-0">…</li> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        80 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <button type="button" role="menuitem" data-danger="true" class="flex w-full items-center rounded-sm border-0 bg-transparent px-3 py-1.5 text-left text-sm text-foreground hover:bg-wash focus-visible:bg-wash disabled:opacity-50 data-[danger]:text-danger">删除会话 分页期间新建</button> from <li class="min-w-0">…</li> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      76 |     await expect(page.getByRole("textbox",{name:"任务草稿",exact:true})).toHaveJSProperty('textContent', "未发送草稿");
+      77 |     await page.getByLabel("会话操作 分页期间新建",{exact:true}).click();
+    > 78 |     await page.getByLabel("会话操作 会话 32",{exact:true}).click();
+         |                                                      ^
+      79 |     await expect(page.getByRole('menu')).toHaveCount(1);
+      80 |     await page.getByRole("textbox",{name:"任务草稿",exact:true}).click();
+      81 |     await expect(page.getByRole('menu')).toHaveCount(0);
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:78:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "测试任务繁忙"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      176 |     await page.route("**/submit",route=>route.fulfill({status:409,json:{error:{code:"busy",message:"测试任务繁忙"}}}));
+      177 |     await input.press("Tab");await input.press("Enter");
+    > 178 |     await expect(page.getByRole("alert")).toContainText("测试任务繁忙");
+          |                                           ^
+      179 |     await expect(input).toHaveJSProperty('textContent', "/new ");
+      180 |   }finally{oldRelease();await app.close();}
+      181 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:178:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    test/browser/chat-loading-focus.spec.ts:53:1 › late submit never steals focus or clears a new context draft 
+    test/browser/chat-loading-focus.spec.ts:102:1 › running task allows next draft without submitting it or clearing it at completion 
+    test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+    test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+    test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft 
+  6 passed (1.3m)

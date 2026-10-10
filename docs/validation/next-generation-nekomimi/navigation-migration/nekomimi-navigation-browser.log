@@ -1,0 +1,130 @@
+
+Running 5 tests using 1 worker
+
+(node:97164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/session-navigation.spec.ts:22:1 › discovers a real /moe extension before execution and completes navigation/delete loop (7.0s)
+  ✘  2 test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (8.7s)
+(node:97190) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/session-navigation.spec.ts:119:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (5.9s)
+(node:97217) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 test/browser/session-navigation.spec.ts:160:1 › late command responses cannot replace a new catalog and failed submission retains draft (5.4s)
+(node:97234) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 test/browser/session-navigation.spec.ts:186:1 › date groups and long titles stay compact across midnight and list revision conflicts (6.1s)
+
+
+  1) test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('会话顺序已更新，已重新读取第一页。')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('会话顺序已更新，已重新读取第一页。') with timeout 5000ms
+      - waiting for getByText('会话顺序已更新，已重新读取第一页。')
+
+
+      72 |     await app.sessions.create("分页期间新建");
+      73 |     await page.getByRole("button",{name:"更多会话"}).click();
+    > 74 |     await expect(page.getByText('会话顺序已更新，已重新读取第一页。')).toBeVisible();
+         |                                                       ^
+      75 |     await expect(page.locator('[data-session-title]')).toHaveCount(30);
+      76 |     await page.getByRole("button",{name:"更多会话"}).click();
+      77 |     await expect(page.locator('[data-session-title]')).toHaveCount(34);
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:74:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-compact-feb20-ated-refresh-preserve-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/session-navigation.spec.ts:119:1 › command keyboard, IME, parameters, errors, reload and responsive presentation 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('命令加载失败')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('命令加载失败') with timeout 5000ms
+      - waiting for getByText('命令加载失败')
+
+
+      137 |     await input.fill("/tmp/file");await expect(page.getByRole("listbox")).toHaveCount(0);
+      138 |     await input.fill("/nothing");await expect(page.getByText("没有匹配的命令，可继续手动输入")).toBeVisible();
+    > 139 |     fail=true;await input.press("Escape");await input.fill("/");await expect(page.getByText("命令加载失败")).toBeVisible();
+          |                                                                                                        ^
+      140 |     fail=false;ready=false;await page.getByRole("button",{name:"重试命令"}).click();await expect(page.getByText("命令尚未就绪")).toBeVisible();
+      141 |     ready=true;names=["fresh"];rev++;await page.getByRole("button",{name:"重试命令"}).click();await expect(page.getByRole("option")).toContainText("/fresh");
+      142 |     await expect(input).toHaveJSProperty('textContent', "/");
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:139:104
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-command-7e665-and-responsive-presentation/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-command-7e665-and-responsive-presentation/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-command-7e665-and-responsive-presentation/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-command-7e665-and-responsive-presentation/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/session-navigation.spec.ts:160:1 › late command responses cannot replace a new catalog and failed submission retains draft 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      172 |     await input.fill("/");await expect(page.getByRole("option")).toContainText("/new");
+      173 |     hold=true;await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
+    > 174 |     await expect.poll(()=>held).toBe(true);
+          |                                 ^
+      175 |     await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
+      176 |     await expect(page.getByRole("option")).toContainText("/new");
+      177 |     oldRelease();await page.waitForTimeout(100);
+        at /Users/kirineko/Github/nekomimi/test/browser/session-navigation.spec.ts:174:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/session-navigation-late-co-aa30f-ed-submission-retains-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft 
+    test/browser/session-navigation.spec.ts:119:1 › command keyboard, IME, parameters, errors, reload and responsive presentation 
+    test/browser/session-navigation.spec.ts:160:1 › late command responses cannot replace a new catalog and failed submission retains draft 
+  2 passed (37.1s)

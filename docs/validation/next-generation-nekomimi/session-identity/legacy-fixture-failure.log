@@ -1,0 +1,45 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/local-experience.test.ts (10 tests | 1 failed) 6318ms
+   × names once through recorded provider without polluting task history, and deletion leaves workspace untouched 2051ms
+ ❯ test/prompt-contracts.test.ts (30 tests | 1 failed) 3872ms
+   × keeps environment provenance hidden from conversation bubbles after branching 129ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/local-experience.test.ts > names once through recorded provider without polluting task history, and deletion leaves workspace untouched
+AssertionError: expected [Function] to throw error including '不存在' but got '会话已删除'
+
+Expected: "不存在"
+Received: "会话已删除"
+
+ ❯ test/local-experience.test.ts:165:45
+    163|     expect(await sessions.remove(created.id)).toEqual({ status: "delet…
+    164|     expect(await readFile(file, "utf8")).toBe("keep");
+    165|     await expect(sessions.entry(created.id)).rejects.toThrow("不存在");
+       |                                             ^
+    166|   } finally {
+    167|     await sessions.close();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/prompt-contracts.test.ts > keeps environment provenance hidden from conversation bubbles after branching
+Error: Branch requires the original workspace and mode identity
+ ❯ branchHistory src/customization/history-branch.ts:16:62
+     14|   const session = await readSession(source), canonical = await realpat…
+     15|   const original = sessionBinding(session.events);
+     16|   if (!original || original.target.root !== canonical) throw new Error…
+       |                                                              ^
+     17|   if (unpairedCalls(session.events).length) throw new Error("Resolve i…
+     18|   const view = contextView(session.events, assemblePrompt([]));
+ ❯ test/prompt-contracts.test.ts:130:2
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 4 passed (6)
+      Tests  2 failed | 65 passed (67)
+   Start at  02:46:32
+   Duration  14.30s (transform 471ms, setup 0ms, import 2.62s, tests 24.66s, environment 0ms)
+

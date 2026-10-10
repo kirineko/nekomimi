@@ -1,0 +1,4 @@
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 395 packages in 56s
+{"installedCodemode":true,"worker":true,"wasm":true,"hostResponsive":true,"limits":{"version":1,"timeoutMs":30000,"memoryLimitBytes":16777216,"sourceBytes":262144,"outputChars":16777216,"outputItems":100000,"storeTotalChars":1048576,"storeValueChars":262144}}

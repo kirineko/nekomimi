@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-07",
+  "scope": "source Storage/recovery modules; parent 1.4 remains incomplete",
+  "sourceSha256": {
+    "src/pi/journal-storage.ts": "f2da7a77c2052931040f35ca4ac7d8d14432d35b7b07a4ae73134b460003a1c4",
+    "src/pi/recovery.ts": "d7fbd71db8b9910f9080c53d73e8f8ec4b22bdace57edc059ad7fa6ed5c6ec34"
+  },
+  "runs": [
+    {
+      "node": "22",
+      "exitCode": 0,
+      "result": "production-node22/results.json"
+    },
+    {
+      "node": "24",
+      "exitCode": 0,
+      "result": "production-node24/results.json"
+    }
+  ],
+  "unitTests": {
+    "files": [
+      "test/durable-journal-storage.test.ts",
+      "test/durable-recovery.test.ts"
+    ],
+    "passed": 19
+  },
+  "knownLimits": [
+    "CLI/Web runtime not switched",
+    "raw network attempt and backpressure not yet validated with Durable",
+    "custom task recovery blocked pending verified cancellation adapters"
+  ],
+  "regression": {
+    "defaultWorkers": {
+      "exitCode": 1,
+      "passed": 339,
+      "total": 341,
+      "failures": "existing Git-history and customization-workflow 30s timeouts"
+    },
+    "workers2": {
+      "exitCode": 0,
+      "passed": 341,
+      "total": 341,
+      "assertionsAndTimeoutsUnchanged": true
+    },
+    "pack": {
+      "exitCode": 0,
+      "installed": true,
+      "temporaryGlobalPrefix": true,
+      "webLoopbackPassed": true
+    },
+    "minimumNodeInstalledModules": {
+      "node": "22.19.0",
+      "exitCode": 0,
+      "result": "packed-node22/results.json"
+    },
+    "openspec": {
+      "passed": 43,
+      "failed": 0
+    }
+  }
+}

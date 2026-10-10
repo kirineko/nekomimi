@@ -1,0 +1,61 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/mode-policy.test.ts (20 tests | 18 failed) 12197ms
+   × sends only work capabilities while retaining project rules, skills and ordinary tools 758ms
+   × keeps ordinary enabled review commands executable in work mode without a model request 636ms
+   × rejects an actual nested RPC to customization_validate before a tool intent 635ms
+   × rejects an actual nested RPC to customization_status before a tool intent 635ms
+   × rejects an actual nested RPC to customization_sdk before a tool intent 625ms
+   × rejects an actual nested RPC to customization_candidate before a tool intent 616ms
+   × rejects an actual nested RPC to customization_package before a tool intent 612ms
+   × rejects an actual nested RPC to resource_write before a tool intent 638ms
+   × rejects an actual nested RPC to customization_reload before a tool intent 640ms
+   × rejects an actual nested RPC to ext_modes_author before a tool intent 610ms
+   × rejects the work command /reload through its real command path 597ms
+   × rejects the work command /reload_host through its real command path 598ms
+   × rejects the work command /author through its real command path 597ms
+   × rejects the work command /author_flow through its real command path 594ms
+   × omits SDK documents from work discovery and refuses a known document ID before intent 607ms
+   × records a forged model call to a hidden creation tool and executes no creation side effect 598ms
+   × offers creation tools and declared author capabilities only in the create request 613ms
+   × does not grant user-directory writes merely because the session is create mode 594ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 18 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/mode-policy.test.ts > sends only work capabilities while retaining project rules, skills and ordinary tools
+ FAIL  test/mode-policy.test.ts > keeps ordinary enabled review commands executable in work mode without a model request
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_validate before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_status before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_sdk before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_candidate before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_package before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to resource_write before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to customization_reload before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects an actual nested RPC to ext_modes_author before a tool intent
+ FAIL  test/mode-policy.test.ts > rejects the work command /reload through its real command path
+ FAIL  test/mode-policy.test.ts > rejects the work command /reload_host through its real command path
+ FAIL  test/mode-policy.test.ts > rejects the work command /author through its real command path
+ FAIL  test/mode-policy.test.ts > rejects the work command /author_flow through its real command path
+ FAIL  test/mode-policy.test.ts > omits SDK documents from work discovery and refuses a known document ID before intent
+ FAIL  test/mode-policy.test.ts > records a forged model call to a hidden creation tool and executes no creation side effect
+ FAIL  test/mode-policy.test.ts > offers creation tools and declared author capabilities only in the create request
+ FAIL  test/mode-policy.test.ts > does not grant user-directory writes merely because the session is create mode
+Error: Error: Invalid, duplicate or reserved name: author
+ ❯ RpcPeer.accept src/customization/rpc.ts:66:51
+     64|           if (p.workflowId !== frame.workflowId || p.stepId !== frame.…
+     65|           this.pending.delete(frame.callId); clearTimeout(p.timer);
+     66|           if (frame.error !== undefined) p.reject(new Error(String(fra…
+       |                                                   ^
+     67|           else p.resolve(frame.value);
+     68|         } else if (frame.kind === "request" && typeof frame.method ===…
+ ❯ Socket.<anonymous> src/customization/rpc.ts:37:46
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/18]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  18 failed | 23 passed (41)
+   Start at  03:20:19
+   Duration  12.86s (transform 385ms, setup 0ms, import 1.46s, tests 18.14s, environment 0ms)
+

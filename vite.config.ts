@@ -1,6 +1,8 @@
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 export default defineConfig({
   root: "src/web",
+  plugins: [tailwindcss()],
   worker: { format: "es" },
   build: { manifest: "assets/asset-manifest.json", assetsInlineLimit: 0, outDir: "../../dist/web-dist", emptyOutDir: true },
   server: {

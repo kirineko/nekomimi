@@ -1,0 +1,137 @@
+{
+  "items": [
+    {
+      "model": [
+        {
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": "recovered"
+            }
+          ],
+          "api": "faux:1791300188907:7foqx6o6xvq",
+          "provider": "faux",
+          "model": "faux-1",
+          "usage": {
+            "input": 52,
+            "output": 3,
+            "cacheRead": 0,
+            "cacheWrite": 52,
+            "totalTokens": 107,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "total": 0
+            }
+          },
+          "stopReason": "stop",
+          "timestamp": 1791300188907
+        }
+      ],
+      "kind": "pi.assistant",
+      "id": 15,
+      "conversationId": 1,
+      "byTaskId": 14
+    },
+    {
+      "model": [
+        {
+          "role": "toolResult",
+          "toolCallId": "external-call",
+          "toolName": "effect",
+          "content": [
+            {
+              "type": "text",
+              "text": "effect completed"
+            }
+          ],
+          "isError": false,
+          "timestamp": 1791300188929
+        }
+      ],
+      "data": {
+        "diagnostics": []
+      },
+      "kind": "pi.tool-result",
+      "id": 13,
+      "conversationId": 1,
+      "byTaskId": 12
+    },
+    {
+      "model": [
+        {
+          "role": "assistant",
+          "content": [
+            {
+              "type": "toolCall",
+              "id": "external-call",
+              "name": "effect",
+              "arguments": {}
+            }
+          ],
+          "api": "faux:1791300188818:zysahz6t4iq",
+          "provider": "faux",
+          "model": "faux-1",
+          "usage": {
+            "input": 38,
+            "output": 3,
+            "cacheRead": 0,
+            "cacheWrite": 38,
+            "totalTokens": 79,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "total": 0
+            }
+          },
+          "stopReason": "toolUse",
+          "timestamp": 1791300188818
+        }
+      ],
+      "kind": "pi.assistant",
+      "id": 11,
+      "conversationId": 1,
+      "byTaskId": 9
+    },
+    {
+      "model": [
+        {
+          "role": "system",
+          "content": "",
+          "toolsAdded": [
+            {
+              "name": "effect",
+              "description": "Fake external effect with observable count",
+              "parameters": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          ],
+          "timestamp": 1791300188856
+        }
+      ],
+      "kind": "pi.system",
+      "id": 10,
+      "conversationId": 1,
+      "byTaskId": 9
+    },
+    {
+      "model": [
+        {
+          "role": "user",
+          "content": "fixture",
+          "timestamp": 1791300188833
+        }
+      ],
+      "kind": "pi.user",
+      "id": 7,
+      "conversationId": 1
+    }
+  ]
+}

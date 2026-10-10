@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/web/v2/routes/session-timeline.tsx(39,26): error TS2339: Property 'dataset' does not exist on type 'Element'.

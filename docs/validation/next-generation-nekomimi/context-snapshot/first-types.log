@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/context-snapshot.ts(2,66): error TS2724: '"./journal.js"' has no exported member named 'ArtifactRef'. Did you mean 'artifactRefs'?

@@ -1,0 +1,7 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/core/recovery-view.ts(9,3): error TS2322: Type '{ launcher: { requiresBuild: true; } | { requiresBuild: false; executable: string; args: string[]; }; planHash: string; version: number; installation: CoreInstallationIdentity; ... 10 more ...; applied: boolean; }' is not assignable to type 'CoreRecoveryView'.
+  Types of property 'applied' are incompatible.
+    Type 'boolean' is not assignable to type 'false'.

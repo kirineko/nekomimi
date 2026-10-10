@@ -14,7 +14,7 @@ if(!config.apiKey)throw Error('Locally configured credentials required');
 const resume=process.env.NEKOMIMI_LIVE_WORKSPACE;
 const workspace=await realpath(resume??await mkdtemp(join(tmpdir(),'nekomimi-v2-live-'))),home=join(workspace,'home'),root=join(workspace,'.nekomimi/extensions/live');
 if(!resume){await mkdir(home);await mkdir(root,{recursive:true});await writeFile(join(workspace,'sample.txt'),'SYNTHETIC_V2_INPUT');
-await writeFile(join(root,'extension.json'),JSON.stringify({name:'live',sdkVersion:2,entry:'index.ts',requiredCapabilities:['commands','tools','providers','workflows','panels','ui','model']}));
+await writeFile(join(root,'extension.json'),JSON.stringify({name:'live',sdkVersion:3,entry:'index.ts',requiredCapabilities:['commands','tools','providers','workflows','panels','ui','model']}));
 await writeFile(join(root,'index.ts'),'export default () => {};\n');}
 let host=new CustomizationHost(workspace,home),app,browser;const started=Date.now(),phases=[];
 const settings={...config,workspace,home,customization:host,session:join(workspace,'generation'),tools:['read','write','edit','resource_list','resource_read','customization_sdk','customization_validate'],maxTurns:24,maxOutputTokens:8000,timeoutMs:120000};

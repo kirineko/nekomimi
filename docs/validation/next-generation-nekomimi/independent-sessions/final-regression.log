@@ -1,0 +1,112 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/independent-sessions.test.ts (7 tests | 4 failed) 20021ms
+   × runs work and create independently, scopes cancel IDs and reports both active runs 3662ms
+   × service shutdown cancels and drains every independent target 3365ms
+   × keeps another target's naming alive and ignores repeated commands and stale cancel IDs 3139ms
+   × a new task preempts only naming on its own target, without rerunning old naming 3310ms
+{"nekomimiDiagnostic":{"version":1,"id":"2964acac-32dd-45b0-b146-88ed9f42b434","timestamp":"2026-10-06T21:02:44.275Z","sessionId":"29b95b89cc3010101df312b39658cc19e99c8bec37b5756558fac5abc6ab967a","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"81b545b3-311c-4c1f-927d-18ad2c84d6f6","timestamp":"2026-10-06T21:02:44.697Z","sessionId":"4f7f63adf9b444c100991d3800a4ff9a66c9dd98493febbb8dc448fc43f74db5","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"76358be5-4551-4fd5-9892-493b1014180e","timestamp":"2026-10-06T21:02:45.424Z","sessionId":"17803c06848a23b8853b1da5f18f7611ca4616d74cf4e10c5b262a71209e927e","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"92de2ff4-024a-4685-a8ce-f26413b7792c","timestamp":"2026-10-06T21:02:45.866Z","sessionId":"84dc92f79cf52b6f6ecb00c5f0d70468642c822b17ee579fbe76cb1f08d32b4e","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e75428b3-c53d-4344-8cee-0ed895dda7fb","timestamp":"2026-10-06T21:02:46.745Z","sessionId":"f68329a5126be0402abf42dfd8fd1e2bf38e03f0fc667e0f3c3b06b3b7f485dc","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5f1f385f-de0a-40a9-9525-9088cde1445a","timestamp":"2026-10-06T21:02:47.433Z","sessionId":"dfd08917098c3c78ccaf6f64680b6b254fc993885712efb07777d3ab36d2f660","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5acd6eca-3aa2-4e26-9f5e-13cf27ee66f3","timestamp":"2026-10-06T21:02:47.876Z","sessionId":"21b8b891bdf240f70fd9b6dbe741a41c9c6700f59c5efccf12d46637773e5810","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"84d20714-12af-4170-9ba9-b1832719a799","timestamp":"2026-10-06T21:02:48.505Z","sessionId":"f4fe866acc9409896ecd7c71460d55da2426234be0cc144ead8bfff8fadb9204","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"efd38d63-af2a-46e8-8a0b-7f44e51f90ab","timestamp":"2026-10-06T21:02:49.220Z","sessionId":"6e4dccca9f1c8cf66218d854ab9f720c16a26e28bf59d3b2b73fad232419994a","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1bfcf465-0ce8-49d3-b0dd-fe09ba214d6e","timestamp":"2026-10-06T21:02:49.839Z","sessionId":"cf9efbbdfb936d2f18302cb9bceee9e87807155e6193f1772cd7c3a11c391164","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1cab0fdc-b05d-4ebb-bfce-57f06df116f2","timestamp":"2026-10-06T21:02:50.377Z","sessionId":"8d3783ccb94ced2e4d5252c04ba01ed7051b55308cf82e4b1ddfc804302d548e","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"301b2c95-d9a7-45c5-86ac-22fb9a2da80f","timestamp":"2026-10-06T21:02:50.729Z","sessionId":"2d63ab1a55b5498077aa2f04a3033be72978f93776ca1c843b688f2f32a618d9","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/independent-sessions.test.ts > runs work and create independently, scopes cancel IDs and reports both active runs
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ test/independent-sessions.test.ts:34:45
+     32|   const f = await fixture();
+     33|   const [work, create] = await Promise.all([f.submit(f.work.id, "work-…
+     34|   await expect.poll(() => f.pending.length).toBe(2);
+       |                                             ^
+     35|   const sessions = (await (await f.request("/sessions")).json()).sessi…
+     36|   expect(sessions.map((item: any) => item.status)).toEqual(["running",…
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/independent-sessions.test.ts:34:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/independent-sessions.test.ts > service shutdown cancels and drains every independent target
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ test/independent-sessions.test.ts:61:45
+
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/independent-sessions.test.ts:61:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/independent-sessions.test.ts > keeps another target's naming alive and ignores repeated commands and stale cancel IDs
+AssertionError: expected undefined to be truthy
+
+- Expected:
+true
+
++ Received:
+undefined
+
+ ❯ test/independent-sessions.test.ts:67:64
+     65| it("keeps another target's naming alive and ignores repeated commands …
+     66|   const f = await fixture(true, false), receipt = await f.submit(f.wor…
+     67|   await expect.poll(() => f.app.sessions.namingFor(f.work.id)).toBeTru…
+       |                                                                ^
+     68|   await expect.poll(() => f.pending.length).toBe(1);
+     69|   const naming = f.app.sessions.namingFor(f.work.id)!;
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/independent-sessions.test.ts:67:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/independent-sessions.test.ts > a new task preempts only naming on its own target, without rerunning old naming
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ test/independent-sessions.test.ts:91:45
+     89| it("a new task preempts only naming on its own target, without rerunni…
+     90|   const f = await fixture(true, false); await f.submit(f.work.id, "fir…
+     91|   await expect.poll(() => f.pending.length).toBe(2);
+       |                                             ^
+     92|   const own = f.app.sessions.namingFor(f.work.id)!, other = f.app.sess…
+     93|   await f.submit(f.work.id, "second");
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/independent-sessions.test.ts:91:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  4 failed | 129 passed (133)
+   Start at  05:02:08
+   Duration  41.98s (transform 2.93s, setup 0ms, import 7.44s, tests 230.35s, environment 0ms)
+

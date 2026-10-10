@@ -22,7 +22,7 @@ export function useConversationScroll(container: RefObject<HTMLElement | null>, 
 
   useLayoutEffect(() => {
     const el = container.current;
-    const content = el?.querySelector<HTMLElement>('.conversation-content');
+    const content = el?.querySelector<HTMLElement>('[data-conversation-content]');
     if (!el || !content) return;
     let positions: RowPosition[] = [];
     let programTarget: number | undefined;
@@ -42,7 +42,7 @@ export function useConversationScroll(container: RefObject<HTMLElement | null>, 
     };
     const measure = () => {
       const origin = el.getBoundingClientRect().top - el.scrollTop;
-      positions = Array.from(content.querySelectorAll<HTMLElement>('[data-row-id]'), node => {
+      positions = Array.from(content.querySelectorAll<HTMLElement>('[data-row-id], [data-delivery-id]'), node => {
         const rect = node.getBoundingClientRect();
         return { node, top: rect.top - origin, bottom: rect.bottom - origin };
       }).sort((a, b) => a.top - b.top);

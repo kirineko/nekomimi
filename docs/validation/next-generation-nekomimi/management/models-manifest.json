@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-10-07T20:29:22.831000+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.4": "in progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "browser": 15,
+    "unit": 26,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/management/model-page-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/model-page-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/model-page-final-build.log": "99055b3ef3c15024f3cdcea880d2bb85850b24fb8b95f20e34e5efa9d5d0689a",
+    "docs/validation/next-generation-nekomimi/management/model-page-final-browser.log": "c8f101ec4e07f7a6675e629b1d16954b622bc8a203ff89627e5e3f0c3d8d0c33",
+    "docs/validation/next-generation-nekomimi/management/model-page-browser.log": "11f6117dd7274b5b9c294d8c8b1adecd4639d9d9d54e542fc36974b56c76f168",
+    "docs/validation/next-generation-nekomimi/management/model-page-unit.log": "e5b4b6f7aa5d8a7d1075a7ff4f2daa21e4b4439192344fe470edefdbca7c2a70",
+    "docs/validation/next-generation-nekomimi/management/model-page-final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/model-page-browser-2.log": "7bff224dbdea8a7fd78d85c4d2035054022c9869ae7f8e4ead6dd17cd11a6ec7",
+    "docs/validation/next-generation-nekomimi/management/model-page-build.log": "b804a53af5ed4d88b54a59452a43187140e220786335b692cae8261331946ece",
+    "docs/validation/next-generation-nekomimi/management/model-page-types-2.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/models-progress.md": "77088d8b0abc3dde4d264988d0c0337ca4e06931d9a38bc5827cb9d15812f864",
+    "src/shared/model-management.ts": "f53b56b56aeca83df414f670731965477fbc8dea1123fd112b7bdba7dad028a3",
+    "src/customization/model-catalog.ts": "b934222875a335ae87b4403842cd0b640648a7a06241ed0c56b64d3934d19216",
+    "src/customization/host.ts": "07a925009349330fd7d431c8a263ddb2d174b1f3b3043c5f2f0329e63903444b",
+    "src/server/sessions.ts": "64b61613f0bbaef4b85059553fbcb8a1dc870a07e3682a57df8953de44fa5fd3",
+    "src/web/v2/routes/models.tsx": "c06a2c708f2764f5b2806a618f226faee3184b15935aa05495eebf71e150d0af",
+    "src/web/v2/routes/model-profile-editor.tsx": "174840cb211527f3f160f1c36a57e7ec594c9f0056ddd52d669bca5f5fd1b56d",
+    "src/web/v2/state/models.ts": "1266d234760178296906f4eb34a6c8def8898e4f7ba0498acdcbe7e15def7ae3",
+    "src/web/v2/router.tsx": "aebe5d8b1affa425b7e4e5bb1d53c9ad554e16f1260ba0653ecf6214d657dae3",
+    "test/model-catalog.test.ts": "5d37ffc6b68811be20723778146fea156ca6f14df7a4edce634bc00349613ee6",
+    "test/browser/model-settings.spec.ts": "6aa104e47f6725f43e2c215a2487c5b358909fd2bb05890c93ed5d1ab34864b1"
+  }
+}

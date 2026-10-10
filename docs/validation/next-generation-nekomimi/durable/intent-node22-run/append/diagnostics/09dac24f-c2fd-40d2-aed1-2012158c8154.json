@@ -1,0 +1,1 @@
+{"version":1,"id":"09dac24f-c2fd-40d2-aed1-2012158c8154","timestamp":"2026-10-06T17:17:21.500Z","sessionId":"959539ad-1411-4aec-9e77-ea4df5800f96","seq":8,"durableSeq":8,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v22.19.0","category":"storage"}

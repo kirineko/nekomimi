@@ -1,0 +1,64 @@
+{
+  "generation": "current",
+  "root": "/Users/kirineko/Github/nekomimi",
+  "node": "v24.15.0",
+  "browser": "154.0.8037.98",
+  "platform": "darwin",
+  "arch": "arm64",
+  "rows": 450,
+  "realModelCalls": 0,
+  "journalUnchanged": true,
+  "results": [
+    {
+      "repeat": 0,
+      "readyMs": 135.17908399999988,
+      "paging": [
+        56.78958299999999,
+        65.63075000000003,
+        64.7841669999998,
+        50.343417000000045,
+        50.74633399999993,
+        49.86237499999993
+      ],
+      "anchorRecoveryMs": 115.53929199999993,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 42.138708999999835,
+      "refreshMs": 104.64170899999999
+    },
+    {
+      "repeat": 1,
+      "readyMs": 125.44058300000006,
+      "paging": [
+        66.84329200000002,
+        63.88258399999995,
+        50.889458000000104,
+        64.65491599999996,
+        51.80045800000016,
+        50.015041999999994
+      ],
+      "anchorRecoveryMs": 116.67429100000027,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 70.38700000000017,
+      "refreshMs": 103.75066599999991
+    },
+    {
+      "repeat": 2,
+      "readyMs": 125.04674999999997,
+      "paging": [
+        66.77016700000013,
+        62.36783299999979,
+        51.22483299999976,
+        49.126124999999774,
+        50.10708399999976,
+        49.89424999999983
+      ],
+      "anchorRecoveryMs": 114.66666600000008,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 68.39000000000033,
+      "refreshMs": 59.187832999999955
+    }
+  ]
+}

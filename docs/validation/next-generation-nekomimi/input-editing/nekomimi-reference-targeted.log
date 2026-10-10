@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:81283) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/references.spec.ts:137:1 › long mixed references and candidate controls fit a keyboard-sized viewport (953ms)
+  ✓  2 test/browser/references.spec.ts:192:1 › work and create references use their own targets and retain chips across client navigation (1.3s)
+
+  2 passed (3.5s)

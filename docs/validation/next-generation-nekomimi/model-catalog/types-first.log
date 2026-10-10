@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/customization/host.ts(253,202): error TS2339: Property 'public' does not exist on type 'ConfigStore'.

@@ -1,0 +1,30 @@
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 326 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/assets/nekomimi-CMII8_56.svg        0.44 kB │ gzip:   0.27 kB
+dist/web-dist/index.html                          0.50 kB │ gzip:   0.33 kB
+dist/web-dist/assets/asset-manifest.json          2.02 kB │ gzip:   0.45 kB
+dist/web-dist/assets/diff-woXpYk--.js             2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js             2.81 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js            41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js          69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js     174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js  175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js            175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js     181.07 kB
+dist/web-dist/assets/index-DmX0wVpL.css          75.15 kB │ gzip:  15.11 kB
+dist/web-dist/assets/ExportDialog-C2pp-A-I.js     1.79 kB │ gzip:   0.94 kB
+dist/web-dist/assets/Changes-CFmq53NR.js          2.15 kB │ gzip:   1.08 kB
+dist/web-dist/assets/FileBrowser-xtq4NmVU.js      4.67 kB │ gzip:   2.12 kB
+dist/web-dist/assets/jsx-runtime-D3jfb0Ew.js      8.90 kB │ gzip:   3.38 kB
+dist/web-dist/assets/Inspector-qnS-e8mA.js       11.11 kB │ gzip:   3.39 kB
+dist/web-dist/assets/Customization-QN3wSnq9.js   42.32 kB │ gzip:  12.63 kB
+dist/web-dist/assets/index-fS2URQ1p.js          471.24 kB │ gzip: 146.49 kB
+
+✓ built in 118ms

@@ -1,0 +1,42 @@
+
+Running 1 test using 1 worker
+
+(node:2086) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview (45.1s)
+
+
+  1) test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: '模型用途', exact: true })
+
+
+      20 |   await card.getByRole('button',{name:'授权并启用资源',exact:true}).click();await expect(page.getByRole('dialog')).toContainText('权限 themes');await page.getByRole('button',{name:'取消操作',exact:true}).click();await expect(card.getByRole('button',{name:'授权并启用资源',exact:true})).toBeFocused();
+      21 |   await card.getByRole('button',{name:'静态校验资源',exact:true}).click();await page.getByRole('button',{name:'确认静态校验资源',exact:true}).click();await expect(card.getByRole('status')).toContainText('静态校验通过');
+    > 22 |   await page.getByRole('link',{name:'模型用途与配置',exact:true}).click();await expect(page.getByRole('status').filter({hasText:'静态校验通过'})).toHaveCount(0);await page.getByRole('link',{name:'能力与权限',exact:true}).click();
+         |                                                         ^
+      23 |   await card.getByRole('button',{name:'授权并启用资源',exact:true}).click();await page.getByRole('button',{name:'确认授权并启用资源',exact:true}).click();await expect(card.getByRole('button',{name:'停用并撤销授权',exact:true})).toBeVisible();
+      24 |   await page.getByRole('link',{name:'主题与外观',exact:true}).click();await page.getByRole('button',{name:'预览 粉白主题',exact:true}).click();await expect(page.locator('html')).toHaveAttribute('data-workbench-theme','pink');await expect(page.getByRole('button',{name:'应用已审阅风格',exact:true})).toBeVisible();await page.getByRole('button',{name:'取消主题预览',exact:true}).click();await expect(page.locator('html')).not.toHaveAttribute('data-workbench-theme');
+      25 |   await page.getByRole('link',{name:'能力与权限',exact:true}).click();await page.setViewportSize({width:360,height:780});await expect(page.getByRole('link',{name:'返回开发目标',exact:true})).toBeInViewport();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath('customization-lifecycle-mobile.png')});
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-lifecycle.spec.ts:22:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-lifecycle-co-d0d37-rmissions-and-theme-preview/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization-lifecycle.spec.ts:8:1 › compact capability catalog, local feedback, permissions and theme preview 

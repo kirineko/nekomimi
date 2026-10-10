@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/runtime.ts(301,77): error TS2339: Property 'handoffId' does not exist on type 'HandoffPreview'.

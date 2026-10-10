@@ -1,0 +1,114 @@
+
+Running 3 tests using 1 worker
+
+(node:71069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/inspection.spec.ts:27:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (45.1s)
+(node:71089) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 test/browser/inspection.spec.ts:27:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (45.1s)
+(node:71117) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/inspection.spec.ts:41:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (45.1s)
+
+
+  1) test/browser/inspection.spec.ts:27:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByRole('region', { name: '所选调用证据' }).getByRole('button', { name: '查看保存的图片 1', exact: true })
+
+
+      33 |     await expect(dialog.getByRole('button',{name:'codemode · 失败',exact:true})).toBeVisible();await dialog.getByRole('button',{name:'展开子调用（3）',exact:true}).click();await expect(dialog.getByRole('button',{name:'write · 完成',exact:true})).toBeVisible();
+      34 |     await dialog.getByRole('button',{name:'classifier · 完成',exact:true}).click();let selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByText(/#\d+ · model.operation.result/).click();await expect(selected.getByRole('region',{name:'归一化分类结果'})).toContainText('0.9');
+    > 35 |     await dialog.getByRole('button',{name:'image · 完成',exact:true}).click();selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByText(/#\d+ · model.operation.result/).click();await selected.getByRole('button',{name:'查看保存的图片 1',exact:true}).click();await expect(selected.getByRole('img',{name:'保存的模型图片 1'})).toBeVisible();await expect.poll(()=>selected.getByRole('img').evaluate((element:HTMLImageElement)=>element.naturalWidth)).toBeGreaterThan(0);
+         |                                                                                                                                                                                                                                                                    ^
+      36 |     await dialog.getByRole('button',{name:'work · 完成',exact:true}).click();selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByRole('combobox',{name:'网络尝试',exact:true}).selectOption('retry-1');await selected.getByText(/#\d+ · request.dispatched/).click();await selected.getByRole('button',{name:'读取原始附件 1',exact:true}).click();await expect(selected).toContainText('raw retry fixture');await expect(selected).toContainText(f.request.sha256);await expect(selected).toContainText('attempt.retry');
+      37 |     await selected.getByRole('combobox',{name:'网络尝试',exact:true}).selectOption('retry-2');await expect(selected).not.toContainText('attempt.retry');
+      38 |     await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'调用证据',exact:true})).toBeFocused();await expect(page.getByLabel('任务草稿',{exact:true})).toHaveValue('检查后继续');expect(writes).toEqual([]);expect(f.calls()).toBe(2);expect(await readFile(join(f.directory,'journal.jsonl'))).toEqual(before);
+        at /Users/kirineko/Github/nekomimi/test/browser/inspection.spec.ts:35:260
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/inspection-10-6-work-neste-fbde3-rtial-usage-remain-readonly/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/inspection-10-6-work-neste-fbde3-rtial-usage-remain-readonly/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/inspection-10-6-work-neste-fbde3-rtial-usage-remain-readonly/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/inspection-10-6-work-neste-fbde3-rtial-usage-remain-readonly/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/inspection.spec.ts:27:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByRole('region', { name: '所选调用证据' }).getByRole('button', { name: '查看保存的图片 1', exact: true })
+
+
+      33 |     await expect(dialog.getByRole('button',{name:'codemode · 失败',exact:true})).toBeVisible();await dialog.getByRole('button',{name:'展开子调用（3）',exact:true}).click();await expect(dialog.getByRole('button',{name:'write · 完成',exact:true})).toBeVisible();
+      34 |     await dialog.getByRole('button',{name:'classifier · 完成',exact:true}).click();let selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByText(/#\d+ · model.operation.result/).click();await expect(selected.getByRole('region',{name:'归一化分类结果'})).toContainText('0.9');
+    > 35 |     await dialog.getByRole('button',{name:'image · 完成',exact:true}).click();selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByText(/#\d+ · model.operation.result/).click();await selected.getByRole('button',{name:/查看保存的图片/}).click();await expect(selected.getByRole('img',{name:/保存的模型图片/})).toBeVisible();await expect.poll(()=>selected.getByRole('img').evaluate((element:HTMLImageElement)=>element.naturalWidth)).toBeGreaterThan(0);
+         |                                                                                                                                                                                                                                                                    ^
+      36 |     await dialog.getByRole('button',{name:'work · 完成',exact:true}).click();selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByRole('combobox',{name:'网络尝试',exact:true}).selectOption('retry-1');await selected.getByText(/#\d+ · request.dispatched/).click();await selected.getByRole('button',{name:'读取原始附件 1',exact:true}).click();await expect(selected).toContainText('raw retry fixture');await expect(selected).toContainText(f.request.sha256);await expect(selected).toContainText('attempt.retry');
+      37 |     await selected.getByRole('combobox',{name:'网络尝试',exact:true}).selectOption('retry-2');await expect(selected).not.toContainText('attempt.retry');
+      38 |     await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'调用证据',exact:true})).toBeFocused();await expect(page.getByLabel('任务草稿',{exact:true})).toHaveValue('检查后继续');expect(writes).toEqual([]);expect(f.calls()).toBe(2);expect(await readFile(join(f.directory,'journal.jsonl'))).toEqual(before);
+        at /Users/kirineko/Github/nekomimi/test/browser/inspection.spec.ts:35:260
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/inspection-10-6-create-nes-18343-rtial-usage-remain-readonly/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/inspection-10-6-create-nes-18343-rtial-usage-remain-readonly/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/inspection-10-6-create-nes-18343-rtial-usage-remain-readonly/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/inspection-10-6-create-nes-18343-rtial-usage-remain-readonly/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/inspection.spec.ts:41:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog').getByRole('region', { name: '所选调用证据' }).getByRole('button', { name: '查看保存的图片 1', exact: true })
+
+
+      44 |     await rm(join(f.directory,'artifacts',f.image.evidence.attachments[0]!.artifact.sha256));
+      45 |     await page.goto(`${f.app.origin}/v2/work/session/${f.session.id}#token=${f.app.token}`);await page.getByRole('button',{name:'调用证据',exact:true}).click();const dialog=page.getByRole('dialog');
+    > 46 |     await dialog.getByRole('button',{name:'展开子调用（3）',exact:true}).click();await dialog.getByRole('button',{name:'image · 完成',exact:true}).click();const selected=dialog.getByRole('region',{name:'所选调用证据'});await selected.getByText(/#\d+ · model.operation.result/).click();await selected.getByRole('button',{name:/查看保存的图片/}).click();await expect(selected.getByRole('alert')).toContainText('图片附件缺失');
+         |                                                                                                                                                                                                                                                                                                                                                ^
+      47 |     expect(await dialog.evaluate(element=>element.scrollWidth<=element.clientWidth)).toBe(true);await page.screenshot({path:info.outputPath('inspection-narrow.png')});await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'调用证据',exact:true})).toBeFocused();
+      48 |   }finally{await f.app.close();}
+      49 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/inspection.spec.ts:46:336
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/inspection-10-6-missing-at-7a926-nspection-remains-reachable/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/inspection-10-6-missing-at-7a926-nspection-remains-reachable/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/inspection-10-6-missing-at-7a926-nspection-remains-reachable/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/inspection-10-6-missing-at-7a926-nspection-remains-reachable/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/inspection.spec.ts:27:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly 
+    test/browser/inspection.spec.ts:27:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly 
+    test/browser/inspection.spec.ts:41:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable 

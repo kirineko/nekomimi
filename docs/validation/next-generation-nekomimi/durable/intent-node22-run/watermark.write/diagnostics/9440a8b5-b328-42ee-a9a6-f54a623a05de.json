@@ -1,0 +1,1 @@
+{"version":1,"id":"9440a8b5-b328-42ee-a9a6-f54a623a05de","timestamp":"2026-10-06T17:17:22.197Z","sessionId":"0ec6e384-b20d-45c8-afc3-00b5d00acb70","seq":9,"durableSeq":8,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v22.19.0","category":"storage"}

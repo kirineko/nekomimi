@@ -1,0 +1,161 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: v2-runtime-slots.spec.ts >> 10.9 scoped slots support draft conflicts, page bridge and explicit remount
+- Location: test/browser/v2-runtime-slots.spec.ts:39:1
+
+# Error details
+
+```
+Test timeout of 45000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - strong [ref=e8]: Nekomimi
+      - generic [ref=e9]: 用户项目
+    - navigation "模式" [ref=e10]:
+      - link "工作" [ref=e11] [cursor=pointer]:
+        - /url: /work
+      - link "创造" [ref=e12] [cursor=pointer]:
+        - /url: /create
+    - generic [ref=e13]:
+      - group [ref=e14]:
+        - generic "运行版本 0.2.1，构建 fc285e62" [ref=e15] [cursor=pointer]: 运行版本 0.2.1 · fc285e62
+      - button "版本恢复" [ref=e16] [cursor=pointer]
+      - button "更多操作" [ref=e18] [cursor=pointer]
+  - generic [ref=e20]:
+    - navigation "项目与会话" [ref=e24]:
+      - paragraph [ref=e25]: WORKSPACE
+      - heading "我的项目" [level=2] [ref=e26]
+      - link "主题与外观" [ref=e27] [cursor=pointer]:
+        - /url: /work/themes
+      - link "基础设置" [ref=e28] [cursor=pointer]:
+        - /url: /work/settings
+      - link "面板管理" [ref=e29] [cursor=pointer]:
+        - /url: /work/session/800928247301f625ec3539acaeafbf04412ff840b6a2fa149e7f155277056cb1/panels
+      - link "持久工作流管理" [ref=e30] [cursor=pointer]:
+        - /url: /work/workflows
+      - link "模型用途与配置" [ref=e31] [cursor=pointer]:
+        - /url: /work/session/800928247301f625ec3539acaeafbf04412ff840b6a2fa149e7f155277056cb1/models
+      - generic [ref=e32]:
+        - textbox "新会话标题" [ref=e33]:
+          - /placeholder: 新任务…
+        - button "新建" [ref=e34] [cursor=pointer]
+      - region "工作会话列表" [ref=e35]:
+        - list [ref=e36]:
+          - listitem [ref=e37]:
+            - heading "今天" [level=3] [ref=e38]
+            - generic [ref=e39]:
+              - generic [ref=e40]:
+                - link "Slot task" [ref=e41] [cursor=pointer]:
+                  - /url: /work/session/800928247301f625ec3539acaeafbf04412ff840b6a2fa149e7f155277056cb1
+                - button "会话操作 Slot task" [ref=e43] [cursor=pointer]: ···
+              - generic [ref=e44]:
+                - generic [ref=e45]: 就绪
+                - button "活动时间 Slot task：2026/10/09 GMT+8 02:28:12" [ref=e46] [cursor=pointer]:
+                  - time [ref=e47]: 刚刚
+        - button "刷新会话列表" [ref=e48] [cursor=pointer]
+    - separator "调整导航宽度" [ref=e49]
+    - main [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - paragraph [ref=e55]: WORK MODE
+          - heading "Slot task" [level=1] [ref=e56]
+        - generic [ref=e57]:
+          - button "调用证据" [ref=e58] [cursor=pointer]
+          - button "上下文详情" [ref=e59] [cursor=pointer]: 上下文
+          - generic [ref=e60]: idle
+          - button "删除" [ref=e61] [cursor=pointer]
+      - navigation "历史导航" [ref=e62]:
+        - status
+      - generic "任务时间线" [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - region "扩展区域 session-header" [ref=e66]:
+              - generic [ref=e67]:
+                - button "打开Work header" [ref=e68] [cursor=pointer]
+                - paragraph [ref=e69]: Work saved header
+            - region "发起交接" [ref=e70]:
+              - button "交接到创造会话" [ref=e71] [cursor=pointer]
+            - region "交接与交付" [ref=e72]:
+              - generic [ref=e73]:
+                - heading "交接与交付" [level=2] [ref=e74]
+                - button "刷新交接记录" [ref=e75] [cursor=pointer]
+              - paragraph [ref=e76]: 尚无交接或交付记录。
+              - region "交接确认状态" [ref=e77]:
+                - generic [ref=e78]:
+                  - heading "交接确认状态" [level=3] [ref=e79]
+                  - button "重新读取确认状态" [ref=e80] [cursor=pointer]
+                - paragraph [ref=e81]: 尚未观察到已接受的交接；若刚刚断线，请先重新读取确认状态。
+          - region "任务轮次" [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: 任务轮次
+              - region "扩展区域 message-content" [ref=e86]:
+                - article [ref=e87]:
+                  - generic [ref=e88]: YOU
+                  - paragraph [ref=e90]: Saved message remains readable
+                - generic [ref=e91]:
+                  - button "打开Work second" [ref=e92] [cursor=pointer]
+                  - paragraph [ref=e93]: Work saved second
+                - generic [ref=e94]:
+                  - button "打开Work first" [ref=e95] [cursor=pointer]
+                  - paragraph [ref=e96]: Work saved first
+      - generic [ref=e97]:
+        - region "扩展交互"
+        - region "扩展区域 composer-toolbar" [ref=e98]:
+          - generic [ref=e99]:
+            - button "关闭Work toolbar" [ref=e100] [cursor=pointer]
+            - region "自定义面板 Work toolbar" [ref=e101]:
+              - generic [ref=e102]:
+                - strong [ref=e103]: Work toolbar
+                - button "收起" [ref=e104] [cursor=pointer]
+              - iframe [active] [ref=e105]:
+                - generic [ref=f1e2]:
+                  - paragraph [ref=f1e3]: Work mounted
+                  - paragraph [ref=f1e4]: bound 800928247301f625ec3539acaeafbf04412ff840b6a2fa149e7f155277056cb1
+                  - button "填写草稿" [ref=f1e5] [cursor=pointer]
+                  - button "打开页面" [ref=f1e6] [cursor=pointer]
+                  - button "并发请求" [ref=f1e7] [cursor=pointer]
+              - group [ref=e106]:
+                - generic "开发详情" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]: 任务草稿
+        - combobox "任务补全" [ref=e109]:
+          - textbox "任务草稿" [ref=e110]
+        - generic [ref=e111]:
+          - generic [ref=e112]: Enter 发送 · Shift+Enter 换行 · / 命令 · @ 引用
+          - button "发送" [ref=e113] [cursor=pointer]
+    - separator "调整详情宽度" [ref=e114]
+    - complementary "结果与证据" [ref=e118]:
+      - paragraph [ref=e119]: INSPECTOR
+      - tablist "侧栏区域" [ref=e120]:
+        - tab "证据" [selected] [ref=e121] [cursor=pointer]
+        - tab "变更" [ref=e122] [cursor=pointer]
+        - tab "文件" [ref=e123] [cursor=pointer]
+      - tabpanel "证据" [ref=e124]:
+        - generic [ref=e125]:
+          - heading "上下文预算" [level=3] [ref=e126]
+          - paragraph [ref=e127]: 选择会话后显示当前投影的上下文统计。
+        - generic [ref=e128]:
+          - heading "调用证据" [level=3] [ref=e129]
+          - paragraph [ref=e130]: 没有进行中的运行。
+      - region "扩展区域 sidebar-widget" [ref=e131]:
+        - status [ref=e132]:
+          - generic [ref=e133]: 未挂载
+          - text: 面板 createonly 不适用于工作模式，未挂载
+        - generic [ref=e134]:
+          - button "打开Work side" [ref=e135] [cursor=pointer]
+          - paragraph [ref=e136]: Work saved side
+        - generic [ref=e137]:
+          - button "打开Work broken" [ref=e138] [cursor=pointer]
+          - paragraph [ref=e139]: Work saved broken
+```

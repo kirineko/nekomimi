@@ -1,0 +1,210 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-runtime.test.ts (9 tests | 8 failed) 7892ms
+   × auto + manual responses share projection, shrink wire input and retain raw evidence 1082ms
+   × auto + manual chat-completions share projection, shrink wire input and retain raw evidence 1287ms
+   × automatic gate runs after tool results without executing any tool twice 892ms
+   × summary tools preserves context and cannot execute effects 1013ms
+   × summary incomplete preserves context and cannot execute effects 924ms
+   × summary cancel preserves context and cannot execute effects 1051ms
+   × summary disabled preserves context and cannot execute effects 1015ms
+   × selected built-in profile auto-compacts and sends the exact effective projection 229ms
+ ❯ test/customization-process.test.ts (10 tests | 1 failed) 14936ms
+   × executes factories and callbacks outside the host and preserves synchronous reload receipts 959ms
+ ❯ test/prompt-contracts.test.ts (30 tests | 2 failed) 5567ms
+   × filters resource instructions, loads skills once and keeps original evidence 108ms
+   × bounds resource directories and never truncates mandatory rules 179ms
+ ❯ test/customization.test.ts (7 tests | 1 failed) 7441ms
+     × records extension commands, state and UI without model dispatch, reloads after run 2395ms
+ ❯ test/command-catalog.test.ts (2 tests | 2 failed) 3563ms
+   × matches catalogs and dispatch for duplicate commands, workflow aliases and skill ids 8ms
+   × provides authenticated, read-only active metadata before first execution and after restart 3554ms
+ ❯ test/customization-server.test.ts (1 test | 1 failed) 8306ms
+   × keeps form answers idempotent, restores history without plugin and protects management 8305ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/command-catalog.test.ts > matches catalogs and dispatch for duplicate commands, workflow aliases and skill ids
+AssertionError: expected [ Array(5) ] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   "/compact",
+-   "/reload",
++ [
+    "/a:moe",
+    "/b:moe",
++   "/compact",
+    "/skill:skill:one",
++   "/skill:skill:two",
+  ]
+
+ ❯ test/command-catalog.test.ts:15:43
+     13|   expect(commandCatalog().ready).toBe(false);
+     14|   let catalog = commandCatalog(activation);
+     15|   expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaini…
+       |                                           ^
+     16|   expect(catalog.commands.some(c=>c.name==="/moe")).toBe(false);
+     17|   expect(matchCommands(activation,"a:moe").candidates).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  test/command-catalog.test.ts > provides authenticated, read-only active metadata before first execution and after restart
+Error: fixture did not settle
+ ❯ until test/command-catalog.test.ts:44:121
+
+ ❯ test/command-catalog.test.ts:51:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  test/context-runtime.test.ts > auto + manual responses share projection, shrink wire input and retain raw evidence
+ FAIL  test/context-runtime.test.ts > auto + manual chat-completions share projection, shrink wire input and retain raw evidence
+Error: Session identity mismatch
+ ❯ Journal.open src/journal.ts:287:112
+    285|       });
+    286|       const snapshot = await observeIO("journal.recovery-read", () => …
+    287|       if (options.sessionId && snapshot.events[0] && snapshot.events[0…
+       |                                                                                                                ^
+    288|       let quarantined: Buffer | undefined;
+    289|       if (snapshot.tornBytes || snapshot.tentativeEvents) {
+ ❯ openJournalStorage src/pi/journal-storage.ts:103:19
+ ❯ runBound src/runtime.ts:104:26
+ ❯ test/context-runtime.test.ts:26:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  test/context-runtime.test.ts > automatic gate runs after tool results without executing any tool twice
+Error: Session identity mismatch
+ ❯ Journal.open src/journal.ts:287:112
+    285|       });
+    286|       const snapshot = await observeIO("journal.recovery-read", () => …
+    287|       if (options.sessionId && snapshot.events[0] && snapshot.events[0…
+       |                                                                                                                ^
+    288|       let quarantined: Buffer | undefined;
+    289|       if (snapshot.tornBytes || snapshot.tentativeEvents) {
+ ❯ openJournalStorage src/pi/journal-storage.ts:103:19
+ ❯ runBound src/runtime.ts:104:26
+ ❯ test/context-runtime.test.ts:39:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  test/context-runtime.test.ts > summary tools preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary incomplete preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary cancel preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary disabled preserves context and cannot execute effects
+Error: Session identity mismatch
+ ❯ Journal.open src/journal.ts:287:112
+    285|       });
+    286|       const snapshot = await observeIO("journal.recovery-read", () => …
+    287|       if (options.sessionId && snapshot.events[0] && snapshot.events[0…
+       |                                                                                                                ^
+    288|       let quarantined: Buffer | undefined;
+    289|       if (snapshot.tornBytes || snapshot.tentativeEvents) {
+ ❯ openJournalStorage src/pi/journal-storage.ts:103:19
+ ❯ runBound src/runtime.ts:104:26
+ ❯ test/context-runtime.test.ts:47:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  test/context-runtime.test.ts > selected built-in profile auto-compacts and sends the exact effective projection
+Error: Session identity mismatch
+ ❯ Journal.open src/journal.ts:287:112
+    285|       });
+    286|       const snapshot = await observeIO("journal.recovery-read", () => …
+    287|       if (options.sessionId && snapshot.events[0] && snapshot.events[0…
+       |                                                                                                                ^
+    288|       let quarantined: Buffer | undefined;
+    289|       if (snapshot.tornBytes || snapshot.tentativeEvents) {
+ ❯ openJournalStorage src/pi/journal-storage.ts:103:19
+ ❯ runBound src/runtime.ts:104:26
+ ❯ test/context-runtime.test.ts:56:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  test/customization-process.test.ts > executes factories and callbacks outside the host and preserves synchronous reload receipts
+AssertionError: expected 'failed' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "failed"
+
+ ❯ test/customization-process.test.ts:24:27
+     22|   try {
+     23|     const result = await run({ ...f, customization: f.host, session: j…
+     24|     expect(result.status).toBe("completed");
+       |                           ^
+     25|     const output = JSON.parse(result.text);
+     26|     expect(output.pid).not.toBe(process.pid); expect(output.factoryPid…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  test/customization-server.test.ts > keeps form answers idempotent, restores history without plugin and protects management
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ test/customization-server.test.ts:71:27
+     69|       items = (await (await req(`/sessions/${session.id}/interactions`…
+     70|       return items.length;
+     71|     }, { timeout: 8000 }).toBe(1);
+       |                           ^
+     72|     const answer = {
+     73|       id: items[0].id,
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/customization-server.test.ts:68:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  test/customization.test.ts > customization lifecycle > records extension commands, state and UI without model dispatch, reloads after run
+SyntaxError: Unexpected end of JSON input
+ ❯ test/customization.test.ts:107:19
+    105|         prompt: "/reload",
+    106|       });
+    107|       expect(JSON.parse(reload.text).status).toBe("pending");
+       |                   ^
+    108|       expect(host.receipts.at(-1)!.status).toBe("activated");
+    109|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  test/prompt-contracts.test.ts > filters resource instructions, loads skills once and keeps original evidence
+TypeError: Cannot read properties of undefined (reading 'tool')
+ ❯ test/prompt-contracts.test.ts:76:82
+     74|  const prompt=assemblePrompt(custom.definitions,custom.instructions);e…
+     75|  const event=j.events.find(e=>e.type==='skill.loaded')!;expect((await …
+     76|  await expect(custom.definitions.find(d=>d.tool.name==='customization_…
+       |                                                                                  ^
+     77|  expect(j.events.some(e=>e.type==='resource.written')).toBe(false);
+     78|  }finally{await j.close();await host.release();await host.close();}
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  test/prompt-contracts.test.ts > bounds resource directories and never truncates mandatory rules
+AssertionError: expected 'Available resources (read matching sk…' not to contain 'Omitted entries: 0'
+
+- Expected
++ Received
+
+- Omitted entries: 0
++ Available resources (read matching skills on demand with resource_read; directory may be partial):
++ [{"id":"rule:8a1382706f6ffa7d361c","kind":"rule","name":"AGENTS.md","description":""}]
++ Omitted entries: 0.
+
+ ❯ test/prompt-contracts.test.ts:97:170
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+
+ Test Files  6 failed | 2 passed (8)
+      Tests  15 failed | 59 passed (74)
+   Start at  03:20:54
+   Duration  49.07s (transform 591ms, setup 0ms, import 3.42s, tests 90.89s, environment 0ms)
+

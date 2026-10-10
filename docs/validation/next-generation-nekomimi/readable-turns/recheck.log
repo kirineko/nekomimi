@@ -1,0 +1,12 @@
+
+Running 3 tests using 2 workers
+
+(node:14776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay (1.3s)
+  ✓  3 test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay (994ms)
+  ✓  1 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (4.1s)
+
+  3 passed (5.4s)

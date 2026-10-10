@@ -1,0 +1,65 @@
+
+Running 6 tests using 2 workers
+
+(node:25821) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25822) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.4s)
+(node:25857) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.8s)
+(node:25875) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.7s)
+  ✓  4 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.4s)
+(node:25890) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.4s)
+  ✘  6 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (7.4s)
+
+
+  1) test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog') with timeout 5000ms
+      - waiting for getByRole('dialog')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      94 |       await expect(page.getByRole('dialog',{name:'外观',exact:true})).toBeVisible();await expect(page.locator('html')).toHaveAttribute('data-workbench-theme','fixture');
+      95 |       if(dismissal==='escape')await page.keyboard.press('Escape');else await page.mouse.click(2,2);
+    > 96 |       await expect(page.getByRole('dialog')).toHaveCount(0);await expect(more).toBeFocused();await expect(page.locator('html')).not.toHaveAttribute('data-workbench-theme');
+         |                                              ^
+      97 |     }
+      98 |     await expect(page.getByLabel('任务草稿',{exact:true})).toHaveJSProperty('textContent','Keep appearance draft');expect(actions).toEqual([]);
+      99 |   } finally {await f.app.close();}
+        at /Users/kirineko/Github/nekomimi/test/browser/theme-management.spec.ts:96:46
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first 
+  5 passed (18.1s)

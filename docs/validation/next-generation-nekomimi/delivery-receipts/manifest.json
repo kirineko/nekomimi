@@ -1,0 +1,32 @@
+{
+  "recordedAt": "2026-10-06T20:55:41.827434+00:00",
+  "node": "v24.15.0",
+  "platform": "Darwin arm64",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "files": {
+    "build.log": "f724bc4205840f72833b54969da2aaf91ef7ffb4ba7546f9ebd587b4a5edaf70",
+    "crash-regression.log": "72f75283bab103848957ee6d8717152f4e454484540b7c49eb04a26de089490a",
+    "final-delivery-tests.log": "0f21d59aee80677a26977a516fc30c5d695d364a1467dcd9f7b16417d44cd1c3",
+    "final-regression.log": "fa2095a6f8bd3c35f28554b721971a0bc2e15bf1ee15a81488fe6f241ec2a773",
+    "first-regression-failure.log": "b18bb33bc604ed225b3fbeda95eefbd06c35baf4ce0a61d60bad26e88bd816a6",
+    "first-tests.log": "033618dba096030eb502351debe4e7280bb6f3725b1036f26b8369ae6cefd4fa",
+    "reference-gate-tests.log": "b35d67b7ea286189c958eeb499a959e2f1b4890944ea8af71f4f57e3f85657e9",
+    "spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  },
+  "sourceFiles": {
+    "src/session/delivery.ts": "a120ad63bdd1ec8c74394372408c60aff68bcfab5e2f9e38b27e543947dc83d4",
+    "src/session/handoff.ts": "e7f480abfaf52bc81551bdd97ea6f2406dce4f0adda1eb2f8f47e31c355b6a16",
+    "src/session/handoff-transfer.ts": "bba3c2c11220ffb3f2272866430ca1e41c902256750308780a5929ead456b09b",
+    "src/server/sessions.ts": "6866961500a84d02723254b457a91e62c3c2cd322dbad79eb6d6e89e05b88b79",
+    "src/server/app.ts": "2f0b4f14583d67b3b9ecb73ca3e068052b19a0c15a1ad857aa6eadde67844a8b",
+    "src/runtime.ts": "29cf84e71d3b24ba3e67ea2215e4ea1040d8e36817400c2585d064711f6c288e",
+    "src/customization/lifecycle.ts": "e21893d6bf7cd3bdb6476236244437c750fe08c0bf615c2ff9bdf40d7dc2f54e",
+    "src/shared/protocol.ts": "f15c9662c501c00e98c05b67f468e392ec21eb2257128fe707a203014b77eeb0",
+    "test/delivery-receipts.test.ts": "fbaa52b4b97a1513a78d7c782532586240a39f23e4ef0d7c5f083c036f7a9984"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "a00ff2c28f641a7f5ce4f503a34d628f398b1af34402d030dd34c2f4385b573a"
+  }
+}

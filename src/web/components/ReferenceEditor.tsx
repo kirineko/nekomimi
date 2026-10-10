@@ -13,11 +13,14 @@ export interface ReferenceEditorHandle {
   setSelectionRange: (start: number, end: number) => void;
   replace: (start: number, end: number, segments: Segment[]) => void;
 }
+const savedEditors=new Map<string,{text:string;segments:Segment[]}>();
 interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSelect'> {
-  value: string; disabled: boolean; placeholder: string; contextRevision: number;
+  value: string; disabled: boolean; placeholder: string; contextRevision: number; sessionId?:string; stateKey?:string;
   onChange: (text: string) => void; onSelect: (start: number, end: number) => void;
 }
-export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function ReferenceEditor({value, disabled, placeholder, contextRevision, onChange, onSelect, ...props}, ref) {
+export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function ReferenceEditor({value, disabled, placeholder, contextRevision, sessionId, stateKey, onChange, onSelect, className, ...props}, ref) {
+  const sessionRef=useRef(sessionId);sessionRef.current=sessionId;
+  const stateKeyRef=useRef(stateKey);stateKeyRef.current=stateKey;
   const root = useRef<HTMLDivElement>(null), history = useRef(new ReferenceHistory());
   const known = useRef(new Map<string, Reference>());
   const composing = useRef(false), callbacks = useRef({ onChange, onSelect }); callbacks.current = { onChange, onSelect };
@@ -97,7 +100,10 @@ export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function
     if (restore) select(history.current.state.start, history.current.state.end);
   };
   const valueOf = () => serialize(history.current.state.segments);
-  const notify = () => { callbacks.current.onChange(valueOf()); callbacks.current.onSelect(history.current.state.start, history.current.state.end); };
+  const notify = () => {
+    const key=stateKeyRef.current;
+    if(key){savedEditors.delete(key);savedEditors.set(key,{text:valueOf(),segments:normalizeSegments(history.current.state.segments)});if(savedEditors.size>128)savedEditors.delete(savedEditors.keys().next().value!);}
+    callbacks.current.onChange(valueOf()); callbacks.current.onSelect(history.current.state.start, history.current.state.end); };
   const replace = (start: number, end: number, segments: Segment[]) => {
     try {
       const next = replaceSegments(history.current.state.segments, start, end, segments);
@@ -112,13 +118,16 @@ export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function
   }));
   useLayoutEffect(() => {
     if (value !== valueOf() && !composing.current) {
-      history.current.reset(value ? [{type:'text',text:value}] : []); render(document.activeElement === root.current);
+      const saved=stateKey?savedEditors.get(stateKey):undefined, current=valueOf();
+      const segments=saved?.text===value?saved.segments:current&&value.startsWith(current)?normalizeSegments([...history.current.state.segments,{type:'text',text:value.slice(current.length)}]):value?[{type:'text' as const,text:value}]:[];
+      history.current.reset(segments); render(document.activeElement === root.current);
+      if(stateKey){savedEditors.delete(stateKey);savedEditors.set(stateKey,{text:value,segments:normalizeSegments(segments)});if(savedEditors.size>128)savedEditors.delete(savedEditors.keys().next().value!);}
     } else if (!root.current?.childNodes.length) render(false);
-  }, [value]);
+  }, [value,stateKey]);
   useEffect(() => {
     epoch.current++; setError(''); pasteAbort.current?.abort();
     return () => { epoch.current++; pasteAbort.current?.abort(); };
-  }, [contextRevision]);
+  }, [contextRevision,sessionId]);
   useEffect(() => {
     const el = root.current!;
     for (const button of el.querySelectorAll('button')) button.disabled = disabled;
@@ -183,7 +192,7 @@ export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function
           for(let offset=0;offset<refs.length;offset+=4) {
             if(abort.signal.aborted || composing.current || history.current.revision!==revision || epoch.current!==currentEpoch)return;
             await Promise.all(refs.slice(offset,offset+4).map(async segment=>{
-              const resolved = await api<Reference>(`/workspace/references?mode=resolve&path=${encodeURIComponent(segment.path)}`,undefined,abort.signal);
+              const resolved = await api<Reference>(`/workspace/references?mode=resolve&path=${encodeURIComponent(segment.path)}${sessionRef.current ? `&session=${encodeURIComponent(sessionRef.current)}` : ""}`,undefined,abort.signal);
               if (resolved.path !== segment.path || resolved.kind !== segment.kind) throw Error('引用目标已变化');
             }));
           }
@@ -208,5 +217,5 @@ export const ReferenceEditor = forwardRef<ReferenceEditorHandle, Props>(function
       document.removeEventListener('selectionchange', onSelection);
     };
   }, []);
-  return <><div {...props} ref={root} role="textbox" aria-multiline="true" aria-disabled={disabled} contentEditable={!disabled} suppressContentEditableWarning className="reference-editor" data-placeholder={placeholder} data-empty={!value} onDrop={e=>e.preventDefault()}/>{error&&<p className="error" role="alert">{error}</p>}</>;
+  return <><div {...props} ref={root} role="textbox" aria-multiline="true" aria-disabled={disabled} contentEditable={!disabled} suppressContentEditableWarning className={className ?? "reference-editor"} data-placeholder={placeholder} data-empty={!value} onDrop={e=>e.preventDefault()}/>{error&&<p className="text-sm text-danger" role="alert">{error}</p>}</>;
 });

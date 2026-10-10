@@ -1,0 +1,64 @@
+{
+  "generation": "baseline",
+  "root": "/tmp/nekomimi-performance-baseline",
+  "node": "v24.15.0",
+  "browser": "154.0.8037.98",
+  "platform": "darwin",
+  "arch": "arm64",
+  "rows": 450,
+  "realModelCalls": 0,
+  "journalUnchanged": true,
+  "results": [
+    {
+      "repeat": 0,
+      "readyMs": 96.10745799999995,
+      "paging": [
+        59.08770800000002,
+        48.32075000000009,
+        51.52337499999999,
+        49.403041999999914,
+        51.18791600000009,
+        65.2048749999999
+      ],
+      "anchorRecoveryMs": 115.98458300000016,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 64.13358399999993,
+      "refreshMs": 61.829082999999855
+    },
+    {
+      "repeat": 1,
+      "readyMs": 81.87558299999955,
+      "paging": [
+        52.106667000000016,
+        48.68437500000027,
+        48.81779200000028,
+        50.752250000000004,
+        49.52845900000011,
+        51.28625000000011
+      ],
+      "anchorRecoveryMs": 116.4984999999997,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 40.790958000000046,
+      "refreshMs": 57.01825000000008
+    },
+    {
+      "repeat": 2,
+      "readyMs": 81.07362499999999,
+      "paging": [
+        58.84245800000008,
+        47.99808299999995,
+        51.669374999999945,
+        48.93779199999972,
+        52.02466699999968,
+        46.858791999999994
+      ],
+      "anchorRecoveryMs": 117.0382080000004,
+      "anchorErrorPx": 0,
+      "retainedRows": 180,
+      "latestMs": 65.23133400000006,
+      "refreshMs": 56.62287500000002
+    }
+  ]
+}

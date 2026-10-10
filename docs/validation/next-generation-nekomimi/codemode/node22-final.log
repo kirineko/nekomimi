@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: direct and nested tools share exactly one authorization, intent, hook and result per call
+ok 1 - direct and nested tools share exactly one authorization, intent, hook and result per call
+  ---
+  duration_ms: 72.547833
+  type: 'test'
+  ...
+# Subtest: revocation after discovery blocks execution
+ok 2 - revocation after discovery blocks execution
+  ---
+  duration_ms: 35.616208
+  type: 'test'
+  ...
+# Subtest: intent persistence failure prevents effect
+ok 3 - intent persistence failure prevents effect
+  ---
+  duration_ms: 35.037792
+  type: 'test'
+  ...
+# Subtest: script failure preserves successful child evidence, never commits script store writes
+ok 4 - script failure preserves successful child evidence, never commits script store writes
+  ---
+  duration_ms: 46.954041
+  type: 'test'
+  ...
+# Subtest: invalid nested schema is rejected before authorization/execution
+ok 5 - invalid nested schema is rejected before authorization/execution
+  ---
+  duration_ms: 32.975875
+  type: 'test'
+  ...
+# Subtest: no ambient host I/O; CPU, memory and output failures are bounded
+ok 6 - no ambient host I/O; CPU, memory and output failures are bounded
+  ---
+  duration_ms: 325.747042
+  type: 'test'
+  ...
+# Subtest: abort is terminal and completed child remains recorded
+ok 7 - abort is terminal and completed child remains recorded
+  ---
+  duration_ms: 45.986625
+  type: 'test'
+  ...
+# Subtest: successful store writes are explicit outputs, not global sandbox state
+ok 8 - successful store writes are explicit outputs, not global sandbox state
+  ---
+  duration_ms: 47.922875
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 645.110208

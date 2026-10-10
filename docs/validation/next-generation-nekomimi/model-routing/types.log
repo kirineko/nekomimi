@@ -1,0 +1,8 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/model-routing.test.ts(25,20): error TS2345: Argument of type '{ home: string; workspace: string; apiKey: string; prompt: string; tools: never[]; fetch: () => Promise<Response>; }' is not assignable to parameter of type 'RunOptions'.
+  Property 'session' is missing in type '{ home: string; workspace: string; apiKey: string; prompt: string; tools: never[]; fetch: () => Promise<Response>; }' but required in type 'RunOptions'.
+test/model-routing.test.ts(54,28): error TS2345: Argument of type '{ home: string; workspace: string; apiKey: string; prompt: string; tools: never[]; model: string; fetch: (_url: unknown, init?: RequestInit) => Promise<Response>; }' is not assignable to parameter of type 'RunOptions'.
+  Property 'session' is missing in type '{ home: string; workspace: string; apiKey: string; prompt: string; tools: never[]; model: string; fetch: (_url: unknown, init?: RequestInit) => Promise<Response>; }' but required in type 'RunOptions'.

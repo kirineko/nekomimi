@@ -1,0 +1,25 @@
+
+Running 16 tests using 2 workers
+
+(node:13068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.5s)
+  ✓   3 test/browser/panel-management.spec.ts:68:1 › 10.9 work panel management keeps the originating session and drafts isolated (1.7s)
+  ✓   2 test/browser/customization.spec.ts:29:1 › previews an unactivated candidate panel and preserves its recorded result and sidebar declaration (6.6s)
+  ✓   4 test/browser/workflow-management.spec.ts:23:1 › 10.4 durable workflow wait survives restart and only an explicit answer continues it (4.7s)
+  ✓   5 test/browser/customization.spec.ts:72:1 › reconciles an unknown workflow result in the browser without repeating its external effect (4.3s)
+  ✓   6 test/browser/workflow-management.spec.ts:40:1 › 10.4 unknown workflow reconciliation does not repeat external effects or resume on navigation (3.7s)
+  ✓   8 test/browser/workflow-management.spec.ts:53:1 › 10.4 definition version change is rejected and invalid input stays editable without automatic retry (1.7s)
+  ✓   7 test/browser/customization.spec.ts:92:1 › restores a durable workflow form after service restart and continues only after an explicit answer (5.3s)
+  ✓  10 test/browser/customization.spec.ts:126:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (4.3s)
+  ✓   9 test/browser/workflow-management.spec.ts:69:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation (6.2s)
+  ✓  11 test/browser/customization.spec.ts:167:1 › reviews a package, installs its command and uninstalls without erasing history (4.0s)
+  ✓  12 test/browser/workflow-management.spec.ts:92:1 › 10.4 running workflow keeps cancellation reachable while continuation actions are locked (3.8s)
+  ✓  13 test/browser/customization.spec.ts:202:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (11.6s)
+  ✓  14 test/browser/customization.spec.ts:245:1 › enable extension, use form, reload a changed command and retain history (6.8s)
+  ✓  15 test/browser/customization.spec.ts:315:1 › isolates custom panels, preserves host controls, and rejects conflicting workflow answers across windows (4.2s)
+  ✓  16 test/browser/customization.spec.ts:388:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (2.4s)
+
+  16 passed (51.3s)

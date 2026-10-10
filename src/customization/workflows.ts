@@ -14,9 +14,12 @@ import type { WorkflowDescriptor, RegisteredWorkflow } from "./workflow-contract
 import type { StepOutcome, WorkflowContext } from "./contracts.js";
 import type { ProcessContext } from "./process.js";
 import type { Json, Contribution } from "./types.js";
+import type { SessionMode } from "../shared/protocol.js";
+import { modeAllows, modeDenial } from "../shared/mode-policy.js";
 
 interface DefinitionSnapshot { definition: WorkflowDescriptor; resources: Resource[]; package?: PackageCandidate }
 export interface WorkflowState {
+  mode: SessionMode;
   id: string; resourceId: string; definitionId: string; definitionRevision: string; schemaVersion: number;
   status: "queued" | "ready" | "running" | "unknown" | "waiting" | "completed" | "cancelled";
   revision: number; step: string; input: Json; attemptId?: string; output?: Json;
@@ -38,7 +41,7 @@ export class Workflows {
   private async state(directory: string, events: JournalEvent[]): Promise<WorkflowState> {
     const created = events.find(e => e.type === "workflow.created"); if (!created) throw new Error("Workflow creation record missing");
     const p = created.payload as any;
-    const state: WorkflowState = { id: p.id, resourceId: p.resourceId, definitionId: p.definitionId, definitionRevision: p.definitionRevision, schemaVersion: p.schemaVersion, status: "queued", revision: 0, step: p.entry, input: p.input, snapshot: p.snapshot, steps: 0 };
+    const state: WorkflowState = { mode: p.mode ?? "work", id: p.id, resourceId: p.resourceId, definitionId: p.definitionId, definitionRevision: p.definitionRevision, schemaVersion: p.schemaVersion, status: "queued", revision: 0, step: p.entry, input: p.input, snapshot: p.snapshot, steps: 0 };
     for (const event of events) {
       const value = event.payload as any; state.revision = event.seq;
       if (event.type === "workflow.step.started") { state.error = undefined; state.status = "unknown"; state.attemptId = event.attemptId; state.step = value.step; state.input = value.input; state.steps++; }
@@ -57,16 +60,25 @@ export class Workflows {
     return state;
   }
   async inspect(workflowId: string) { const path = await this.path(workflowId), state = await this.state(path, (await readSession(path)).events); if (this.active?.id === workflowId && state.status === "unknown") state.status = "running"; return state; }
-  async list() {
-    const names = (await readdir(await this.root())).filter(validId);
-    if (names.length > 4096) throw new Error("Workflow history directory limit");
+  async list() { return this.listReadonly(); }
+  /** Reading switch blockers must not create a workflow directory or load a factory. */
+  async listReadonly() {
+    const root = await safePath(this.host.catalog.workspace, '.nekomimi/workflows');
+    let names: string[];
+    try { names = (await readdir(root)).filter(validId); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return []; throw error; }
+    if (names.length > 4096) throw new Error('Workflow history directory limit');
     const result: WorkflowState[] = [];
-    for (const name of names) result.push(await this.inspect(name));
+    for (const name of names) {
+      const directory = await safePath(root, name), state = await this.state(directory, (await readSession(directory)).events);
+      if (this.active?.id === name && state.status === 'unknown') state.status = 'running';
+      result.push(state);
+    }
     return result;
   }
   private async pin(workflow: RegisteredWorkflow, activation: Activation, workflowId: string): Promise<DefinitionSnapshot> {
     const { resource } = workflow;
-    const definition: WorkflowDescriptor = { id: workflow.id, schemaVersion: workflow.schemaVersion, inputSchema: workflow.inputSchema, entry: workflow.entry, steps: workflow.steps, ...(workflow.triggers ? { triggers: workflow.triggers } : {}) };
+    const definition: WorkflowDescriptor = { id: workflow.id, schemaVersion: workflow.schemaVersion, inputSchema: workflow.inputSchema, entry: workflow.entry, steps: workflow.steps, ...(workflow.modes ? { modes: workflow.modes } : {}), ...(workflow.triggers ? { triggers: workflow.triggers } : {}) };
     if (resource.packageId) {
       const store = new Packages(this.host.catalog.workspace, this.host.catalog.home), pkg = (await store.list()).find(p => p.packageId === resource.packageId && p.revision === resource.packageRevision);
       if (!pkg) throw new Error("Workflow package lock unavailable");
@@ -81,7 +93,7 @@ export class Workflows {
         await rename(staging, root);
       } finally { await rm(staging, { recursive: true, force: true }); }
     }
-    return { definition, resources: [{ ...resource, root, path: join(root, resource.manifest!.entry), status: "enabled" }] };
+    return { definition, resources: [{ ...resource, authorityLocation: { root: resource.root, path: resource.path }, root, path: join(root, resource.manifest!.entry), status: "enabled" }] };
   }
   private async snapshot(directory: string, ref: Artifact): Promise<DefinitionSnapshot> {
     const snapshot = JSON.parse((await readArtifact(directory, ref)).toString()) as DefinitionSnapshot;
@@ -95,16 +107,18 @@ export class Workflows {
   }
   async create(resourceId: string, definitionId: string, input: Json, activation: Activation, workflowId = id(), causes: string[] = []) {
     if (Buffer.byteLength(JSON.stringify(input)) > LIMITS.file) throw new Error("Workflow input limit");
-    const directory = await this.path(workflowId);
+    if (!validId(workflowId)) throw new Error("Invalid workflow ID");
+    const directory = await safePath(this.host.catalog.workspace, join(".nekomimi/workflows", workflowId));
     if (await exists(directory)) {
       const old = await this.inspect(workflowId);
       const created = (await readSession(directory)).events.find(e => e.type === "workflow.created")!.payload as any;
-      if (created.resourceId !== resourceId || created.definitionId !== definitionId || hash(JSON.stringify(created.input)) !== hash(JSON.stringify(input))) throw new Error("Workflow command identity conflict");
+      if (created.resourceId !== resourceId || created.definitionId !== definitionId || (created.mode ?? "work") !== (this.settings.mode ?? "work") || hash(JSON.stringify(created.input)) !== hash(JSON.stringify(input))) throw new Error("Workflow command identity conflict");
       return old;
     }
     const queue = await this.list(); if (queue.length >= 4096 || queue.filter(w => !["completed", "cancelled"].includes(w.status)).length >= 64) throw new Error("Workflow queue limit");
     const workflow = activation.extensions.flatMap(e => e.workflows).find(w => w.resource.id === resourceId && w.id === definitionId);
     if (!workflow || !Value.Check(workflow.inputSchema, input)) throw new Error("Unknown workflow or invalid input schema");
+    if (!modeAllows(this.settings.mode ?? "work", workflow.modes)) throw modeDenial("Workflow unavailable in this session mode");
     return this.materialize(workflowId, resourceId, input, causes, await this.pin(workflow, activation, workflowId));
   }
   private async materialize(workflowId: string, resourceId: string, input: Json, causes: string[], snapshot: DefinitionSnapshot) {
@@ -113,7 +127,7 @@ export class Workflows {
     if (!resource) throw new Error("Workflow snapshot identity missing");
     if (await exists(directory)) {
       const created = (await readSession(directory)).events.find(e => e.type === "workflow.created")?.payload as any;
-      if (!created || created.resourceId !== resourceId || created.definitionId !== workflow.id || created.definitionRevision !== resource.hash || hash(JSON.stringify(created.input)) !== hash(JSON.stringify(input))) throw new Error("Workflow outbox identity conflict");
+      if (!created || created.resourceId !== resourceId || created.definitionId !== workflow.id || created.definitionRevision !== resource.hash || (created.mode ?? "work") !== (this.settings.mode ?? "work") || hash(JSON.stringify(created.input)) !== hash(JSON.stringify(input))) throw new Error("Workflow outbox identity conflict");
       return this.inspect(workflowId);
     }
     const queue = await this.list();
@@ -121,7 +135,7 @@ export class Workflows {
     const definitionId = workflow.id, staging = directory + ".pending-" + id();
     const journal = await Journal.open(staging, { secrets: [this.settings.apiKey] });
     try {
-      await journal.append("workflow.created", { version: 1, id: workflowId, resourceId, definitionId, definitionRevision: resource.hash, schemaVersion: workflow.schemaVersion, entry: workflow.entry, input, causes: [...causes, `${resourceId}:${definitionId}`], snapshot: await journal.artifact(JSON.stringify(snapshot)) }, { workflowId, resourceId, definitionRevision: resource.hash });
+      await journal.append("workflow.created", { version: 1, mode: this.settings.mode ?? "work", id: workflowId, resourceId, definitionId, definitionRevision: resource.hash, schemaVersion: workflow.schemaVersion, entry: workflow.entry, input, causes: [...causes, `${resourceId}:${definitionId}`], snapshot: await journal.artifact(JSON.stringify(snapshot)) }, { workflowId, resourceId, definitionRevision: resource.hash });
       await journal.close(); await rename(staging, directory);
       return this.inspect(workflowId);
     } catch (error) { await journal.close().catch(() => {}); await rm(staging, { recursive: true, force: true }); throw error; }
@@ -142,6 +156,7 @@ export class Workflows {
       journal = await Journal.open(directory, { secrets: [this.settings.apiKey] });
       const writer = journal;
       let state = await this.state(directory, journal.events);
+      if (state.mode !== (this.settings.mode ?? "work")) throw new Error("Workflow session mode cannot change");
       if (options.expectedRevision !== undefined && state.revision !== options.expectedRevision) throw new Error("Workflow revision conflict");
       if (!["queued", "ready"].includes(state.status)) throw new Error(`Workflow ${state.status}; explicit answer or unknown resolution required`);
       await this.recover(journal);
@@ -155,7 +170,7 @@ export class Workflows {
       for (let count = 0; count < (options.maxSteps ?? 64) && ["queued", "ready"].includes(state.status); count++) {
         signal.throwIfAborted(); if (state.steps >= 128) throw new Error("Workflow step/causal budget exceeded");
         const attemptId = id(), runId = id(), stepId = state.step;
-        const links = { workflowId, resourceId: state.resourceId, definitionRevision: state.definitionRevision, stepId, attemptId, runId };
+        const links = { mode: state.mode, workflowId, resourceId: state.resourceId, definitionRevision: state.definitionRevision, stepId, attemptId, runId };
         const custom = new CustomRun(this.host, activation, journal, runId, signal, this.settings, undefined, false, {}, links);
         const core = await CoreTools.create(this.host.catalog.workspace, journal, links, { search: { apiKey: this.settings.apiKey, fetch: this.settings.fetch, settings: this.settings.search } });
         await custom.initialize(core.definitions());
@@ -211,11 +226,12 @@ export class Workflows {
     if (this.active?.id === workflowId) { this.active.abort.abort(new Error("Workflow cancelled by user")); return { id: workflowId, status: "cancelling" }; }
     return this.edit(workflowId, expectedRevision, async (journal, state) => { if (["completed", "cancelled"].includes(state.status)) return; await journal.append("workflow.cancelled", { unknown: state.status === "unknown" }, { workflowId }); });
   }
-  async migrate(workflowId: string, expectedRevision: number, target: { resourceId: string; definitionId: string; fromSchemaVersion: number; step: string; input: Json; note: string }, activation: Activation) {
+  async migrate(workflowId: string, expectedRevision: number, target: { resourceId: string; definitionId: string; definitionRevision?: string; fromSchemaVersion: number; step: string; input: Json; note: string }, activation: Activation) {
     return this.edit(workflowId, expectedRevision, async (journal, state) => {
       if (!["queued", "ready", "waiting"].includes(state.status) || state.schemaVersion !== target.fromSchemaVersion || !target.note?.trim()) throw new Error("Workflow migration requires a compatible settled state and explicit note");
       const workflow = activation.extensions.flatMap(e => e.workflows).find(w => w.resource.id === target.resourceId && w.id === target.definitionId);
-      if (!workflow || !Object.hasOwn(workflow.steps, target.step) || !Value.Check(workflow.inputSchema, target.input)) throw new Error("Workflow migration target/schema invalid");
+      if (!workflow || !modeAllows(state.mode, workflow.modes) || !Object.hasOwn(workflow.steps, target.step) || !Value.Check(workflow.inputSchema, target.input)) throw new Error("Workflow migration target/schema invalid");
+      if (target.definitionRevision !== undefined && target.definitionRevision !== workflow.resource.hash) throw new Error("Workflow migration definition revision conflict");
       const snapshot = await this.pin(workflow, activation, workflowId);
       await journal.append("workflow.migrated", { previous: await journal.artifact(JSON.stringify(state)), snapshot: await journal.artifact(JSON.stringify(snapshot)), resourceId: target.resourceId, definitionId: target.definitionId, definitionRevision: workflow.resource.hash, schemaVersion: workflow.schemaVersion, step: target.step, input: target.input, note: target.note }, { workflowId });
     });
@@ -248,7 +264,7 @@ export class Workflows {
     const event = source.events.findLast(e => kind === "tool-completed" ? e.type === "tool.completed" && (!name || (e.payload as any).name === name) : ["run.finished", "workflow.step.completed"].includes(e.type));
     if (!event) return;
     const causes: string[] = (source.events.find(e => e.type === "workflow.created")?.payload as any)?.causes ?? [];
-    for (const workflow of activation.extensions.flatMap(e => e.workflows).filter(w => w.triggers?.some(t => t.kind === kind && (!t.name || t.name === name)))) {
+    for (const workflow of activation.extensions.flatMap(e => e.workflows).filter(w => modeAllows(settings.mode ?? source.links().mode ?? "work", w.modes) && w.triggers?.some(t => t.kind === kind && (!t.name || t.name === name)))) {
       const target = `${workflow.resource.id}:${workflow.id}`;
       const digest = hash(`${source.sessionId}:${event.eventId}:${target}:${workflow.resource.hash}`), workflowId = `${digest.slice(0, 8)}-${digest.slice(8, 12)}-${digest.slice(12, 16)}-${digest.slice(16, 20)}-${digest.slice(20, 32)}`;
       if (source.events.some(e => e.type === "workflow.trigger.delivered" && (e.payload as any).workflowId === workflowId)) continue;

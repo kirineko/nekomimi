@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: chat/success: all serialized attempts and raw responses cross injected fetch
+ok 1 - chat/success: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 21.085791
+  type: 'test'
+  ...
+# Subtest: chat/rate: all serialized attempts and raw responses cross injected fetch
+ok 2 - chat/rate: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 23.666875
+  type: 'test'
+  ...
+# Subtest: chat/cancel: all serialized attempts and raw responses cross injected fetch
+ok 3 - chat/cancel: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 12.980333
+  type: 'test'
+  ...
+# Subtest: classifier/success: all serialized attempts and raw responses cross injected fetch
+ok 4 - classifier/success: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 12.92425
+  type: 'test'
+  ...
+# Subtest: classifier/rate: all serialized attempts and raw responses cross injected fetch
+ok 5 - classifier/rate: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 22.989375
+  type: 'test'
+  ...
+# Subtest: classifier/cancel: all serialized attempts and raw responses cross injected fetch
+ok 6 - classifier/cancel: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 12.889667
+  type: 'test'
+  ...
+# Subtest: image/success: all serialized attempts and raw responses cross injected fetch
+ok 7 - image/success: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 13.89375
+  type: 'test'
+  ...
+# Subtest: image/rate: all serialized attempts and raw responses cross injected fetch
+ok 8 - image/rate: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 24.153125
+  type: 'test'
+  ...
+# Subtest: image/cancel: all serialized attempts and raw responses cross injected fetch
+ok 9 - image/cancel: all serialized attempts and raw responses cross injected fetch
+  ---
+  duration_ms: 13.838458
+  type: 'test'
+  ...
+# Subtest: typed catalog does not collide; unavailable auth and route API remain explicit
+ok 10 - typed catalog does not collide; unavailable auth and route API remain explicit
+  ---
+  duration_ms: 0.527292
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 291.142375

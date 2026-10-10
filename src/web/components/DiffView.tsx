@@ -1,3 +1,4 @@
+import { Button } from "../ui/Button";
 import { TokenSpans } from "../../presentation/syntax/view";
 import { useEffect, useState } from "react";
 import type { DiffPage } from "../../presentation/diff";
@@ -45,22 +46,22 @@ export function DiffView({
       .length ?? 0) <= 8;
   return (
     <section
-      className={`diff-view ${embedded ? "embedded" : ""}`}
+      className={`min-w-0 space-y-2 rounded-md border border-line p-2 ${embedded ? "text-xs" : "text-sm"}`}
       aria-label="文件差异"
     >
-      <header>
+      <header className="flex flex-wrap items-center gap-2">
         {!embedded && (
-          <span className="diff-path" title={path}>
+          <span className="min-w-0 break-all font-medium" title={path}>
             {path?.split(/[\\/]/).at(-1) ?? "文件修改"}
           </span>
         )}
         {page && !page.unavailable && (
-          <span className="diff-stats">
+          <span className="flex gap-2 text-xs [&_b]:text-brand [&_em]:text-danger">
             <b>+{page.added}</b> <em>−{page.removed}</em>
           </span>
         )}
         {path && locate && (
-          <button onClick={() => locate(path)}>定位文件</button>
+          <Button variant="outline" size="sm" onClick={() => locate(path)}>定位文件</Button>
         )}
       </header>
       {error || page?.unavailable ? (
@@ -70,13 +71,13 @@ export function DiffView({
       ) : (
         <>
           {!page.total && <p>内容无变化</p>}
-          <div className="diff-lines">
+          <div className="max-w-full overflow-x-auto rounded-sm border border-line font-mono text-xs">
             {page.lines.map((line, i) =>
               hideHeaders && line.kind === "header" ? null : (
-                <div className={`diff-line ${line.kind}`} key={offset + i}>
+                <div data-change-kind={line.kind} className={`grid min-w-max grid-cols-[2.5rem_2.5rem_1fr] gap-1 px-1 ${line.kind === "add" ? "bg-brand/10" : line.kind === "del" ? "bg-danger/10" : ""}`} key={offset + i}>
                   <span>{line.old}</span>
                   <span>{line.next}</span>
-                  <code className="syntax">
+                  <code className="whitespace-pre">
                     {line.kind === "add" ? "+" : line.kind === "del" ? "−" : " "}{" "}
                     {line.tokens ? <TokenSpans tokens={line.tokens}/> : line.text}
                     {line.truncated ? " … [长行已截断，原文见附件]" : ""}
@@ -85,38 +86,38 @@ export function DiffView({
               ),
             )}
           </div>
-          <footer>
-            <button
+          <footer className="flex flex-wrap items-center gap-2 text-xs">
+            <Button variant="outline" size="sm"
               onClick={() => {
                 setExpanded(!expanded);
                 setOffset(0);
               }}
             >
               {expanded ? "收起差异" : "查看文件 diff ↗"}
-            </button>
+            </Button>
             {expanded && (
               <>
-                <button
+                <Button variant="outline" size="sm"
                   disabled={!offset}
                   onClick={() => setOffset(Math.max(0, offset - 120))}
                 >
                   上一段
-                </button>
+                </Button>
                 <span>
                   {offset + 1}–{offset + page.lines.length} / {page.total} 行
                 </span>
-                <button
+                <Button variant="outline" size="sm"
                   disabled={page.next === undefined}
                   onClick={() => setOffset(page.next!)}
                 >
                   下一段
-                </button>
+                </Button>
               </>
             )}
             {!expanded && page.next !== undefined && (
               <span>还有 {page.total - page.lines.length} 行</span>
             )}
-            <button
+            <Button variant="outline" size="sm"
               onClick={() => {
                 void navigator.clipboard
                   .writeText(
@@ -132,7 +133,7 @@ export function DiffView({
               }}
             >
               {copied ? "已复制" : "复制这段"}
-            </button>
+            </Button>
           </footer>
         </>
       )}

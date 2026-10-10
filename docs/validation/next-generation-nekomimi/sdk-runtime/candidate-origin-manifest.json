@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-07T15:06:20.791545+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/candidates.ts": "6bf250d46e8de8009e9b2d78d8363cb03514d3c8ea46765090749d2e0e370574",
+    "src/customization/packages.ts": "039308430e869b7a8efacf4bd8c8fda83741dfd3b3dfe4b15b0065af56634ab6",
+    "src/customization/package-management.ts": "94b8f4e780fb73f6006d7315c9c43908f52b9c2c13c4bb47a63a919ba087977f",
+    "src/customization/host.ts": "9bb8f2c638729dbd7ef3eef99336646f1d0f334b3a3c5df424e76818587334fb",
+    "src/customization/run.ts": "2595b2601c894cdb031226489e7ed3ae4f91b5df9666f248b92f8ce9d5e75280",
+    "test/candidate-origin.test.ts": "abe99fc450d3e95332d2c419a2f0211a85718ca80f4835370611010dd9d81ff9",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin.md": "d346e4e8f5bd7b8dc0352caceb380498e6da9cff1db666915b04504137feaaea",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "ca04b670c2805148cb8898e050db349926b26a4a623b00d081009df579a6e1c6",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-build.log": "b507315e266f4deabb0273031f5369e7b801cf6d0557ff2df969541ac33957f2",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-final.log": "112afebeffaa003a14814e76de10f51754305df344420e0a7d0a42450f9e6e06",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-first.log": "e71380c56f5d66c1d1be2b75f6d96272b348e103a1f50681b103154ac2ae9a54",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-regression.log": "07b686471ec01d4cde9dbac13742a313058ef3e50d44699c5e4411306bf6dba3",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/candidate-origin-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

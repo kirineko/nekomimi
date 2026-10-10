@@ -8,31 +8,33 @@ import type { Json } from './types.js';
 import { Candidates } from './candidates.js';
 import { ExtensionProcess } from './process.js';
 import { panelDocument } from './panel-document.js';
+import { ApiError } from '../shared/protocol.js';
 interface Instance {sessionId?:string;candidatePreview?:boolean;html:string; nonce:string; panel:BuiltPanel; expires:number; window:number; messages:number; lastId:number; workflow?:{id:string;waitId?:string;revision:number}; preview:boolean}
 export class Panels {
   private instances = new Map<string,Instance>();
   constructor(readonly host:CustomizationHost) {}
-  catalog() {return this.host.active?.extensions.flatMap(e=>e.panels.map(({bundle,css,resource,...p})=>({...p,resourceId:resource.id,revision:resource.hash}))) ?? [];}
+  catalog() {return this.host.active?.extensions.flatMap(e=>e.panels.map(({bundle,css,resource,...p})=>({...p,resourceId:resource.id,revision:resource.hash,resourceRevision:resource.hash}))) ?? [];}
   private async authorized(panel:BuiltPanel) {
     const grant = await this.host.catalog.grant(panel.resource);
-    if (!grant?.enabled || !grant.trusted || !grant.capabilities?.includes(['sidebar','result'].includes(panel.slot)?'panels':'views')) throw new Error('Panel authorization revoked');
+    if (!grant?.enabled || !grant.trusted || !grant.capabilities?.includes(panel.capability)) throw new Error('Panel authorization revoked');
     const current = this.host.active?.extensions.flatMap(e=>e.panels).find(p=>p.resource.id===panel.resource.id && p.id===panel.id);
     if (!current || current.resource.hash!==panel.resource.hash || current.bundleHash!==panel.bundleHash) throw new Error('Panel revision no longer active');
   }
-  async mount(resourceId:string, panelId:string, revision:string, props:Json, workflowId?:string, preview=false, themeName?:string, sessionId?:string) {
+  async mount(resourceId:string, panelId:string, revision:string, props:Json, workflowId?:string, preview=false, themeName?:string, sessionId?:string, mode: 'work'|'create' = 'work') {
     for (const [key,value] of this.instances) if(value.expires<Date.now()) this.instances.delete(key);
     if(this.instances.size>=64) throw new Error('Panel instance limit');
     const panel=this.host.active?.extensions.flatMap(e=>e.panels).find(p=>p.resource.id===resourceId && p.id===panelId && p.resource.hash===revision);
     if(!panel) throw new Error('Panel revision unavailable; use saved fallback');
     await this.authorized(panel);
+    if(!panel.modes.includes(mode)) throw new ApiError(403,'panel_mode','面板不适用于当前会话模式');
     if(Buffer.byteLength(JSON.stringify(props))>32768 || !Value.Check(panel.propsSchema,props)) throw new Error('Panel props schema/size invalid');
     if(themeName && !Object.hasOwn(panel.themes ?? {},themeName)) throw new Error('Unknown panel theme');
     const theme=themeName?panel.themes![themeName]:panel.theme;
     let workflow:Instance['workflow'];
-    if(workflowId) {const state=await this.host.workflows.inspect(workflowId); if(state.resourceId!==resourceId) throw new Error('Panel workflow resource mismatch'); workflow={id:workflowId,waitId:state.wait?.id,revision:state.revision};}
+    if(workflowId) {const state=await this.host.workflows.inspect(workflowId); if(state.resourceId!==resourceId) throw new Error('Panel workflow resource mismatch'); if(state.mode!==mode) throw new Error('Panel workflow mode mismatch'); workflow={id:workflowId,waitId:state.wait?.id,revision:state.revision};}
     const mounted=await this.attach(panel,props,workflow,preview,theme);
     this.instances.get(mounted.instanceId)!.sessionId=sessionId;
-    return mounted;
+    return {...mounted,url:mounted.url+(sessionId?`?session=${encodeURIComponent(sessionId)}`:'')};
   }
   private async attach(panel:BuiltPanel,props:Json,workflow:Instance['workflow'],preview:boolean,theme:BuiltPanel['theme'],candidatePreview=false) {
     for(const [key,value] of this.instances)if(value.expires<Date.now())this.instances.delete(key);
@@ -45,36 +47,71 @@ export class Panels {
     this.instances.set(instanceId,{candidatePreview,html,nonce,panel,workflow,preview,expires:Date.now()+30*60_000,window:Date.now(),messages:0,lastId:0});
     return {instanceId,nonce,url:`/api/v1/panels/${instanceId}/frame`,fallback:panel.fallback,bundleHash:panel.bundleHash};
   }
-  async previewCandidate(candidateId:string,expectedHash:string,panelId:string|undefined,props:Json,authorize:boolean) {
+  async previewCandidate(candidateId:string,expectedHash:string,panelId:string|undefined,props:Json,authorize:boolean,signal?:AbortSignal,task:{validationTaskId?:string;sessionId?:string;assertTarget?:()=>Promise<void>}={}) {
     if(!authorize)throw new Error('Candidate panel factory preview requires explicit trusted Node authorization');
+    signal?.throwIfAborted();
     const {resource}=await new Candidates(this.host.catalog.workspace).prepare(candidateId,expectedHash);
+    signal?.throwIfAborted();
+    await task.assertTarget?.();
     const history=await Journal.open(join(this.host.catalog.workspace,'.nekomimi/panel-history'));
-    try{await history.append('panel.preview.intent',{candidateId,contentHash:expectedHash,panelId,simulated:true,boundary:'Trusted Node factory; no host bridge actions'},{resourceId:resource.id,resourceRevision:resource.hash});}finally{await history.close();}
+    try{await history.append('panel.preview.intent',{candidateId,contentHash:expectedHash,panelId,simulated:true,boundary:'Trusted Node factory; no host bridge actions'},{resourceId:resource.id,resourceRevision:resource.hash,validationTaskId:task.validationTaskId});}finally{await history.close();}
     const process=new ExtensionProcess(resource,this.host.catalog);
+    let mounted: string | undefined;
     try {
-      const registrations=await process.start(),panel=registrations.flatMap(r=>r.panels).find(p=>!panelId||p.id===panelId);
+      const registrations=await process.start(signal),panel=registrations.flatMap(r=>r.panels).find(p=>!panelId||p.id===panelId);
       if(!panel || Buffer.byteLength(JSON.stringify(props))>32768 || !Value.Check(panel.propsSchema,props))throw new Error('Candidate panel identity or props schema invalid');
       const {bundle,css,resource:owner,...descriptor}=panel;
-      await this.host.lifecycle.record(owner,"preview",{passed:true,contributionId:panel.id});
-      return {verification:{stage:"preview",hostIntegration:"not_run",resourceRevision:owner.hash},panel:{...descriptor,resourceId:owner.id,revision:owner.hash},frame:await this.attach(panel,props,undefined,true,panel.theme,true)};
-    }finally{await process.stop();}
+      signal?.throwIfAborted();
+      await task.assertTarget?.();
+      const frame=await this.attach(panel,props,undefined,true,panel.theme,true);
+      mounted=frame.instanceId;
+      this.instances.get(mounted)!.sessionId=task.sessionId;
+      await process.stop();
+      signal?.throwIfAborted();
+      await task.assertTarget?.();
+      const evidence=await this.host.lifecycle.record(owner,"preview",{passed:true,contributionId:panel.id,check:"isolated-panel-frame-built",sessionId:task.sessionId,runId:task.validationTaskId});
+      signal?.throwIfAborted();
+      return {verification:evidence.verification,panel:{...descriptor,resourceId:owner.id,revision:owner.hash},frame};
+    }catch(error){
+      if(mounted)this.unmount(mounted,task.sessionId);
+      let cleanupError: unknown;
+      try { await process.stop(); } catch(failure) { cleanupError=failure; }
+      const unknownCleanup=cleanupError || (error as {cleanup?:string})?.cleanup==='unknown';
+      const status=unknownCleanup?'unknown':signal?.aborted?'cancelled':'failed';
+      try {
+        await task.assertTarget?.();
+        const evidence=await this.host.lifecycle.record(resource,"preview",{passed:false,status,check:"isolated-panel-frame-built",sessionId:task.sessionId,runId:task.validationTaskId});
+        throw Object.assign(new Error(cleanupError?`Panel preview cleanup unconfirmed: ${String(cleanupError)}`:String(error),{cause:error}),{verification:evidence.verification});
+      } catch(recording) {
+        throw Object.assign(recording instanceof Error?recording:new Error(String(recording)),{cleanup:unknownCleanup?'unknown':'confirmed'});
+      }
+    }
   }
-  async document(instanceId:string) {
+  async document(instanceId:string, sessionId?:string) {
     const instance=this.instances.get(instanceId);
     if(!instance || instance.expires<Date.now()) throw new Error('Panel instance expired');
+    this.assertSession(instance, sessionId);
     if(!instance.candidatePreview)await this.authorized(instance.panel);
     return {html:instance.html,nonce:instance.nonce};
   }
-  unmount(instanceId:string) {this.instances.delete(instanceId); return {status:'closed'};}
+  private assertSession(instance:Instance, sessionId:string|undefined) {
+    if(instance.sessionId!==sessionId) throw new ApiError(403,'panel_scope','Panel session scope mismatch：面板不属于当前会话');
+  }
+  unmount(instanceId:string, sessionId?:string) {
+    const instance=this.instances.get(instanceId);
+    if(instance)this.assertSession(instance,sessionId);
+    this.instances.delete(instanceId); return {status:'closed'};
+  }
   async recordUiAction(instanceId:string, action:string, stage:'intent'|'completed'|'failed', value:unknown) {
     const instance=this.instances.get(instanceId);
     if(!instance)throw new Error('Panel instance expired');
     const journal=await Journal.open(join(this.host.catalog.workspace,'.nekomimi/panel-history'));
     try{await journal.append(`panel.action.${stage}`,{action,sessionId:instance.sessionId,value},{resourceId:instance.panel.resource.id,resourceRevision:instance.panel.resource.hash,instanceId});}finally{await journal.close();}
   }
-  async uiAction(instanceId:string, sequence:number, action:string, value:Json) {
+  async uiAction(instanceId:string, sequence:number, action:string, value:Json, sessionId?:string) {
     const instance=this.instances.get(instanceId);
     if(!instance||instance.expires<Date.now())throw new Error('Panel instance expired');
+    this.assertSession(instance,sessionId);
     if(Date.now()-instance.window>=1000){instance.window=Date.now();instance.messages=0;}
     if(++instance.messages>30||!Number.isSafeInteger(sequence)||sequence<=instance.lastId||Buffer.byteLength(JSON.stringify(value))>32768)throw new Error('Panel message identity/rate/size invalid');
     instance.lastId=sequence;
@@ -86,9 +123,10 @@ export class Panels {
     if(!instance.sessionId)throw new Error('Panel session unbound');
     return {sessionId:instance.sessionId,resourceId:instance.panel.resource.id,revision:instance.panel.resource.hash};
   }
-  async action(instanceId:string, sequence:number, action:string, value:Json) {
+  async action(instanceId:string, sequence:number, action:string, value:Json, sessionId?:string) {
     const instance=this.instances.get(instanceId);
     if(!instance || instance.expires<Date.now()) throw new Error('Panel instance expired');
+    this.assertSession(instance,sessionId);
     if(Date.now()-instance.window>=1000) {instance.window=Date.now();instance.messages=0;}
     if(++instance.messages>30 || !Number.isSafeInteger(sequence) || sequence<=instance.lastId || Buffer.byteLength(JSON.stringify(value))>32768) throw new Error('Panel message identity/rate/size invalid');
     instance.lastId=sequence;

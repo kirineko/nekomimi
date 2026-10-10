@@ -1,0 +1,144 @@
+/* Nekomimi 设计系统 tokens —— 批次 0 用户批准的高对比明暗样稿（D11）。
+   色值来源：docs/validation/next-generation-nekomimi/ui/styles.css（2026-10-07 评审批准）。
+   旧页面已于 10.9 删除，样式基线（preflight）进入产品；扩展面板在独立 iframe 中不受影响。 */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-background: var(--surface);
+  --color-foreground: var(--ink);
+  --color-panel: var(--panel);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--brand);
+  --color-primary-foreground: var(--on-brand);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-wash: var(--wash);
+  --color-accent: var(--wash);
+  --color-accent-foreground: var(--ink);
+  --color-secondary: var(--wash);
+  --color-secondary-foreground: var(--ink);
+  --color-destructive: var(--danger);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-ring: var(--brand);
+  --color-input: var(--line);
+}
+
+:root {
+  --surface: #f8fafc; --panel: #eef2f7; --ink: #172033; --muted: #4b5563;
+  --line: #b8c2d2; --brand: #5a3ec8; --wash: #e9e3fc; --on-brand: #ffffff;
+  --danger: #b42335; --warning: #7a4800;
+  /* 扩展桥主题快照（currentPanelTheme）读取 --accent，保持与 --brand 一致 */
+  --accent: var(--brand);
+  --radius-control: 8px; --radius-card: 12px; --radius-dialog: 16px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --shadow-soft: 0 3px 18px #0000000c; --shadow-floating: 0 8px 26px #00000018;
+  --motion-duration: 150ms;
+  font: 14px/1.6 system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--surface);
+}
+:root[data-theme="dark"] {
+  --surface: #131b2b; --panel: #0e1523; --ink: #f0f4ff; --muted: #b7c0d2;
+  --line: #73819a; --brand: #beaaff; --wash: #30264e; --on-brand: #151124;
+  --danger: #ff9aa9; --warning: #ffd084;
+}
+
+/* 基础层：preflight 已重置浏览器默认样式，此处补齐产品基线。 */
+@layer base {
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--surface); color: var(--ink); font: 14px/1.6 system-ui, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  summary { cursor: pointer; }
+  ::selection { background: var(--wash); }
+  /* preflight 去掉列表样式；富文本内恢复 */
+  [data-rich-content] ul { list-style: disc; }
+  [data-rich-content] ol { list-style: decimal; }
+  [data-rich-content] :is(p, ul, ol, pre, blockquote) { margin-block: .6em; }
+}
+/* 设计系统作用域：仅 .ds 内的元素应用基础排版与焦点规则，旧页面不受影响。 */
+body:has(#root > .ds) { margin: 0; }
+.ds, .ds * { box-sizing: border-box; }
+.ds button, .ds a, .ds summary, .ds select { cursor: pointer; }
+.ds button:disabled, .ds select:disabled, .ds input:disabled, .ds textarea:disabled { cursor: not-allowed; }
+.ds :where(button, a, textarea, select, input, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+/* 排版基线放入 base 层：工具类（text-xl、my-3 等）才能覆盖它；
+   未分层的规则会永远压过 Tailwind 工具类。按钮 font 由 preflight 提供。 */
+@layer base {
+  .ds h1 { font-size: 24px; font-weight: 600; line-height: 1.3; margin: 0; }
+  .ds h2 { font-size: 17px; font-weight: 600; margin: 0; }
+  .ds h3 { font-weight: 600; margin: 0; }
+  .ds p { margin: 6px 0; }
+  .ds .muted { color: var(--muted); font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds *, .ds *::before, .ds *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keep panels mounted across breakpoints: responsive layout changes presentation,
+   never panel instance lifetime or session-local editing state. */
+/* 窄屏：主区独占；导航与详情为覆盖层，面板节点始终挂载 */
+.workbench-shell[data-narrow] > [data-group] { display: block !important; position: relative; }
+.workbench-shell[data-narrow] [data-panel][id="main"] { width: 100% !important; height: 100%; }
+.workbench-shell[data-narrow] :is([data-panel][id="nav"], [data-panel][id="details"]) {
+  position: absolute; inset-block: 0; z-index: 30; width: min(88vw, 360px) !important; max-width: 100%;
+  box-shadow: var(--shadow-floating); transform: translateX(var(--off, -100%));
+  transition: transform var(--motion-duration), visibility var(--motion-duration);
+  visibility: hidden;
+}
+.workbench-shell[data-narrow] [data-panel][id="nav"] { inset-inline-start: 0; --off: -100%; }
+.workbench-shell[data-narrow] [data-panel][id="details"] { inset-inline-end: 0; --off: 100%; width: 100vw !important; }
+.workbench-shell[data-narrow][data-nav-open] [data-panel][id="nav"],
+.workbench-shell[data-narrow][data-details-open] [data-panel][id="details"] { --off: 0; visibility: visible; }
+.workbench-shell[data-narrow] [role="separator"] { display: none; }
+
+/* Saved Markdown uses the shared safe renderer; no legacy workbench selectors. */
+[data-rich-content] h1 { font-size: 1.5em; font-weight: 600; }
+[data-rich-content] h2 { font-size: 1.25em; font-weight: 600; }
+[data-rich-content] h3 { font-size: 1.1em; font-weight: 600; }
+[data-rich-content] :is(h1,h2,h3,h4) { margin: 1em 0 .5em; line-height: 1.4; }
+[data-rich-content] :is(ul,ol) { padding-inline-start: 1.6em; }
+[data-rich-content] a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+[data-rich-content] pre { max-width: 100%; overflow: auto; border: 1px solid var(--line); background: var(--panel); padding: 12px; border-radius: 8px; white-space: pre; font-size: 12px; }
+[data-rich-content] :not(pre) > code { overflow-wrap: anywhere; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+[data-rich-content] blockquote { margin-inline: 0; padding-inline-start: 12px; border-inline-start: 3px solid var(--line); color: var(--muted); }
+[data-rich-content] div:has(> table) { max-width: 100%; overflow: auto; }
+[data-rich-content] table { border-collapse: collapse; }
+[data-rich-content] :is(th,td) { border: 1px solid var(--line); padding: 6px 10px; text-align: start; }
+[data-rich-content] img { max-width: 100%; height: auto; }
+/* Syntax tokens are produced by the shared bounded highlighter, not extension CSS. */
+.ds :is([data-rich-content],[aria-label="文件差异"]) { --code-blue:#005cc5; --code-green:#207f37; --code-purple:#6f42c1; --code-red:#b31d28; --code-orange:#9b4800; }
+:root[data-theme="dark"] .ds :is([data-rich-content],[aria-label="文件差异"]) { --code-blue:#9acbff; --code-green:#a3ddb0; --code-purple:#d7b9ff; --code-red:#ffb7bd; --code-orange:#ffcb98; }
+.ds :is(.syn-c0,.syn-c1) { color:var(--code-blue,var(--ink)); }
+.ds .syn-c2 { color:var(--code-green,var(--ink)); }
+.ds :is(.syn-c3,.syn-c10,.syn-c11) { color:var(--ink); }
+.ds :is(.syn-c4,.syn-c5) { color:var(--muted); }
+.ds .syn-c6 { color:var(--code-purple,var(--ink)); }
+.ds :is(.syn-c7,.syn-c8) { color:var(--code-red,var(--ink)); }
+.ds .syn-c9 { color:var(--code-orange,var(--ink)); }
+.ds :is(.syn-f1,.syn-f3,.syn-f5,.syn-f7) { font-style:italic; }
+.ds :is(.syn-f2,.syn-f3,.syn-f6,.syn-f7) { font-weight:700; }
+.ds :is(.syn-f4,.syn-f5,.syn-f6,.syn-f7) { text-decoration:underline; }
+
+[data-reference-editor][data-empty="true"]::before { content:attr(data-placeholder); color:var(--muted); pointer-events:none; }
+[data-reference-editor] [data-reference-id] { display:inline-flex; align-items:baseline; gap:4px; max-width:100%; margin:1px 2px; padding:1px 5px; border:1px solid var(--line); border-radius:5px; background:var(--wash); color:var(--ink); vertical-align:baseline; white-space:normal; }
+[data-reference-editor] [data-reference-id] > span { overflow-wrap:anywhere; }
+[data-reference-editor] [data-reference-id] > button { flex:none; border:0; border-radius:3px; background:transparent; color:var(--ink); cursor:pointer; padding:0 3px; font:inherit; }
+
+@media (max-height: 600px) {
+  [data-task-composer] { position:sticky; bottom:0; }
+  [data-reference-editor] { min-height:2.5rem; max-height:12dvh; }
+}

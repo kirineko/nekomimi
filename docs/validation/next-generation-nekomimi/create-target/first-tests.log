@@ -1,0 +1,59 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/create-target-scope.test.ts (8 tests | 3 failed) 11752ms
+   × refuses missing core source through headless and HTTP without a fallback or model call 120ms
+   × rejects bound SDK host mismatch and path escapes without returning another host's documents 6ms
+   × returns the bound development target and honest shell boundary through the real SDK tool 3480ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/create-target-scope.test.ts > refuses missing core source through headless and HTTP without a fallback or model call
+AssertionError: expected 400 to be 422 // Object.is equality
+
+- Expected
++ Received
+
+- 422
++ 400
+
+ ❯ test/create-target-scope.test.ts:33:24
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/create-target-scope.test.ts > rejects bound SDK host mismatch and path escapes without returning another host's documents
+AssertionError: expected [Function] to throw error including 'outside' but got '开发资料与绑定的目标宿主不匹配，读取已阻止'
+
+Expected: "outside"
+Received: "开发资料与绑定的目标宿主不匹配，读取已阻止"
+
+ ❯ test/create-target-scope.test.ts:57:93
+     55|   await expect(sdkCatalog("public", f.workspace, f.home, stale)).rejec…
+     56|   await expect(sdkCatalog("public", f.ownerWorkspace, f.home, selected…
+     57|   await expect(sdkCatalog("guide:../../package.json", f.workspace, f.h…
+       |                                                                                             ^
+     58| });
+     59| it("returns the bound development target and honest shell boundary thr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/create-target-scope.test.ts > returns the bound development target and honest shell boundary through the real SDK tool
+Error: Artifact symlink rejected: daa0d4f36f09ba585ebde3e274f0656e9b9ade317d3e238a198e4ed943431203
+ ❯ readArtifact src/journal.ts:101:11
+     99|   const resolved = await realpath(file);
+    100|   if (resolved !== file)
+    101|     throw new Error(`Artifact symlink rejected: ${ref.sha256}`);
+       |           ^
+    102|   const data = await readFile(file);
+    103|   if (hash(data) !== ref.sha256 || data.length !== ref.bytes)
+ ❯ test/create-target-scope.test.ts:64:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  3 failed | 82 passed (85)
+   Start at  03:38:51
+   Duration  28.29s (transform 1.05s, setup 0ms, import 3.07s, tests 66.83s, environment 0ms)
+

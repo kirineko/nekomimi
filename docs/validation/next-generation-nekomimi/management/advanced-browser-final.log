@@ -1,0 +1,16 @@
+
+Running 9 tests using 1 worker
+
+(node:66173) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets (803ms)
+  ✓  2 test/browser/model-advanced.spec.ts:35:47 › 10.4 work history branch explicit retry after lost response preserves target and creates once (1.1s)
+  ✓  3 test/browser/model-advanced.spec.ts:35:47 › 10.4 create history branch explicit retry after lost response preserves target and creates once (1.1s)
+  ✓  4 test/browser/model-advanced.spec.ts:65:1 › 10.4 reasoning conversion needs explicit consent and keeps original evidence (861ms)
+  ✓  5 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (616ms)
+  ✓  6 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (497ms)
+  ✓  7 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.3s)
+  ✓  8 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (321ms)
+  ✓  9 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.3s)
+
+  9 passed (9.5s)

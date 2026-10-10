@@ -1,0 +1,60 @@
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 572 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/index.html                                   0.35 kB │ gzip:   0.26 kB
+dist/web-dist/assets/nekomimi-CMII8_56.svg                 0.44 kB │ gzip:   0.27 kB
+dist/web-dist/assets/diff-woXpYk--.js                      2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js                      2.81 kB
+dist/web-dist/assets/asset-manifest.json                  11.95 kB │ gzip:   1.53 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js                     41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js                   69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js              174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js           175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js                     175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js              181.07 kB
+dist/web-dist/assets/app-DZ0PaA6i.css                     24.47 kB │ gzip:   5.67 kB
+dist/web-dist/assets/protocol-BVobqEOb.js                  0.05 kB │ gzip:   0.07 kB
+dist/web-dist/assets/view-D_h8qbtf.js                      0.86 kB │ gzip:   0.51 kB
+dist/web-dist/assets/api-DMIcjBmh.js                       1.51 kB │ gzip:   0.89 kB
+dist/web-dist/assets/session-export-DGDHfuqW.js            1.99 kB │ gzip:   1.17 kB
+dist/web-dist/assets/Changes-DbsBSBBp.js                   2.36 kB │ gzip:   1.17 kB
+dist/web-dist/assets/useMutation-wD3fn_jc.js               2.38 kB │ gzip:   0.98 kB
+dist/web-dist/assets/index-CvIJ4JvT.js                     2.85 kB │ gzip:   1.42 kB
+dist/web-dist/assets/management-confirm-DJAYZFfu.js        2.87 kB │ gzip:   1.52 kB
+dist/web-dist/assets/DiffView-BiLMIXZD.js                  3.20 kB │ gzip:   1.54 kB
+dist/web-dist/assets/mutation-CTF2wsFG.js                  3.44 kB │ gzip:   1.14 kB
+dist/web-dist/assets/syntax-scope-RHHvEe5b.js              3.46 kB │ gzip:   1.48 kB
+dist/web-dist/assets/themes-C5vdV7Ia.js                    3.70 kB │ gzip:   1.71 kB
+dist/web-dist/assets/panels-DALWgVO-.js                    3.78 kB │ gzip:   1.78 kB
+dist/web-dist/assets/context-details-button-CSVG67x_.js    4.65 kB │ gzip:   2.33 kB
+dist/web-dist/assets/useSelector-BqNb-xg7.js               4.79 kB │ gzip:   2.08 kB
+dist/web-dist/assets/ui-contract-BAaWOpN7.js               4.94 kB │ gzip:   2.18 kB
+dist/web-dist/assets/FileBrowser-BGz4Ejm6.js               5.07 kB │ gzip:   2.29 kB
+dist/web-dist/assets/delivery-candidate-DJTsLo0O.js        5.18 kB │ gzip:   2.27 kB
+dist/web-dist/assets/dev-ui-APTv3rLs.js                    5.44 kB │ gzip:   2.14 kB
+dist/web-dist/assets/mcp-management-DBnCk9v3.js            5.58 kB │ gzip:   2.46 kB
+dist/web-dist/assets/link-DqDAajMP.js                      6.22 kB │ gzip:   3.04 kB
+dist/web-dist/assets/resources-D9Ub56kw.js                 8.22 kB │ gzip:   3.31 kB
+dist/web-dist/assets/jsx-runtime-D3jfb0Ew.js               8.90 kB │ gzip:   3.38 kB
+dist/web-dist/assets/package-management-QwdxbCWn.js        9.10 kB │ gzip:   3.22 kB
+dist/web-dist/assets/create-C-sKuMLY.js                    9.26 kB │ gzip:   3.15 kB
+dist/web-dist/assets/settings-B_jxjf__.js                  9.58 kB │ gzip:   3.33 kB
+dist/web-dist/assets/workflows-DJzrI6Xz.js                11.16 kB │ gzip:   3.80 kB
+dist/web-dist/assets/inspection-DW0L9B7z.js               12.09 kB │ gzip:   4.14 kB
+dist/web-dist/assets/context-details-Dchq8vZF.js          13.08 kB │ gzip:   4.20 kB
+dist/web-dist/assets/models-Bb-20BCn.js                   16.03 kB │ gzip:   5.63 kB
+dist/web-dist/assets/useQuery-DFeNbou5.js                 22.69 kB │ gzip:   7.55 kB
+dist/web-dist/assets/core-candidate-DIpUKELa.js           25.36 kB │ gzip:   7.80 kB
+dist/web-dist/assets/create-NIqfWTGX.js                   29.40 kB │ gzip:   8.79 kB
+dist/web-dist/assets/Button-Dj9Rw-1V.js                   32.81 kB │ gzip:  10.81 kB
+dist/web-dist/assets/Dialog-sSVRVMj-.js                   41.26 kB │ gzip:  14.01 kB
+dist/web-dist/assets/markdown-content-CO6akGke.js        155.72 kB │ gzip:  46.60 kB
+dist/web-dist/assets/app-BwtK1J3q.js                     485.78 kB │ gzip: 153.93 kB
+
+✓ built in 155ms

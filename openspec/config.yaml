@@ -3,7 +3,7 @@ context: |
   Language: zh-CN. 保留 OpenSpec 结构标题和 SHALL/MUST 关键字。
   Nekomimi（nekomimi）是独立的新 TypeScript 项目，需求研究入口为根目录 spec.md。
   优先级：可观测性及 pi 风格提示词/工具 > Web/TUI > Skills/Rules/MCP 和上下文缓存 > 子任务及市场。
-  目标技术栈：Node.js LTS、TypeScript strict、ESM；pi-agent-core 0.85.1 低层可替换循环；独立 DeepSeek Responses adapter 复用 pi-ai 0.85.1 公开 parser。
+  目标技术栈：Node.js LTS、TypeScript strict、ESM；next-generation-nekomimi 以 Pi Durable 1.0.4 公开 Storage/Harness 和受记录 AI adapter 为生产目标。当前工作树已切换到 Durable 入口；已归档规格保留此前版本契约，新增能力完成状态以该 change 的任务和验收证据为准，不自动回退，也不以规划完成宣称全部实施完成。
   JSONL Journal 是唯一权威事实；ContextView 和 WireRequest 独立且可追溯。
   浏览器 React/Vite 优先，pi-tui 后续共享命令/事件协议；初期 npm 单主包。
   选型证据见 docs/validation/2026-09-15/README.md；应用验收与本机持久化测量见 docs/implementation-validation.md，平台限制仍需保留。

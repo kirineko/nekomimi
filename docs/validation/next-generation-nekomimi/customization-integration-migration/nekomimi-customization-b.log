@@ -1,0 +1,53 @@
+
+Running 4 tests using 1 worker
+
+(node:4187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization.spec.ts:40:1 › reconciles an unknown workflow result in the browser without repeating its external effect (4.4s)
+  ✓  2 test/browser/customization.spec.ts:60:1 › restores a durable workflow form after service restart and continues only after an explicit answer (5.1s)
+  ✘  3 test/browser/customization.spec.ts:91:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (21.5s)
+(node:4249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 test/browser/customization.spec.ts:361:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (2.5s)
+
+
+  1) test/browser/customization.spec.ts:91:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('log', { name: '对话时间线' })
+    Expected substring: "Custom Provider completed"
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('log', { name: '对话时间线' }) with timeout 20000ms
+      - waiting for getByRole('log', { name: '对话时间线' })
+
+
+      119 |     await expect(page.getByRole('dialog')).toHaveCount(0);
+      120 |     await page.goto(app.origin+path);
+    > 121 |     await page.getByLabel("任务草稿",{exact:true}).fill("Read sample.txt using the custom Provider");
+          |                                                        ^
+      122 |     await expect(page.getByRole("button", { name: "发送",exact:true })).toBeEnabled();
+      123 |     await page.getByRole("button", { name: "发送",exact:true }).click();
+      124 |     await expect(page.getByRole("log",{name:"对话时间线"})).toContainText("Custom Provider completed");
+        at /Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:121:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-configures-a-ce98b-cutes-a-recorded-tool-round/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-configures-a-ce98b-cutes-a-recorded-tool-round/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-configures-a-ce98b-cutes-a-recorded-tool-round/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-configures-a-ce98b-cutes-a-recorded-tool-round/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/customization.spec.ts:91:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round 
+  3 passed (35.9s)

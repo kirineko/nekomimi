@@ -1,7 +1,7 @@
 /** Contracts for host tools only; remote and extension schemas are never rewritten. */
 const contracts: Record<string,{snippet:string;fields:Record<string,string>;actions?:Record<string,string[]>}> = {
  resource_read:{snippet:'Read a skill or installed SDK resource',fields:{id:'Exact enabled resource ID from the catalog.',file:'Declared relative file required for extension/provider/workflow/panel resources; omit for skills, rules, docs and MCP.'}},
- resource_list:{snippet:'Discover resource IDs and pinned activation states',fields:{}},
+ resource_list:{snippet:'Discover a bounded resource page and pinned activation states',fields:{offset:'Optional zero-based cursor from the previous next field',limit:'Optional page size, from 1 to 32',revision:'Optional pinned catalog revision, required to continue a prior page safely'}},
  customization_sdk:{snippet:'Find installed SDK types and development guides',fields:{entry:'Omit for catalog; public, ui, contracts, legacy for types, or guide:<path> from the catalog for installed documentation.'}},
  customization_status:{snippet:'Check current delivery stages and missing permissions',fields:{resourceId:'Optional exact resource ID; omit for all discovered resources. This queries current state, not the pinned activation.'}},
  customization_validate:{snippet:'Statically check discovered extensions',fields:{}},
@@ -11,8 +11,9 @@ const contracts: Record<string,{snippet:string;fields:Record<string,string>;acti
  resource_write:{snippet:'Write a project or explicitly requested user resource',fields:{scope:'project by default. user requires explicit cross-project intent and user-directory write authorization; code execution authorization is separate.',kind:'Resource family: extension, skill, rule or mcp.',name:'Resource name in the selected scope.',file:'Resource-relative file path; cannot escape its resource root.',text:'Complete UTF-8 file content.',previousHash:'null only to create; for replacement supply the exact current content SHA-256, re-read on conflicts.'}},
  mcp_content:{snippet:'Read remote resources and prompts as data',fields:{action:'list(server); read(server, exactly one of uri/template, optional parameters); prompt(server, name, optional parameters); subscribe/unsubscribe(server, uri).',server:'Exact enabled MCP resource ID, not its display name.',uri:'Resource URI for read or subscription; mutually exclusive with template.',template:'Resource URI template for read; supply parameters for placeholders.',name:'Prompt name from list, required for prompt.',parameters:'String-valued template or prompt arguments; use the listed required fields.'},actions:{list:['server'],read:['server'],prompt:['server','name'],subscribe:['server','uri'],unsubscribe:['server','uri']}},
 };
-export function hostToolContract(name:string,parameters:object){
- const contract=contracts[name];if(!contract)return {parameters,snippet:''};
+export function hostToolContract(name:string,parameters:object,mode?:'work'|'create'){
+ let contract=contracts[name];if(!contract)return {parameters,snippet:''};
+ if(name==='resource_read'&&mode==='work')contract={snippet:'Read enabled project skills, rules or resource data',fields:{id:'Exact enabled resource ID from the catalog.',file:'Declared relative file for extension/provider/workflow/panel resources; omit for skills, rules and MCP.'}};
  const schema=JSON.parse(JSON.stringify(parameters));
  for(const [key,description] of Object.entries(contract.fields)) if(schema.properties?.[key])schema.properties[key].description=description;
  if(name==='customization_package' && schema.properties.source?.properties){

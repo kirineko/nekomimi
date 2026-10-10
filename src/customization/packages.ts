@@ -1,10 +1,10 @@
-import { mkdir, readdir, lstat, readFile, writeFile, copyFile, rename, rm, realpath } from "node:fs/promises";
+import { link, mkdir, readdir, lstat, readFile, writeFile, copyFile, rename, rm, realpath } from "node:fs/promises";
 import { join, dirname, relative, resolve } from "node:path";
 import { realpathSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { parse } from "yaml";
 import { create as createArchive } from "tar";
-import { Journal, atomicFile, hash, id } from "../journal.js";
+import { Journal, readSession, atomicFile, hash, id } from "../journal.js";
 import { packageIdentity, type PackageManifest, type PackageSource, type PackageLock } from "./contracts.js";
 import { checkPackageManifest, packagePath } from "./package-manifest.js";
 import { fetchNpm, resolveNpm, fetchGit, unpack, installDependencies, PACKAGE_LIMITS, type DependencyLockEntry } from "./package-source.js";
@@ -12,7 +12,9 @@ import { safePath, exists, boundedRead, type Resource, type McpConfig } from "./
 import { userHome } from "../storage/paths.js";
 import { checkTypes } from "./validation.js";
 
-export interface PackageCandidate extends PackageLock {}
+import type { CandidateOrigin } from "./candidates.js";
+import { checkSessionTarget } from "../session/identity.js";
+export interface PackageCandidate extends PackageLock { origin?: CandidateOrigin }
 interface PackagePointer { version: 1; revision: number; entries: Record<string, PackageCandidate> }
 async function treeFiles(root: string): Promise<Record<string, string>> {
   root = await realpath(root);
@@ -77,10 +79,15 @@ export class Packages {
     const changed = [...new Set([...Object.keys(old?.files ?? {}), ...Object.keys(candidate.files)])].filter(path => old?.files[path] !== candidate.files[path]);
     const root = join(this.base(scope), "package-content", candidate.revision);
     const files = await Promise.all(changed.filter(path => !path.startsWith("node_modules/")).slice(0, 64).map(async name => ({ name, previousHash: old?.files[name], hash: candidate.files[name], preview: candidate.files[name] && /\.(?:[cm]?[jt]sx?|json|md|css|html)$/.test(name) ? (await readFile(await safePath(root, name), "utf8")).slice(0, 4000) : undefined })));
-    return { candidate, checks, passed: checks.every(c => c.passed), permissions, addedPermissions: permissions.filter(p => !old?.grants.includes(p)), files, changedFiles: changed.length, previousRevision: old?.revision };
+    return { candidate, activeRevision: await this.revision(scope), checks, passed: checks.every(c => c.passed), permissions, addedPermissions: permissions.filter(p => !old?.grants.includes(p)), files, changedFiles: changed.length, previousRevision: old?.revision };
   }
-  async prepare(source: PackageSource, scope: "project" | "user", bindings: Record<string, string> = {}, signal?: AbortSignal): Promise<PackageCandidate> {
+  async prepare(source: PackageSource, scope: "project" | "user", bindings: Record<string, string> = {}, signal?: AbortSignal, origin?: CandidateOrigin): Promise<PackageCandidate> {
     if (!["project", "user"].includes(scope)) throw new Error("Invalid installation scope");
+    if (origin) {
+      origin = structuredClone(origin);
+      if (origin.session.mode !== "create" || origin.session.target.kind !== "extension" || origin.session.target.root !== this.workspace) throw new Error("Package creation target mismatch");
+      await checkSessionTarget(origin.session, this.home);
+    }
     const base = this.base(scope); await mkdir(base, { recursive: true });
     const staging = await safePath(base, join(base, "package-staging", id()));
     const incoming = join(staging, "incoming"), content = join(staging, "content");
@@ -143,7 +150,7 @@ export class Packages {
       }
       const revision = hash(JSON.stringify({ manifest, files, dependencies, ruleBindings }));
       const identity = this.identity({ scope, manifest, source: pinned }, "package", revision);
-      const candidate: PackageCandidate = { version: 1, lockVersion: 1, id: id(), scope, packageId: identity.packageId!, revision, manifest, source: pinned, integrity: integrity || `sha512-${createHash("sha512").update(JSON.stringify(files)).digest("base64")}`, dependencies, files, ruleBindings, grants: [] };
+      const candidate: PackageCandidate = { version: 1, lockVersion: 1, id: id(), scope, packageId: identity.packageId!, revision, manifest, source: pinned, integrity: integrity || `sha512-${createHash("sha512").update(JSON.stringify(files)).digest("base64")}`, dependencies, files, ruleBindings, grants: [], ...(origin ? { origin } : {}) };
       if (Buffer.byteLength(JSON.stringify(candidate)) > PACKAGE_LIMITS.metadata) throw new Error("Package lock metadata limit");
       const publishing = await Journal.open(await safePath(base, join(base, 'package-journal')));
       try {
@@ -152,6 +159,7 @@ export class Packages {
         await mkdir(dirname(destination), { recursive: true });
         if (!(await exists(destination))) await rename(content, destination);
         else if (JSON.stringify(await treeFiles(destination)) !== JSON.stringify(files)) throw new Error("Package content collision or tampering");
+        await publishing.append("package.candidate.created", { candidateId: candidate.id, scope, revision, origin: origin ?? null });
         const candidatePath = await safePath(base, join(base, "package-candidates", candidate.id + ".json"));
         await mkdir(dirname(candidatePath), { recursive: true }); await atomicFile(candidatePath, JSON.stringify(candidate));
       } finally { await publishing.close(); }
@@ -197,7 +205,20 @@ export class Packages {
       return result;
     }));
   }
+  async assertOrigin(candidate: PackageCandidate) {
+    const path = join(this.base(candidate.scope), "package-journal");
+    if (await exists(join(path, "journal.jsonl"))) {
+      const { events } = await readSession(path);
+      const created = events.find(e => e.type === "package.candidate.created" && (e.payload as {candidateId?:string}).candidateId === candidate.id);
+      if (created && JSON.stringify((created.payload as {origin:unknown}).origin) !== JSON.stringify(candidate.origin ?? null)) throw new Error("Package candidate origin mismatch");
+    }
+    if (candidate.origin) {
+      if (candidate.origin.session.mode !== "create" || candidate.origin.session.target.kind !== "extension" || (candidate.scope === "project" && candidate.origin.session.target.root !== this.workspace)) throw new Error("Package application target mismatch");
+      await checkSessionTarget(candidate.origin.session, this.home);
+    }
+  }
   async commit(candidate: PackageCandidate, grants: string[], expectedRevision: number) {
+    await this.assertOrigin(candidate);
     await this.resources(candidate);
     if ((await this.permissions(candidate)).some(c => !grants.includes(c))) throw new Error("Package permission expansion requires authorization");
     const base = this.base(candidate.scope), journalPath = await safePath(base, join(base, "package-journal"));
@@ -234,9 +255,10 @@ export class Packages {
       return [];
     })];
   }
-  async export(packageId: string, output: string) {
+  async export(packageId: string, output: string, expectedHash?: string) {
     const candidate = (await this.list()).find(p => p.packageId === packageId);
     if (!candidate) throw new Error("Unknown installed package");
+    if (expectedHash !== undefined && candidate.revision !== expectedHash) throw new Error("Package export revision conflict; inspect again");
     await this.resources(candidate);
     const base = this.base(candidate.scope), root = await safePath(base, join(base, "package-content", candidate.revision));
     const destination = await safePath(this.workspace, output);
@@ -254,7 +276,7 @@ export class Packages {
       try {
         await createArchive({ cwd: staging, file: temporary, gzip: true, portable: true, prefix: "package/" }, [...Object.keys(candidate.files), "nekomimi.lock.json"]);
         if ((await lstat(temporary)).size > PACKAGE_LIMITS.download) throw new Error("Package export size limit");
-        await rename(temporary, destination);
+        await link(temporary, destination);
       } finally { await rm(temporary, { force: true }); }
       return { path: destination, integrity: `sha512-${createHash("sha512").update(await readFile(destination)).digest("base64")}`, revision: candidate.revision };
     } finally { await rm(staging, { recursive: true, force: true }); }

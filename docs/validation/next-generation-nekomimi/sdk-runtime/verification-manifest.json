@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-10-07T15:12:06.749495+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/shared/customization-lifecycle.ts": "ce7c8e5c7d9647f553c715974d5fe79ac1ce0a97f77c5defba8de5c6326d2f57",
+    "src/customization/validation.ts": "4c6b0f21abf6e1379708c4bcf5652b4d6131c1b3d50a70a568b46f19933921f0",
+    "src/customization/lifecycle.ts": "a09172c9d20500d26a0956a62cc87c3e75de12164cf99877752ae91a67237c54",
+    "src/customization/trial.ts": "ca3ef81a3948e7859d5394cd716de4af8d05012b69c1d3a1f33bf6f42ea0bbc0",
+    "src/customization/panels.ts": "661a4f1d694d841c1ab613a9fe88a1d5db9685e98241c869b68e56ed12f555f5",
+    "src/customization/resource-access.ts": "e0f7f83d9a34ed591d34d7dd3a6ba5b441944daca9366acf3f098c2fbcc237d7",
+    "src/server/sessions.ts": "1e97ba88c824e3b40b17d0a04369ee4a0827442f18339b43a7544b1898d70aef",
+    "test/customization-verification.test.ts": "400baa4ce68e6300fab44a06617d9bf5c1a6fa7ffddedd2ef23890dc585b19c5",
+    "test/customization-panels.test.ts": "5bac626e7704eac9fe3c58a5c92d13f18f4ddb6cb960fc2657cfb8196daa9e7f",
+    "test/sdk-v3-contract.test.ts": "cbcbb12b81757c491e88fcc1b3bbcc28a809c74fc160e786fe06be73a5ad9e8f",
+    "extension-docs/validation.md": "de61356f4526f8ca38f0277d012aa2c0b0068616e570560b19049bad807acabc",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification.md": "57fd1954ad8ec4128c0efe050c3371853130c917f51ea5ae4832a620accc2aeb",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "ab2e354c3b734354c39aa3f320b525d0cd56cd84ca86b2fa11e95010503bb7ee",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-build.log": "53d7f5e8ff196fe8339e68653557a5494791ee536288669b94d46f460750f7dc",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-cancel-diagnostic.log": "ae95e134a4bf632221a4982c9c6ee2f8e3fb21d2b6f80f0986c5c79e014dde3a",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-final.log": "46f178947cb3d597cf1861778870597b7b941102f15205dbe8d72ee3326f3f83",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-first.log": "dcbd920d86ad600f76a9550f9057858c3f6ef568857e195a76ed803767768eb4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-regression.log": "2bfba4b047145c4ebd74de1817037c07f0f372cee342e6ab720d2c17dbe38462",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/verification-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

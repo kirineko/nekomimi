@@ -1,0 +1,10 @@
+{"seq":1,"type":"message","message":{"role":"system","content":"CANONICAL_FROM_JOURNAL","tools":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}],"timestamp":0}}
+{"seq":2,"type":"message","message":{"role":"user","content":[{"type":"text","text":"fixture input"}],"timestamp":1791299917576}}
+{"seq":3,"type":"prepare","preparation":1}
+{"seq":4,"type":"request.persisted","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299917576}]}","sha256":"ee640d3161c160cf224e852ec65bd3034bb66731f45867cb2e4a71fda0f0e4cf"}
+{"seq":5,"type":"wire.received","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299917576}]}","sha256":"ee640d3161c160cf224e852ec65bd3034bb66731f45867cb2e4a71fda0f0e4cf"}
+{"seq":6,"type":"message","message":{"role":"assistant","content":[{"type":"text","text":"done"}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"aborted","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"errorMessage":"fixture aborted","thinkingLevel":"off"}}
+{"seq":7,"type":"finish","turns":1,"stopReason":"aborted","toolResults":[]}
+{"seq":8,"type":"turn_end"}
+{"seq":9,"type":"agent_end"}
+{"seq":10,"type":"probe.passed","requests":1,"effects":[],"preparation":1,"turns":1}

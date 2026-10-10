@@ -1,0 +1,12 @@
+
+Running 7 tests using 1 worker
+
+  ✓  1 ui.spec.ts:7:1 › Radix keyboard dialog, theme preview, focus restoration and shadcn control (349ms)
+  ✓  2 ui.spec.ts:12:1 › Router navigation preserves isolated work/create drafts; Query keys bind mode (357ms)
+  ✓  3 ui.spec.ts:18:1 › resizable panel separator supports keyboard (243ms)
+  ✓  4 ui.spec.ts:22:1 › virtual list bounds DOM, measures delayed image, streams without stealing draft focus (532ms)
+  ✓  5 ui.spec.ts:34:28 › narrow viewport and CSS zoom 100% keep essential controls reachable (233ms)
+  ✓  6 ui.spec.ts:34:28 › narrow viewport and CSS zoom 200% keep essential controls reachable (244ms)
+  ✓  7 ui.spec.ts:40:1 › visual samples: both workbenches, all states, narrow and dark (1.0s)
+
+  7 passed (3.7s)

@@ -1,0 +1,144 @@
+
+Running 15 tests using 2 workers
+
+(node:99129) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:99130) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"count":60,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.001209,"RecalcStyleDuration":0.0006000000000000001,"ScriptDuration":0.023868},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓   1 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.4s)
+{"count":180,"p95":16.800000000000182,"longTasks":[],"metrics":{"LayoutDuration":0.0015309999999999994,"RecalcStyleDuration":0.0006390000000000007,"ScriptDuration":0.020337000000000008},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓   2 test/browser/scrolling.spec.ts:5:1 › scroll trajectory and performance baseline (3.7s)
+(node:99163) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"height":696,"historyHeight":696,"remaining":30}
+  ✓   3 test/browser/scrolling.spec.ts:30:1 › bottom boundary and return control do not move the viewport (955ms)
+  ✘   5 test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (918ms)
+(node:99182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"browser":"","cacheViewMs":818,"workerJobs":2}
+  ✓   6 test/browser/scrolling.spec.ts:68:1 › layout growth preserves the current anchor including movement in the same frame (1.3s)
+  ✘   4 test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline (4.0s)
+(node:99206) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 test/browser/scrolling.spec.ts:94:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.5s)
+{"browser":"","first100LinesMs":1333,"inputFillDuringStreamMs":32}
+  ✘   9 test/browser/scrolling.spec.ts:117:1 › fixture supports a delayed panel and diff without model or tool execution (5.7s)
+(node:99231) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 test/browser/syntax.spec.ts:67:1 › streaming code stays interactive and stale highlighting cannot cross sessions (7.9s)
+  ✓  10 test/browser/scrolling.spec.ts:132:1 › narrow and zoomed history controls stay bounded without overlapping the reading surface (1.5s)
+{"count":180,"streaming":true,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.00174,"RecalcStyleDuration":0.000861,"ScriptDuration":0.082834}}
+  ✓  11 test/browser/scrolling.spec.ts:150:1 › streaming history performance sample (2.9s)
+  ✓  12 test/browser/scrolling.spec.ts:166:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.1s)
+  ✓  13 test/browser/scrolling.spec.ts:204:1 › horizontal code scrolling does not leave latest mode (718ms)
+  ✓  14 test/browser/scrolling.spec.ts:217:1 › completion failure and cancellation do not pull history to the bottom (1.5s)
+  ✓  15 test/browser/scrolling.spec.ts:232:1 › new content is readable by scrolling, including a full historical window (1.9s)
+
+
+  1) test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    23
+
+      57 |       const tops=[before.top,...sample.frames.map(f=>f.top)];
+      58 |       for(let i=1;i<tops.length;i++) expect((tops[i]!-tops[i-1]!)*Math.sign(delta)).toBeGreaterThanOrEqual(-2);
+    > 59 |       expect(Math.abs(tops.at(-1)!-Math.max(0,Math.min(before.max,before.top+delta)))).toBeLessThanOrEqual(2);
+         |                                                                                        ^
+      60 |     }
+      61 |     await conversation.focus();await page.keyboard.press('End');
+      62 |     await expect.poll(()=>conversation.evaluate(el=>el.scrollHeight-el.clientHeight-el.scrollTop)).toBeLessThan(3);
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling.spec.ts:59:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-repeated-wheel-r-1a266-d-keyboard-can-reach-latest/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-repeated-wheel-r-1a266-d-keyboard-can-reach-latest/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-repeated-wheel-r-1a266-d-keyboard-can-reach-latest/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-repeated-wheel-r-1a266-d-keyboard-can-reach-latest/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/scrolling.spec.ts:117:1 › fixture supports a delayed panel and diff without model or tool execution 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('iframe[title^="面板"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('iframe[title^="面板"]') with timeout 5000ms
+      - waiting for locator('iframe[title^="面板"]')
+
+
+      121 |     await fixture.show('panel');await page.getByRole('button',{name:'打开互动内容'}).click();
+      122 |     const frame=page.locator('iframe[title^="面板"]');
+    > 123 |     await expect(frame).toBeVisible();
+          |                         ^
+      124 |     await frame.contentFrame().getByRole('button',{name:'展开'}).click();
+      125 |     await expect(frame).toHaveCSS('height','500px');
+      126 |     await fixture.expand();await fixture.append();
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling.spec.ts:123:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-fixture-supports-d482b-out-model-or-tool-execution/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-fixture-supports-d482b-out-model-or-tool-execution/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-fixture-supports-d482b-out-model-or-tool-execution/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-fixture-supports-d482b-out-model-or-tool-execution/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(75, 85, 99)"
+    Received: "rgb(100, 109, 118)"
+
+      61 |   await offline.goto(pathToFileURL(path).href);
+      62 |   await expect(offline.locator('.markdown .syntax [class*="syn-c"]').first()).toBeVisible();
+    > 63 |   expect(await offline.locator('.markdown pre').first().locator('[class*="syn-c"]').first().evaluate(e=>getComputedStyle(e).color)).toBe(color);
+         |                                                                                                                                     ^
+      64 |   await expect(offline.locator('code.syntax [class*="syn-c"]').first()).toBeVisible();
+      65 |   expect(remote).toEqual([]);expect(await offline.evaluate(()=>(window as any).hacked)).toBeUndefined();expect(errors).toEqual([]);
+      66 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/syntax.spec.ts:63:133
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/syntax-production-CSP-high-07a98-exported-HTML-works-offline/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest 
+    test/browser/scrolling.spec.ts:117:1 › fixture supports a delayed panel and diff without model or tool execution 
+    test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline 
+  12 passed (28.2s)

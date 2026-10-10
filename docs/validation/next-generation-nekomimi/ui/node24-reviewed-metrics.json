@@ -1,0 +1,6 @@
+{
+  "environment": "single local Chrome run; not comparison or SLO",
+  "inputFillAndAssertionMs": 6.159916000000067,
+  "scrollAndAssertionMs": 27.525041999999985,
+  "visualScenarioSweepMs": 886.887084
+}

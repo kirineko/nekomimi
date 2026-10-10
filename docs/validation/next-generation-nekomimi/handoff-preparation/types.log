@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/handoff-preparation.test.ts(21,59): error TS2524: 'await' expressions cannot be used in a parameter initializer.

@@ -1,0 +1,17 @@
+{
+  "phase": "managed-passed",
+  "launchId": "a059ce13-b07a-48b4-afe7-6f215d50f89f",
+  "identity": {
+    "version": "0.2.1",
+    "build": "3fe4ef6d82800c94cfcdb76051e03d5477f463e0dcef4dc335563005119a91aa",
+    "contract": "5903f6ac575f77788b1c22a0c158e0a95ef00544394d29539755673fce542220",
+    "entry": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-VElhOq/home/core-builds/artifacts/fc962c356ee7319dd6eecbbabb04a57ace3fd743afa3aaaf3280678c04238253/dist/cli.js",
+    "node": "/Users/kirineko/.local/share/fnm/node-versions/v24.15.0/installation/bin/node",
+    "requiresBuild": false
+  },
+  "termination": {
+    "code": 0,
+    "signal": null
+  },
+  "portClosed": true
+}

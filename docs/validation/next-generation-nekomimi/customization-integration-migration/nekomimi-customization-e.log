@@ -1,0 +1,72 @@
+
+Running 3 tests using 1 worker
+
+(node:4618) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization.spec.ts:139:1 › reviews a package, installs its command and uninstalls without erasing history (4.2s)
+  ✘  2 test/browser/customization.spec.ts:174:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (25.7s)
+(node:4648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/customization.spec.ts:217:1 › enable extension, use form, reload a changed command and retain history (1.5m)
+
+
+  1) test/browser/customization.spec.ts:174:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('静态校验：通过', { exact: true })
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('静态校验：通过', { exact: true }) with timeout 20000ms
+      - waiting for getByText('静态校验：通过', { exact: true })
+
+
+      183 |       await page.getByRole('tab',{name:'验证记录',exact:true}).click();
+      184 |       await page.getByRole('button',{name:'运行静态校验',exact:true}).click();
+    > 185 |       await expect(page.getByText(`静态校验：${passed?'通过':'失败'}`,{exact:true})).toBeVisible();
+          |                                                                             ^
+      186 |     };
+      187 |     const activate=async(label:string)=>{
+      188 |       await page.getByRole('tab',{name:'启用与导出',exact:true}).click();
+        at inspect (/Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:185:77)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:210:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-checks-candi-9e471-back-without-losing-history/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-checks-candi-9e471-back-without-losing-history/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-checks-candi-9e471-back-without-losing-history/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-checks-candi-9e471-back-without-losing-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/customization.spec.ts:217:1 › enable extension, use form, reload a changed command and retain history 
+
+    Test timeout of 90000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-enable-exten-f7fe3--command-and-retain-history/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-enable-exten-f7fe3--command-and-retain-history/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-enable-exten-f7fe3--command-and-retain-history/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-enable-exten-f7fe3--command-and-retain-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/customization.spec.ts:174:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history 
+    test/browser/customization.spec.ts:217:1 › enable extension, use form, reload a changed command and retain history 
+  1 passed (2.0m)

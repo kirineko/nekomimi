@@ -45,8 +45,8 @@
 
 #### Scenario: 旧配置升级到多 Provider
 
-- **WHEN** 用户首次用 V2 打开只有 V1 model/baseUrl/API key 的配置
-- **THEN** 原设置映射到默认 DeepSeek profile 且保留备份，默认任务行为不变；迁移失败保留原文件，不猜测或覆盖凭证。
+- **WHEN** 用户选择只有旧版 model/baseUrl/API key、缺少当前数据格式标记或契约版本不受支持的配置目录
+- **THEN** 在创建配置写入者前拒绝并提示选择独立的新数据目录；原文件及摘要不变，不自动映射到默认 profile、不生成备份或兼容配置、不读取环境变量补齐凭证。
 
 #### Scenario: Web 修改模型与端点
 

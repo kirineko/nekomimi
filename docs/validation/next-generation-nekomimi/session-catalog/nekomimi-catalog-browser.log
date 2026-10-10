@@ -1,0 +1,72 @@
+
+Running 23 tests using 1 worker
+
+(node:83101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/create-candidates.spec.ts:15:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (2.0s)
+  ✘   2 test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (20.6s)
+(node:83134) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 test/browser/create-candidates.spec.ts:44:1 › 10.2 target creation and candidate loading failures remain distinct (594ms)
+  ✓   4 test/browser/create-candidates.spec.ts:52:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.6s)
+  ✓   5 test/browser/create-candidates.spec.ts:73:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (1.5s)
+  ✓   6 test/browser/create-candidates.spec.ts:94:1 › 10.2 simulation exposes durable results without replay on return (2.4s)
+  ✓   7 test/browser/create-candidates.spec.ts:112:1 › 10.2 unavailable target retains background preview cancellation (1.4s)
+  ✓   8 test/browser/create-candidates.spec.ts:131:1 › 10.2 closed preview is reported expired and invalid props never start execution (1.6s)
+  ✓   9 test/browser/create-conversation.spec.ts:8:1 › 10.3 create input preserves independent drafts and explicitly runs against its own target (2.5s)
+  ✓  10 test/browser/create-conversation.spec.ts:39:1 › 10.3 create task stop is explicit and cancels only its active request (1.8s)
+  ✓  11 test/browser/v2-session-catalog.spec.ts:8:1 › catalog pagination restarts on an actual revision conflict and preserves the selected draft (5.5s)
+  ✓  12 test/browser/v2-session-catalog.spec.ts:34:1 › a create deep link beyond the first 100 sessions resolves its own target without loading all pages (11.7s)
+  ✓  13 test/browser/v2-session-catalog.spec.ts:51:1 › local date groups update across midnight and full times are keyboard accessible (860ms)
+  ✓  14 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (416ms)
+  ✓  15 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (309ms)
+  ✓  16 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (694ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (295ms)
+  ✓  18 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (401ms)
+  ✓  19 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (498ms)
+  ✓  20 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (506ms)
+  ✓  21 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  22 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (262ms)
+  ✓  23 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.5s)
+
+
+  1) test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('iframe[title="候选预览 preview"]').contentFrame().getByText('预览已运行', { exact: true })
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('iframe[title="候选预览 preview"]').contentFrame().getByText('预览已运行', { exact: true }) with timeout 20000ms
+      - waiting for locator('iframe[title="候选预览 preview"]').contentFrame().getByText('预览已运行', { exact: true })
+
+
+      35 |     const run = page.getByRole('button', { name: '运行候选预览' }); await expect(run).toBeDisabled(); expect(actions).toEqual([]);
+      36 |     await page.getByLabel('预览数据 JSON').fill(JSON.stringify({ text: '预览已运行' })); await page.getByLabel('我授权执行当前候选的预览代码').check(); await run.click();
+    > 37 |     await expect(page.frameLocator('iframe[title="候选预览 preview"]').getByText('预览已运行', { exact: true })).toBeVisible({ timeout: 20000 });
+         |                                                                                                         ^
+      38 |     await expect(page.getByText('视图预览：通过', { exact: true })).toBeVisible(); await expect(page.getByText('宿主验收：未运行', { exact: true })).toBeVisible();
+      39 |     await page.getByRole('tab', { name: '内容差异' }).click(); await page.getByRole('tab', { name: '运行预览', exact: true }).click();
+      40 |     await expect(page.locator('iframe[title="候选预览 preview"]')).toHaveCount(0); expect(actions.filter(action => action === 'candidate-execution-start')).toHaveLength(1);
+        at /Users/kirineko/Github/nekomimi/test/browser/create-candidates.spec.ts:37:105
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/create-candidates-10-2-pan-226d9-s-the-selected-target-frame/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/create-candidates-10-2-pan-226d9-s-the-selected-target-frame/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/create-candidates-10-2-pan-226d9-s-the-selected-target-frame/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/create-candidates-10-2-pan-226d9-s-the-selected-target-frame/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame 
+  22 passed (1.1m)

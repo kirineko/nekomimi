@@ -1,0 +1,22 @@
+
+Running 13 tests using 2 workers
+
+(node:93905) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:93906) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.7s)
+  ✓   1 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.5s)
+  ✓   3 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.8s)
+  ✓   4 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.9s)
+  ✓   5 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.3s)
+  ✓   6 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.9s)
+  ✓   7 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (1.9s)
+  ✓   8 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.6s)
+  ✓  10 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (646ms)
+  ✓   9 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.9s)
+  ✓  11 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (604ms)
+  ✓  12 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.5s)
+  ✓  13 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.8s)
+
+  13 passed (14.0s)

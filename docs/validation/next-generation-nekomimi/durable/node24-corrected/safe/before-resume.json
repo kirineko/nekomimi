@@ -1,0 +1,74 @@
+{
+  "scheduling": "paused",
+  "tasks": [
+    {
+      "record": {
+        "id": 12,
+        "conversationId": 1,
+        "kind": "pi.tool",
+        "version": 1,
+        "input": {
+          "assistant": 11,
+          "callId": "external-call"
+        },
+        "owner": 9,
+        "background": false,
+        "abortRequested": false,
+        "state": {
+          "status": "pending",
+          "checkpoint": {
+            "phase": "execute",
+            "arguments": {},
+            "replay": "safe"
+          }
+        }
+      },
+      "state": {
+        "kind": "ready",
+        "migrates": false
+      }
+    },
+    {
+      "record": {
+        "id": 9,
+        "conversationId": 1,
+        "kind": "pi.generation",
+        "version": 1,
+        "input": {},
+        "background": false,
+        "abortRequested": false,
+        "state": {
+          "status": "waiting",
+          "checkpoint": {
+            "phase": "tools",
+            "assistant": 11,
+            "tools": [
+              12
+            ],
+            "pending": []
+          },
+          "on": [
+            12
+          ],
+          "policy": "allSettled"
+        }
+      },
+      "state": {
+        "kind": "waiting",
+        "on": [
+          12
+        ]
+      }
+    }
+  ],
+  "submissions": [
+    {
+      "conversationId": 1,
+      "requestId": "original",
+      "type": "input",
+      "status": "placed",
+      "entry": 7,
+      "id": 8
+    }
+  ]
+}

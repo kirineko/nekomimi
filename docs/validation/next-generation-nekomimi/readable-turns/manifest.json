@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-10-08T15:03:46.100Z",
+  "baseline": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "platform": "darwin",
+  "arch": "arm64",
+  "node": "v24.15.0",
+  "files": {
+    "src/web/v2/routes/readable-turns.ts": "fff094943011bbedff67213cda6b1d5b006e30d3e6e761c631e9956626a03f87",
+    "src/web/v2/routes/turn-heading.tsx": "5d7124c9cfef5738a953567dc5dddd5d42dc865f5cae2be9f6708606b19cfad2",
+    "src/web/v2/routes/session-timeline.tsx": "d3175c87b429b614db8db345a921af7ecfc83573b9ccb598d2acd9a678c3653e",
+    "src/web/v2/routes/inspection-button.tsx": "46a035145af681c480f263c988d835cec3040aa411d5806e0d247a2ce3167930",
+    "src/web/v2/routes/inspection.tsx": "5a9c14470799431c28f92c60dcc0129865e033fd2b8a6e7467ba86f83fc9c6ad",
+    "src/web/components/CustomPanel.tsx": "61ea49c298418b5edd9171381a2cc4ba11c89bbd6fe5ae815c1aafc48ea068f5",
+    "src/web/hooks/useConversationScroll.ts": "ff86e0460b18aebc1ef87f669f177b050d1e7432809d01adf83d5ec967a2af90",
+    "src/web/presentation.ts": "d057ac9f92bb67bba5ee97312fe4b51cd869bff55024e723a0947e25be3df98a",
+    "src/README.md": "06a013ce3d242191d5b98fbecca9bf1647f95578cc8640aa7656e5cd9b56acf2",
+    "test/conversation-display.test.tsx": "31a0e45005a526f2623b20118fc35e914eccf07a119bf880e67ec849815c5c2c",
+    "test/conversation-turns.test.ts": "3817c3c14c104132ed13fd1b51b755e63278f5897b36a4840011b765cddc37d4",
+    "test/browser/readable-turns.spec.ts": "380990ec0fe9494dc62183eaa765e0559882a69e3c9dc80dac1a8c0a899fbf66",
+    "test/browser/scrolling-native.spec.ts": "8aa6762d99ab4f060fc7420595fd93e9547e94f95d1a1b87eccb6aabec0bce19",
+    "test/browser/workbench.spec.ts": "3de97acdc4ba302b0db32ed3093c6d3c65268b18c2cb678c66ef52289a76f3c3",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "eb411d0df126c47aa6e83b4558edfa576f13d3a3fee691f03b728742e04c0b65",
+    "openspec/changes/next-generation-nekomimi/design.md": "a114ccb9bd817168e3db50245c0c7c42de6b5a64d91f7a29fb56665885e1d894",
+    "docs/validation/next-generation-nekomimi/readable-turns/README.md": "85910ec26f2a7adadef3fcb0e1125dd05a31ee7eba16773de7f4b5db7309ec9a",
+    "docs/validation/next-generation-nekomimi/readable-turns/removed.json": "398966c6db4f315f8140207b6741f7b43037c89caf958869a5fbb92025201892"
+  }
+}

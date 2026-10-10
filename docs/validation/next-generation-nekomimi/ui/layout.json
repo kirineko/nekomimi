@@ -1,0 +1,90 @@
+{
+  "headers": 1,
+  "viewport": [
+    360,
+    960
+  ],
+  "scroll": [
+    0,
+    0
+  ],
+  "elements": [
+    {
+      "selector": "body",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 1001.28125
+      },
+      "position": "static",
+      "overflow": "visible"
+    },
+    {
+      "selector": ".topbar",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 102.890625
+      },
+      "position": "static",
+      "overflow": "visible"
+    },
+    {
+      "selector": ".mobile-layout",
+      "bounds": {
+        "x": 0,
+        "y": 102.890625,
+        "width": 360,
+        "height": 898.390625
+      },
+      "position": "static",
+      "overflow": "visible"
+    },
+    {
+      "selector": ".conversation",
+      "bounds": {
+        "x": 0,
+        "y": 102.890625,
+        "width": 360,
+        "height": 852
+      },
+      "position": "static",
+      "overflow": "visible"
+    },
+    {
+      "selector": ".timeline",
+      "bounds": {
+        "x": 16,
+        "y": 258.078125,
+        "width": 328,
+        "height": 526.921875
+      },
+      "position": "static",
+      "overflow": "auto"
+    },
+    {
+      "selector": ".composer",
+      "bounds": {
+        "x": 16,
+        "y": 785,
+        "width": 328,
+        "height": 157.890625
+      },
+      "position": "static",
+      "overflow": "visible"
+    },
+    {
+      "selector": "summary",
+      "bounds": {
+        "x": 0,
+        "y": 954.890625,
+        "width": 360,
+        "height": 46.390625
+      },
+      "position": "static",
+      "overflow": "visible"
+    }
+  ]
+}

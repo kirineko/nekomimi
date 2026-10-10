@@ -18,6 +18,9 @@ export class Interactions {
       cancel: () => void;
     }
   >();
+  pending() {
+    return [...this.waiting.values()].map(({ item }) => ({ id: item.id, sessionId: item.sessionId, runId: item.runId, resourceId: item.resourceId }));
+  }
   list(sessionId: string) {
     return [...this.waiting.values()]
       .filter((w) => w.item.sessionId === sessionId)

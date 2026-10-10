@@ -1,0 +1,4 @@
+node_modules/@google/genai/dist/node/node.d.ts(1,29): error TS2307: Cannot find module '@modelcontextprotocol/sdk/client/index.js' or its corresponding type declarations.
+probe.ts(3,10): error TS2305: Module '"@earendil-works/pi-ai/api/openai-responses"' has no exported member 'streamOpenAIResponses'.
+probe.ts(10,7): error TS2741: Property 'streamFn' is missing in type '{}' but required in type 'AgentOptions'.
+probe.ts(13,22): error TS2314: Generic type 'Model<TApi>' requires 1 type argument(s).

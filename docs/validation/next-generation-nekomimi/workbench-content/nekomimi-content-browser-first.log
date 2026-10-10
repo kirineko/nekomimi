@@ -1,0 +1,85 @@
+
+Running 13 tests using 1 worker
+
+(node:78356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.4s)
+(node:78405) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.6s)
+  ✓   3 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.2s)
+  ✓   4 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (1.0s)
+  ✓   5 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (902ms)
+  ✓   6 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (1.0s)
+  ✓   7 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.0s)
+  ✓   8 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (733ms)
+  ✓   9 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (909ms)
+  ✓  10 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (654ms)
+  ✘  11 test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (45.1s)
+(node:78486) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (3.0s)
+  ✓  13 test/browser/v2-runtime-slots.spec.ts:103:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.4s)
+
+
+  1) test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('timeline').locator('pre')
+    Expected substring: "const greeting"
+    Error: strict mode violation: getByTestId('timeline').locator('pre') resolved to 3 elements:
+        1) <pre class="syntax">…</pre> aka locator('pre').filter({ hasText: 'const greeting = "hello";' })
+        2) <pre class="max-h-64 overflow-auto whitespace-pre-wrap break-all text-xs">{↵  "path": "src/result.ts"↵}</pre> aka getByText('{ "path": "src/result.ts" }')
+        3) <pre class="max-h-64 overflow-auto whitespace-pre-wrap break-all text-xs">Recorded edit complete</pre> aka getByText('Recorded edit complete')
+
+    Call log:
+      - Expect "toContainText" getByTestId('timeline').locator('pre') with timeout 5000ms
+      - waiting for getByTestId('timeline').locator('pre')
+
+
+      30 |     const timeline=page.getByTestId('timeline');await expect(timeline.getByRole('heading',{name:'Saved answer'})).toBeVisible();
+      31 |     await expect(timeline.getByRole('link',{name:/Documentation/})).toHaveAttribute('rel','noopener noreferrer');
+    > 32 |     await expect(timeline.locator('pre')).toContainText('const greeting');await expect(timeline.getByRole('table')).toContainText('Saved');
+         |                                           ^
+      33 |     await expect(timeline.locator('script,img,iframe')).toHaveCount(0);
+      34 |     await expect(timeline.locator('[class*="syn-c"]').first()).toBeVisible();
+      35 |     expect(await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(node=>(node as HTMLLinkElement).href).some(url=>/workbench-|styles-|customization-|runtime-ui-|navigation-/.test(url)))).toBe(false);
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-content-files.spec.ts:32:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-content-files-10-9-rich-919c5-out-legacy-styles-or-replay/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount 
+
+    Test timeout of 45000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay 
+    test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount 
+  11 passed (1.1m)

@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-runtime.test.ts (14 tests | 1 failed) 26891ms
+   × captures matched task and model before and after explicit compaction 2391ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > captures matched task and model before and after explicit compaction
+AssertionError: expected 'work' to be 'main' // Object.is equality
+
+Expected: "main"
+Received: "work"
+
+ ❯ test/context-runtime.test.ts:47:65
+     45|    const snapshot=JSON.parse((await readArtifact(result.session,(snaps…
+     46|    const dispatched=observed.events.filter(e=>e.type==='request.dispat…
+     47|    expect(body).toEqual(bodies.at(-1));expect(snapshot.purpose).toBe('…
+       |                                                                 ^
+     48|    report.variants[variant]={body,bodyArtifact:(dispatched.at(-1)!.pay…
+     49|     measurement:snapshot.measurement,selection:snapshot.selection,reta…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 44 passed (45)
+   Start at  21:36:51
+   Duration  27.49s (transform 363ms, setup 0ms, import 1.43s, tests 31.56s, environment 0ms)
+

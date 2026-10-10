@@ -1,0 +1,35 @@
+{
+  "scope": "task 2.1 format admission; not completed Durable execution migration",
+  "sourceSha256": {
+    "src/storage/format.ts": "39774f02056263b9e6cc29bd69d2fd1eadf3f441d8d053b9412cfa9b3c098d35",
+    "src/storage/paths.ts": "514174e8fba2065f80fdb67d9367a568f555d788c1ab479dd2fe7847520d9da4",
+    "src/shared/versions.ts": "915f6b8cbdd1dd786341f486b86fd36353db251cb52d2b4633951296fd53b7b8",
+    "src/config/store.ts": "32fc79e6eaa11bfcd70ac77c1b02936e0480505e6a85333e3db9d05f610dedf1",
+    "src/pi/journal-storage.ts": "1de8628e486a6354a59322a2d6658d9d1e668c223f91d1fe4b59a991bae60467",
+    "src/runtime.ts": "6550c3e0505431373fbab5a809c237fbc7936e762426e68c1304248307f3c4af",
+    "src/server/sessions.ts": "da7fab283c6c00b52b7b02e9542f956777a79529d9f43170f7db7d74def1b152",
+    "src/export.ts": "6b65c771f69b78129d11d9565d5fdf240d5527fb787b83a2cb379b94b816d0d9",
+    "src/customization/candidates.ts": "d0553c65e1e229a3895e71bcdeb2a38ce4a6e10a0162a12f191735a0706dc0ae",
+    "src/customization/resources.ts": "763af7315e9044481d4bf507931caaf54db944a98c48cbb257ef2d0e4b94b5d4",
+    "src/customization/provider-profiles.ts": "42b5dcd1d95ba09237f1e7db99372985d7e72669a401411c3dc0faea86bd20c9",
+    "src/customization/mcp-oauth.ts": "b8f35b6bebc9e958a69250ddecc7ddc8d4bca6c523dc2c7e01980a57a5d64595",
+    "src/customization/types.ts": "c4491e56e624fc92ce8479ae57cc86f0619fc347ae0c9b2df301b4e2f2f3a63a",
+    "src/customization/worker.ts": "9f3842ce325cb34903f9704f8f4c59b7e09bd007943cc14d3c8a70dc4d59ab57"
+  },
+  "checks": {
+    "typecheck": "durable/format-stage-typecheck.log",
+    "newFormatAndSdkCandidateTests": {
+      "passed": 17,
+      "log": "durable/format-stage-verified.log"
+    },
+    "contextHttpAndRecoveryRegression": {
+      "passed": 49,
+      "log": "durable/format-latest-tests.log"
+    },
+    "sdkLifecycleAndPermissionRegression": {
+      "passed": 51,
+      "log": "durable/sdk3-tests-verified.log"
+    }
+  },
+  "remaining": "tasks 2.2 through 11 remain pending; earlier full-suite failures retained and fixed by scoped regressions; full suite rerun still required"
+}

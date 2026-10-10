@@ -1,0 +1,67 @@
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 575 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/index.html                               0.35 kB │ gzip:   0.27 kB
+dist/web-dist/assets/nekomimi-CMII8_56.svg             0.44 kB │ gzip:   0.27 kB
+dist/web-dist/assets/diff-woXpYk--.js                  2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js                  2.81 kB
+dist/web-dist/assets/asset-manifest.json              13.72 kB │ gzip:   1.82 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js                 41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js               69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js          174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js       175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js                 175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js          181.07 kB
+dist/web-dist/assets/app-DZ0PaA6i.css                 24.47 kB │ gzip:   5.67 kB
+dist/web-dist/assets/protocol-BVobqEOb.js              0.05 kB │ gzip:   0.07 kB
+dist/web-dist/assets/useRouter-FxgnsQDe.js             0.14 kB │ gzip:   0.14 kB
+dist/web-dist/assets/useNavigate-Cuix6Co9.js           0.22 kB │ gzip:   0.18 kB
+dist/web-dist/assets/Badge-BJD3HJfl.js                 0.54 kB │ gzip:   0.32 kB
+dist/web-dist/assets/session-catalog-BQY1KXu4.js       1.12 kB │ gzip:   0.66 kB
+dist/web-dist/assets/api-BZVUjpGh.js                   1.50 kB │ gzip:   0.89 kB
+dist/web-dist/assets/runtime-dialogs-DhBCcl0v.js       1.61 kB │ gzip:   0.88 kB
+dist/web-dist/assets/Menu-Bnq6tSaS.js                  1.76 kB │ gzip:   0.97 kB
+dist/web-dist/assets/session-export-B2QD5a4n.js        1.95 kB │ gzip:   1.15 kB
+dist/web-dist/assets/Changes-BjTJHXO9.js               2.32 kB │ gzip:   1.16 kB
+dist/web-dist/assets/session-delete-BVlSSP7L.js        2.56 kB │ gzip:   1.33 kB
+dist/web-dist/assets/deferred-CQRHozIi.js              2.70 kB │ gzip:   1.45 kB
+dist/web-dist/assets/management-confirm-DlcbYxHX.js    2.82 kB │ gzip:   1.50 kB
+dist/web-dist/assets/index-DE_w5ba3.js                 2.84 kB │ gzip:   1.42 kB
+dist/web-dist/assets/work-session-DmaHEnr9.js          2.94 kB │ gzip:   1.53 kB
+dist/web-dist/assets/more-dialog-CXVjZezF.js           3.13 kB │ gzip:   1.60 kB
+dist/web-dist/assets/mutation-0wMQ_3ad.js              3.44 kB │ gzip:   1.14 kB
+dist/web-dist/assets/themes-sqube_Jj.js                3.66 kB │ gzip:   1.68 kB
+dist/web-dist/assets/panels-DSJq8N6v.js                3.71 kB │ gzip:   1.74 kB
+dist/web-dist/assets/DiffView-C_U-TVeP.js              3.91 kB │ gzip:   1.88 kB
+dist/web-dist/assets/useSelector-C5blEMR5.js           4.71 kB │ gzip:   2.05 kB
+dist/web-dist/assets/ui-contract-DC4Xsd68.js           4.94 kB │ gzip:   2.18 kB
+dist/web-dist/assets/FileBrowser-CI7MEP-o.js           5.03 kB │ gzip:   2.26 kB
+dist/web-dist/assets/delivery-candidate-B8jTtmdt.js    5.10 kB │ gzip:   2.24 kB
+dist/web-dist/assets/dev-ui-B7CQj8rn.js                5.47 kB │ gzip:   2.15 kB
+dist/web-dist/assets/mcp-management-LPcUwTyp.js        5.54 kB │ gzip:   2.44 kB
+dist/web-dist/assets/link-Yjki_DlL.js                  6.24 kB │ gzip:   3.04 kB
+dist/web-dist/assets/query-BVghO7Yc.js                 7.11 kB │ gzip:   2.25 kB
+dist/web-dist/assets/core-recovery-PW0u7B0V.js         7.28 kB │ gzip:   3.10 kB
+dist/web-dist/assets/presentation-C6rTv5_x.js          7.32 kB │ gzip:   3.09 kB
+dist/web-dist/assets/resources-CVWLyvol.js             8.18 kB │ gzip:   3.28 kB
+dist/web-dist/assets/package-management-DUtUza7X.js    8.99 kB │ gzip:   3.16 kB
+dist/web-dist/assets/settings-BWKe8rso.js              9.51 kB │ gzip:   3.28 kB
+dist/web-dist/assets/workflows-CCAYd_1X.js            11.09 kB │ gzip:   3.76 kB
+dist/web-dist/assets/inspection-9wl-d31i.js           12.04 kB │ gzip:   4.13 kB
+dist/web-dist/assets/context-details-C9O2x_hF.js      13.08 kB │ gzip:   4.20 kB
+dist/web-dist/assets/models-m2rAQvPW.js               15.99 kB │ gzip:   5.60 kB
+dist/web-dist/assets/useQuery-DJQIPop0.js             22.69 kB │ gzip:   7.54 kB
+dist/web-dist/assets/core-candidate-D_7sFHdZ.js       25.28 kB │ gzip:   7.76 kB
+dist/web-dist/assets/create-BKr2FhyQ.js               29.39 kB │ gzip:   8.77 kB
+dist/web-dist/assets/Dialog-D5xtvEiv.js               37.45 kB │ gzip:  12.80 kB
+dist/web-dist/assets/Button-C-QFE-EU.js               41.67 kB │ gzip:  13.96 kB
+dist/web-dist/assets/handoff-cards-yuUun1hG.js       259.53 kB │ gzip:  78.70 kB
+dist/web-dist/assets/app-CEau_YOD.js                 372.36 kB │ gzip: 119.32 kB
+
+✓ built in 150ms

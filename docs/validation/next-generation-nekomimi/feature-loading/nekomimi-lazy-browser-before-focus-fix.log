@@ -1,0 +1,92 @@
+
+Running 50 tests using 2 workers
+
+(node:94219) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:94218) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/basic-settings.spec.ts:11:1 › 10.4 settings preserve drafts across refresh and require explicit revision adoption after conflict (884ms)
+  ✓   3 test/browser/basic-settings.spec.ts:30:1 › 10.4 uncertain credential writes clear and redact input; clearing local key does not clear runtime override (561ms)
+  ✓   2 test/browser/create-candidates.spec.ts:15:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (1.6s)
+  ✓   4 test/browser/basic-settings.spec.ts:49:1 › 10.4 custom profile without a key does not imply a default credential; narrow settings remain usable (449ms)
+  ✓   6 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.5s)
+  ✓   5 test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (2.2s)
+  ✓   8 test/browser/create-candidates.spec.ts:44:1 › 10.2 target creation and candidate loading failures remain distinct (684ms)
+  ✓   7 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.6s)
+  ✓   9 test/browser/create-candidates.spec.ts:52:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.6s)
+  ✓  10 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.3s)
+  ✓  11 test/browser/create-candidates.spec.ts:73:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (2.1s)
+  ✓  12 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (1.9s)
+  ✓  13 test/browser/create-candidates.spec.ts:94:1 › 10.2 simulation exposes durable results without replay on return (2.4s)
+  ✓  14 test/browser/mcp-management.spec.ts:16:1 › 10.4 MCP browsing does not connect, consent starts OAuth and callback never enables the resource (2.3s)
+  ✓  16 test/browser/mcp-management.spec.ts:37:1 › 10.4 changed MCP configuration rejects stale consent without discovery or automatic retry (593ms)
+  ✓  17 test/browser/mcp-management.spec.ts:51:1 › 10.4 pending MCP authorization survives refresh without persisting its link or restarting automatically (840ms)
+  ✓  15 test/browser/create-candidates.spec.ts:112:1 › 10.2 unavailable target retains background preview cancellation (1.5s)
+  ✓  18 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (630ms)
+  ✓  20 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (484ms)
+  ✓  19 test/browser/create-candidates.spec.ts:131:1 › 10.2 closed preview is reported expired and invalid props never start execution (1.7s)
+  ✓  21 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.4s)
+  ✓  23 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (339ms)
+  ✓  24 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+  ✓  22 test/browser/package-management.spec.ts:17:1 › 10.4 package browse and cancelled install are read-only; reviewed install, export and uninstall stay target-scoped (3.8s)
+  ✓  26 test/browser/package-management.spec.ts:36:1 › 10.4 stale package review fails once without replacing the installed revision (1.0s)
+  ✓  25 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.1s)
+  ✓  28 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.5s)
+  ✓  27 test/browser/package-management.spec.ts:48:1 › 10.4 package rollback requires inspecting the prior version and cache collection preserves referenced content (2.7s)
+  ✓  29 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (620ms)
+  ✓  31 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (890ms)
+  ✓  30 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.1s)
+  ✓  32 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.8s)
+  ✓  33 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.6s)
+  ✓  34 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.7s)
+  ✓  35 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.7s)
+  ✓  36 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓  37 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.5s)
+  ✓  39 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (637ms)
+  ✓  38 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.9s)
+  ✓  40 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (542ms)
+  ✓  42 test/browser/v2-feature-loading.spec.ts:71:2 › 10.9 files and management failures stay local and can close or retry (882ms)
+  ✓  41 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓  44 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.9s)
+  ✓  45 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (845ms)
+  ✓  43 test/browser/workflow-management.spec.ts:23:1 › 10.4 durable workflow wait survives restart and only an explicit answer continues it (5.5s)
+  ✘  46 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (2.1s)
+  ✓  47 test/browser/workflow-management.spec.ts:40:1 › 10.4 unknown workflow reconciliation does not repeat external effects or resume on navigation (3.6s)
+  ✓  48 test/browser/workflow-management.spec.ts:53:1 › 10.4 definition version change is rejected and invalid input stays editable without automatic retry (1.7s)
+  ✓  49 test/browser/workflow-management.spec.ts:69:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation (6.8s)
+  ✓  50 test/browser/workflow-management.spec.ts:92:1 › 10.4 running workflow keeps cancellation reachable while continuation actions are locked (3.9s)
+
+
+  1) test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "关闭加载"
+    Received: "导出对话离线 HTML 用于阅读，诊断包包含会话与执行证据；导出不会重新运行模型、工具或扩展。下载 HTML下载诊断包隐私与脱敏需要脱敏的文本（每行一项）脱敏包不可继续会话；此输入只保留到本次窗口关闭。完成"
+
+      51 |     await input.fill('收到旧响应之前的新草稿');await page.getByRole('button',{name:'导出会话',exact:true}).click();const dialog=page.getByRole('dialog',{name:'导出对话'});await expect(dialog).toBeVisible();
+      52 |     const focused=await page.evaluate(()=>document.activeElement?.textContent);release();await expect(page.getByText(/延迟提交失败/)).toBeVisible();
+    > 53 |     expect(await page.evaluate(()=>document.activeElement?.textContent)).toBe(focused);await expect(dialog).toBeVisible();
+         |                                                                          ^
+      54 |     await page.keyboard.press('Escape');await expect(input).toHaveJSProperty('textContent','收到旧响应之前的新草稿');
+      55 |   }finally{release();await app.close();}
+      56 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-run-recovery.spec.ts:53:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+  49 passed (53.8s)

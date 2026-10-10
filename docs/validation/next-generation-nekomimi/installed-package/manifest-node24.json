@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-10-08T16:33:42.554748+00:00",
+  "baseline": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "node": "24.15.0",
+  "platform": "darwin-arm64",
+  "archive": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-Vlug1L/nekomimi-0.2.1.tgz",
+  "archiveSha256": "77ef00a355e83348c4d8e8c5845789db077b5952e1b565417f2e6103ded23269",
+  "command": "npm run test:pack",
+  "exitCode": 0,
+  "files": {
+    "docs/validation/next-generation-nekomimi/installed-package/node24-pack.log": "c7aeb5ba9559f73e28aee3a7237059fa7f87b431faff912268a40070388738f0",
+    "docs/validation/next-generation-nekomimi/installed-package/portable-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/installed-package/README.md": "8be53e18786590a0d941bf4609cf6228baf63d3b4f16295e78cc4ea662f5e32f",
+    "docs/validation/next-generation-nekomimi/installed-package/portable-build.log": "eb11048d7b39bcfc48f4889637ef4e64d4b54a83ebffc3499904fa5353107e8f",
+    "docs/validation/next-generation-nekomimi/installed-package/portable-browser.log": "d0ad02928f3cd1af96eb419adb87a4b16b5721b83b24bc84515dd88ed4c1a2b2",
+    "src/server/evidence.ts": "91e6f20efbb6e7b734793a920a3ed021c6fb6458c3fb9c34e2233449ab429e69",
+    "test/browser/v2-content-files.spec.ts": "41dc5b9cab1bfcff3d09498a899951c4c8e6bee9e71e32a40938c666bba0eb4c",
+    "package.json": "bf7035a5be7d029f503dd5c4ef51af51a974354f42155c679d6056d0c9ce99e4",
+    "package-lock.json": "cc5806220b76562975e5d7f213437c505e9e2f65df9be2932b442065c7003a42",
+    "scripts/pack-sdk-guide-fixture.mjs": "1bca1f17fb269c43085812ff32beff1f6c65f279c9308a0a430ec349590508a6",
+    "scripts/pack-chat-browser.mjs": "9b3c349472f910926e424247e2cc0a74675c6dea0cc2139e7446ac09d464acb8",
+    "scripts/pack-theme-browser.mjs": "6a2b1bd94611ed9aa24edb15f786bbce57e3618e2eaa64c25ad680cbc51efdd0",
+    "scripts/pack-smoke.mjs": "85515092cecc1bd903c03d8a1464057522ad38c1194543a62647fa9fafc0e9cb",
+    "scripts/pack-codemode-fixture.mjs": "06c1f1cfdc657cdce8bb191c86f230668e2481ddbc1035a23f93af623dbc98d0",
+    "scripts/pack-context-browser.mjs": "bf2fcd56927aa6e7801f04a701aa0ff7fd489d18e4e5c84ef60ebf16eb631c54",
+    "scripts/pack-web-fixture.mjs": "4fb24b73e218193744b3e1f66ac05470b4f6de64b2619b44d743634a3e0ff44e",
+    "scripts/pack-customization-fixture.mjs": "23a7800c0e159ea23c1c1552250a23fbe39ea9bf553540effc235f155158c48e",
+    "scripts/pack-durable-fixture.mjs": "0f552b0255b0a5c8f158bb5401542eed0700c8d67012dea4265788d860aa4647"
+  }
+}

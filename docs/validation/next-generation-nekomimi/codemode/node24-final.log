@@ -1,0 +1,16 @@
+✔ direct and nested tools share exactly one authorization, intent, hook and result per call (82.382ms)
+✔ revocation after discovery blocks execution (34.40875ms)
+✔ intent persistence failure prevents effect (31.99625ms)
+✔ script failure preserves successful child evidence, never commits script store writes (43.909375ms)
+✔ invalid nested schema is rejected before authorization/execution (29.948375ms)
+✔ no ambient host I/O; CPU, memory and output failures are bounded (278.277125ms)
+✔ abort is terminal and completed child remains recorded (43.901792ms)
+✔ successful store writes are explicit outputs, not global sandbox state (42.946458ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 589.802334

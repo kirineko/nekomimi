@@ -1,0 +1,1454 @@
+
+Running 4 tests using 1 worker
+
+(node:71778) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.6s)
+  ✓  2 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.5s)
+  ✓  3 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.2s)
+  ✘  4 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (6.8s)
+
+
+  1) test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '上下文详情', exact: true })
+    Timeout: 5000ms
+    - Expected substring  -   1
+    + Received string     + 700
+
+    - 来源会话已删除或不可回溯
+    + 上下文详情关闭详情只读查看当前估算、历史选择和压缩来源。刷新只读详情会话与目标身份 · work{
+    +   "sessionId": "88ed379d2dc649129ca7cc57bc42d3f12fa0b31da1293194e4547a4981647152",
+    +   "mode": "work",
+    +   "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933"
+    + }当前占用估算 4,722 tokens · 容量未知这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标work / 308fe031129c模型 / Providernew-current-model / deepseek系统 / 工具 / 消息1,254 / 2,415 / 1,053匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 未知 / 未知可用输入 / 压力阈值未知 / 未知当前上下文与能力版本{
+    +   "mode": "work",
+    +   "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933",
+    +   "revision": "f452592dfe638f1c810e6ca6cd8fb14a042ea69e27a96d8f57a2ec460a4fc322",
+    +   "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+    +   "purpose": "work"
+    + }policy · 382 tokens原始估算 382，校准调整 0[
+    +   {
+    +     "source": "nekomimi:work:v3",
+    +     "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+    +   }
+    + ]tools · 347 tokens原始估算 347，校准调整 0[
+    +   {
+    +     "source": "tool-summary:bash",
+    +     "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+    +   },
+    +   {
+    +     "source": "tool-summary:codemode",
+    +     "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+    +   },
+    +   {
+    +     "source": "tool-summary:edit",
+    +     "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_catalog",
+    +     "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_classify",
+    +     "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+    +   },
+    +   {
+    +     "source": "tool-summary:model_image",
+    +     "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+    +   },
+    +   {
+    +     "source": "tool-summary:read",
+    +     "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+    +   },
+    +   {
+    +     "source": "tool-summary:resource_list",
+    +     "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+    +   },
+    +   {
+    +     "source": "tool-summary:web_search",
+    +     "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+    +   },
+    +   {
+    +     "source": "tool-summary:write",
+    +     "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+    +   }
+    + ]guidance · 525 tokens原始估算 525，校准调整 0[
+    +   {
+    +     "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+    +     "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+    +   },
+    +   {
+    +     "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+    +     "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+    +   },
+    +   {
+    +     "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+    +     "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+    +     "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+    +   },
+    +   {
+    +     "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+    +     "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+    +   },
+    +   {
+    +     "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+    +     "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+    +   },
+    +   {
+    +     "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+    +     "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+    +   }
+    + ]schemas · 2,415 tokens原始估算 2,415，校准调整 0[
+    +   {
+    +     "source": "bash",
+    +     "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+    +   },
+    +   {
+    +     "source": "codemode",
+    +     "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+    +   },
+    +   {
+    +     "source": "edit",
+    +     "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+    +   },
+    +   {
+    +     "source": "model_catalog",
+    +     "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+    +   },
+    +   {
+    +     "source": "model_classify",
+    +     "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+    +   },
+    +   {
+    +     "source": "model_image",
+    +     "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+    +   },
+    +   {
+    +     "source": "read",
+    +     "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+    +   },
+    +   {
+    +     "source": "resource_list",
+    +     "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+    +   },
+    +   {
+    +     "source": "web_search",
+    +     "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+    +   },
+    +   {
+    +     "source": "write",
+    +     "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+    +   }
+    + ]handoff · 811 tokens原始估算 811，校准调整 0[
+    +   {
+    +     "source": "handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1",
+    +     "hash": "ccf9cc6fcc63328ab590f0d9040eeef9afd10a32448035ff397668d217d4be0c",
+    +     "eventId": "ee22bcef-873a-48b6-858f-22ca080ec663"
+    +   },
+    +   {
+    +     "source": "handoff:current-evidence:v1",
+    +     "hash": "8ab24498579856ba4d26d68ec0c68ccc297f59da7ce6c863b1392e49bdc3c223",
+    +     "eventId": "a0136907-d8f3-462f-93ca-e546de02e304"
+    +   }
+    + ]history · 91 tokens原始估算 91，校准调整 0[
+    +   {
+    +     "source": "user",
+    +     "hash": "04cbc2330f60fbf3f8b0193368740393943fc1bfb7220e87776b7ff42bcc2d25",
+    +     "eventId": "2c1494db-ed6d-4979-a32d-e9ca18b91487"
+    +   },
+    +   {
+    +     "source": "response:69f4d054-0923-46a3-923a-fedbb7e0dc76",
+    +     "hash": "6f896de27971490a81a9e4e767f7dcfcaf4d5b4e04da866a9ebdb28cc6d658b2",
+    +     "eventId": "d579ed9d-6c4a-4179-98c1-ac4bec014e60"
+    +   }
+    + ]environment · 151 tokens原始估算 151，校准调整 0[
+    +   {
+    +     "source": "runtime:environment:v1",
+    +     "hash": "cdf5518d1a552ebca01c1fede454021cfa0b0dc14d23fe4679695360d3b2b8a0",
+    +     "eventId": "c1655629-a208-48fd-8a5a-291d586ce623"
+    +   }
+    + ]当前排除来源（2）[
+    +   {
+    +     "source": "customization:delivery:v2",
+    +     "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+    +     "reason": "tool-dependency-unavailable"
+    +   },
+    +   {
+    +     "source": "customization:entry:v2",
+    +     "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+    +     "reason": "tool-dependency-unavailable"
+    +   }
+    + ]历史请求选择快照这里记录当次请求实际选入及排除的版本，不代表当前资源授权。请求快照最新请求#27 · work · 58d689da-b4ad-4eb0-883d-645b4bfc8486最新快照列表更早快照列表选入 34 · 排除 9 · deepseek-flash请求身份与版本{
+    +   "eventId": "58d689da-b4ad-4eb0-883d-645b4bfc8486",
+    +   "seq": 27,
+    +   "revision": "e8d546956f04b13bad1581a3a62f6022c8f7dd398a6661ce576b695eb3ef8039",
+    +   "contextRevision": "168284cc0f9221b0bf2dd56b0b7ca64f53e10e819c371673459b0370e86019b1",
+    +   "purpose": "work",
+    +   "mode": "work",
+    +   "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933",
+    +   "model": {
+    +     "id": "deepseek-flash",
+    +     "provider": "deepseek",
+    +     "protocol": "responses"
+    +   },
+    +   "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+    +   "handoffs": [
+    +     {
+    +       "handoffId": "38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d",
+    +       "payloadHash": "a52bcc8ce88c43d5f193912d6566392d6866cff8b3b0557f6d8eb99fa14b2786",
+    +       "sourceSessionId": "3c38556ade084a548df1816200caa432a448e787f12a4fa00b22d1c2e2d9f518",
+    +       "sourceMode": "create",
+    +       "decision": "include",
+    +       "reason": "previously-selected-handoff-history",
+    +       "sourceAvailable": true
+    +     }
+    +   ],
+    +   "artifact": {
+    +     "kind": "artifact",
+    +     "sha256": "6a629626a8a47a566247b369b8994f79b7248f86d8417ece0659ff0b3ed94064",
+    +     "bytes": 64320
+    +   },
+    +   "total": 43,
+    +   "included": 34,
+    +   "excluded": 9,
+    +   "next": 40
+    + }选择结果全部选入排除选入 · deepseek:deepseek-flash · selected-model{
+    +   "id": "snapshot:model",
+    +   "source": "deepseek:deepseek-flash",
+    +   "hash": "68efadba82aa5bd87598b1b49a4545bc77d60a58b7adbe2d3ab9144b80f9ebdb",
+    +   "role": "model-selection",
+    +   "layer": "model",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "selected-model"
+    + }选入 · nekomimi:work:v3 · effective-instruction{
+    +   "id": "instruction:0",
+    +   "source": "nekomimi:work:v3",
+    +   "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6",
+    +   "role": "instruction",
+    +   "layer": "policy",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "3",
+    +   "sources": [
+    +     "nekomimi:work:v3"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:bash · effective-instruction{
+    +   "id": "instruction:1",
+    +   "source": "tool-summary:bash",
+    +   "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:bash:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:codemode · effective-instruction{
+    +   "id": "instruction:2",
+    +   "source": "tool-summary:codemode",
+    +   "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "builtin:codemode:v1"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:edit · effective-instruction{
+    +   "id": "instruction:3",
+    +   "source": "tool-summary:edit",
+    +   "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:edit:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:model_catalog · effective-instruction{
+    +   "id": "instruction:4",
+    +   "source": "tool-summary:model_catalog",
+    +   "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "harness:model_catalog:2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:model_classify · effective-instruction{
+    +   "id": "instruction:5",
+    +   "source": "tool-summary:model_classify",
+    +   "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "harness:model_classify:2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:model_image · effective-instruction{
+    +   "id": "instruction:6",
+    +   "source": "tool-summary:model_image",
+    +   "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "harness:model_image:2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:read · effective-instruction{
+    +   "id": "instruction:7",
+    +   "source": "tool-summary:read",
+    +   "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:read:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:resource_list · effective-instruction{
+    +   "id": "instruction:8",
+    +   "source": "tool-summary:resource_list",
+    +   "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "harness:resource_list:2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:web_search · effective-instruction{
+    +   "id": "instruction:9",
+    +   "source": "tool-summary:web_search",
+    +   "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:web_search:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-summary:write · effective-instruction{
+    +   "id": "instruction:10",
+    +   "source": "tool-summary:write",
+    +   "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08",
+    +   "role": "instruction",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:write:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546 · effective-instruction{
+    +   "id": "instruction:11",
+    +   "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+    +   "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:read:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a · effective-instruction{
+    +   "id": "instruction:12",
+    +   "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+    +   "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "builtin:codemode:v1"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489 · effective-instruction{
+    +   "id": "instruction:13",
+    +   "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+    +   "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:bash:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c · effective-instruction{
+    +   "id": "instruction:14",
+    +   "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+    +   "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:edit:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d · effective-instruction{
+    +   "id": "instruction:15",
+    +   "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+    +   "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:write:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65 · effective-instruction{
+    +   "id": "instruction:16",
+    +   "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+    +   "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:read:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89 · effective-instruction{
+    +   "id": "instruction:17",
+    +   "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+    +   "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+    +   "role": "instruction",
+    +   "layer": "guidance",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "effective-instruction",
+    +   "version": "2",
+    +   "sources": [
+    +     "tool:web_search:v2"
+    +   ],
+    +   "transformations": [
+    +     "host-framing"
+    +   ]
+    + }选入 · bash · declared-tool{
+    +   "id": "schema:0",
+    +   "source": "bash",
+    +   "hash": "b1a58188f48eec785ace0e370366ef1154724474fae70f7a34406e5c106301ee",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · codemode · declared-tool{
+    +   "id": "schema:1",
+    +   "source": "codemode",
+    +   "hash": "74f27645676d6a8c58bc0ab61c8ab6be972439aa26730c71f84a946a0318c6dc",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · edit · declared-tool{
+    +   "id": "schema:2",
+    +   "source": "edit",
+    +   "hash": "8e39b57b9a44b05618c965b7d899f3db57b0f6495167849f51356ea09c7afffc",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · model_catalog · declared-tool{
+    +   "id": "schema:3",
+    +   "source": "model_catalog",
+    +   "hash": "30ad1300d6506cbd2b29763286a5cc56d09817c362ba53bfdbf4da22182282a5",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · model_classify · declared-tool{
+    +   "id": "schema:4",
+    +   "source": "model_classify",
+    +   "hash": "3262209e71ea9d2e36ba4c6bdbf3d248d71c7f29be80be0759782d09acb60c88",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · model_image · declared-tool{
+    +   "id": "schema:5",
+    +   "source": "model_image",
+    +   "hash": "85c60ce3d461d3e8062f22214baeb44e473fc9dcceed37cc381e6b29988e71a9",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · read · declared-tool{
+    +   "id": "schema:6",
+    +   "source": "read",
+    +   "hash": "12e41d56b4ef8906a24c5395da4fa363b99710b157313661f5ab10a32a5f22dd",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · resource_list · declared-tool{
+    +   "id": "schema:7",
+    +   "source": "resource_list",
+    +   "hash": "fb4b3d4ce328b7593f5bf7a19d3648362d5daba1e1f9152ae0a0739352a85c69",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · web_search · declared-tool{
+    +   "id": "schema:8",
+    +   "source": "web_search",
+    +   "hash": "25e9b8b6d6be06bd971754c8607aaefc85012f8a54ce1df8db2efc977edf6701",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }选入 · write · declared-tool{
+    +   "id": "schema:9",
+    +   "source": "write",
+    +   "hash": "c1afd42f306e8c65cf730d03561ec5d7ecf7271e951ebbe5ee1edb2bb2afd940",
+    +   "role": "tool-schema",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "declared-tool"
+    + }排除 · customization:delivery:v2 · tool-dependency-unavailable{
+    +   "id": "excluded-instruction:807b6a6c7d417c82d32f345433cb8d8e46f96f7cf7d218b9d7f76e6444cb24e4",
+    +   "source": "customization:delivery:v2",
+    +   "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+    +   "role": "instruction",
+    +   "layer": "resources",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "tool-dependency-unavailable",
+    +   "version": "2"
+    + }排除 · customization:entry:v2 · tool-dependency-unavailable{
+    +   "id": "excluded-instruction:903120aac2fb1facb6f077d850974d370fa85d5f18dcbb4cabf2d002fd22f74d",
+    +   "source": "customization:entry:v2",
+    +   "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+    +   "role": "instruction",
+    +   "layer": "resources",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "tool-dependency-unavailable",
+    +   "version": "2"
+    + }排除 · customization_candidate · mode-filter{
+    +   "id": "mode-excluded-tool:customization_candidate",
+    +   "source": "customization_candidate",
+    +   "hash": "bcd08d7d7391fde438a75b7e22e1e9ae8047b885f26728dfd9f86d78fbeca83d",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · customization_package · mode-filter{
+    +   "id": "mode-excluded-tool:customization_package",
+    +   "source": "customization_package",
+    +   "hash": "88a7a0294fa498bbff95be3e9e0a1d1d4348eb54e3971916cfdda05e43129f41",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · customization_reload · mode-filter{
+    +   "id": "mode-excluded-tool:customization_reload",
+    +   "source": "customization_reload",
+    +   "hash": "4787c6db967ad645fa6c6fd052687d3fc015886e333e6943cf36f69527743bca",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · customization_sdk · mode-filter{
+    +   "id": "mode-excluded-tool:customization_sdk",
+    +   "source": "customization_sdk",
+    +   "hash": "59f4c013c68106e8691f2e60097d38cc7176ff04826255369d84c23a9b35d10a",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · customization_status · mode-filter{
+    +   "id": "mode-excluded-tool:customization_status",
+    +   "source": "customization_status",
+    +   "hash": "1c428c77f3e50b1ad7938246ab49f0d1962c84f70649493035b6f44fba61c4d0",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · customization_validate · mode-filter{
+    +   "id": "mode-excluded-tool:customization_validate",
+    +   "source": "customization_validate",
+    +   "hash": "53589d7c41f084c7a729ac12e1c31f35823f42f8b348af9cc854bfc4301d89da",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }排除 · resource_write · mode-filter{
+    +   "id": "mode-excluded-tool:resource_write",
+    +   "source": "resource_write",
+    +   "hash": "f08f668e40c571c7a32a892e59f2d6af61bb75abbadd4f921ae9c90d40ba4e53",
+    +   "role": "tool-identity",
+    +   "layer": "tools",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "exclude",
+    +   "reason": "mode-filter"
+    + }选入 · handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1 · selected-history{
+    +   "id": "history:0",
+    +   "source": "handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1",
+    +   "hash": "ccf9cc6fcc63328ab590f0d9040eeef9afd10a32448035ff397668d217d4be0c",
+    +   "role": "user",
+    +   "layer": "history",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "selected-history",
+    +   "eventId": "ee22bcef-873a-48b6-858f-22ca080ec663",
+    +   "itemIndex": 0
+    + }选入 · handoff:current-evidence:v1 · selected-history{
+    +   "id": "history:1",
+    +   "source": "handoff:current-evidence:v1",
+    +   "hash": "8ab24498579856ba4d26d68ec0c68ccc297f59da7ce6c863b1392e49bdc3c223",
+    +   "role": "user",
+    +   "layer": "history",
+    +   "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+    +   "decision": "include",
+    +   "reason": "selected-history",
+    +   "eventId": "a0136907-d8f3-462f-93ca-e546de02e304",
+    +   "itemIndex": 0
+    + }选择清单偏移 0 / 43上一页选择下一页选择读取完整请求快照交接 38300efe4fd0 · 选入 · previously-selected-handoff-history{
+    +   "handoffId": "38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d",
+    +   "payloadHash": "a52bcc8ce88c43d5f193912d6566392d6866cff8b3b0557f6d8eb99fa14b2786",
+    +   "sourceSessionId": "3c38556ade084a548df1816200caa432a448e787f12a4fa00b22d1c2e2d9f518",
+    +   "sourceMode": "create",
+    +   "decision": "include",
+    +   "reason": "previously-selected-handoff-history",
+    +   "sourceAvailable": true
+    + }上方为请求捕获的来源状态；以下检查当前是否仍可回溯。查看交接来源会话查看交付版本 review压缩记录与来源只有已提交检查点改变后续投影；开始、失败或取消记录不表示摘要已生效。尚无压缩记录。最新压缩记录更早压缩记录
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '上下文详情', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '上下文详情', exact: true })
+        14 × locator resolved to <div role="dialog" tabindex="-1" id="radix-_r_g_" data-state="open" data-slot="dialog-content" aria-labelledby="radix-_r_h_" aria-describedby="radix-_r_i_" class="ds fixed top-1/2 left-1/2 z-50 w-[min(440px,calc(100vw-32px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-background text-foreground shadow-floating max-h-[85dvh] overflow-y-auto break-words p-4">…</div>
+           - unexpected value "上下文详情关闭详情只读查看当前估算、历史选择和压缩来源。刷新只读详情会话与目标身份 · work{
+      "sessionId": "88ed379d2dc649129ca7cc57bc42d3f12fa0b31da1293194e4547a4981647152",
+      "mode": "work",
+      "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933"
+    }当前占用估算 4,722 tokens · 容量未知这是下一请求的上下文投影，不是累计计费用量。历史请求的实测值不代表当前输入。模式 / 目标work / 308fe031129c模型 / Providernew-current-model / deepseek系统 / 工具 / 消息1,254 / 2,415 / 1,053匹配请求样本未知 tokens预算策略2输出 / 安全 / 工具结果预留131,072 / 未知 / 未知可用输入 / 压力阈值未知 / 未知当前上下文与能力版本{
+      "mode": "work",
+      "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933",
+      "revision": "f452592dfe638f1c810e6ca6cd8fb14a042ea69e27a96d8f57a2ec460a4fc322",
+      "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+      "purpose": "work"
+    }policy · 382 tokens原始估算 382，校准调整 0[
+      {
+        "source": "nekomimi:work:v3",
+        "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6"
+      }
+    ]tools · 347 tokens原始估算 347，校准调整 0[
+      {
+        "source": "tool-summary:bash",
+        "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3"
+      },
+      {
+        "source": "tool-summary:codemode",
+        "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1"
+      },
+      {
+        "source": "tool-summary:edit",
+        "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f"
+      },
+      {
+        "source": "tool-summary:model_catalog",
+        "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975"
+      },
+      {
+        "source": "tool-summary:model_classify",
+        "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5"
+      },
+      {
+        "source": "tool-summary:model_image",
+        "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12"
+      },
+      {
+        "source": "tool-summary:read",
+        "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44"
+      },
+      {
+        "source": "tool-summary:resource_list",
+        "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1"
+      },
+      {
+        "source": "tool-summary:web_search",
+        "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c"
+      },
+      {
+        "source": "tool-summary:write",
+        "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08"
+      }
+    ]guidance · 525 tokens原始估算 525，校准调整 0[
+      {
+        "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+        "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546"
+      },
+      {
+        "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+        "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a"
+      },
+      {
+        "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+        "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489"
+      },
+      {
+        "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+        "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c"
+      },
+      {
+        "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+        "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d"
+      },
+      {
+        "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+        "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65"
+      },
+      {
+        "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+        "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89"
+      }
+    ]schemas · 2,415 tokens原始估算 2,415，校准调整 0[
+      {
+        "source": "bash",
+        "hash": "df15f9c3c4a99c757b1648e998bc24562017d5196bf883ab518204438e51c489"
+      },
+      {
+        "source": "codemode",
+        "hash": "3d6e06b06afc001bd30e503dd7a4d2c28fbf58795f74daf08ae6c93a7267a784"
+      },
+      {
+        "source": "edit",
+        "hash": "861fafebbad01e97839e2e77cf8d7a0cfbeb09172bd0e709bdb0c37f17e3a865"
+      },
+      {
+        "source": "model_catalog",
+        "hash": "2a6104cf213284a52aee2dce4578d154e0c2532258bea1ea967cf15f3ab74961"
+      },
+      {
+        "source": "model_classify",
+        "hash": "60fcf8a12ddf841319272ebefd8a48fc0fcc725a61a59098f8f3f9d06af043e6"
+      },
+      {
+        "source": "model_image",
+        "hash": "0b3339c3c56e62aaabfd66db65c1616105736e28c754329414b825495e76c056"
+      },
+      {
+        "source": "read",
+        "hash": "0a77a4e0faedf8a0d544dd62177d988cdebffee5ef435afc48eb20becc68fa2f"
+      },
+      {
+        "source": "resource_list",
+        "hash": "970733a8d17f0ebc329b3cc280c82062f9cf6a3121669d133e35e4bf8e690ab2"
+      },
+      {
+        "source": "web_search",
+        "hash": "7821856923242db00cce122242a8284c56f703f06d6aac27d0b376d85737fb43"
+      },
+      {
+        "source": "write",
+        "hash": "eed27db4bddb65ad960c0d3accbe13d0aae8b84fa9abb2c75315d18a5eb4e48d"
+      }
+    ]handoff · 811 tokens原始估算 811，校准调整 0[
+      {
+        "source": "handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1",
+        "hash": "ccf9cc6fcc63328ab590f0d9040eeef9afd10a32448035ff397668d217d4be0c",
+        "eventId": "ee22bcef-873a-48b6-858f-22ca080ec663"
+      },
+      {
+        "source": "handoff:current-evidence:v1",
+        "hash": "8ab24498579856ba4d26d68ec0c68ccc297f59da7ce6c863b1392e49bdc3c223",
+        "eventId": "a0136907-d8f3-462f-93ca-e546de02e304"
+      }
+    ]history · 91 tokens原始估算 91，校准调整 0[
+      {
+        "source": "user",
+        "hash": "04cbc2330f60fbf3f8b0193368740393943fc1bfb7220e87776b7ff42bcc2d25",
+        "eventId": "2c1494db-ed6d-4979-a32d-e9ca18b91487"
+      },
+      {
+        "source": "response:69f4d054-0923-46a3-923a-fedbb7e0dc76",
+        "hash": "6f896de27971490a81a9e4e767f7dcfcaf4d5b4e04da866a9ebdb28cc6d658b2",
+        "eventId": "d579ed9d-6c4a-4179-98c1-ac4bec014e60"
+      }
+    ]environment · 151 tokens原始估算 151，校准调整 0[
+      {
+        "source": "runtime:environment:v1",
+        "hash": "cdf5518d1a552ebca01c1fede454021cfa0b0dc14d23fe4679695360d3b2b8a0",
+        "eventId": "c1655629-a208-48fd-8a5a-291d586ce623"
+      }
+    ]当前排除来源（2）[
+      {
+        "source": "customization:delivery:v2",
+        "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+        "reason": "tool-dependency-unavailable"
+      },
+      {
+        "source": "customization:entry:v2",
+        "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+        "reason": "tool-dependency-unavailable"
+      }
+    ]历史请求选择快照这里记录当次请求实际选入及排除的版本，不代表当前资源授权。请求快照最新请求#27 · work · 58d689da-b4ad-4eb0-883d-645b4bfc8486最新快照列表更早快照列表选入 34 · 排除 9 · deepseek-flash请求身份与版本{
+      "eventId": "58d689da-b4ad-4eb0-883d-645b4bfc8486",
+      "seq": 27,
+      "revision": "e8d546956f04b13bad1581a3a62f6022c8f7dd398a6661ce576b695eb3ef8039",
+      "contextRevision": "168284cc0f9221b0bf2dd56b0b7ca64f53e10e819c371673459b0370e86019b1",
+      "purpose": "work",
+      "mode": "work",
+      "targetId": "308fe031129c975608e76a8721ab42ff0add56dcdf231f73f4b8b79af0f9a933",
+      "model": {
+        "id": "deepseek-flash",
+        "provider": "deepseek",
+        "protocol": "responses"
+      },
+      "capabilityRevision": "314a3761de8f2b61d78ba1489240250cf5a6c8e984b3944bbc6a6505b20d1233",
+      "handoffs": [
+        {
+          "handoffId": "38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d",
+          "payloadHash": "a52bcc8ce88c43d5f193912d6566392d6866cff8b3b0557f6d8eb99fa14b2786",
+          "sourceSessionId": "3c38556ade084a548df1816200caa432a448e787f12a4fa00b22d1c2e2d9f518",
+          "sourceMode": "create",
+          "decision": "include",
+          "reason": "previously-selected-handoff-history",
+          "sourceAvailable": true
+        }
+      ],
+      "artifact": {
+        "kind": "artifact",
+        "sha256": "6a629626a8a47a566247b369b8994f79b7248f86d8417ece0659ff0b3ed94064",
+        "bytes": 64320
+      },
+      "total": 43,
+      "included": 34,
+      "excluded": 9,
+      "next": 40
+    }选择结果全部选入排除选入 · deepseek:deepseek-flash · selected-model{
+      "id": "snapshot:model",
+      "source": "deepseek:deepseek-flash",
+      "hash": "68efadba82aa5bd87598b1b49a4545bc77d60a58b7adbe2d3ab9144b80f9ebdb",
+      "role": "model-selection",
+      "layer": "model",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "selected-model"
+    }选入 · nekomimi:work:v3 · effective-instruction{
+      "id": "instruction:0",
+      "source": "nekomimi:work:v3",
+      "hash": "c5cd13f12ea13993b591ba158a1d6975501f8b4a65329bb2e7f9fc56493216d6",
+      "role": "instruction",
+      "layer": "policy",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "3",
+      "sources": [
+        "nekomimi:work:v3"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:bash · effective-instruction{
+      "id": "instruction:1",
+      "source": "tool-summary:bash",
+      "hash": "724e59a4ae56df4fd81aa875781891d0611173832a588cc944998672f45857b3",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:bash:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:codemode · effective-instruction{
+      "id": "instruction:2",
+      "source": "tool-summary:codemode",
+      "hash": "979576bffec7cd6685a0cbcc864fa905ca3fc913853ebc35d46ed501c313bde1",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "builtin:codemode:v1"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:edit · effective-instruction{
+      "id": "instruction:3",
+      "source": "tool-summary:edit",
+      "hash": "cd1293aa66d1231407d0aa3083f999f40522f96e9a2db50a633365cab797666f",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:edit:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:model_catalog · effective-instruction{
+      "id": "instruction:4",
+      "source": "tool-summary:model_catalog",
+      "hash": "dba09be193c8bb80769da0f7c8287f632f0c3e74ab0d2a03a996f8648771b975",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "harness:model_catalog:2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:model_classify · effective-instruction{
+      "id": "instruction:5",
+      "source": "tool-summary:model_classify",
+      "hash": "543f0e17db69cd59a988b4bda5706c6ec31c7c9684a71c1b47ae14a5a8b964d5",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "harness:model_classify:2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:model_image · effective-instruction{
+      "id": "instruction:6",
+      "source": "tool-summary:model_image",
+      "hash": "d3426e6d5ed4c2bddc406fe1975c509395722adf63e7e589323fc598b0eb6d12",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "harness:model_image:2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:read · effective-instruction{
+      "id": "instruction:7",
+      "source": "tool-summary:read",
+      "hash": "ca0e63340edca20e445d40924b334b5caf8d3ee3c4b093971066b30397cfda44",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:read:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:resource_list · effective-instruction{
+      "id": "instruction:8",
+      "source": "tool-summary:resource_list",
+      "hash": "28c097d54c3421b97843efc0e4b68e0dbed7de597d3a6295d2db68ce444e7cf1",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "harness:resource_list:2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:web_search · effective-instruction{
+      "id": "instruction:9",
+      "source": "tool-summary:web_search",
+      "hash": "74170d5aa94f992e23e7a9df8d6c861ce84844d43d3979e98d064154f4b85a0c",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:web_search:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-summary:write · effective-instruction{
+      "id": "instruction:10",
+      "source": "tool-summary:write",
+      "hash": "6d582cf60b91e7a9bbfa84c05d7e5952b12991ee3ce0e63254b8fe774ea5ac08",
+      "role": "instruction",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:write:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546 · effective-instruction{
+      "id": "instruction:11",
+      "source": "tool-guidance:344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+      "hash": "344b7d1cd1b70c9eaa341276b4ed155d3d730146c284d61e565508cd9c403546",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:read:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a · effective-instruction{
+      "id": "instruction:12",
+      "source": "tool-guidance:14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+      "hash": "14d4146970a151c0e169e37b2f7c9099ed591899471f8b389a98edac9ac52b7a",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "builtin:codemode:v1"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489 · effective-instruction{
+      "id": "instruction:13",
+      "source": "tool-guidance:3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+      "hash": "3672e9a95f74b3bf6ffbd8e838e8abc68a435e1b121693678c3acb381d13d489",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:bash:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c · effective-instruction{
+      "id": "instruction:14",
+      "source": "tool-guidance:d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+      "hash": "d32c3c343d2d1bf1a0132a85f8a1dc480a98e11a3095585c3256a0e94dd4468c",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:edit:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d · effective-instruction{
+      "id": "instruction:15",
+      "source": "tool-guidance:43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+      "hash": "43436b9d7e8be44009e308e802e636ea619bf5a6fb49246280c70d84e52a024d",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:write:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65 · effective-instruction{
+      "id": "instruction:16",
+      "source": "tool-guidance:7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+      "hash": "7598b0ed6fc4d75fb111fa02a20ec506df09cd359b25eb965e8305fcbad11e65",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:read:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89 · effective-instruction{
+      "id": "instruction:17",
+      "source": "tool-guidance:d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+      "hash": "d2dc7339555fd81dd7dfccdafee66ac1635bb61f27f50e72d3a31e5658ddca89",
+      "role": "instruction",
+      "layer": "guidance",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "effective-instruction",
+      "version": "2",
+      "sources": [
+        "tool:web_search:v2"
+      ],
+      "transformations": [
+        "host-framing"
+      ]
+    }选入 · bash · declared-tool{
+      "id": "schema:0",
+      "source": "bash",
+      "hash": "b1a58188f48eec785ace0e370366ef1154724474fae70f7a34406e5c106301ee",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · codemode · declared-tool{
+      "id": "schema:1",
+      "source": "codemode",
+      "hash": "74f27645676d6a8c58bc0ab61c8ab6be972439aa26730c71f84a946a0318c6dc",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · edit · declared-tool{
+      "id": "schema:2",
+      "source": "edit",
+      "hash": "8e39b57b9a44b05618c965b7d899f3db57b0f6495167849f51356ea09c7afffc",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · model_catalog · declared-tool{
+      "id": "schema:3",
+      "source": "model_catalog",
+      "hash": "30ad1300d6506cbd2b29763286a5cc56d09817c362ba53bfdbf4da22182282a5",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · model_classify · declared-tool{
+      "id": "schema:4",
+      "source": "model_classify",
+      "hash": "3262209e71ea9d2e36ba4c6bdbf3d248d71c7f29be80be0759782d09acb60c88",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · model_image · declared-tool{
+      "id": "schema:5",
+      "source": "model_image",
+      "hash": "85c60ce3d461d3e8062f22214baeb44e473fc9dcceed37cc381e6b29988e71a9",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · read · declared-tool{
+      "id": "schema:6",
+      "source": "read",
+      "hash": "12e41d56b4ef8906a24c5395da4fa363b99710b157313661f5ab10a32a5f22dd",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · resource_list · declared-tool{
+      "id": "schema:7",
+      "source": "resource_list",
+      "hash": "fb4b3d4ce328b7593f5bf7a19d3648362d5daba1e1f9152ae0a0739352a85c69",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · web_search · declared-tool{
+      "id": "schema:8",
+      "source": "web_search",
+      "hash": "25e9b8b6d6be06bd971754c8607aaefc85012f8a54ce1df8db2efc977edf6701",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }选入 · write · declared-tool{
+      "id": "schema:9",
+      "source": "write",
+      "hash": "c1afd42f306e8c65cf730d03561ec5d7ecf7271e951ebbe5ee1edb2bb2afd940",
+      "role": "tool-schema",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "declared-tool"
+    }排除 · customization:delivery:v2 · tool-dependency-unavailable{
+      "id": "excluded-instruction:807b6a6c7d417c82d32f345433cb8d8e46f96f7cf7d218b9d7f76e6444cb24e4",
+      "source": "customization:delivery:v2",
+      "hash": "1492747a261c1b46140065c85a374ae403ad62ce743b364affa85e8828474cbc",
+      "role": "instruction",
+      "layer": "resources",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "tool-dependency-unavailable",
+      "version": "2"
+    }排除 · customization:entry:v2 · tool-dependency-unavailable{
+      "id": "excluded-instruction:903120aac2fb1facb6f077d850974d370fa85d5f18dcbb4cabf2d002fd22f74d",
+      "source": "customization:entry:v2",
+      "hash": "f266c2a860d8af752c6cf7421c862172ddb42141f22f743911adbea0da92fef0",
+      "role": "instruction",
+      "layer": "resources",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "tool-dependency-unavailable",
+      "version": "2"
+    }排除 · customization_candidate · mode-filter{
+      "id": "mode-excluded-tool:customization_candidate",
+      "source": "customization_candidate",
+      "hash": "bcd08d7d7391fde438a75b7e22e1e9ae8047b885f26728dfd9f86d78fbeca83d",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · customization_package · mode-filter{
+      "id": "mode-excluded-tool:customization_package",
+      "source": "customization_package",
+      "hash": "88a7a0294fa498bbff95be3e9e0a1d1d4348eb54e3971916cfdda05e43129f41",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · customization_reload · mode-filter{
+      "id": "mode-excluded-tool:customization_reload",
+      "source": "customization_reload",
+      "hash": "4787c6db967ad645fa6c6fd052687d3fc015886e333e6943cf36f69527743bca",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · customization_sdk · mode-filter{
+      "id": "mode-excluded-tool:customization_sdk",
+      "source": "customization_sdk",
+      "hash": "59f4c013c68106e8691f2e60097d38cc7176ff04826255369d84c23a9b35d10a",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · customization_status · mode-filter{
+      "id": "mode-excluded-tool:customization_status",
+      "source": "customization_status",
+      "hash": "1c428c77f3e50b1ad7938246ab49f0d1962c84f70649493035b6f44fba61c4d0",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · customization_validate · mode-filter{
+      "id": "mode-excluded-tool:customization_validate",
+      "source": "customization_validate",
+      "hash": "53589d7c41f084c7a729ac12e1c31f35823f42f8b348af9cc854bfc4301d89da",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }排除 · resource_write · mode-filter{
+      "id": "mode-excluded-tool:resource_write",
+      "source": "resource_write",
+      "hash": "f08f668e40c571c7a32a892e59f2d6af61bb75abbadd4f921ae9c90d40ba4e53",
+      "role": "tool-identity",
+      "layer": "tools",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "exclude",
+      "reason": "mode-filter"
+    }选入 · handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1 · selected-history{
+      "id": "history:0",
+      "source": "handoff:38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d:v1",
+      "hash": "ccf9cc6fcc63328ab590f0d9040eeef9afd10a32448035ff397668d217d4be0c",
+      "role": "user",
+      "layer": "history",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "selected-history",
+      "eventId": "ee22bcef-873a-48b6-858f-22ca080ec663",
+      "itemIndex": 0
+    }选入 · handoff:current-evidence:v1 · selected-history{
+      "id": "history:1",
+      "source": "handoff:current-evidence:v1",
+      "hash": "8ab24498579856ba4d26d68ec0c68ccc297f59da7ce6c863b1392e49bdc3c223",
+      "role": "user",
+      "layer": "history",
+      "scope": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-kxT7g8",
+      "decision": "include",
+      "reason": "selected-history",
+      "eventId": "a0136907-d8f3-462f-93ca-e546de02e304",
+      "itemIndex": 0
+    }选择清单偏移 0 / 43上一页选择下一页选择读取完整请求快照交接 38300efe4fd0 · 选入 · previously-selected-handoff-history{
+      "handoffId": "38300efe4fd03c56355fe316064631fdb3b83cd2df42de12ab04d0026e28356d",
+      "payloadHash": "a52bcc8ce88c43d5f193912d6566392d6866cff8b3b0557f6d8eb99fa14b2786",
+      "sourceSessionId": "3c38556ade084a548df1816200caa432a448e787f12a4fa00b22d1c2e2d9f518",
+      "sourceMode": "create",
+      "decision": "include",
+      "reason": "previously-selected-handoff-history",
+      "sourceAvailable": true
+    }上方为请求捕获的来源状态；以下检查当前是否仍可回溯。查看交接来源会话查看交付版本 review压缩记录与来源只有已提交检查点改变后续投影；开始、失败或取消记录不表示摘要已生效。尚无压缩记录。最新压缩记录更早压缩记录"
+
+
+      63 |     const context=page.getByRole('dialog',{name:'上下文详情',exact:true});await expect(context.getByRole('combobox',{name:'请求快照',exact:true})).toHaveValue(captured.eventId);await expect(context.getByRole('region',{name:'当前上下文统计'})).toContainText('new-current-model');
+      64 |     const handoff=context.getByRole('region',{name:'此请求的交接来源'});await handoff.locator('summary').click();await expect(handoff.getByRole('link',{name:'查看交付版本 review',exact:true})).toHaveAttribute('href',new RegExp(candidate.id));await expect(handoff.getByRole('link',{name:'查看交接来源会话',exact:true})).toHaveAttribute('href',new RegExp(source.id));
+    > 65 |     await page.keyboard.press('Escape');await expect(inspection).toBeVisible();await app.sessions.remove(source.id);await selected.getByRole('button',{name:'查看此请求的上下文',exact:true}).click();await context.getByRole('region',{name:'此请求的交接来源'}).locator('summary').click();await expect(context).toContainText('来源会话已删除或不可回溯');await expect(context.getByRole('link',{name:'查看交接来源会话',exact:true})).toHaveCount(0);expect(calls).toBe(1);
+         |                                                                                                                                                                                                                                                                                                   ^
+      66 |   }finally{await app.close();}
+      67 | });
+      68 |
+        at /Users/kirineko/Github/nekomimi/test/browser/inspection.spec.ts:65:291
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing 
+  3 passed (12.3s)

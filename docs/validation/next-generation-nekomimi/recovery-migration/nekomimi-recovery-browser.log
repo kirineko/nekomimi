@@ -1,0 +1,68 @@
+
+Running 17 tests using 1 worker
+
+(node:84424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (3.3s)
+  ✓   2 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓   3 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.7s)
+  ✓   4 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓   5 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓   6 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (840ms)
+  ✘   7 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (6.0s)
+(node:84534) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (457ms)
+  ✓   9 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (281ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (700ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (237ms)
+  ✓  12 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (382ms)
+  ✓  13 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (499ms)
+  ✓  14 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (490ms)
+  ✓  15 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  16 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (287ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+
+
+  1) test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+
+    Error: expect(locator).toHaveJSProperty(expected) failed
+
+    Locator:  getByLabel('任务草稿', { exact: true })
+    Expected: ""
+    Received: "提交方式 keyboard"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveJSProperty" getByLabel('任务草稿', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('任务草稿', { exact: true })
+        14 × locator resolved to <div role="textbox" data-empty="false" aria-multiline="true" aria-disabled="false" contenteditable="true" aria-labelledby="_r_r_" aria-autocomplete="list" data-reference-editor="true" data-placeholder="描述当前任务… / 命令 · @ 引用文件或目录" data-session-input="ff267d881c173a6ed04044bc4bd10b6bfd0c3952080721e982096419f7edab52" class="my-2 min-h-18 max-h-52 overflow-auto whitespace-pre-wrap break-words rounded-md border border-line bg-background px-3 py-2 text-sm text-foreground">提交方式 keyboard</div>
+           - unexpected value "提交方式 keyboard"
+
+
+      45 |     for(const via of ['mouse','keyboard']){
+      46 |       await input.fill('提交方式 '+via);if(via==='mouse')await send.click();else{await send.focus();await page.keyboard.press('Enter');}
+    > 47 |       await expect(input).toBeFocused();await expect(input).toHaveJSProperty('textContent','');await expect(send).toBeDisabled();await app.sessions.activeFor(session.id)?.done;
+         |                                                             ^
+      48 |     }
+      49 |     const gate=new Promise<void>(resolve=>{release=resolve;});await page.route('**/submit',async route=>{await gate;await route.fulfill({status:503,json:{error:{message:'延迟提交失败'}}});},{times:1});
+      50 |     await input.fill('等待响应');await send.focus();await page.keyboard.press('Enter');await expect(input).toBeFocused();
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-run-recovery.spec.ts:47:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-run-recovery-button-sub-5c2b4-does-not-steal-dialog-focus/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus 
+  16 passed (27.3s)

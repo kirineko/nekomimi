@@ -1,0 +1,12 @@
+{
+  "model-policy-build.log": "7cbb1f1c7865ebde46468c919a9a73db2e5e24c5682a220f19ee1c1013b8bee7",
+  "model-policy-first-failure.log": "49a6d9c8c1bc6194793d542fea7a5355abb278c946a1cf4b6ecb5931a007939d",
+  "model-policy-regression.log": "1514c5da02a21adc8b4a083f45158816742f92b09e32ac37fd748e3aeb568fe8",
+  "model-policy-runtime.log": "3926cffd23e5e6cdd427bde24897c06930130882bfe0e5cf5b6bbdd962683a24",
+  "model-policy-typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+  "pipeline-and-model-policy.md": "80a144169c0fa53450a90258a050f726c69f2840332a00d61f8579d69b6ab2a0",
+  "pipeline-build.log": "5070d3b2050823df9ce5cb87926c2ac8bceb94b88b364fd3ef26cea64b216c4d",
+  "pipeline-contracts.log": "61d7712017c2f07bcf9e3f4995558159ee5687fba8f9570bf022e58999054958",
+  "pipeline-regression.log": "de385af5411cc976c3d7115dce6c2f197d8c38c7ca754869fb11a01b84179d5f",
+  "pipeline-typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+}

@@ -1,0 +1,76 @@
+[
+  {
+    "name": "react",
+    "version": "19.3.0",
+    "license": "MIT",
+    "engines": {
+      "node": ">=0.10.0"
+    }
+  },
+  {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "license": "MIT"
+  },
+  {
+    "name": "@radix-ui/react-dialog",
+    "version": "1.2.0",
+    "license": "MIT"
+  },
+  {
+    "name": "@radix-ui/react-slot",
+    "version": "1.4.0",
+    "license": "MIT"
+  },
+  {
+    "name": "class-variance-authority",
+    "version": "0.7.1",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "clsx",
+    "version": "2.1.1",
+    "license": "MIT",
+    "engines": {
+      "node": ">=6"
+    }
+  },
+  {
+    "name": "tailwind-merge",
+    "version": "3.7.0",
+    "license": "MIT"
+  },
+  {
+    "name": "@tanstack/react-query",
+    "version": "5.104.1",
+    "license": "MIT"
+  },
+  {
+    "name": "@tanstack/react-router",
+    "version": "1.170.41",
+    "license": "MIT",
+    "engines": {
+      "node": ">=20.19"
+    }
+  },
+  {
+    "name": "@tanstack/react-virtual",
+    "version": "3.14.13",
+    "license": "MIT"
+  },
+  {
+    "name": "react-resizable-panels",
+    "version": "4.14.2",
+    "license": "MIT"
+  },
+  {
+    "name": "tailwindcss",
+    "version": "4.3.3",
+    "license": "MIT"
+  },
+  {
+    "name": "@tailwindcss/vite",
+    "version": "4.3.3",
+    "license": "MIT"
+  }
+]

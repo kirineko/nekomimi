@@ -1,3 +1,4 @@
+import {prepareDataHome} from '../src/storage/format.js';
 import { expect, it } from "vitest";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -10,7 +11,7 @@ import { temporary, key, response, callItem, textItem } from "./helpers.js";
 async function fixture() {
   const source = await temporary();
   await mkdir(join(source, "skills")); await mkdir(join(source, "rules"));
-  await writeFile(join(source, "nekomimi.json"), JSON.stringify({ manifestVersion: 1, name: "review-package", version: "1.0.0", sdkVersion: 2, requiredCapabilities: ["commands"], dependencies: {}, resources: [
+  await writeFile(join(source, "nekomimi.json"), JSON.stringify({ manifestVersion: 1, name: "review-package", version: "1.0.0", sdkVersion: 3, requiredCapabilities: ["commands"], dependencies: {}, resources: [
     { kind: "extension", name: "review-package", entry: "index.ts" },
     { kind: "skill", name: "package-checklist", entry: "skills/SKILL.md" },
     { kind: "rule", name: "typescript-rules", entry: "rules/typescript.md", ruleScope: { root: ".", include: ["**/*.ts"] } },
@@ -21,7 +22,7 @@ async function fixture() {
   return source;
 }
 it("installs a local multi-resource package with stable identities and target-bound rules", async () => {
-  const workspace = await temporary(), home = await temporary(), source = await fixture();
+  const workspace = await temporary(), home = await temporary(), source = await fixture(); await prepareDataHome(home);
   const packages = new Packages(workspace, home), host = new CustomizationHost(workspace, home);
   try {
     await expect(packages.prepare({ kind: "local", path: source }, "project")).rejects.toThrow("target binding");
@@ -46,11 +47,16 @@ it("installs a local multi-resource package with stable identities and target-bo
     await writeFile(join(source, "index.ts"), (await readFile(join(source, "index.ts"), "utf8")).replace("package active", "package updated"));
     const update = await packages.prepare({ kind: "local", path: source }, "project", { "typescript-rules": "src" });
     expect(update.packageId).toBe(candidate.packageId); expect(update.revision).not.toBe(candidate.revision);
+    const preview = await packages.preview("project", update.id);
     const updated = await host.requestPackage(update.id, "project"); await host.reload(updated); expect(updated.status).toBe("activated");
+    await expect(host.requestPackage(candidate.id, "project", true, preview.activeRevision)).rejects.toThrow("revision conflict");
+    const {packageAction} = await import("../src/customization/package-management.js");
+    await expect(packageAction(host,{action:"rollback",id:candidate.packageId,scope:"project",contentHash:update.revision,activeRevision:await packages.revision("project"),authorize:true},{user:true})).rejects.toThrow("target revision conflict");
+    expect((await packages.list()).find(p=>p.packageId===candidate.packageId)?.revision).toBe(update.revision);
   } finally { await host.close(); }
 });
 it("keeps project overrides and rejects private source files and same-scope collisions", async () => {
-  const workspace = await temporary(), home = await temporary(), source = await fixture();
+  const workspace = await temporary(), home = await temporary(), source = await fixture(); await prepareDataHome(home);
   const packages = new Packages(workspace, home);
   const user = await packages.prepare({ kind: "local", path: source }, "user", { "typescript-rules": "src" });
   await packages.commit(user, await packages.permissions(user), 0);
@@ -75,7 +81,7 @@ it("keeps project overrides and rejects private source files and same-scope coll
 });
 it("shares one process per executable package revision while keeping resource state separate", async () => {
   const workspace = await temporary(), home = await temporary(), source = await temporary();
-  await writeFile(join(source, "nekomimi.json"), JSON.stringify({ manifestVersion: 1, name: "multi", version: "1.0.0", sdkVersion: 2, requiredCapabilities: ["commands", "state"], dependencies: {}, resources: ["one", "two"].map(name => ({ kind: "extension", name, entry: name + ".ts" })) }));
+  await writeFile(join(source, "nekomimi.json"), JSON.stringify({ manifestVersion: 1, name: "multi", version: "1.0.0", sdkVersion: 3, requiredCapabilities: ["commands", "state"], dependencies: {}, resources: ["one", "two"].map(name => ({ kind: "extension", name, entry: name + ".ts" })) }));
   for (const name of ["one", "two"]) await writeFile(join(source, name + ".ts"), `import type {ExtensionFactory} from 'nekomimi/extensions'; export default ((api)=>{api.registerCommand('pid',{description:'pid',async handler(a,c){const n=Number(await c.state.get('n',1) ?? 0)+1;await c.state.set('n',1,n);return JSON.stringify({pid:process.pid,resource:c.resourceId,n})}})}) satisfies ExtensionFactory;`);
   const packages = new Packages(workspace, home), host = new CustomizationHost(workspace, home);
   try {
@@ -92,7 +98,7 @@ it("shares one process per executable package revision while keeping resource st
   } finally { await host.close(); }
 });
 it("shares a package into another workspace with fresh rule bindings and uninstalls only its registrations", async () => {
-  const workspace = await temporary(), home = await temporary(), source = await fixture();
+  const workspace = await temporary(), home = await temporary(), source = await fixture(); await prepareDataHome(home);
   const packages = new Packages(workspace, home);
   const candidate = await packages.prepare({ kind: "local", path: source }, "project", { "typescript-rules": "src" });
   await packages.commit(candidate, await packages.permissions(candidate), 0);
@@ -132,3 +138,21 @@ it('collects explicitly discarded unused candidates while retaining history and 
  expect((await store.resources(first)).length).toBe(3);expect((await store.resources(pinned)).length).toBe(3);
  await expect(store.resources(unused)).rejects.toThrow();
 });
+
+it('binds package uninstall to reviewed content and revision and publishes concurrent exports exclusively', async () => {
+  const workspace = await temporary(), home = await temporary(), source = await fixture(); await prepareDataHome(home);
+  const store = new Packages(workspace, home), host = new CustomizationHost(workspace, home);
+  try {
+    const candidate = await store.prepare({ kind: 'local', path: source }, 'project', { 'typescript-rules': 'src' });
+    const receipt = await host.requestPackage(candidate.id, 'project', true); await host.reload(receipt); expect(receipt.status).toBe('activated');
+    await expect(host.removePackage(candidate.packageId, '0'.repeat(64), await store.revision('project'))).rejects.toThrow('revision conflict');
+    await expect(host.removePackage(candidate.packageId, candidate.revision, 0)).rejects.toThrow('revision conflict');
+    expect(host.receipts).toHaveLength(1); expect(await store.list()).toHaveLength(1);
+    const results = await Promise.allSettled([store.export(candidate.packageId, 'exclusive.tgz', candidate.revision), store.export(candidate.packageId, 'exclusive.tgz', candidate.revision)]);
+    expect(results.filter(result => result.status === 'fulfilled')).toHaveLength(1);
+    expect(results.filter(result => result.status === 'rejected')).toHaveLength(1);
+    const bytes = await readFile(join(workspace, 'exclusive.tgz')); expect(bytes.length).toBeGreaterThan(100);
+    await expect(store.export(candidate.packageId, 'exclusive.tgz', candidate.revision)).rejects.toThrow('already exists');
+    expect(await readFile(join(workspace, 'exclusive.tgz'))).toEqual(bytes);
+  } finally { await host.close(); }
+}, 30000);

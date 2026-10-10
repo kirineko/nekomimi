@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-07T16:18:27.234788+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/core/builds.ts": "a20184f8e6ab50565d3e5f9976e61d57fddd666107fb50a3daa075fb2e5fb8eb",
+    "src/core/build-process.ts": "4695f8301e002a42e1bd9513acae89af2d306e672ea811fe0eea53437a192b86",
+    "src/core/validation.ts": "7cc30733c5a82a9485a679e93a90d7a1c9334f1a7af9cb20585a9821401c99dd",
+    "src/core/validation-worker.ts": "bf15b4b002a67c0b91db1fc7174a96d6f57a77600c1d6592d77db39ee11642c9",
+    "src/core/validations.ts": "44776a05e963388da3ccedf9b63c67e6d8618c3e1aadb9fa06d1fc2b2ca55e7c",
+    "src/cli.ts": "361c4181450f77e651d6a48b0cffcfda1e6136b87c96718b681ef5adf01cf7a8",
+    "test/core-validation.test.ts": "52c496f9ec397f08b84dc796ec13747794f83d109e9374dc4e12589b2b270e59",
+    "test/core-builds.test.ts": "65681a5c8f44dfcaa1897352e7d4fe3e67e7a7d0010c942c1ec6059775b9d075",
+    "scripts/core-candidate-smoke.mjs": "e0cdd199ea15a2a7ed142457a262f09ede9d06e2fbfe4131f9a233f01cb9c048",
+    "extension-docs/core-source.md": "ad77ebe2403008dd36b0398d24ea93fee57dcd0f6792bb66fa0292d67071ae42",
+    "openspec/changes/next-generation-nekomimi/specs/core-change-candidates/spec.md": "2ab3bdd7886e3d788e2267297649350dbd20eb8f0a2787cd451e6b5f0c487370",
+    "openspec/changes/next-generation-nekomimi/design.md": "efd6e368f8348e7a91d0d082866b6c0967386d96f18837f6a4a870b421b461ff",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "0c8ed8d7d9d1ab07afe8fefa427a92c2d9f5b857e670bd4906c3ab4338f7c8dc",
+    "docs/validation/next-generation-nekomimi/core/validation-complete.log": "99e339aee208968c6701bd80bd752629500d85ebf4e863df061248df4f5147d5",
+    "docs/validation/next-generation-nekomimi/core/validation.md": "7860d62f3774d2199ed4749b18dd1c5a9387a3b809fbb07bec05f40f27d8bdd4",
+    "docs/validation/next-generation-nekomimi/core/validation-source-first.log": "a4a03bdd958747f45c7b998e29fd08f77a4f02a68694d01ee4a5d17157b01a2b",
+    "docs/validation/next-generation-nekomimi/core/validation-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/core/validation-build.log": "89b1c3a2b2244c47f01c6d4ca291d0dcfae051f3d9685d6ea07633c47f540b7d",
+    "docs/validation/next-generation-nekomimi/core/validation-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/core/validation-source-receipt.json": "ec1d845927e79404f3bb12008cd44fdd6369b0a2eedcf0e603114258947ab9f4",
+    "docs/validation/next-generation-nekomimi/core/validation-source-complete.log": "016edfb1ea4d1a78a5bd5f16ea089943f576880b3c105be026a6ec1c406a94d6",
+    "docs/validation/next-generation-nekomimi/core/validation-first.log": "877cb2017c06b99946a16480889568f2a426ac5fe004a21e2326d738d46ef215"
+  }
+}

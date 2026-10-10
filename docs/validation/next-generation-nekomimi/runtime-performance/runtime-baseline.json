@@ -1,0 +1,378 @@
+{
+  "generation": "baseline",
+  "root": "/tmp/nekomimi-performance-baseline",
+  "node": "v24.15.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "config": {
+    "model": "deepseek-flash",
+    "maxOutputTokens": 2048,
+    "tools": [
+      "read",
+      "write",
+      "edit",
+      "bash"
+    ],
+    "naming": false
+  },
+  "realModelCalls": 0,
+  "fixtureResponseUsage": "synthetic; not cost or quality evidence",
+  "gc": true,
+  "scriptSha256": "3ccdded63ae93bae72311d188a168360bed0f86639ff6c09009923ca39c13941",
+  "results": [
+    {
+      "rows": 0,
+      "repeat": 0,
+      "requests": [
+        {
+          "prepareMs": 165.29679199999998,
+          "wireBytes": 6298,
+          "schemaBytes": 3174,
+          "inputBytes": 428,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 299.280209,
+      "memoryBefore": {
+        "rss": 207257600,
+        "heapTotal": 114442240,
+        "heapUsed": 41082072,
+        "external": 22276509,
+        "arrayBuffers": 45885
+      },
+      "memoryAfter": {
+        "rss": 208158720,
+        "heapTotal": 115228672,
+        "heapUsed": 46464808,
+        "external": 22388065,
+        "arrayBuffers": 333177
+      },
+      "peakRss": 208125952,
+      "recoveryMs": 26.26212499999997,
+      "latestMs": 20.141542000000072,
+      "pages": [],
+      "visibleAnchorCount": 4,
+      "journalBytesBefore": 841,
+      "journalBytesAfter": 35232,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    },
+    {
+      "rows": 0,
+      "repeat": 1,
+      "requests": [
+        {
+          "prepareMs": 167.19887500000004,
+          "wireBytes": 6298,
+          "schemaBytes": 3174,
+          "inputBytes": 428,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 303.7925,
+      "memoryBefore": {
+        "rss": 211419136,
+        "heapTotal": 116359168,
+        "heapUsed": 43070400,
+        "external": 23226288,
+        "arrayBuffers": 245741
+      },
+      "memoryAfter": {
+        "rss": 211664896,
+        "heapTotal": 116359168,
+        "heapUsed": 47390592,
+        "external": 22646303,
+        "arrayBuffers": 430807
+      },
+      "peakRss": 211664896,
+      "recoveryMs": 10.798999999999978,
+      "latestMs": 7.611374999999953,
+      "pages": [],
+      "visibleAnchorCount": 4,
+      "journalBytesBefore": 841,
+      "journalBytesAfter": 35232,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    },
+    {
+      "rows": 0,
+      "repeat": 2,
+      "requests": [
+        {
+          "prepareMs": 160.681333,
+          "wireBytes": 6298,
+          "schemaBytes": 3174,
+          "inputBytes": 428,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 302.43883300000016,
+      "memoryBefore": {
+        "rss": 222511104,
+        "heapTotal": 116883456,
+        "heapUsed": 43424560,
+        "external": 23269712,
+        "arrayBuffers": 376403
+      },
+      "memoryAfter": {
+        "rss": 222576640,
+        "heapTotal": 116883456,
+        "heapUsed": 47642680,
+        "external": 22646303,
+        "arrayBuffers": 430807
+      },
+      "peakRss": 222576640,
+      "recoveryMs": 11.083583999999973,
+      "latestMs": 7.518332999999984,
+      "pages": [],
+      "visibleAnchorCount": 4,
+      "journalBytesBefore": 841,
+      "journalBytesAfter": 35232,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    },
+    {
+      "rows": 400,
+      "repeat": 0,
+      "requests": [
+        {
+          "prepareMs": 188.35129200000006,
+          "wireBytes": 167388,
+          "schemaBytes": 3174,
+          "inputBytes": 161518,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 320.566292,
+      "memoryBefore": {
+        "rss": 223592448,
+        "heapTotal": 117407744,
+        "heapUsed": 44182104,
+        "external": 24135642,
+        "arrayBuffers": 941606
+      },
+      "memoryAfter": {
+        "rss": 227573760,
+        "heapTotal": 120045568,
+        "heapUsed": 62685656,
+        "external": 23663968,
+        "arrayBuffers": 1448472
+      },
+      "peakRss": 227573760,
+      "recoveryMs": 15.17291699999987,
+      "latestMs": 11.838874999999916,
+      "pages": [
+        {
+          "ms": 3.0949589999997897,
+          "rows": 60,
+          "before": 284
+        },
+        {
+          "ms": 2.1130410000000666,
+          "rows": 60,
+          "before": 224
+        },
+        {
+          "ms": 1.831083000000035,
+          "rows": 60,
+          "before": 164
+        },
+        {
+          "ms": 1.9199169999999413,
+          "rows": 60,
+          "before": 104
+        },
+        {
+          "ms": 1.8651250000000346,
+          "rows": 60,
+          "before": 44
+        },
+        {
+          "ms": 1.7646250000000236,
+          "rows": 44
+        }
+      ],
+      "visibleAnchorCount": 404,
+      "journalBytesBefore": 314227,
+      "journalBytesAfter": 348651,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    },
+    {
+      "rows": 400,
+      "repeat": 1,
+      "requests": [
+        {
+          "prepareMs": 188.09400000000005,
+          "wireBytes": 167388,
+          "schemaBytes": 3174,
+          "inputBytes": 161518,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 331.22787500000004,
+      "memoryBefore": {
+        "rss": 236568576,
+        "heapTotal": 118456320,
+        "heapUsed": 46056576,
+        "external": 23634594,
+        "arrayBuffers": 770320
+      },
+      "memoryAfter": {
+        "rss": 239681536,
+        "heapTotal": 121094144,
+        "heapUsed": 57705152,
+        "external": 23978787,
+        "arrayBuffers": 1763291
+      },
+      "peakRss": 239681536,
+      "recoveryMs": 13.870790999999826,
+      "latestMs": 10.762250000000222,
+      "pages": [
+        {
+          "ms": 2.365125000000262,
+          "rows": 60,
+          "before": 284
+        },
+        {
+          "ms": 1.7014580000000024,
+          "rows": 60,
+          "before": 224
+        },
+        {
+          "ms": 1.4651669999998376,
+          "rows": 60,
+          "before": 164
+        },
+        {
+          "ms": 1.3438750000000255,
+          "rows": 60,
+          "before": 104
+        },
+        {
+          "ms": 1.3243330000000242,
+          "rows": 60,
+          "before": 44
+        },
+        {
+          "ms": 1.131750000000011,
+          "rows": 44
+        }
+      ],
+      "visibleAnchorCount": 404,
+      "journalBytesBefore": 314227,
+      "journalBytesAfter": 348651,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    },
+    {
+      "rows": 400,
+      "repeat": 2,
+      "requests": [
+        {
+          "prepareMs": 183.4236249999999,
+          "wireBytes": 167388,
+          "schemaBytes": 3174,
+          "inputBytes": 161518,
+          "instructionsBytes": 2510,
+          "toolNames": [
+            "bash",
+            "edit",
+            "read",
+            "write"
+          ],
+          "model": "deepseek-flash"
+        }
+      ],
+      "elapsedMs": 316.5967919999998,
+      "memoryBefore": {
+        "rss": 237813760,
+        "heapTotal": 118980608,
+        "heapUsed": 46367856,
+        "external": 28017665,
+        "arrayBuffers": 770320
+      },
+      "memoryAfter": {
+        "rss": 240664576,
+        "heapTotal": 121618432,
+        "heapUsed": 57859528,
+        "external": 23977387,
+        "arrayBuffers": 1761891
+      },
+      "peakRss": 240664576,
+      "recoveryMs": 13.880333000000064,
+      "latestMs": 10.53604200000018,
+      "pages": [
+        {
+          "ms": 2.5186250000001564,
+          "rows": 60,
+          "before": 284
+        },
+        {
+          "ms": 1.4845840000002681,
+          "rows": 60,
+          "before": 224
+        },
+        {
+          "ms": 1.4998749999999745,
+          "rows": 60,
+          "before": 164
+        },
+        {
+          "ms": 1.4960829999999987,
+          "rows": 60,
+          "before": 104
+        },
+        {
+          "ms": 1.4659579999997732,
+          "rows": 60,
+          "before": 44
+        },
+        {
+          "ms": 1.3443750000001273,
+          "rows": 44
+        }
+      ],
+      "visibleAnchorCount": 404,
+      "journalBytesBefore": 314227,
+      "journalBytesAfter": 348651,
+      "readOnlyRecovery": true,
+      "stableAnchors": true
+    }
+  ]
+}

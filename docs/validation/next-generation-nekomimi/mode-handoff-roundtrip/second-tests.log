@@ -1,0 +1,27 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/mode-handoff-roundtrip.test.ts (2 tests | 1 failed) 5197ms
+   × headless confirms creation, records validation, confirms delivery and continues work without duplicate effects 2271ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/mode-handoff-roundtrip.test.ts > headless confirms creation, records validation, confirms delivery and continues work without duplicate effects
+Error: Command already accepted; inspect its existing receipt
+ ❯ src/runtime.ts:197:15
+    195|       );
+    196|       if (prior)
+    197|         throw new Error(
+       |               ^
+    198|           "Command already accepted; inspect its existing receipt",
+    199|         );
+ ❯ test/mode-handoff-roundtrip.test.ts:48:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  05:06:57
+   Duration  5.86s (transform 250ms, setup 0ms, import 610ms, tests 5.20s, environment 0ms)
+

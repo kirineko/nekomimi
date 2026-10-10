@@ -1,0 +1,19 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"61b71932-27c8-4ef5-8ae1-43c2292445cb","timestamp":"2026-10-06T18:04:17.395Z","sessionId":"ca7e97f0-e09b-470b-a94f-7efc0db2c632","runId":"f52cccfd-f65a-4f6d-9868-a6eb1184fdd7","attemptId":"7d75e7c4-2df2-4aa2-a4f9-0849154548d7","seq":18,"durableSeq":17,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6d5da19c-85ca-4a65-8633-4faa2da7f565","timestamp":"2026-10-06T18:05:57.842Z","sessionId":"7c004e3e-1fc3-49eb-911b-6156cb32325e","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"644cbd24-d44f-40e0-a467-3c7d2bef6e82","timestamp":"2026-10-06T18:06:08.570Z","sessionId":"588e6131-8b2a-4e64-9b1b-78b5a06a7e15","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"b3585870-275e-4081-8cb2-3960cec9e418","timestamp":"2026-10-06T18:06:08.617Z","sessionId":"8224974e-759e-4045-91e5-7bd234b13507","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"daac89b4-f707-422e-aef1-370c404214ba","timestamp":"2026-10-06T18:06:08.730Z","sessionId":"f63203f5-284e-4bff-94f1-61198c785021","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"96ebde51-0bfd-4713-ba86-b54a21cd6497","timestamp":"2026-10-06T18:06:08.882Z","sessionId":"6c177c6d-b43d-4619-959b-02da7eebcb6b","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"66c3e281-5787-45bc-8ce1-d9926fe1fddf","timestamp":"2026-10-06T18:06:09.117Z","sessionId":"afe49025-d0ad-4ab7-a5c2-4354a5043b43","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"f2527be5-07bd-4408-9df8-d19c957235a8","timestamp":"2026-10-06T18:06:09.135Z","sessionId":"d7fd43a6-cc2f-40f1-a8d6-323d0aed285b","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"c1b523dd-3790-4111-919b-d8307bb8768d","timestamp":"2026-10-06T18:06:09.137Z","sessionId":"d7fd43a6-cc2f-40f1-a8d6-323d0aed285b","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"86d6cd71-2863-43af-912d-260053d9660f","timestamp":"2026-10-06T18:06:19.028Z","sessionId":"c20edea5-030d-4ece-842d-1463dc6fc809","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+ Test Files  62 passed (62)
+      Tests  372 passed (372)
+   Start at  02:03:24
+   Duration  175.55s (transform 783ms, setup 0ms, import 15.19s, tests 332.14s, environment 2ms)
+

@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-10-07T14:54:55.145064+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/mcp.ts": "6711d3353e715c4c39bfc59fd6e4ad749368dbacbe810ea313434121a389aec0",
+    "src/customization/run.ts": "bf1d863c9c80d373d3fd27a4f16f82987e9c33c94b92026a49528a7b4de88cb4",
+    "src/customization/mcp-discovery.ts": "cd79c53e4117921f312d2a86f17d0d5d697c339870d936dcc1694aea0a631692",
+    "test/mcp-fault-recovery.test.ts": "f0a17868512a2b28e829cc74c49f0c712866816f22b74fa6bcd0f19f8871bc43",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "171bfe973ada7bd7fd33d605e157ba1e47207f87f4320edf80219101f54629c0",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-recovery.md": "004969a92428604699892bddad2454d0589037dc427c4a9a0415365b59a09fbf",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-build.log": "c8a1e501491efa34889138a268f95ecefe9c6f284aa3d675afac5a82b9ec897f",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-regression.log": "5af4d64eaee035d70c961e7df819263056577e2b141f3796f8809e78992e501c",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-tests.log": "780e4bb9ffd0f89bf7eb9578f48333a602ce31f832ce42c09505331036db982e",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/fault-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

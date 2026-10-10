@@ -1,0 +1,19 @@
+
+Running 9 tests using 2 workers
+
+(node:1250) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/workbench-upgrade.spec.ts:69:1 › search, diff, locate, open and reload preserve evidence and draft (4.5s)
+  ✓  3 test/browser/workbench-upgrade.spec.ts:120:1 › workspace API authentication and side effect boundary (60ms)
+  ✓  4 test/browser/workbench-upgrade.spec.ts:133:1 › files and settings remain usable at all viewports (1.3s)
+  ✓  2 test/browser/workbench.spec.ts:49:1 › submits, observes tool diff, inspects request, reloads, continues and exports (6.0s)
+  ✓  6 test/browser/workbench.spec.ts:119:1 › cancels and remains usable on a narrow viewport (2.8s)
+  ✓  5 test/browser/workbench-upgrade.spec.ts:161:1 › changes keep expanded history while new journal events arrive (3.1s)
+180-row input fill and assertion: 10ms
+  ✓  7 test/browser/workbench.spec.ts:141:1 › windows long history and pages context sources beyond a raw artifact page (3.4s)
+  ✓  8 test/browser/workbench.spec.ts:203:1 › compact layout preserves controls and inspector focus at all target sizes (2.6s)
+  ✓  9 test/browser/workbench.spec.ts:222:1 › shows and downloads diagnostics even when durable cursor and status do not change (747ms)
+
+  9 passed (17.0s)

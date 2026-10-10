@@ -1,0 +1,120 @@
+{
+  "imports": [
+    {
+      "source": "src/runtime.ts",
+      "import": "@earendil-works/chord/context",
+      "version": "1.0.4",
+      "publicExport": "./context"
+    },
+    {
+      "source": "src/provider.ts",
+      "import": "@earendil-works/pi-ai",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/provider.ts",
+      "import": "@earendil-works/pi-ai/api/openai-responses",
+      "version": "1.0.4",
+      "publicExport": "./api/*"
+    },
+    {
+      "source": "src/customization/history-branch.ts",
+      "import": "@earendil-works/chord/context",
+      "version": "1.0.4",
+      "publicExport": "./context"
+    },
+    {
+      "source": "src/customization/adapter-provider.ts",
+      "import": "@earendil-works/pi-ai",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/server/sessions.ts",
+      "import": "@earendil-works/chord/context",
+      "version": "1.0.4",
+      "publicExport": "./context"
+    },
+    {
+      "source": "src/pi/durable-loop.ts",
+      "import": "@earendil-works/pi-ai",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/durable-loop.ts",
+      "import": "@earendil-works/pi-durable",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/durable-loop.ts",
+      "import": "@earendil-works/chord/context",
+      "version": "1.0.4",
+      "publicExport": "./context"
+    },
+    {
+      "source": "src/pi/task-context.ts",
+      "import": "@earendil-works/chord",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/task-context.ts",
+      "import": "@earendil-works/chord/context",
+      "version": "1.0.4",
+      "publicExport": "./context"
+    },
+    {
+      "source": "src/pi/tool-adapter.ts",
+      "import": "@earendil-works/chord",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/tool-adapter.ts",
+      "import": "@earendil-works/pi-durable",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/model-stream.ts",
+      "import": "@earendil-works/pi-ai",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/recovery.ts",
+      "import": "@earendil-works/chord",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/recovery.ts",
+      "import": "@earendil-works/pi-durable",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/journal-storage.ts",
+      "import": "@earendil-works/chord",
+      "version": "1.0.4",
+      "publicExport": "."
+    },
+    {
+      "source": "src/pi/journal-storage.ts",
+      "import": "@earendil-works/pi-durable/storage/memory",
+      "version": "1.0.4",
+      "publicExport": "./storage/memory"
+    },
+    {
+      "source": "src/pi/journal-storage.ts",
+      "import": "@earendil-works/pi-durable",
+      "version": "1.0.4",
+      "publicExport": "."
+    }
+  ],
+  "browserAndProductProtocolFrameworkImports": 0,
+  "oldAgentImports": 0
+}

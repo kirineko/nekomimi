@@ -1,0 +1,7 @@
+{"seq":1,"type":"message","message":{"role":"system","content":"CANONICAL_FROM_JOURNAL","tools":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}],"timestamp":0}}
+{"seq":2,"type":"message","message":{"role":"user","content":[{"type":"text","text":"fixture input"}],"timestamp":1791299163949}}
+{"seq":3,"type":"prepare","preparation":1}
+{"seq":4,"type":"message","message":{"role":"assistant","content":[{"type":"text","text":"done"}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"aborted","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"errorMessage":"fixture aborted","thinkingLevel":"off"}}
+{"seq":5,"type":"finish","turns":1,"stopReason":"aborted","toolResults":[]}
+{"seq":6,"type":"turn_end"}
+{"seq":7,"type":"agent_end"}

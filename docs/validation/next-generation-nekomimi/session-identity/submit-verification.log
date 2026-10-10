@@ -1,0 +1,9 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  02:56:57
+   Duration  12.96s (transform 485ms, setup 0ms, import 1.28s, tests 19.99s, environment 0ms)
+

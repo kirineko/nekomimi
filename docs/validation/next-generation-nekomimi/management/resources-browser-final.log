@@ -1,0 +1,26 @@
+
+Running 19 tests using 1 worker
+
+(node:60551) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (623ms)
+  ✓   2 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (506ms)
+  ✓   3 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.2s)
+  ✓   4 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (295ms)
+  ✓   5 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+  ✓   6 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.7s)
+  ✓   7 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (696ms)
+  ✓   8 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (857ms)
+  ✓   9 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (2.0s)
+  ✓  10 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (401ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (274ms)
+  ✓  12 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (663ms)
+  ✓  13 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (251ms)
+  ✓  14 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (301ms)
+  ✓  15 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (463ms)
+  ✓  16 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (435ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.3s)
+  ✓  18 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (254ms)
+  ✓  19 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+
+  19 passed (17.4s)

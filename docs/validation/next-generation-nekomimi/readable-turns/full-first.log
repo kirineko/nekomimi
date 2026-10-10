@@ -1,0 +1,260 @@
+
+Running 196 tests using 2 workers
+
+(node:16070) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 test/browser/basic-settings.spec.ts:11:1 › 10.4 settings preserve drafts across refresh and require explicit revision adoption after conflict (902ms)
+  ✓    3 test/browser/basic-settings.spec.ts:30:1 › 10.4 uncertain credential writes clear and redact input; clearing local key does not clear runtime override (608ms)
+  ✓    4 test/browser/basic-settings.spec.ts:49:1 › 10.4 custom profile without a key does not imply a default credential; narrow settings remain usable (460ms)
+  ✓    5 test/browser/chat-loading-focus.spec.ts:13:1 › optional features load on demand, cancel delayed load, retry network failure and keep draft (1.8s)
+  ✓    2 test/browser/candidate-management.spec.ts:13:1 › 10.4 candidate activation requires review and validation, reports actual loading and never installs in the work project (3.9s)
+  ✓    7 test/browser/candidate-management.spec.ts:31:1 › 10.4 export review is explicit, preserves the nonsecret path and refuses existing files (1.0s)
+  ✓    6 test/browser/chat-loading-focus.spec.ts:38:1 › submit restores focus for mouse and keyboard and failure retains draft (2.1s)
+  ✓    9 test/browser/chat-loading-focus.spec.ts:53:1 › late submit never steals focus or clears a new context draft (925ms)
+  ✓   10 test/browser/chat-loading-focus.spec.ts:76:1 › latest follows new messages and delayed layout, while deliberate history reading stays anchored (2.1s)
+  ✓    8 test/browser/candidate-management.spec.ts:44:1 › 10.4 rollback reviews the immutable prior version and changed candidates cannot use old consent (4.8s)
+  ✓   11 test/browser/chat-loading-focus.spec.ts:102:1 › running task allows next draft without submitting it or clearing it at completion (1.5s)
+  ✓   12 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (3.7s)
+  ✓   13 test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact (3.1s)
+  ✓   15 test/browser/core-candidate.spec.ts:10:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes (1.3s)
+  ✓   14 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (3.1s)
+  ✓   17 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.9s)
+  ✓   16 test/browser/core-candidate.spec.ts:36:1 › 10.2 reviewed core build continues across navigation and stops only after explicit cancellation (5.1s)
+  ✓   18 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (3.0s)
+  ✓   19 test/browser/core-candidate.spec.ts:59:1 › 10.2 explicit isolated validation runs the real compiled probe and reports its own stage (2.8s)
+  ✓   21 test/browser/core-status.spec.ts:6:1 › shows the observed service build and diagnoses an unmanaged launcher (361ms)
+  ✓   20 test/browser/core-launch-info.spec.ts:9:1 › 10.8 unmanaged source host exposes only verified launch instructions and explicit recovery diagnostics (974ms)
+  ✓   23 test/browser/core-switch-real.spec.ts:19:1 › 10.8 browser confirmation replaces real compiled Web children and restores the receipt independently of the old candidate page (4.0s)
+  ✓   22 test/browser/core-status.spec.ts:15:1 › refreshes managed build identity and never labels cached identity current after a connection failure (6.7s)
+  ✓   25 test/browser/create-candidates.spec.ts:15:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (1.4s)
+  ✓   24 test/browser/core-switch-ui.spec.ts:46:1 › 10.8 explicit confirmation shows exact impact, waits for blockers, and rejects a changed plan (5.3s)
+  ✓   26 test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (2.1s)
+  ✓   28 test/browser/create-candidates.spec.ts:44:1 › 10.2 target creation and candidate loading failures remain distinct (579ms)
+  ✓   27 test/browser/core-switch-ui.spec.ts:67:1 › 10.8 lost response recovers the durable receipt after reload without replaying the switch (2.4s)
+  ✓   29 test/browser/create-candidates.spec.ts:52:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.5s)
+  ✓   30 test/browser/core-switch-ui.spec.ts:86:1 › 10.8 failed and unknown results remain distinct from the observed build and never auto-retry (1.2s)
+  ✓   31 test/browser/create-candidates.spec.ts:73:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (1.5s)
+  ✓   32 test/browser/core-switch-ui.spec.ts:105:1 › 10.8 a receipt for another command cannot become successful UI evidence (2.3s)
+  ✓   33 test/browser/create-candidates.spec.ts:94:1 › 10.2 simulation exposes durable results without replay on return (2.3s)
+  ✓   35 test/browser/create-candidates.spec.ts:112:1 › 10.2 unavailable target retains background preview cancellation (1.4s)
+  ✓   34 test/browser/create-conversation.spec.ts:8:1 › 10.3 create input preserves independent drafts and explicitly runs against its own target (3.2s)
+  ✓   36 test/browser/create-candidates.spec.ts:131:1 › 10.2 closed preview is reported expired and invalid props never start execution (1.7s)
+  ✓   37 test/browser/create-conversation.spec.ts:39:1 › 10.3 create task stop is explicit and cancels only its active request (1.7s)
+  ✓   39 test/browser/customization-studio.spec.ts:65:1 › empty management pages recover reads and modal choices contain keyboard focus without writes (564ms)
+  ✓   40 test/browser/customization-studio.spec.ts:95:1 › model choice supports keyboard focus, cancellation, failures and independent persisted purposes (754ms)
+  ✓   41 test/browser/customization-studio.spec.ts:142:1 › draft survives read refresh, revision failure and partial credential success but cancellation clears it (825ms)
+  ✓   42 test/browser/customization-studio.spec.ts:202:1 › closing during a submitted save reads its result on reopen without submitting twice (508ms)
+  ✓   38 test/browser/customization-lifecycle.spec.ts:7:1 › compact capability catalog, local feedback, permissions and theme preview (6.1s)
+  ✓   43 test/browser/customization-studio.spec.ts:229:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion (2.4s)
+  ✓   45 test/browser/customization-studio.spec.ts:291:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write (787ms)
+  ✓   46 test/browser/customization-studio.spec.ts:337:1 › resource diagnostics preserve active versions and display deferred changes without hidden writes (424ms)
+  ✓   47 test/browser/delivery-navigation.spec.ts:21:1 › 10.3 exact delivery deep link and explicit/native return preserve the card offset (1.5s)
+  ✓   48 test/browser/delivery-navigation.spec.ts:45:1 › 10.3 changed or unavailable candidate never masquerades as the delivered version (1.5s)
+  ✓   49 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.0s)
+  ✓   50 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (694ms)
+  ✓   44 test/browser/customization.spec.ts:33:1 › previews an unactivated candidate panel and preserves its recorded result and sidebar declaration (7.2s)
+  ✓   51 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (2.2s)
+  ✓   53 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (970ms)
+  ✓   54 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.2s)
+  ✓   52 test/browser/customization.spec.ts:82:1 › reconciles an unknown workflow result in the browser without repeating its external effect (4.2s)
+  ✓   55 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.2s)
+  ✓   57 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.8s)
+  ✓   58 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (1.1s)
+  ✓   59 test/browser/handoff-recovery.spec.ts:14:1 › 10.3 refresh observes a partial handoff and explicit recovery completes only its saved metadata (1.4s)
+  ✓   60 test/browser/handoff-recovery.spec.ts:49:1 › 10.3 deleted destination blocks explicit recovery and is never recreated (791ms)
+  ✓   56 test/browser/customization.spec.ts:116:1 › restores a durable workflow form after service restart and continues only after an explicit answer (6.1s)
+  ✓   61 test/browser/handoff-summary.spec.ts:22:1 › 10.3 explicit summary is separately reviewed and never confirms the handoff (1.5s)
+  ✓   63 test/browser/handoff-summary.spec.ts:43:1 › 10.3 explicit summary cancellation records its terminal and retry does not call the model again (1.6s)
+  ✓   64 test/browser/handoff-summary.spec.ts:61:1 › 10.3 changing preview input aborts summary and preserves the new draft (1.5s)
+  ✓   62 test/browser/customization.spec.ts:157:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (4.4s)
+  ✓   65 test/browser/handoff-summary.spec.ts:74:1 › 10.3 a changed source revision rejects the completed summary (1.4s)
+  ✓   67 test/browser/handoff-summary.spec.ts:88:1 › 10.3 missing summary credentials show a local error without a model call (901ms)
+  ✓   66 test/browser/customization.spec.ts:204:1 › reviews a package, installs its command and uninstalls without erasing history (4.1s)
+  ✓   68 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (2.7s)
+  ✓   70 test/browser/header-recovery.spec.ts:36:1 › export is disabled without a session or while the durable run is active (2.6s)
+  ✓   71 test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor (2.0s)
+  ✓   72 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.5s)
+  ✓   73 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.4s)
+  ✓   74 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.2s)
+  ✓   75 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (1.7s)
+  ✓   69 test/browser/customization.spec.ts:243:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (11.7s)
+  ✓   76 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.4s)
+  ✓   77 test/browser/customization.spec.ts:298:1 › enable extension, use form, reload a changed command and retain history (6.9s)
+  ✓   78 test/browser/mcp-management.spec.ts:16:1 › 10.4 MCP browsing does not connect, consent starts OAuth and callback never enables the resource (2.3s)
+  ✓   80 test/browser/mcp-management.spec.ts:37:1 › 10.4 changed MCP configuration rejects stale consent without discovery or automatic retry (521ms)
+  ✓   81 test/browser/mcp-management.spec.ts:51:1 › 10.4 pending MCP authorization survives refresh without persisting its link or restarting automatically (753ms)
+  ✓   82 test/browser/model-advanced.spec.ts:11:1 › 10.4 migration uses reviewed revision and preserves existing purpose choices without exposing secrets (708ms)
+  ✓   83 test/browser/model-advanced.spec.ts:35:47 › 10.4 work history branch explicit retry after lost response preserves target and creates once (1.0s)
+  ✓   79 test/browser/customization.spec.ts:357:1 › isolates custom panels, preserves host controls, and rejects conflicting workflow answers across windows (4.2s)
+  ✓   84 test/browser/model-advanced.spec.ts:35:47 › 10.4 create history branch explicit retry after lost response preserves target and creates once (1.1s)
+  ✓   86 test/browser/model-advanced.spec.ts:65:1 › 10.4 reasoning conversion needs explicit consent and keeps original evidence (726ms)
+  ✓   87 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (587ms)
+  ✓   85 test/browser/customization.spec.ts:481:1 › authorizes MCP through a browser callback, refreshes after service restart and disconnects without exposing tokens (2.4s)
+  ✓   88 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (530ms)
+  ✓   90 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.2s)
+  ✓   91 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (329ms)
+  ✓   89 test/browser/package-management.spec.ts:17:1 › 10.4 package browse and cancelled install are read-only; reviewed install, export and uninstall stay target-scoped (2.5s)
+  ✓   92 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+  ✓   93 test/browser/package-management.spec.ts:36:1 › 10.4 stale package review fails once without replacing the installed revision (992ms)
+  ✓   95 test/browser/package-management.spec.ts:48:1 › 10.4 package rollback requires inspecting the prior version and cache collection preserves referenced content (2.7s)
+  ✓   94 test/browser/panel-management.spec.ts:6:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.1s)
+  ✓   96 test/browser/readable-turns.spec.ts:7:46 › work: readable turns retain failures and expose auxiliary evidence without replay (982ms)
+  ✓   97 test/browser/panel-management.spec.ts:82:1 › 10.9 work panel management keeps the originating session and drafts isolated (1.7s)
+  ✓   98 test/browser/readable-turns.spec.ts:7:46 › create: readable turns retain failures and expose auxiliary evidence without replay (1.1s)
+  ✓  100 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.5s)
+  ✓   99 test/browser/references.spec.ts:24:1 › reference chips choose files and whole directories, drill, edit and send path-only context (2.5s)
+  ✓  101 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (753ms)
+  ✓  102 test/browser/references.spec.ts:47:1 › clipboard preserves special paths, atomic deletion, undo and untrusted paste fallback (733ms)
+  ✓  103 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (729ms)
+  ✓  104 test/browser/references.spec.ts:68:1 › query cancellation, IME, errors and responsive chips preserve the draft (1.3s)
+  ✓  105 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.8s)
+  ✓  106 test/browser/references.spec.ts:84:1 › reference APIs authenticate, bound directories and reject external symlinks (791ms)
+  ✓  108 test/browser/references.spec.ts:99:1 › native composition, adjacent chip deletion and cancelled selection preserve editing (1.0s)
+{"referenceSearch":{"cold":{"duration":12.699999928474426,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}},"warm":{"duration":2.899999976158142,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}}},"inputMs":12,"browser":"154.0.8037.98"}
+  ✓  109 test/browser/references.spec.ts:121:1 › large workspace discovery is bounded and input stays responsive during lookup (840ms)
+  ✓  110 test/browser/references.spec.ts:137:1 › long mixed references and candidate controls fit a keyboard-sized viewport (969ms)
+  ✓  111 test/browser/references.spec.ts:153:1 › removing a chip after native IME insertion preserves adjacent prose and undo (724ms)
+  ✓  112 test/browser/references.spec.ts:170:1 › late clipboard validation cannot replace active native IME input (700ms)
+  ✓  107 test/browser/runtime-ui.spec.ts:19:1 › applies a complete theme and shows user content with stable panel interaction and readable history (4.9s)
+  ✓  113 test/browser/references.spec.ts:192:1 › work and create references use their own targets and retain chips across client navigation (1.5s)
+{"count":60,"p95":16.800000000000182,"longTasks":[],"metrics":{"LayoutDuration":0.001387,"RecalcStyleDuration":0.000745,"ScriptDuration":0.025977},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓  114 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.5s)
+{"count":180,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.000961,"RecalcStyleDuration":0.0004330000000000002,"ScriptDuration":0.029275999999999996},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓  115 test/browser/scrolling.spec.ts:4:1 › scroll trajectory and performance sample (3.7s)
+{"height":696,"historyHeight":696,"remaining":30}
+  ✓  117 test/browser/scrolling.spec.ts:29:1 › bottom boundary and return control do not move the viewport (1.3s)
+  ✓  116 test/browser/search-brand.spec.ts:28:1 › favicon shares the brand resource and search evidence survives reload (1.8s)
+  ✓  118 test/browser/scrolling.spec.ts:47:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (3.6s)
+  ✓  120 test/browser/scrolling.spec.ts:73:1 › layout growth preserves the current anchor including movement in the same frame (1.2s)
+  ✓  121 test/browser/scrolling.spec.ts:99:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.7s)
+  ✓  119 test/browser/session-navigation.spec.ts:22:1 › discovers a real /moe extension before execution and completes navigation/delete loop (6.8s)
+  ✓  122 test/browser/scrolling.spec.ts:122:1 › fixture supports a delayed panel and diff without model or tool execution (1.5s)
+  ✓  124 test/browser/scrolling.spec.ts:137:1 › narrow and zoomed history controls stay bounded without overlapping the reading surface (1.9s)
+  ✓  123 test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (4.3s)
+  ✓  126 test/browser/session-navigation.spec.ts:116:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.3s)
+{"count":180,"streaming":true,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.001222,"RecalcStyleDuration":0.000676,"ScriptDuration":0.058221}}
+  ✓  125 test/browser/scrolling.spec.ts:155:1 › streaming history performance sample (3.4s)
+  ✓  127 test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft (571ms)
+  ✓  128 test/browser/scrolling.spec.ts:171:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.6s)
+  ✓  130 test/browser/scrolling.spec.ts:209:1 › horizontal code scrolling does not leave latest mode (1.1s)
+  ✓  131 test/browser/scrolling.spec.ts:222:1 › completion failure and cancellation do not pull history to the bottom (1.8s)
+  ✓  129 test/browser/session-navigation.spec.ts:183:1 › date groups and long titles stay compact across midnight and list revision conflicts (6.1s)
+  ✓  132 test/browser/scrolling.spec.ts:237:1 › new content is readable by scrolling, including a full historical window (2.4s)
+{"browser":"","cacheViewMs":821,"workerJobs":2}
+  ✓  133 test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline (3.5s)
+  ✓  134 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.2s)
+  ✓  136 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.7s)
+{"browser":"","first100LinesMs":1315,"inputFillDuringStreamMs":29}
+  ✓  137 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.9s)
+  ✓  138 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.5s)
+  ✓  139 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.1s)
+  ✓  135 test/browser/syntax.spec.ts:74:1 › streaming code stays interactive and stale highlighting cannot cross sessions (7.7s)
+  ✓  141 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (567ms)
+  ✓  142 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (605ms)
+  ✓  140 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (1.6s)
+  ✓  143 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (855ms)
+  ✓  145 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (527ms)
+  ✓  144 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓  146 test/browser/v2-feature-loading.spec.ts:110:1 › 10.9 host recovery stays available when appearance code cannot load (550ms)
+  ✓  148 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.4s)
+  ✓  147 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.9s)
+  ✓  149 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (1.1s)
+  ✓  151 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (1.2s)
+  ✓  152 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (1.1s)
+  ✓  150 test/browser/v2-interactions.spec.ts:8:1 › an extension form survives reload, isolates sessions and retries the same explicit answer (4.0s)
+  ✓  153 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.3s)
+  ✓  154 test/browser/v2-interactions.spec.ts:47:1 › a create form answers only its own interaction and ignores late work polling (932ms)
+  ✓  155 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (765ms)
+  ✓  157 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (1.4s)
+  ✓  158 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (658ms)
+  ✓  156 test/browser/v2-run-recovery.spec.ts:7:46 › work: failure continuation prepares a scoped draft without rerunning (2.9s)
+  ✓  159 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.8s)
+  ✓  160 test/browser/v2-run-recovery.spec.ts:7:46 › create: failure continuation prepares a scoped draft without rerunning (2.4s)
+  ✓  162 test/browser/v2-run-recovery.spec.ts:25:1 › diagnostic metadata updates without a new durable event and downloads read-only evidence (908ms)
+  ✓  161 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (3.0s)
+  ✓  163 test/browser/v2-run-recovery.spec.ts:40:1 › button submission restores editor focus immediately and a late reply does not steal dialog focus (2.0s)
+  ✓  164 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.7s)
+  ✓  166 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.2s)
+  ✓  167 test/browser/v2-runtime-slots.spec.ts:138:1 › 10.9 hiding extensions unmounts open slots and restoring visibility never remounts (2.0s)
+  ✓  168 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (429ms)
+  ✓  169 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (521ms)
+  ✓  170 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (827ms)
+  ✓  171 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (286ms)
+  ✓  165 test/browser/v2-session-catalog.spec.ts:8:1 › catalog pagination restarts on an actual revision conflict and preserves the selected draft (7.0s)
+  ✓  172 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (425ms)
+  ✓  174 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (668ms)
+  ✓  175 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (620ms)
+  ✓  176 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (3.0s)
+  ✓  177 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (292ms)
+  ✓  178 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.7s)
+  ✓  179 test/browser/v2-workbench.spec.ts:274:1 › 10.9 default entry opens the workbench and obsolete experiment routes stay read-only (409ms)
+  ✓  180 test/browser/workbench-upgrade.spec.ts:69:1 › search, diff, locate, open and reload preserve evidence and draft (4.8s)
+  ✓  181 test/browser/workbench-upgrade.spec.ts:120:1 › workspace API authentication and side effect boundary (68ms)
+  ✓  182 test/browser/workbench-upgrade.spec.ts:133:1 › files and settings remain usable at all viewports (1.4s)
+  ✓  173 test/browser/v2-session-catalog.spec.ts:38:1 › a create deep link beyond the first 100 sessions resolves its own target without loading all pages (14.2s)
+  ✓  184 test/browser/v2-session-catalog.spec.ts:55:1 › local date groups update across midnight and full times are keyboard accessible (998ms)
+  ✓  185 test/browser/v2-session-catalog.spec.ts:73:1 › session menus and deletion preserve focus, refuse duplicate pending requests and retain other drafts (1.3s)
+  ✓  183 test/browser/workbench-upgrade.spec.ts:161:1 › changes keep expanded history while new journal events arrive (3.7s)
+  ✓  186 test/browser/workbench.spec.ts:49:1 › submits, observes tool diff, inspects request, reloads, continues and exports (4.8s)
+  ✓  187 test/browser/workflow-management.spec.ts:23:1 › 10.4 durable workflow wait survives restart and only an explicit answer continues it (4.9s)
+  ✓  188 test/browser/workbench.spec.ts:124:1 › cancels and remains usable on a narrow viewport (2.6s)
+  ✓  189 test/browser/workflow-management.spec.ts:40:1 › 10.4 unknown workflow reconciliation does not repeat external effects or resume on navigation (3.7s)
+  ✓  191 test/browser/workflow-management.spec.ts:53:1 › 10.4 definition version change is rejected and invalid input stays editable without automatic retry (1.7s)
+  ✘  190 test/browser/workbench.spec.ts:146:1 › windows long history and pages context sources beyond a raw artifact page (6.6s)
+(node:16932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  192 test/browser/workflow-management.spec.ts:69:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation (6.8s)
+  ✓  193 test/browser/workbench.spec.ts:208:1 › compact layout preserves controls and inspector focus at all target sizes (2.7s)
+  ✓  195 test/browser/workbench.spec.ts:227:1 › shows and downloads diagnostics even when durable cursor and status do not change (768ms)
+(node:16973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  194 test/browser/workflow-management.spec.ts:92:1 › 10.4 running workflow keeps cancellation reachable while continuation actions are locked (3.9s)
+  ✓  196 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.8s)
+
+
+  1) test/browser/workbench.spec.ts:146:1 › windows long history and pages context sources beyond a raw artifact page 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-row-id]')
+    Expected: 60
+    Received: 57
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-row-id]') with timeout 5000ms
+      - waiting for locator('[data-row-id]')
+        3 × locator resolved to 0 elements
+          - unexpected value "0"
+        11 × locator resolved to 57 elements
+           - unexpected value "57"
+
+
+      159 |     expect(calls).toBe(2);
+      160 |     await page.goto(`${app.origin}/work/session/${session.id}#token=${app.token}`);
+    > 161 |     await expect(page.locator('[data-row-id]')).toHaveCount(60);
+          |                                                 ^
+      162 |     for (const count of [120, 180, 180]) {
+      163 |         await page.getByRole('button', { name: '查看更早', exact: true }).click();
+      164 |         await expect(page.locator('[data-row-id]')).toHaveCount(count);
+        at /Users/kirineko/Github/nekomimi/test/browser/workbench.spec.ts:161:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-windows-long-his-72c74--beyond-a-raw-artifact-page/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workbench-windows-long-his-72c74--beyond-a-raw-artifact-page/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-windows-long-his-72c74--beyond-a-raw-artifact-page/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-windows-long-his-72c74--beyond-a-raw-artifact-page/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/workbench.spec.ts:146:1 › windows long history and pages context sources beyond a raw artifact page 
+  195 passed (3.7m)

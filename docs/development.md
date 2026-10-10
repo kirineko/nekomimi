@@ -1,6 +1,6 @@
 # Nekomimi 开发与高级用法
 
-基于 pi 低层 Agent 的 TypeScript headless 编程 Agent。第一版提供 DeepSeek Responses 调用、文件与 shell 工具、可恢复的 Journal，以及离线 HTML/诊断包。
+基于 Pi Durable 1.0.4 公开 Harness/Storage 的 TypeScript headless 编程 Agent。提供 DeepSeek Responses 调用、文件与 shell 工具、可恢复的 Journal，以及离线 HTML/诊断包。
 
 ## 开始使用
 
@@ -47,6 +47,8 @@ openspec validate --all --strict
 
 实测结果、capability 对照及限制见 [应用验收报告](implementation-validation.md)。Windows 的终止/目录持久化行为尚未实机验收；跨进程恶意文件替换不具备内核级原子 compare-and-swap 保证。长会话回放目前一次读取 Journal，不提供无限历史的常数内存保证。
 
+持久数据目录依赖文件系统的原子替换与同步语义。当前实测的 OrbStack macOS 共享挂载，在 Linux 进程执行原子 `rename` 时会让并发读取短暂得到 `ENOENT`；不能用它宣称 Journal 持久化验收通过。Linux 容器验收使用原生文件系统保存运行数据，仓库与安装包可只读挂载；具体探针和平台结果见 [最终平台证据](validation/next-generation-nekomimi/platform-clean/README.md)。
+
 ## OpenSpec 与研究
 
 - [原始研究](../spec.md)
@@ -69,7 +71,7 @@ npm run web -- --workspace /path/to/project
 
 界面提供会话列表、任务时间线、流式回复、工具参数/结果与文件 diff。点击调用卡片可查看总览、指令、输入、请求和响应；上下文来源支持跳转到原始记录。任务可取消、在终态后继续。浏览器关闭或断线不取消已接受任务；重连只恢复显示。
 
-单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。CLI 与 Web 共用 `~/.nekomimi/workspaces/<工作区摘要>/sessions/`。旧 `.harness/sessions/` 和 `~/.deepy-harness/sessions/` 可通过 `nekomimi migrate --execute` 显式复制迁移，原件保留。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `nekomimi inspect <目录>` 检查。运行中需要等待停止后再导出。
+单个工作区同一时间运行一个任务，其他会话仍可查看；第二个运行明确返回繁忙。CLI 与 Web 共用 `~/.nekomimi/v2/workspaces/<工作区摘要>/sessions/`。旧格式在正式运行与导入前拒绝。历史复制工具不意味着旧会话获得新版执行兼容；原数据须保留，使用新版需选择独立数据目录。无 API key 时仍能浏览历史。导出支持 HTML 和 tar 封装的诊断 bundle；解开 tar 后使用 `nekomimi inspect <目录>` 检查。运行中需要等待停止后再导出。
 
 ```sh
 npm run test:browser   # 本机 Chrome 的端到端测试
@@ -96,7 +98,7 @@ npm run test:web-live  # 显式联网的浏览器合成任务验收
 
 ## 配置与会话管理
 
-品牌与安装命令已更名为 Nekomimi / `nekomimi`。设置和凭证分别保存在 `~/.nekomimi/settings.json`、`auth.json`，不读取 API key 环境变量或 dotenv。启动后可从侧栏“设置”保存、替换或清除密钥；已保存的密钥不回显。CLI 使用 `nekomimi config`，`--home <目录>` 显式隔离配置和数据。文件凭证使用本地用户权限保护，不提供同用户 shell 隔离。
+品牌与安装命令已更名为 Nekomimi / `nekomimi`。设置和凭证分别保存在 `~/.nekomimi/v2/settings.json`、`~/.nekomimi/v2/auth.json`，不读取 API key 环境变量或 dotenv。启动后可从侧栏“设置”保存、替换或清除密钥；已保存的密钥不回显。CLI 使用 `nekomimi config`，`--home <目录>` 显式隔离配置和数据。文件凭证使用本地用户权限保护，不提供同用户 shell 隔离。
 
 Enter 发送，Shift+Enter 换行，中文选词不触发发送。首条消息提供临时标题，首轮成功后自动命名一次；命名记录作为辅助调用独立可查。会话右侧删除入口只清理会话日志与附件，保留工作区文件；请先停止运行或命名、等待下载结束。
 
@@ -122,11 +124,11 @@ CLI 迁移预览：`nekomimi migrate --workspace <目录>`；确认复制：加 
 
 ## 用户定制 V1
 
-在 Web 顶部「定制能力」查看项目/用户资源、启用并信任扩展或 MCP、撤销授权、静态校验和请求重载。当前任务固定使用已捕获版本，重载在空闲边界生效；坏候选保留原版本，清理失败要求重启。代码授权覆盖对应资源，修改后无需重复授权；重新启用被撤销的资源需要显式操作。
+在 创造空间侧栏「能力与权限」查看项目/用户资源、启用并信任扩展或 MCP、撤销授权、静态校验和请求重载。当前任务固定使用已捕获版本，重载在空闲边界生效；坏候选保留原版本，清理失败要求重启。代码授权覆盖对应资源，修改后无需重复授权；重新启用被撤销的资源需要显式操作。
 
 模型可读取随包 [SDK 开发资料](../extension-docs/README.md)，通过普通文件工具创建 `.nekomimi/extensions/<name>/extension.json` 和 `index.ts`。工具、命令、生命周期钩子、版本化状态、辅助模型调用与状态/卡片/表单均走统一 Journal。Skills 位于 `.agents/skills`，Rules 使用分层 `AGENTS.md`，MCP 配置位于 `.nekomimi/mcp.json`；用户级路径及覆盖规则见 [配置示例](../extension-docs/skills-rules-mcp.md)。
 
-可信扩展拥有 Node 权限；直接 Node 操作不能强制审计或沙箱化。静态检查不执行工厂，但试运行与激活都会执行可信代码。V2 已实现上述扩展方向，仍在候选验收；SDK 2 使用独立进程、自定义 Provider、持久工作流、受控浏览器面板、MCP resources/prompts/OAuth 和能力包。用法见 [SDK 2](../extension-docs/v2.md)，完成状态见 [V2 验证](customization-v2-validation.md)，不能把阶段测试等同于完成交付。
+可信扩展拥有 Node 权限；直接 Node 操作不能强制审计或沙箱化。静态检查不执行工厂，但试运行与激活都会执行可信代码。当前 SDK 3 支持独立进程、自定义 Provider、持久工作流、受控浏览器面板、MCP resources/prompts/OAuth 和能力包；旧 SDK 1/2 在工厂前拒绝。用法见 [SDK 入口](../extension-docs/README.md)，当前进度、性能回归与平台验证见 [下一代验收](validation/next-generation-nekomimi/README.md)。
 
 验证脚本 `node scripts/customization-live-smoke.mjs` 需要显式联网和现有本地凭证，只操作临时合成工作区，不是 CI 条件。完整结果见 [V1 验收记录](customization-v1-validation.md)。
 
@@ -139,4 +141,4 @@ V2 真实模型演练入口为 `node scripts/customization-v2-live-smoke.mjs`，
 
 服务端 `response.incomplete` 不等同于调用轮数耗尽。调用证据保留 `incompleteReason`、`outputBudget` 和 usage；`max_output_tokens` 提示分步骤继续，`content_filter` 提示调整描述，网络截断不执行未完成的工具调用。显式预算和轮数参数优先；输出耗尽不自动扩大预算或重试。
 
-顶栏“更多操作”收纳外观与导出。外观内使用“显示扩展内容”开关替代独立恢复按钮，恢复默认同时清除当前主题效果并关闭当前页扩展视图；全局/项目范围放在高级选项。导出弹层默认展示 HTML/诊断包，脱敏设置折叠；可用 Escape、关闭按钮或遮罩退出。菜单与控件跟随主题字体、语义配色、圆角与焦点样式。
+顶栏“设置”菜单收纳全部设置、外观、版本与恢复和开发者视图开关；导出放在任务页“会话操作”中。外观内使用“显示扩展内容”开关替代独立恢复按钮，恢复默认同时清除当前主题效果并关闭当前页扩展视图；全局/项目范围放在高级选项。导出弹层默认展示 HTML/诊断包，脱敏设置折叠；可用 Escape、关闭按钮或遮罩退出。菜单与控件跟随主题字体、语义配色、圆角与焦点样式。

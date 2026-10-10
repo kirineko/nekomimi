@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-10-07T17:15:10.178498+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task8.6": "incomplete",
+  "sha256": {
+    "src/core/recovery.ts": "51c2fbe9f78173eca7c24579e67024940385af2bcc827a456bded0753a4df444",
+    "src/cli.ts": "20b96c9b1053aecdd5d313c5d1084ba4ca9e39a832bf85f2bc88db09e7142f03",
+    "test/core-recovery.test.ts": "f735ceec52184765d229523792390e0261a2066f2c2271fe50cb2dba2fc46491",
+    "extension-docs/core-source.md": "b139300574ddef0390484b0466ce058e406ab7e6b1c30d9f11272b5fd87d72c1",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "e00cfc57a703960055f93cd7feda4163d9de1b81db206a134f7194732fafe605",
+    "docs/validation/next-generation-nekomimi/core/recovery-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/core/recovery-unit.log": "fcb14d91d16d4a883ec42dd62f197242c52f2b5b7b1fb18a62bbdffaca0341d9",
+    "docs/validation/next-generation-nekomimi/core/recovery-build.log": "f22d070a113cd7365b5408a949cf5452874c156a76862e07e80e5a5154616ac1",
+    "docs/validation/next-generation-nekomimi/core/recovery-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/core/recovery-progress.md": "4f4671beac983d21c5f2f543f5ce58a7f402f0ae0ec9339b5930e63e101762dd"
+  }
+}

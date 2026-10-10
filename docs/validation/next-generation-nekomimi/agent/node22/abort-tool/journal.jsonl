@@ -1,0 +1,18 @@
+{"seq":1,"type":"message","message":{"role":"system","content":"CANONICAL_FROM_JOURNAL","tools":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}],"timestamp":0}}
+{"seq":2,"type":"message","message":{"role":"user","content":[{"type":"text","text":"fixture input"}],"timestamp":1791299165155}}
+{"seq":3,"type":"prepare","preparation":1}
+{"seq":4,"type":"request.persisted","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299165155}]}","sha256":"baf52e5165c22aa96874076563d0e465525a78c6733d9ee4f1b17e206b90268d"}
+{"seq":5,"type":"wire.received","attempt":1,"body":"{\"model\":\"fixture\",\"messages\":[{\"role\":\"system\",\"content\":\"CANONICAL_FROM_JOURNAL\",\"tools\":[{\"name\":\"effect\",\"description\":\"Fixture local effect\",\"parameters\":{\"type\":\"object\",\"required\":[\"value\"],\"properties\":{\"value\":{\"type\":\"string\"}}}}],\"timestamp\":0},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"fixture input\"}],\"timestamp\":1791299165155}]}","sha256":"baf52e5165c22aa96874076563d0e465525a78c6733d9ee4f1b17e206b90268d"}
+{"seq":6,"type":"message","message":{"role":"assistant","content":[{"type":"toolCall","id":"started","name":"effect","arguments":{"value":"started"}},{"type":"toolCall","id":"forbidden","name":"effect","arguments":{"value":"forbidden"}}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"toolUse","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"thinkingLevel":"off"}}
+{"seq":7,"type":"tool.intent","id":"started"}
+{"seq":8,"type":"effect.observed","id":"started","args":{"value":"started"}}
+{"seq":9,"type":"tool.result","id":"started","isError":false}
+{"seq":10,"type":"message","message":{"role":"toolResult","toolCallId":"started","toolName":"effect","content":[{"type":"text","text":"started"}],"details":{"id":"started"},"isError":false,"timestamp":1791299165197}}
+{"seq":11,"type":"finish","turns":1,"stopReason":"toolUse","toolResults":["started"]}
+{"seq":12,"type":"turn_end"}
+{"seq":13,"type":"message","message":{"role":"system","content":"","timestamp":1791299165209,"toolsAdded":[{"name":"effect","description":"Fixture local effect","parameters":{"type":"object","required":["value"],"properties":{"value":{"type":"string"}}}}]}}
+{"seq":14,"type":"prepare","preparation":2}
+{"seq":15,"type":"message","message":{"role":"assistant","content":[{"type":"text","text":"done"}],"api":"openai-responses","provider":"fixture","model":"fixture","stopReason":"aborted","timestamp":1,"usage":{"input":1,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":2,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"errorMessage":"fixture aborted","thinkingLevel":"off"}}
+{"seq":16,"type":"finish","turns":2,"stopReason":"aborted","toolResults":[]}
+{"seq":17,"type":"turn_end"}
+{"seq":18,"type":"agent_end"}

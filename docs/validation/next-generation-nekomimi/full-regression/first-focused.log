@@ -1,0 +1,35 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/cli.test.ts (3 tests | 1 failed | 2 skipped) 1452ms
+   × web CLI opens actual URL once; opener failure and startup failure are isolated 1451ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/cli.test.ts > web CLI opens actual URL once; opener failure and startup failure are isolated
+AssertionError: expected '' to contain 'http://127.0.0.1:64831/#token=097afcd…'
+
+- Expected
++ Received
+
+- http://127.0.0.1:64831/#token=097afcda6bfea31aa87d18a05bb092ba7c7401a7b7314b02aa049301790c2381
+
+ ❯ test/cli.test.ts:50:178
+     48|   try{
+     49|    if(mode==='startup'){expect(await exited).not.toBe(0);await expect(…
+     50|    const url=await Promise.race([started,exited.then(()=>{throw new Er…
+       |                                                                                                                                                                                  ^
+     51|    expect((await readFile(record,'utf8')).trim().split('\n')).toEqual(…
+     52|    if(mode==='failure')await expect.poll(()=>stderr).toContain('手动打开')…
+
+Caused by: Error: Matcher did not succeed in time.
+ ❯ test/cli.test.ts:50:88
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 1 passed | 15 skipped (17)
+   Start at  23:11:53
+   Duration  4.13s (transform 264ms, setup 0ms, import 757ms, tests 3.24s, environment 0ms)
+

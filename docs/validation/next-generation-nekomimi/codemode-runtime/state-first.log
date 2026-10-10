@@ -1,0 +1,48 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/codemode-state.test.ts (3 tests | 1 failed) 10299ms
+   × stores full large output and image bytes separately from bounded model projection 129ms
+ ❯ test/codemode-concurrency.test.ts (5 tests | 1 failed) 18682ms
+   × rejects calls beyond the fixed per-script budget 15003ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/codemode-concurrency.test.ts > rejects calls beyond the fixed per-script budget
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/codemode-concurrency.test.ts:11:1
+      9| import {temporary,delay} from './helpers.js';
+     10|
+     11| it('rejects calls beyond the fixed per-script budget',async()=>{
+       | ^
+     12|  const journal=await Journal.open(await temporary());let effects=0;
+     13|  const tool=recordedTool({name:'count',label:'count',description:'coun…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/codemode-state.test.ts > stores full large output and image bytes separately from bounded model projection
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ test/codemode-state.test.ts:35:86
+     33|   const finished=journal.events.find(e=>e.type==='codemode.finished')!…
+     34|   const original=JSON.parse((await readArtifact(journal.directory,fini…
+     35|   expect(original.content[0].text).toBe('猫😀'.repeat(10000));expect(fi…
+       |                                                                                      ^
+     36|   expect(await readArtifact(journal.directory,finished.images[0].artif…
+     37|   expect(result.content).toContainEqual({type:'image',data:'AQID',mime…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 2 passed (4)
+      Tests  2 failed | 15 passed (17)
+   Start at  21:50:38
+   Duration  19.09s (transform 440ms, setup 0ms, import 1.40s, tests 33.26s, environment 0ms)
+

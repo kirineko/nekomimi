@@ -1,0 +1,41 @@
+{
+  "node": "v22.19.0",
+  "requests": 2,
+  "attempts": 2,
+  "exactBytesAndHash": true,
+  "fixedContextAtWire": true,
+  "rawResponse": "rate limited{\"answer\":\"wire complete\"}",
+  "reliablePublications": [
+    {
+      "frameworkSeq": 1,
+      "journalSeq": 2,
+      "changes": 6
+    },
+    {
+      "frameworkSeq": 2,
+      "journalSeq": 3,
+      "changes": 4
+    },
+    {
+      "frameworkSeq": 3,
+      "journalSeq": 4,
+      "changes": 1
+    },
+    {
+      "frameworkSeq": 4,
+      "journalSeq": 5,
+      "changes": 1
+    },
+    {
+      "frameworkSeq": 5,
+      "journalSeq": 6,
+      "changes": 1
+    },
+    {
+      "frameworkSeq": 6,
+      "journalSeq": 19,
+      "changes": 5
+    }
+  ],
+  "noHiddenFrameworkRetry": true
+}

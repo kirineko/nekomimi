@@ -1,0 +1,39 @@
+{
+  "task": "5.5",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted",
+  "checks": {
+    "distinctRelatedTests": 75,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 0
+  },
+  "sha256": {
+    "src/customization/model-catalog.ts": "aaa7e2eba8d7bf22dcafca7d4a2a8c8064c5838614b24e6907ff7c3f6f8689ed",
+    "src/customization/provider-registry.ts": "3a586cac640cdd2219823efe6a9ea5d4d39b0000c7beb12e2035e63ccb2296f9",
+    "src/customization/provider-profiles.ts": "efb63fd61a52843cc0831f0a93fb4845f101f3312bb275d4e778ad7f619758c6",
+    "src/customization/sdk-contracts.ts": "149e55b132126c3608a699f54f6ad0795975c5e0520f55fe5d6f04f5dbdb6ce3",
+    "src/customization/adapter-provider.ts": "6aed4c7ca8cd110ebb808f41aa38fb91916e069a1169f416fe641010b535cc11",
+    "src/customization/host.ts": "61ce3ffc63ac5e09a46d4c5ca2be4d7cd5a82aa5a0e6c08ae036175243d6cf25",
+    "src/customization/run.ts": "1185a378d7cf35bd7d764b813aa0d1c39a6a993bc893ae928e03fb9557c81c21",
+    "src/provider.ts": "14c5187653069349e6d21668933e0f5d270f11de9d7558c4c5e32b3fac270d33",
+    "src/server/sessions.ts": "1c560f705c72174a0ccfa23010a46f502c2b28c5a830f8e0952e61f9c75ba32d",
+    "src/server/app.ts": "0eadb9b78685979b00d4a4a548c4e3cbbfa655d1835893c03a3161277cb3b39d",
+    "src/cli.ts": "f0a3a1f2934a876ab0ad639e4e1913b9703a86188df585a6d2bab34d66da9568",
+    "test/model-catalog.test.ts": "496a18960bcf73b585c70b6a0d481ce766a5ea31e764ada12376f4c8fab78e2e",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-verified.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-tests.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/tests-first.log": "7e63661686a6f0ea33a92da4ed11c7caeca6ab4eab871d83c5bb6efa5b4e79c4",
+    "docs/validation/next-generation-nekomimi/model-catalog/tests-fixed.log": "a3f0b8891f47f779d14543ad72236455b41b5eb6343d6ed3316b703b7fea19f2",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-complete.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/build-final.log": "583b731ada1e62923f276a621409cdef037030c14f1b5c251ad87c39b0a742e3",
+    "docs/validation/next-generation-nekomimi/model-catalog/catalog-final.log": "c241aaf303c8a545ce90e015f111b85119ae479d1a119db53f0301c1ef9d2f14",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-first.log": "c5f51845a1cb35d49c110a6ecfe3021153c76c95961011872dc0f9338b448082",
+    "docs/validation/next-generation-nekomimi/model-catalog/catalog-server-tests.log": "bae507298b5dd8a7b8de239ed7a9cf2a0c826103ba35d205e3956c5a4ed9c9cd",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-fixed.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/model-catalog/types-integration.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/model-catalog/unknown-capacity.log": "69ef39e4577e9fe1a4178a1da7289c486bab794067c10c87f9b73fcd524db573"
+  }
+}

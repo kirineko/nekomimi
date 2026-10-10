@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-07T14:25:24.005517+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "test/codemode-partial-failure.test.ts": "dd365cffa4138c89d3e04f4422f8fe0e736c05b47052e63ff122462b1cb923e0",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "c191e41754033ef40401938542435ead5b4fcdccc44f0b1ac93b97d55964b91d",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-failure.md": "34a8ac22c6c7f20b8a1becf5654887dd4eb57711641bfa777cfe2ea8d716965b",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-first.log": "0216e613b12400af863a9f7f8a2bdb98a47e72dd13ccdf8ca0a874b0c4a71fdf",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-fixed.log": "67312bc1ec0503b51ac0382e757037f39e4cc76b9da020cf18c1653e15f22b31",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-order.log": "b76b56f56071922790953436ad9c62ff0028c1edfcf9ea196062a629a47dba06",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/partial-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  }
+}

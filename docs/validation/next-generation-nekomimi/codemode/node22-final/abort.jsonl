@@ -1,0 +1,6 @@
+{"seq":1,"type":"authorize","id":"child-1","parent":"script-1","allowed":true,"version":"fixture-v1","args":{"value":1}}
+{"seq":2,"type":"intent","id":"child-1","parent":"script-1"}
+{"seq":3,"type":"after-hook","id":"child-1","parent":"script-1"}
+{"seq":4,"type":"result","id":"child-1","parent":"script-1","isError":false,"result":{"content":[{"type":"text","text":"1"}],"structuredContent":{"value":1},"details":{"effect":1}}}
+{"seq":5,"type":"script.aborted","calls":[]}
+{"seq":6,"type":"probe.passed"}

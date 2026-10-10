@@ -1,0 +1,31 @@
+{
+  "task": "4.7",
+  "commit": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted",
+  "node": "v24.15.0",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "checks": {
+    "relatedTests": 124,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 0
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/handoff-context/types-projection.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff-context/tests-fixture-fixed.log": "3065ceb2490d0c3e04cef2c5bb81019822d2857a6f50b8b3b7dae38d2da799fa",
+    "docs/validation/next-generation-nekomimi/handoff-context/types-tests.log": "cadbddd3ce165aee646f7bbb90ad89c4ebd8fd187246cb3bb490f3268c3ed88e",
+    "docs/validation/next-generation-nekomimi/handoff-context/types-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff-context/tests-first.log": "4e3000edbb7c46c09b349f74ee00393c03615629b833fe3a1dc8076ca22af7a0",
+    "docs/validation/next-generation-nekomimi/handoff-context/regression-first.log": "66894970412017190dd6d1a7e91d330ccf38d0fb24495fd1ed1413beaded7a7a",
+    "docs/validation/next-generation-nekomimi/handoff-context/specs-final.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/handoff-context/types-complete.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff-context/build-final.log": "6bff45924eac63374e361e5b3e87a2ce5f58be4be39760f1fb199c6fab3561bd",
+    "docs/validation/next-generation-nekomimi/handoff-context/README.md": "89e5df7f525bd8d098aed64f3f3b6e8d1ebf1896220f6e79109db9926272bd32",
+    "docs/validation/next-generation-nekomimi/handoff-context/build-first.log": "ee31f627dc0ffc68087b25b3472379df304806fbfb864b6f4da765aac04aba72",
+    "docs/validation/next-generation-nekomimi/handoff-context/tests-bounded-model.log": "63bb11d3287c9c40614e464020d33ef88b6373972e4730f04ae9c41d994d7a02",
+    "docs/validation/next-generation-nekomimi/handoff-context/regression-final.log": "7e934c5105d0bf6c3e70d0adf95b1c569de051c7a2cf4368a795f3da735f4921",
+    "docs/validation/next-generation-nekomimi/handoff-context/types-first.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff-context/tests-final.log": "46cf59f4c78fc3c92d973aaa9256e329a61929e43bc86c513744aa52885fa684",
+    "docs/validation/next-generation-nekomimi/handoff-context/types-tests-fixed.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/candidate-origin.test.ts (3 tests | 1 failed) 4719ms
+   × binds user packages without granting new permissions and detects stripped origin metadata 392ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/candidate-origin.test.ts > binds user packages without granting new permissions and detects stripped origin metadata
+AssertionError: Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-YUKJav 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖: expected 'failed' to be 'activated' // Object.is equality
+
+Expected: "activated"
+Received: "failed"
+
+ ❯ test/candidate-origin.test.ts:66:43
+     64|     await expect(host.requestPackage(first.id, 'user')).rejects.toThro…
+     65|     const receipt = await host.requestPackage(first.id, 'user', true);…
+     66|     expect(receipt.status, receipt.error).toBe('activated');
+       |                                           ^
+     67|     await writeFile(join(source, 'nekomimi.json'), JSON.stringify({ ..…
+     68|     const update = await store.prepare({ kind: 'local', path: source }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 29 passed (30)
+   Start at  23:04:54
+   Duration  12.10s (transform 1.26s, setup 0ms, import 3.35s, tests 45.83s, environment 0ms)
+

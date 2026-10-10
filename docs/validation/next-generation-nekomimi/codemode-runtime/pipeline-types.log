@@ -1,0 +1,11 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/codemode.ts(14,4): error TS2322: Type '(parentId: string, { code }: { code: any; }, signal: AbortSignal | undefined) => Promise<{ content: { type: "text"; text: string; }[]; details: { limits: Readonly<{ version: 1; timeoutMs: 30000; memoryLimitBytes: number; ... 4 more ...; storeValueChars: number; }>; result?: undefined; }; } | { ...; }>' is not assignable to type '(toolCallId: string, params: unknown, signal?: AbortSignal | undefined, onUpdate?: ((result: RuntimeToolResult<unknown>) => void) | undefined) => Promise<RuntimeToolResult<unknown>>'.
+  Types of parameters '__1' and 'params' are incompatible.
+    Type 'unknown' is not assignable to type '{ code: any; }'.
+src/codemode.ts(19,37): error TS2345: Argument of type '{ name: string; description: string; inputSchema: TSchema; execute: (args: unknown, context: CodemodeToolContext) => Promise<RuntimeToolResult<unknown>>; }[]' is not assignable to parameter of type 'readonly CodemodeTool[]'.
+  Type '{ name: string; description: string; inputSchema: TSchema; execute: (args: unknown, context: CodemodeToolContext) => Promise<RuntimeToolResult<unknown>>; }' is not assignable to type 'CodemodeTool'.
+    Types of property 'inputSchema' are incompatible.
+      Type 'TSchema' is not assignable to type 'CodemodeJsonSchema | undefined'.

@@ -1,0 +1,57 @@
+{"phase":"prepare","root":"/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-WxEOh4","node":"v24.15.0","platform":"darwin","arch":"arm64"}
+{"phase":"build","candidateId":"33102cd1-d8a9-4ead-8df9-fade15e7a13d","inputHash":"48ed93bf87c2e72936648f915ba16eadcd06d44acce922f9fdfe75a08f203157"}
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /Users/kirineko/.local/share/fnm/node-versions/v24.15.0/installation/bin/node /Users/kirineko/Github/nekomimi/dist/cli.js core build {"candidateId":"33102cd1-d8a9-4ead-8df9-fade15e7a13d","inputHash":"48ed93bf87c2e72936648f915ba16eadcd06d44acce922f9fdfe75a08f203157","commandId":"real-core-build","authorize":true} --workspace /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-WxEOh4/owner --home /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-WxEOh4/home
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:509:28)
+    at maybeClose (node:internal/child_process:1124:16)
+    at Socket.<anonymous> (node:internal/child_process:481:11)
+    at Socket.emit (node:events:509:28)
+    at Pipe.<anonymous> (node:net:350:12) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '/Users/kirineko/.local/share/fnm/node-versions/v24.15.0/installation/bin/node /Users/kirineko/Github/nekomimi/dist/cli.js core build {"candidateId":"33102cd1-d8a9-4ead-8df9-fade15e7a13d","inputHash":"48ed93bf87c2e72936648f915ba16eadcd06d44acce922f9fdfe75a08f203157","commandId":"real-core-build","authorize":true} --workspace /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-WxEOh4/owner --home /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-core-smoke-WxEOh4/home',
+  stdout: '{\n' +
+    '  "version": 1,\n' +
+    '  "commandId": "real-core-build",\n' +
+    '  "buildId": "43063086-d097-4fb2-a688-59c5fb043f64",\n' +
+    '  "candidateId": "33102cd1-d8a9-4ead-8df9-fade15e7a13d",\n' +
+    '  "inputHash": "48ed93bf87c2e72936648f915ba16eadcd06d44acce922f9fdfe75a08f203157",\n' +
+    '  "status": "failed",\n' +
+    '  "processes": [\n' +
+    '    {\n' +
+    '      "status": "passed",\n' +
+    '      "exitCode": 0,\n' +
+    '      "signal": null,\n' +
+    '      "cleanup": "confirmed",\n' +
+    '      "cleanupScope": "process-group",\n' +
+    '      "bytes": 120,\n' +
+    '      "dispatched": true,\n' +
+    '      "pid": 33345\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "status": "passed",\n' +
+    '      "exitCode": 0,\n' +
+    '      "signal": null,\n' +
+    '      "cleanup": "confirmed",\n' +
+    '      "cleanupScope": "process-group",\n' +
+    '      "bytes": 2628,\n' +
+    '      "dispatched": true,\n' +
+    '      "pid": 33643\n' +
+    '    }\n' +
+    '  ],\n' +
+    '  "hostIntegration": "not_run",\n' +
+    '  "applied": false,\n' +
+    '  "error": "Error: Core artifact type or hard link rejected"\n' +
+    '}\n',
+  stderr: ''
+}
+
+Node.js v24.15.0

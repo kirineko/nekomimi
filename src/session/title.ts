@@ -2,6 +2,7 @@ import { Journal, id, type JournalOptions } from "../journal.js";
 import { ResponsesProvider, type ProviderOptions } from "../provider.js";
 import { assemblePrompt } from "../context.js";
 import { promptData } from "../prompts.js";
+import { sessionBinding, checkSessionTarget } from "./identity.js";
 import type { CustomizationHost, Activation } from "../customization/host.js";
 import { createProvider } from "../customization/adapter-provider.js";
 export async function nameSession(
@@ -36,6 +37,9 @@ export async function nameSession(
     const limited = Buffer.from(String(text))
       .subarray(0, 4096)
       .toString("utf8");
+    signal.throwIfAborted();
+    const binding = sessionBinding(journal.events);
+    if (binding) await checkSessionTarget(binding, customization?.catalog.home);
     if (customization) activation = await customization.acquire();
     const build = (...args: ConstructorParameters<typeof ResponsesProvider>) => customization && activation ? createProvider(customization, activation, ...args) : new ResponsesProvider(...args);
     const provider = await build(

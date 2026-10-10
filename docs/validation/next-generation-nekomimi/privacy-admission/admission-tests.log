@@ -1,0 +1,10 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"0e9b32c0-b309-4583-b83f-8456861ea232","timestamp":"2026-10-08T17:12:16.846Z","sessionId":"cbfcc62a-8da7-4be3-83cc-a505cb7baa7c","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+ Test Files  6 passed (6)
+      Tests  48 passed (48)
+   Start at  01:12:16
+   Duration  16.85s (transform 1.65s, setup 0ms, import 3.84s, tests 41.40s, environment 0ms)
+

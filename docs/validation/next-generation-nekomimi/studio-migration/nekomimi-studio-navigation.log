@@ -1,0 +1,144 @@
+
+Running 7 tests using 1 worker
+
+(node:3354) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization-studio.spec.ts:54:1 › empty management pages recover reads and modal choices contain keyboard focus without writes (651ms)
+  ✘  2 test/browser/customization-studio.spec.ts:77:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes (5.4s)
+(node:3376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/customization-studio.spec.ts:105:1 › draft survives read refresh, revision failure and partial credential success but cancellation clears it (5.4s)
+(node:3393) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 test/browser/customization-studio.spec.ts:144:1 › closing during a submitted save reads its result on reopen without submitting twice (562ms)
+  ✘  5 test/browser/customization-studio.spec.ts:161:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion (1.5m)
+(node:3434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  6 test/browser/customization-studio.spec.ts:221:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write (841ms)
+  ✓  7 test/browser/customization-studio.spec.ts:251:1 › resource diagnostics preserve active versions and display deferred changes without hidden writes (424ms)
+
+
+  1) test/browser/customization-studio.spec.ts:77:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('工作对话模型配置', { exact: true })
+    Expected: "profile-7"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('工作对话模型配置', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('工作对话模型配置', { exact: true })
+        14 × locator resolved to <select data-slot="select" aria-label="工作对话模型配置" class="rounded-md border border-line bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted disabled:opacity-50 aria-invalid:border-destructive w-auto cursor-pointer">…</select>
+           - unexpected value ""
+
+
+      87 |     await trigger.click();
+      88 |     const select=page.getByLabel("工作对话模型配置",{exact:true});
+    > 89 |     await select.focus(); await expect(select).toBeFocused(); await page.keyboard.press("End"); await page.keyboard.press("Enter"); await expect(select).toHaveValue("profile-7");
+         |                                                                                                                                                          ^
+      90 |     await page.keyboard.press("Home"); await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter"); await expect(select).toHaveValue("profile-0");
+      91 |     await page.keyboard.press("Escape"); await expect(trigger).toBeFocused(); expect(f.writes).toHaveLength(0);
+      92 |     await choose(page,"工作对话模型","profile-3");
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:89:154
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/customization-studio.spec.ts:105:1 › draft survives read refresh, revision failure and partial credential success but cancellation clears it 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   2
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      116 |     await open(page); await edit(page);
+      117 |     await page.getByLabel("Provider API key").fill("fixture-secret");
+    > 118 |     const before = f.reads(); await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange"))); await expect.poll(f.reads).toBeGreaterThan(before);
+          |                                                                                                                                            ^
+      119 |     await expect(page.getByLabel("Provider API key")).toBeFocused();
+      120 |     await expect(page.getByLabel("Provider API key")).toHaveValue("fixture-secret");
+      121 |     await expect(page.getByLabel("模型配置名称")).toHaveValue("new-profile");
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:118:140
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-draft-4cfee--but-cancellation-clears-it/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-draft-4cfee--but-cancellation-clears-it/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-draft-4cfee--but-cancellation-clears-it/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-draft-4cfee--but-cancellation-clears-it/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/customization-studio.spec.ts:161:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: '模型用途与配置', exact: true })
+        - locator resolved to <a href="/v2/create/models" class="text-sm underline">模型用途与配置</a>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        173 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      37 |   await link.waitFor({state:"attached"});
+      38 |   if(!await link.isVisible()) await page.getByRole("button",{name:"导航与详情",exact:true}).click();
+    > 39 |   await link.click();
+         |              ^
+      40 | }
+      41 | async function choose(page: Page, name: string, option: string) {
+      42 |   await page.getByRole("button", {name:`选择${name}`,exact:true}).click();
+        at tab (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:39:14)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:183:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-studi-a4665-controls-and-reduced-motion/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-studi-a4665-controls-and-reduced-motion/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-studi-a4665-controls-and-reduced-motion/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-studi-a4665-controls-and-reduced-motion/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/customization-studio.spec.ts:77:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+    test/browser/customization-studio.spec.ts:105:1 › draft survives read refresh, revision failure and partial credential success but cancellation clears it 
+    test/browser/customization-studio.spec.ts:161:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion 
+  4 passed (1.8m)

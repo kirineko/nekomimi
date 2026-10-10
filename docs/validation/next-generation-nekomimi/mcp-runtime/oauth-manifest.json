@@ -1,0 +1,22 @@
+{
+  "recordedAt": "2026-10-07T14:49:53.761422+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/mcp-oauth.ts": "f1dff9417f27cacac02ccf323449174723b7d5506a8c829574380188a198fb97",
+    "src/customization/mcp.ts": "55dbebb260a3230a282d329f34209140cb3206eb3dda9923f58f1360bc51c0bd",
+    "test/mcp-oauth-rotation.test.ts": "370a8bad75474afd6bd5bc9ecdf3beeb32dbdb165108fc8fb709c71cabe859c5",
+    "test/fixtures/oauth-rotation.ts": "7f44ef0a600d44a58c2a482265ddebf24e27dd469d8aa1eaf2798a3f82202813",
+    "extension-docs/platform.md": "6c97f30813a7db2b3aefa8ba5c782ed49a0631930e5efd1603df6e3a4e19820e",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "07fe17ede809c9f752d6dc2d7765110d62932d2c95c3c59b0e64870be09638e3",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth.md": "14ec573a015eb713bed6489b9ec8d17eaa0876441bc55725a2ecb88236d8135a",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-first.log": "7efde9bd810c17766bbc939f637885924ad9cc8c18d021f9f612ca992a959ed5",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-rotation.log": "ef0de5f35579af249f63b4a93b28811b520528d3f050b19bec04faecb23bf58e",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-regression.log": "158166adf8b89e8bbdbd125a3b8a936f733fe6842d131499a6e1c670af983489",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-build.log": "eb4f480fa1e66b8c10f649aa3cc89e8b5641fcee88fb59b289a110b7b699da00",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/oauth-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  }
+}

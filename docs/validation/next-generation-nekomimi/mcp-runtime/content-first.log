@@ -1,0 +1,28 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-mcp-content.test.ts (6 tests | 1 failed) 7239ms
+   × binds read facts to create mode and target without injecting them into a separate work session 73ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-mcp-content.test.ts > binds read facts to create mode and target without injecting them into a separate work session
+Error: 创造任务需要独立开发目录
+ ❯ createSessionBinding src/session/identity.ts:55:11
+     53|     throw new ApiError(403, "target_scope", "工作目标不属于当前授权项目");
+     54|   if (input.mode === "create" && root === owner)
+     55|     throw new ApiError(422, "target_scope", "创造任务需要独立开发目录");
+       |           ^
+     56|   const st = await stat(root, { bigint: true });
+     57|   if (!st.isDirectory()) throw new ApiError(422, "target_unavailable",…
+ ❯ run src/runtime.ts:112:15
+ ❯ test/customization-mcp-content.test.ts:114:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 12 passed (13)
+   Start at  22:42:13
+   Duration  10.95s (transform 673ms, setup 0ms, import 1.84s, tests 22.33s, environment 0ms)
+

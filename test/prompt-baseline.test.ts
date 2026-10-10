@@ -38,8 +38,9 @@ it('captures comparable offline prompt scenarios',async()=>{
   }
   const baseline=JSON.parse(await readFile(path,'utf8'));
   if(process.env.PROMPT_REPORT==='1'){
-   await mkdir('docs/validation/prompt-contracts',{recursive:true});
-   await writeFile('docs/validation/prompt-contracts/comparison.json',JSON.stringify({baselineRevision:baseline.revision,measurement:baseline.measurement,model:baseline.model,liveEvaluation:'not run',before:baseline.metrics,after:metrics,inputs},null,2)+'\n');
+   const directory=process.env.PROMPT_REPORT_DIRECTORY??'docs/validation/prompt-contracts';
+   await mkdir(directory,{recursive:true});
+   await writeFile(join(directory,'comparison.json'),JSON.stringify({baselineRevision:baseline.revision,measurement:baseline.measurement,model:baseline.model,liveEvaluation:'not run',before:baseline.metrics,after:metrics,inputs},null,2)+'\n');
   }
   expect(Object.keys(baseline.inputs)).toEqual(Object.keys(inputs));
   expect(Object.values(metrics).every(m=>m.total>0)).toBe(true);

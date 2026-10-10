@@ -1,0 +1,50 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"f7668d39-cfc6-4332-807a-54578d4ce5eb","timestamp":"2026-10-07T21:55:37.383Z","sessionId":"a5fdad19-5cd4-45d6-8368-6c93ec987bda","runId":"c50e1386-6f11-4938-8ed3-b07e3f584f8e","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/context-details.test.ts (2 tests | 1 failed) 20080ms
+   × serves current measurement and pinned selection pages without models, factories or history writes 15005ms
+{"nekomimiDiagnostic":{"version":1,"id":"5b7e6b97-a4bd-4a8c-befe-18c5e8a01a59","timestamp":"2026-10-07T21:55:42.277Z","sessionId":"7c55f3ea-8fb6-450b-b4a7-86ee28838f91","runId":"ec5a5318-e434-4cb8-bc6d-e9ee0f2aaeea","seq":33,"durableSeq":32,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a687c8c4-3607-4a99-b613-8f4b4970a9b1","timestamp":"2026-10-07T21:55:46.671Z","sessionId":"b19b9dbc-6011-499d-b9c9-119f975845cd","runId":"63d470be-820a-40ff-af6b-2dd817b8ea7b","seq":33,"durableSeq":32,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3d2833aa-c9e8-495a-a9cd-ad31933fcf5b","timestamp":"2026-10-07T21:55:49.983Z","sessionId":"77038a41-a784-4325-be5b-ed0fa53cf1f4","runId":"0b93fb19-25fb-4d83-9123-e7c2c2277614","seq":33,"durableSeq":32,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"f3a16c9c-fc00-40ed-a980-4baed83b9137","timestamp":"2026-10-07T21:55:53.245Z","sessionId":"853e30dd-6741-429b-a324-05a5f371bf61","runId":"b27410d3-a4ec-4a77-8997-883d60d5f7f1","attemptId":"8066d6c4-3189-4af0-989d-83d448417f1a","seq":35,"durableSeq":35,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"787c2146-dfab-40a9-874b-91b2a96015c5","timestamp":"2026-10-07T21:55:56.084Z","sessionId":"5841c015-0894-4ae7-8fff-57467845fc5f","runId":"c41e0de6-0d77-4c32-bbe5-fba8db3fad3e","attemptId":"6c75f294-f622-45be-a233-1578a27ff0f0","seq":36,"durableSeq":35,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1fb116da-caeb-4318-a2db-9512255503c2","timestamp":"2026-10-07T21:55:58.196Z","sessionId":"6be1a866-62e6-4597-86c5-da8eb65bb6ae","runId":"6c351d76-f325-48af-ac71-ef62f06c7c79","attemptId":"6554e151-efc7-440a-8d93-8736bce4adf6","seq":36,"durableSeq":35,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"cb250e14-7925-4126-8b86-1410f44a5c00","timestamp":"2026-10-07T21:56:00.802Z","sessionId":"a1c490b1-3353-47f3-bda0-57f01e1f7dc6","runId":"ed3f5581-82f9-4e91-b707-0e5e374c7657","attemptId":"e331bef3-fa21-4019-8b5f-13b2bd45882a","seq":36,"durableSeq":35,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/handoff-context.test.ts (5 tests | 1 failed) 40843ms
+   × requires an explicit work delivery selection and excludes SDK guidance while keeping the complete snapshot 15013ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-details.test.ts > serves current measurement and pinned selection pages without models, factories or history writes
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/context-details.test.ts:8:1
+      6| import {temporary,key,response,textItem} from './helpers.js';
+      7| import type {ContextDetailsView} from '../src/shared/context-details.j…
+      8| it('serves current measurement and pinned selection pages without mode…
+       | ^
+      9|   let calls=0;const app=await startWeb({workspace:await temporary(),ho…
+     10|   try{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/handoff-context.test.ts > requires an explicit work delivery selection and excludes SDK guidance while keeping the complete snapshot
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/handoff-context.test.ts:59:1
+     57|  await expect(readFile(join(f.development,'APPLIED'))).rejects.toThrow…
+     58| });
+     59| it('requires an explicit work delivery selection and excludes SDK guid…
+       | ^
+     60|  const f=await fixture(),marker='SDK_DEVELOPMENT_BODY_MUST_STAY_OUT';
+     61|  const sdk=await f.add(f.create.id,'context.add',{source:'installed-gu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 9 passed (11)
+      Tests  2 failed | 83 passed (85)
+   Start at  05:55:20
+   Duration  61.25s (transform 2.39s, setup 0ms, import 7.52s, tests 325.97s, environment 0ms)
+

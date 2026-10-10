@@ -1,0 +1,111 @@
+{"diagnosticOnly":true,"iteration":1,"root":"/tmp/debug-global-U6PR6q"}
+file:///harness/scripts/global-web-smoke.mjs:37
+    if(!r.ok)throw new Error(`${path}: ${await r.text()}\nInstalled service output:\n${output}`); return r.json();
+                   ^
+
+Error: /sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}
+Installed service output:
+Web: http://127.0.0.1:42783/#token=42119b1300c0c8e3b626a3db8403cc59af3e531958668097931528c23a6177d7
+FIXTURE_DIAGNOSTIC_ONLY Error: ENOENT: no such file or directory, open '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'
+    at async open (node:internal/fs/promises:640:25)
+    at async readFile (node:internal/fs/promises:1287:14)
+    at async JournalReader.update (file:///tmp/harness-pack-ByngRK/global/lib/node_modules/nekomimi/dist/server/journal-reader.js:25:33) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'
+}
+
+    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///harness/scripts/global-web-smoke.mjs:63:38
+
+Node.js v24.15.0
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /usr/local/bin/node scripts/global-web-smoke.mjs /tmp/harness-pack-ByngRK/global/bin/nekomimi /tmp/debug-global-U6PR6q
+file:///harness/scripts/global-web-smoke.mjs:37
+    if(!r.ok)throw new Error(`${path}: ${await r.text()}\nInstalled service output:\n${output}`); return r.json();
+                   ^
+
+Error: /sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}
+Installed service output:
+Web: http://127.0.0.1:42783/#token=42119b1300c0c8e3b626a3db8403cc59af3e531958668097931528c23a6177d7
+FIXTURE_DIAGNOSTIC_ONLY Error: ENOENT: no such file or directory, open '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'
+    at async open (node:internal/fs/promises:640:25)
+    at async readFile (node:internal/fs/promises:1287:14)
+    at async JournalReader.update (file:///tmp/harness-pack-ByngRK/global/lib/node_modules/nekomimi/dist/server/journal-reader.js:25:33) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'
+}
+
+    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///harness/scripts/global-web-smoke.mjs:63:38
+
+Node.js v24.15.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at file:///harness/[eval1]:1:538 {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'file:///harness/scripts/global-web-smoke.mjs:37\n' +
+      '    if(!r.ok)throw new Error(`${path}: ${await r.text()}\\nInstalled service output:\\n${output}`); return r.json();\n' +
+      '                   ^\n' +
+      '\n' +
+      'Error: /sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}\n' +
+      'Installed service output:\n' +
+      'Web: http://127.0.0.1:42783/#token=42119b1300c0c8e3b626a3db8403cc59af3e531958668097931528c23a6177d7\n' +
+      "FIXTURE_DIAGNOSTIC_ONLY Error: ENOENT: no such file or directory, open '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'\n" +
+      '    at async open (node:internal/fs/promises:640:25)\n' +
+      '    at async readFile (node:internal/fs/promises:1287:14)\n' +
+      '    at async JournalReader.update (file:///tmp/harness-pack-ByngRK/global/lib/node_modules/nekomimi/dist/server/journal-reader.js:25:33) {\n' +
+      '  errno: -2,\n' +
+      "  code: 'ENOENT',\n" +
+      "  syscall: 'open',\n" +
+      "  path: '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'\n" +
+      '}\n' +
+      '\n' +
+      '    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+      '    at async file:///harness/scripts/global-web-smoke.mjs:63:38\n' +
+      '\n' +
+      'Node.js v24.15.0\n'
+  ],
+  pid: 17,
+  stdout: '',
+  stderr: 'file:///harness/scripts/global-web-smoke.mjs:37\n' +
+    '    if(!r.ok)throw new Error(`${path}: ${await r.text()}\\nInstalled service output:\\n${output}`); return r.json();\n' +
+    '                   ^\n' +
+    '\n' +
+    'Error: /sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}\n' +
+    'Installed service output:\n' +
+    'Web: http://127.0.0.1:42783/#token=42119b1300c0c8e3b626a3db8403cc59af3e531958668097931528c23a6177d7\n' +
+    "FIXTURE_DIAGNOSTIC_ONLY Error: ENOENT: no such file or directory, open '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'\n" +
+    '    at async open (node:internal/fs/promises:640:25)\n' +
+    '    at async readFile (node:internal/fs/promises:1287:14)\n' +
+    '    at async JournalReader.update (file:///tmp/harness-pack-ByngRK/global/lib/node_modules/nekomimi/dist/server/journal-reader.js:25:33) {\n' +
+    '  errno: -2,\n' +
+    "  code: 'ENOENT',\n" +
+    "  syscall: 'open',\n" +
+    "  path: '/tmp/debug-global-U6PR6q/isolated-home/workspaces/40144f025fbca648551f469887604bad419ea7c223bdb0ffec324543f3d80177/sessions/b12dabe1f036062226f1dd05a76efe112128de5cdf2ddb5b2e308bf71d5047c6/durable.json'\n" +
+    '}\n' +
+    '\n' +
+    '    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+    '    at async file:///harness/scripts/global-web-smoke.mjs:63:38\n' +
+    '\n' +
+    'Node.js v24.15.0\n'
+}
+
+Node.js v24.15.0

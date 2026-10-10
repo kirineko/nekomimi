@@ -12,11 +12,11 @@ it("keeps form answers idempotent, restores history without plugin and protects 
   await mkdir(root, { recursive: true });
   await writeFile(
     join(root, "extension.json"),
-    JSON.stringify({ name: "forms", sdkVersion: 1, entry: "index.ts" }),
+    JSON.stringify({ name: "forms", sdkVersion: 3, requiredCapabilities: ['commands', 'state', 'ui'], entry: "index.ts" }),
   );
   await writeFile(
     join(root, "index.ts"),
-    `export default api=>{api.registerCommand('ask',{description:'Ask',async handler(args,ctx){const r=await ctx.ui({kind:'form',title:'Review choice',fields:[{name:'choice',label:'Choice',required:true,options:['yes','no']}]});await ctx.state.set('answer',1,r);return JSON.stringify(r);}});}`,
+    `export default (api: import('nekomimi/extensions').ExtensionAPI)=>{api.registerCommand('ask',{description:'Ask',async handler(args,ctx){const r=await ctx.ui({kind:'form',title:'Review choice',fields:[{name:'choice',label:'Choice',required:true,options:['yes','no']}]});await ctx.state.set('answer',1,r);return JSON.stringify(r);}});}`,
   );
   const app = await startWeb({
     workspace,
@@ -47,13 +47,10 @@ it("keeps form answers idempotent, restores history without plugin and protects 
     ).toBe(403);
     const initial = await (await req("/customization")).json();
     const resource = initial.resources.find((r: any) => r.kind === "extension");
-    await req("/customization", {
-      action: "set",
-      id: resource.id,
-      enabled: true,
-      trusted: true,
-      revision: initial.settingsRevision,
-    });
+    // This fixture installs an already granted ordinary work command. New code
+    // authorization through HTTP is covered by the create-mode policy tests.
+    await app.sessions.customization.catalog.decide(resource.id, true, true, initial.settingsRevision);
+    await app.sessions.customization.reload(app.sessions.customization.requestReload());
     const session = await (
       await req("/sessions", { version: 1, title: "custom" })
     ).json();
@@ -65,12 +62,10 @@ it("keeps form answers idempotent, restores history without plugin and protects 
       })
     ).json();
     let items: any[] = [];
-    for (let n = 0; n < 60 && !items.length; n++) {
-      items = (await (await req(`/sessions/${session.id}/interactions`)).json())
-        .items;
-      await delay(20);
-    }
-    expect(items).toHaveLength(1);
+    await expect.poll(async () => {
+      items = (await (await req(`/sessions/${session.id}/interactions`)).json()).items;
+      return items.length;
+    }, { timeout: 8000 }).toBe(1);
     const answer = {
       id: items[0].id,
       commandId: "answer",

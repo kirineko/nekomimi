@@ -1,0 +1,47 @@
+{
+  "consumer": "[cleaned] /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-ui-probe-cai1nf0n",
+  "installExitCode": 0,
+  "builds": [
+    {
+      "label": "build-node24",
+      "typecheck": 0,
+      "build": 0
+    },
+    {
+      "label": "build-node22",
+      "typecheck": 0,
+      "build": 0
+    }
+  ],
+  "browserInitialExitCode": 0,
+  "final": [
+    {
+      "label": "node24-final",
+      "typecheck": 0,
+      "build": 0,
+      "browser": 0
+    },
+    {
+      "label": "node22-final",
+      "typecheck": 0,
+      "build": 0,
+      "browser": 0
+    }
+  ],
+  "reviewed": [
+    {
+      "label": "node24-reviewed",
+      "typecheck": 0,
+      "build": 0,
+      "browser": 0
+    },
+    {
+      "label": "node22-reviewed",
+      "typecheck": 0,
+      "build": 0,
+      "browser": 0
+    }
+  ],
+  "cleanedAt": "2026-10-07T01:15:14.717031+08:00",
+  "cleanupNote": "Temporary React/Vite consumer directory removed; screenshots/README/logs retained."
+}

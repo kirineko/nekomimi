@@ -1,0 +1,7 @@
+[
+  "src/web/components/Artifact.tsx",
+  "src/web/components/Brand.tsx",
+  "src/web/components/RuntimeViews.tsx",
+  "src/web/components/Timeline.tsx",
+  "src/web/components/ToolCard.tsx"
+]

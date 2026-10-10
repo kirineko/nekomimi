@@ -1,0 +1,128 @@
+
+Running 7 tests using 1 worker
+
+(node:2958) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization-studio.spec.ts:51:1 › empty management pages recover reads and modal choices contain keyboard focus without writes (619ms)
+  ✘  2 test/browser/customization-studio.spec.ts:74:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes (5.4s)
+(node:2980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 test/browser/customization-studio.spec.ts:102:1 › draft survives read refresh, revision failure and partial credential success but cancellation clears it (832ms)
+  ✓  4 test/browser/customization-studio.spec.ts:140:1 › closing during a submitted save reads its result on reopen without submitting twice (503ms)
+  ✘  5 test/browser/customization-studio.spec.ts:157:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion (1.5m)
+(node:3033) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 test/browser/customization-studio.spec.ts:203:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write (501ms)
+(node:3054) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  7 test/browser/customization-studio.spec.ts:233:1 › resource diagnostics preserve active versions and display deferred changes without hidden writes (475ms)
+
+
+  1) test/browser/customization-studio.spec.ts:74:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('工作对话模型配置', { exact: true })
+    Expected: "profile-7"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('工作对话模型配置', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('工作对话模型配置', { exact: true })
+        14 × locator resolved to <select data-slot="select" aria-label="工作对话模型配置" class="rounded-md border border-line bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted disabled:opacity-50 aria-invalid:border-destructive w-auto cursor-pointer">…</select>
+           - unexpected value ""
+
+
+      84 |     await trigger.click();
+      85 |     const select=page.getByLabel("工作对话模型配置",{exact:true});
+    > 86 |     await select.focus(); await page.keyboard.press("End"); await expect(select).toHaveValue("profile-7");
+         |                                                                                  ^
+      87 |     await page.keyboard.press("Home"); await page.keyboard.press("ArrowDown"); await expect(select).toHaveValue("profile-0");
+      88 |     await page.keyboard.press("Escape"); await expect(trigger).toBeFocused(); expect(f.writes).toHaveLength(0);
+      89 |     await choose(page,"工作对话模型","profile-3");
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:86:82
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-nativ-b2d32-ependent-persisted-purposes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/customization-studio.spec.ts:157:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: '持久工作流', exact: true })
+
+
+      34 | async function open(page: Page) { await tab(page,"模型"); }
+      35 | async function tab(page: Page, name: string) {
+    > 36 |   const link=page.getByRole("link", {name: name === "资源" ? "能力与权限" : name === "工作流与面板" ? "持久工作流管理" : "模型用途与配置", exact:true});
+         |                                                                                                                       ^
+      37 |   if(!await link.isVisible()) await page.getByRole("button",{name:"导航与详情",exact:true}).click();
+      38 |   await link.click();
+      39 | }
+        at tab (/Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:36:119)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:190:13
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-studi-a4665-controls-and-reduced-motion/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-studi-a4665-controls-and-reduced-motion/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-studi-a4665-controls-and-reduced-motion/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-studi-a4665-controls-and-reduced-motion/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/customization-studio.spec.ts:203:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"action": "provider-save", "profile": {"baseUrl": "https://fixture.invalid/v1", "id": "INVALID NAME", "model": "fixture-model", "operation": "chat", "paths": ["/chat/completions"], "providerId": "example-chat", "resourceId": "provider-resource", "routing": "physical"}, "revision": 1}]
+
+      211 |   });
+      212 |   try {
+    > 213 |     await open(page); await edit(page);
+          |                                        ^
+      214 |     const save = page.getByRole("button", { name: "授权并保存模型配置" });
+      215 |     await page.getByLabel("模型配置名称").fill("INVALID NAME"); await save.click(); expect(f.writes).toHaveLength(0);
+      216 |     await page.getByLabel("模型配置名称").fill("new-profile");
+        at /Users/kirineko/Github/nekomimi/test/browser/customization-studio.spec.ts:213:96
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-studio-valid-355b1-an-unknown-credential-write/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-studio-valid-355b1-an-unknown-credential-write/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-studio-valid-355b1-an-unknown-credential-write/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-studio-valid-355b1-an-unknown-credential-write/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    test/browser/customization-studio.spec.ts:74:1 › native model choice supports keyboard, cancellation, failures and independent persisted purposes 
+    test/browser/customization-studio.spec.ts:157:1 › studio screenshots cover long content, error summaries, responsive controls and reduced motion 
+    test/browser/customization-studio.spec.ts:203:1 › validates fields, exposes endpoint scope and requires explicit recovery of an unknown credential write 
+  4 passed (1.7m)

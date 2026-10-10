@@ -1,0 +1,36 @@
+[
+  {
+    "id": "nekomimi-codemode-validation@0.0.0",
+    "name": "nekomimi-codemode-validation",
+    "version": "0.0.0",
+    "size": 291934,
+    "unpackedSize": 644884,
+    "shasum": "7f4186693a3625415a2b8061b4a801af2f726770",
+    "integrity": "sha512-IPQqxwh/YnTHP2TwQBWs50i/ZetWAkVxCc/NgNuBkPSVzvmC/I4W9TiPrw2JoX57Q5fGqPwik4jlNHJABaOEwQ==",
+    "filename": "nekomimi-codemode-validation-0.0.0.tgz",
+    "files": [
+      {
+        "path": "codemode.test.mjs",
+        "size": 7112,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 322,
+        "mode": 420
+      },
+      {
+        "path": "quickjs.wasm",
+        "size": 637405,
+        "mode": 420
+      },
+      {
+        "path": "worker.mjs",
+        "size": 45,
+        "mode": 420
+      }
+    ],
+    "entryCount": 4,
+    "bundled": []
+  }
+]

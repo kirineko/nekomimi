@@ -12,13 +12,14 @@ export function packageSource(value: unknown): PackageSource {
   throw new Error("Invalid package source");
 }
 /** Model requests cannot grant themselves authorization or read arbitrary local sources. */
-export async function packageAction(host: CustomizationHost, value: Record<string, unknown>, options: { user: boolean; signal?: AbortSignal }) {
+export async function packageAction(host: CustomizationHost, value: Record<string, unknown>, options: { user: boolean; signal?: AbortSignal; origin?: import("./candidates.js").CandidateOrigin }) {
   const store = new Packages(host.catalog.workspace, host.catalog.home);
   const scope = value.scope === undefined ? "project" : value.scope;
   if (scope !== "project" && scope !== "user") throw new Error("Invalid package scope");
   const action = value.action, id = String(value.id ?? "");
   if (action === "list") return { installed: await store.list(), candidates: await store.drafts() };
   if (action === "inspect") return store.preview(scope, id);
+  if (action === "rollback-inspect") { const previous = await store.previous(id); return store.preview(previous.scope, previous.id); }
   if (!options.user && scope === "user" && !(await host.catalog.decisions()).userWrites) throw new Error("User resource writing requires authorization");
   if (action === "collect") {
     if (!options.user) throw new Error("Package cache collection requires an explicit user operation");
@@ -33,14 +34,14 @@ export async function packageAction(host: CustomizationHost, value: Record<strin
     const bindings = value.bindings ?? {};
     if (!bindings || typeof bindings !== "object" || Array.isArray(bindings) || Object.values(bindings).some(v => typeof v !== "string")) throw new Error("Rule bindings must map names to workspace paths");
     const signal = options.signal ? AbortSignal.any([options.signal, AbortSignal.timeout(120_000)]) : AbortSignal.timeout(120_000);
-    return store.prepare(source, scope, bindings as Record<string, string>, signal);
+    return store.prepare(source, scope, bindings as Record<string, string>, signal, options.origin);
   }
-  if (action === "activate") return host.requestPackage(id, scope, options.user && value.authorize === true);
+  if (action === "activate") return host.requestPackage(id, scope, options.user && value.authorize === true, typeof value.activeRevision === "number" ? value.activeRevision : undefined, typeof value.contentHash === "string" ? value.contentHash : undefined);
   const installed = (await store.list()).find(p => p.packageId === id);
   if (!installed) throw new Error("Unknown installed package");
   if (!options.user && installed.scope === "user" && !(await host.catalog.decisions()).userWrites) throw new Error("User resource writing requires authorization");
-  if (action === "rollback") { const previous = await store.previous(id); return host.requestPackage(previous.id, previous.scope, options.user && value.authorize === true); }
-  if (action === "export") return store.export(id, String(value.output ?? ""));
-  if (action === "uninstall") return host.removePackage(id);
+  if (action === "rollback") { const previous = await store.previous(id); if (value.contentHash !== undefined && value.contentHash !== previous.revision) throw new Error("Package rollback target revision conflict; inspect again"); return host.requestPackage(previous.id, previous.scope, options.user && value.authorize === true, typeof value.activeRevision === "number" ? value.activeRevision : undefined, typeof value.contentHash === "string" ? value.contentHash : undefined); }
+  if (action === "export") return store.export(id, String(value.output ?? ""), typeof value.contentHash === "string" ? value.contentHash : undefined);
+  if (action === "uninstall") return host.removePackage(id, typeof value.contentHash === "string" ? value.contentHash : undefined, typeof value.activeRevision === "number" ? value.activeRevision : undefined);
   throw new Error("Unknown package action");
 }

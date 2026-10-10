@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:65442) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/create-candidates.spec.ts:30:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (2.7s)
+  ✓  2 test/browser/customization.spec.ts:280:1 › isolates custom panels, preserves host controls, and rejects conflicting workflow answers across windows (6.2s)
+  ✓  3 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.1s)
+
+  3 passed (13.3s)

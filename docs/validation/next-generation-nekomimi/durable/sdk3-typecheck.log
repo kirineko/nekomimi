@@ -1,0 +1,9 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/storage/format.ts(1,55): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/storage/format.ts(2,31): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/storage/format.ts(3,25): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/storage/format.ts(36,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/storage/format.ts(66,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.

@@ -1,0 +1,39 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/codemode-pipeline.test.ts (6 tests | 1 failed) 1853ms
+   × keeps a successful child when the enclosing script fails and excludes nested VMs 113ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/codemode-pipeline.test.ts > keeps a successful child when the enclosing script fails and excludes nested VMs
+AssertionError: expected { ok: false, error: { …(4) }, …(2) } to match object { ok: false, …(1) }
+(5 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "message": "after effect",
++     "message": "tools.codemode does not exist. Available: effect. ALL_TOOLS lists every tool; searchTools(query) finds tools by topic. Check for a member with \"codemode\" in tools.",
+    },
+    "ok": false,
+  }
+
+ ❯ test/codemode-pipeline.test.ts:42:42
+     40|  try{
+     41|   const result=await script.tool.execute('parent',{code:'await tools.e…
+     42|   expect((result.details as any).result).toMatchObject({ok:false,error…
+       |                                          ^
+     43|   expect(journal.events.filter(e=>e.type==='tool.completed')).toHaveLe…
+     44|  }finally{await journal.close();}
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 11 passed (12)
+   Start at  21:44:30
+   Duration  4.02s (transform 239ms, setup 0ms, import 823ms, tests 3.00s, environment 0ms)
+

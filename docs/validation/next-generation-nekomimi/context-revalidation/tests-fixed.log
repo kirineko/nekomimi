@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-revalidation.test.ts (8 tests | 1 failed) 11473ms
+   × keeps captured body fixed through a late permission-after-intent change and blocks only revoked dispatch 1642ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-revalidation.test.ts > keeps captured body fixed through a late permission-after-intent change and blocks only revoked dispatch
+AssertionError: expected 'completed' to be 'failed' // Object.is equality
+
+Expected: "failed"
+Received: "completed"
+
+ ❯ test/context-revalidation.test.ts:51:54
+     49|       if(last&&JSON.parse(last).type==='request.dispatched'){changed=t…
+     50|     }},fetch:async(_url,init)=>{calls++;bodies.push(JSON.parse(String(…
+     51|     expect(changed).toBe(true);expect(result.status).toBe(kind==='cont…
+       |                                                      ^
+     52|     const events=(await readSession(result.session)).events,selected=e…
+     53|     const snapshot=JSON.parse((await readArtifact(result.session,(sele…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 17 passed (18)
+   Start at  06:32:14
+   Duration  12.08s (transform 386ms, setup 0ms, import 1.68s, tests 19.42s, environment 0ms)
+

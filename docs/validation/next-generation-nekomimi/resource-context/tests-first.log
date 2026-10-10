@@ -1,0 +1,34 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"7ea2ea84-20e3-40fd-818b-34029c506105","timestamp":"2026-10-06T22:08:02.723Z","sessionId":"5060b0bb-55dc-442a-9737-8e5a0fb59e10","runId":"cf50f189-dad8-4b5a-b10a-33c6041591bd","seq":29,"durableSeq":29,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"fb28f091-56ec-40e1-b4e0-4b5bfd072c71","timestamp":"2026-10-06T22:08:03.658Z","sessionId":"cfb76914-dc5e-41b0-be4c-80ae7f32baf7","runId":"b884ab65-9de4-43f3-9eef-77a97947ab86","seq":30,"durableSeq":29,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0973b18f-75ba-405b-83f3-cce6bbcd89f9","timestamp":"2026-10-06T22:08:04.686Z","sessionId":"0b3dd7c5-3b0a-4deb-89ed-dd76feb15b90","runId":"d499465a-a26d-4d31-be2e-f2fe5327551d","seq":31,"durableSeq":30,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e16cbd8d-afa7-477c-be1e-baaaa2196cc6","timestamp":"2026-10-06T22:08:05.663Z","sessionId":"41ece40c-303b-4dbd-a95b-21dd627d1947","runId":"c288dbf3-7104-4523-aee3-3f0603681b6f","seq":30,"durableSeq":29,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1240e8d9-f2ef-490d-bb81-dfd6507ba0ae","timestamp":"2026-10-06T22:08:06.826Z","sessionId":"877a4879-6002-47dd-b60e-143d4494f468","runId":"0441a8e4-c63e-4e06-ad59-eaea9753173c","attemptId":"a5c149c2-ecf6-443f-aab5-5de743c35644","seq":33,"durableSeq":33,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"adbd6c6d-93d1-4f24-9330-1cff78a6a599","timestamp":"2026-10-06T22:08:08.074Z","sessionId":"d4544e8e-e182-4998-a6ea-99b25c4f1657","runId":"88baa491-c854-48bd-ae95-217d8c6b806f","attemptId":"7ede0dad-dcb2-4231-a758-b6137cf9f14f","seq":34,"durableSeq":33,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"39adf73f-d8be-4d16-84ac-0d2af582f2c5","timestamp":"2026-10-06T22:08:08.821Z","sessionId":"9e6fbb96-9954-4aa8-b5a7-4ecbc9b1c0b1","runId":"bd26e487-c4f8-48dc-88dc-790b7a5ebf37","attemptId":"57e34fbc-a9a4-43d4-b36a-000d93459cbe","seq":33,"durableSeq":32,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"f03a8acc-2b43-41fd-8469-eba44245e166","timestamp":"2026-10-06T22:08:09.842Z","sessionId":"d093e332-9333-4d18-bc94-2b34ecf5bd4d","runId":"1a1aac02-3699-4f27-b697-a0bc3ddb03d3","attemptId":"d2e1228b-612a-44a6-bf75-767292da160f","seq":33,"durableSeq":32,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/resource-context.test.ts (3 tests | 1 failed) 3533ms
+   × paginates a large catalog with complete coverage, bounded UTF-8 descriptors, explicit omissions and pinned cursors 260ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/resource-context.test.ts > paginates a large catalog with complete coverage, bounded UTF-8 descriptors, explicit omissions and pinned cursors
+AssertionError: expected 24109 to be less than or equal to 12000
+ ❯ test/resource-context.test.ts:36:116
+     34|     while(offset!==undefined){
+     35|       const result = await list.execute('catalog-page', {offset,revisi…
+     36|       const text=result.content.find(c=>c.type==='text')!;expect(text.…
+       |                                                                                                                    ^
+     37|       expect(page.items.length).toBeLessThanOrEqual(CONTEXT_POLICY.pag…
+     38|       expect(page.omitted).toBe(page.total-page.offset-page.items.leng…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  1 failed | 78 passed (79)
+   Start at  06:07:32
+   Duration  40.58s (transform 525ms, setup 0ms, import 2.92s, tests 77.14s, environment 0ms)
+

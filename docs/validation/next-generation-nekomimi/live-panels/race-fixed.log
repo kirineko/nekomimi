@@ -1,0 +1,35 @@
+
+Running 10 tests using 2 workers
+
+(node:26003) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.4s)
+(node:26039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.5s)
+(node:26056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.5s)
+(node:26080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.9s)
+(node:26082) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.5s)
+(node:26111) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (5.0s)
+(node:26127) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.5s)
+(node:26149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.9s)
+(node:26151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.3s)
+  ✓   9 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (5.0s)
+
+  10 passed (24.8s)

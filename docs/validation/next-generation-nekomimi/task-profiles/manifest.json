@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-06T21:21:28.110723+00:00",
+  "node": "v24.15.0",
+  "files": {
+    "admission-build.log": "9e500d79b2d8b487c30b38c09866a1cab8835ea276bae8f771edf78a1746f911",
+    "first-tests.log": "f95863d3797439aea62d8b65e0b02eddf63625f01b4355fee8366fdadd497c1e",
+    "admission-tests.log": "68ad6d4d8eb0544dc95ca56892af4e4e922eb0a36328f4160a81ed8f36ca155b",
+    "first-build.log": "ee31f627dc0ffc68087b25b3472379df304806fbfb864b6f4da765aac04aba72",
+    "complete-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "budget-check.log": "58618cf5d94bf50868a061c5e6aa54fd5d5f1c0b85962dd2854b242e78c849eb",
+    "complete-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "final-tests.log": "d8ee1f8cbf54d643a45c2583d83e9e7e5bb75f00725695ae48c883a70ec04eea"
+  },
+  "profiles": "232c57157360ae64640520e1c0af2345cc76e4a2765762cf92cee06407366c8d",
+  "sourceFiles": {
+    "src/prompts.ts": "bfc923181f17876f2737fd4cddc86606d22a41b4cd0908079c0ef6d3665f9754",
+    "src/context.ts": "9cad9c6c013512271be80dfc3006e45450280b9f6faa793c7b20023d6b8b232a",
+    "src/runtime.ts": "d78f26e3983b54c8f4b2d323a733033f4d87f2d929f0c17e06e440503d7128df",
+    "src/provider.ts": "914e0ab9c556327dc0d596fcee9be62c31cc55f2f9c5d95a6ee9684bfd5413fe",
+    "src/customization/adapter-provider.ts": "b54229af6a2cd76b2b90655a19fa39c5300ecfa9f1a10114afe276e2f7ec6b57",
+    "test/task-profiles.test.ts": "32b991d44f7d40b6c49adace8c638db8b4fdf938ad051427802d48218ea17eab",
+    "test/fixtures/task-profiles.json": "232c57157360ae64640520e1c0af2345cc76e4a2765762cf92cee06407366c8d",
+    "test/mode-policy.test.ts": "9628af219b6d8b162d64d6ad9769caf2b87a9e14fb08764c0a00f43c740f48da",
+    "test/prompt-contracts.test.ts": "a145c250d73e4f0931fd5a44d2029b60bddbc453ceb7ad4224a08fb94c50e988"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "97839b795cae461d6e3e0e53c0d94e10149cca8dc918cdb83e2b1d9bf9b37775"
+  }
+}

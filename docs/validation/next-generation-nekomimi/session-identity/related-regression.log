@@ -1,0 +1,14 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"e1c80e03-2cff-4058-af61-236206900210","timestamp":"2026-10-06T18:49:09.178Z","sessionId":"e747c07b-80d6-4d9f-a696-779558f4d198","runId":"afad0fab-a3d3-4359-a0c5-6436f0eb1a0a","attemptId":"cc303276-7358-459f-8a75-5568e002463f","seq":27,"durableSeq":27,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"21166909-dc43-420c-bc08-024f8799b565","timestamp":"2026-10-06T18:49:09.886Z","sessionId":"472cb509-5d31-46f8-a367-3a734e5abc16","runId":"41dbe084-ecaa-46e5-a713-1698648b5cc4","attemptId":"ad08bced-15ff-49cd-8abf-33a9aaabe46e","seq":27,"durableSeq":26,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e2b6edaa-24a2-49bb-b14b-a19c4e3e1e26","timestamp":"2026-10-06T18:49:10.328Z","sessionId":"4bd3269a-6213-445e-8880-d7312b27895b","runId":"9f74ed10-0274-4a03-a950-26f7b9b68c2b","attemptId":"0e24d7d8-6a9f-40a9-a8c5-9a148e7e3611","seq":27,"durableSeq":26,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1c749f4b-9d1c-4fec-ba97-0aefa800d522","timestamp":"2026-10-06T18:49:11.202Z","sessionId":"dc90293c-f019-454e-a31a-842312a0e64e","runId":"d7d67152-121d-499a-a95f-3be6abbf7e9c","attemptId":"d2b4acb1-6715-4cd1-8722-5921b6679d46","seq":28,"durableSeq":27,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"85e957eb-fa7a-4515-8f7f-4ac9bd15a3c6","timestamp":"2026-10-06T18:49:17.641Z","sessionId":"ee791dd8-2f61-4ee1-9f67-e43a7d4a4e3e","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+ Test Files  8 passed (8)
+      Tests  79 passed (79)
+   Start at  02:49:02
+   Duration  19.68s (transform 386ms, setup 0ms, import 2.78s, tests 34.98s, environment 0ms)
+

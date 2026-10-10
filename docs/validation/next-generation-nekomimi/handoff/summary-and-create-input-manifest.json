@@ -1,0 +1,43 @@
+{
+  "recordedAt": "2026-10-07T20:12:24.779457+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.3": "in-progress",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "browser": 25,
+    "unitDistinct": 10,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/handoff/handoff-summary-unit.log": "a064af046c9c9e46fa0e7e3ab4ab912bf2f535ed3ab6762af841764811d4798d",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-summary-build.log": "87012f8e7daa29944b7de12ac593e938a982c72b7f970ee9f82e31df377740b0",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-summary-browser.log": "689bae2b9363c9a857bd30fa31aec7fc73cb5e9ca5715a4bd8e24aa4df3a5dbd",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-summary-types.log": "3121943709d35f34ebf0a0f4a1652019f66cc04299f47115dc833db337f9db20",
+    "docs/validation/next-generation-nekomimi/handoff/handoff-summary-types-2.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-browser.log": "0a4a1eee0fbb29cf275442a3bce408e4d5232ab29962a449b23c237d136b5a91",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-build.log": "66a730fccb275ac34366981f575b27d435149553120c87706cab9b7e73eaf3cd",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-types-2.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-browser-2.log": "d72f1d05bf7e11fef3d2c9ebc99f172875f0d8d2af601d567df601c502176b1d",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-build-2.log": "67304e801fa5372849fb666724881066a06809b88669afb6c6663f6cd464504a",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-final-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-unit.log": "2377b293322d9343e9e21b7c8456a01e552f0429986fe87eac5787560ea867b8",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/handoff/create-conversation-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/handoff/summary-and-create-input.md": "62f5aaee55756a77e309f3edff2c6a011195bfc8c6ae4c6a706e346970f6fbab",
+    "src/web/v2/routes/handoff-summary.tsx": "b68461febd0a96cb7426f4c108484763f58ee26df5a50182d2fa48e6fa2ee17f",
+    "src/web/v2/routes/handoff-compose.tsx": "3c82309ff2799c38a010083c2b4fb6add9c44eb1f2bff09d07018620a7f727d7",
+    "src/web/v2/routes/session-composer.tsx": "9668df4398e4d1fd56ed3c511d23c8c58957753c0875e98196c0e3f8e33aa607",
+    "src/web/v2/routes/create-conversation.tsx": "df69f74c741fd82ca36732c9fcdee53783b3de303c22357d2f491a731adca754",
+    "src/web/v2/routes/create.tsx": "f5fb43599a8e8f1731093e32b21ea6380be03b46e7816638f227b83282c587fa",
+    "src/web/v2/routes/work-session.tsx": "72ea77ad4096bd1c4af4910bf437067eb0d90c69b45e5a3f4d7965ce51e6dee9",
+    "src/web/v2/state/handoff.ts": "031409c7b2a998a3022a8b12da7db1498d8522b772655204e90e52ba252835c8",
+    "test/browser/handoff-summary.spec.ts": "9e928f715aa5698e3d61e5d5a0cc6006e1989513d8694659085ecf6dd673a09b",
+    "test/browser/create-conversation.spec.ts": "3ccc1c42c7a745381e4bdbcea63c0d3dcfebe1a69518b973eeec88e2309cb747",
+    "openspec/changes/next-generation-nekomimi/design.md": "fd28b57c76593348f6ba9344253e9f6b3d961d02f83b8a75a3a759028e5b8ee1",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "366cba9ed9933ec3e2ff46dc8ad22abf5045d244736dc88c2ce317c986506a2f"
+  }
+}

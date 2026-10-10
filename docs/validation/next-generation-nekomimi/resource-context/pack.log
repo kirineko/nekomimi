@@ -1,0 +1,58 @@
+pack-smoke: npm pack 
+pack-smoke: tar 
+pack-smoke: npm install 
+pack-smoke: npm install (global)
+pack-smoke: nekomimi 
+pack-smoke: node 
+{"globalCli":true,"webAssets":true,"fileConfiguration":true,"workspaceIsolation":true,"canonicalPath":true,"calls":3}
+pack-smoke: node 
+pack-smoke: nekomimi 
+pack-smoke: node 
+pack-smoke: node 
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /Users/kirineko/.local/share/fnm/node-versions/v24.15.0/installation/bin/node customization-smoke.mjs
+file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95
+    throw Error(used.error ?? "Command failed");
+          ^
+
+Error: Error: Error: Missing SDK document
+    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95:11
+
+Node.js v24.15.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at invoke (file:///Users/kirineko/Github/nekomimi/scripts/pack-smoke.mjs:15:10)
+    at file:///Users/kirineko/Github/nekomimi/scripts/pack-smoke.mjs:48:13 {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95\n' +
+      '    throw Error(used.error ?? "Command failed");\n' +
+      '          ^\n' +
+      '\n' +
+      'Error: Error: Error: Missing SDK document\n' +
+      '    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95:11\n' +
+      '\n' +
+      'Node.js v24.15.0\n'
+  ],
+  pid: 82362,
+  stdout: '',
+  stderr: 'file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95\n' +
+    '    throw Error(used.error ?? "Command failed");\n' +
+    '          ^\n' +
+    '\n' +
+    'Error: Error: Error: Missing SDK document\n' +
+    '    at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-bOUBHB/customization-smoke.mjs:95:11\n' +
+    '\n' +
+    'Node.js v24.15.0\n'
+}
+
+Node.js v24.15.0

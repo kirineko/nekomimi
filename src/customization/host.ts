@@ -1,3 +1,4 @@
+import { ApiError } from "../shared/protocol.js";
 import { Lifecycle } from './lifecycle.js';
 import { Themes } from "./themes.js";
 import type { BuiltTheme } from "./theme-build.js";
@@ -10,6 +11,8 @@ import { Packages, type PackageCandidate } from "./packages.js";
 import { McpOAuth } from "./mcp-oauth.js";
 import { ProviderRegistry, type RegisteredProvider } from "./provider-registry.js";
 import { ProviderProfiles } from "./provider-profiles.js";
+import { modelCatalog } from "./model-catalog.js";
+import { ConfigStore } from "../config/store.js";
 import type { RegisteredWorkflow } from "./workflow-contract.js";
 import { Panels } from "./panels.js";
 import type { BuiltPanel } from "./panel-build.js";
@@ -184,51 +187,67 @@ export class CustomizationHost {
     if (!this.busy) void this.reload(receipt);
     return receipt;
   }
-  async requestCandidate(candidateId: string, expectedHash: string, authorize = false, expectedSettings?: number): Promise<ReloadReceipt> {
+  async requestCandidate(candidateId: string, expectedHash: string, authorize = false, expectedSettings?: number, expectedActiveRevision?: number): Promise<ReloadReceipt> {
     const store = new Candidates(this.catalog.workspace);
     const { resource } = await store.prepare(candidateId, expectedHash);
-    return this.queueCandidate(resource, authorize, expectedSettings);
+    return this.queueCandidate(resource, authorize, expectedSettings, expectedActiveRevision);
   }
-  async requestRollback(name: string, authorize = false) {
-    return this.queueCandidate(await new Candidates(this.catalog.workspace).previous(name), authorize);
+  async requestProjectDelivery(delivery: import('./candidates.js').CandidateDelivery, expectedSettings: number, expectedActiveRevision: number): Promise<ReloadReceipt> {
+    if (this.busy) throw new Error('Target runtime is busy; review delivery again when idle');
+    const resource = await new Candidates(this.catalog.workspace).stageDelivery(delivery, this.catalog.home);
+    return this.queueCandidate(resource, true, expectedSettings, expectedActiveRevision, true);
   }
-  async requestPackage(candidateId: string, scope: "project" | "user", authorize = false) {
+  async requestRollback(name: string, authorize = false, expectedHash?: string, expectedActiveRevision?: number, expectedSettings?: number) {
+    const previous = await new Candidates(this.catalog.workspace).previous(name);
+    if (expectedHash !== undefined && previous.hash !== expectedHash) throw new ApiError(409, "candidate_revision_conflict", "Rollback target revision conflict; inspect again");
+    return this.queueCandidate(previous, authorize, expectedSettings, expectedActiveRevision);
+  }
+  async requestPackage(candidateId: string, scope: "project" | "user", authorize = false, expectedActiveRevision?: number, expectedHash?: string) {
     return this.exclusive(async () => {
       if (this.receipts.some(r => r.status === "pending")) throw new Error("Another customization change is pending");
       const packages = new Packages(this.catalog.workspace, this.catalog.home);
+      const activeRevision = await packages.revision(scope);
+      if (expectedActiveRevision !== undefined && activeRevision !== expectedActiveRevision) throw new ApiError(409, "package_revision_conflict", "Package installation revision conflict; inspect again");
       const candidate = await packages.candidate(scope, candidateId);
+      if (expectedHash !== undefined && candidate.revision !== expectedHash) throw new ApiError(409, "package_revision_conflict", "Package content revision conflict; inspect again");
+      await packages.assertOrigin(candidate);
       const previous = (await packages.list()).find(p => p.packageId === candidate.packageId);
       const grants = await packages.permissions(candidate);
       if (!authorize && (!previous?.trusted || grants.some(g => !previous.grants.includes(g)))) throw new Error("Package requires authorization for source, capabilities or targets");
       const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending" };
       this.nextReloadId = id();
-      this.packageCommits.set(receipt.id, { candidate, grants, expectedRevision: await packages.revision(scope) });
+      this.packageCommits.set(receipt.id, { candidate, grants, expectedRevision: activeRevision });
       this.receipts.push(receipt); this.receipts = this.receipts.slice(-30);
       if (!this.busy) void this.reload(receipt);
       return receipt;
     });
   }
-  async removePackage(packageId: string) {
+  async removePackage(packageId: string, expectedHash?: string, expectedRevision?: number) {
     return this.exclusive(async () => {
       if (this.receipts.some(r => r.status === "pending")) throw new Error("Another customization change is pending");
       const packages = new Packages(this.catalog.workspace, this.catalog.home);
       const candidate = (await packages.list()).find(p => p.packageId === packageId);
       if (!candidate) throw new Error("Unknown installed package");
+      const activeRevision = await packages.revision(candidate.scope);
+      if (expectedHash !== undefined && candidate.revision !== expectedHash || expectedRevision !== undefined && activeRevision !== expectedRevision) throw new ApiError(409, "package_revision_conflict", "Package installation revision conflict; inspect again");
       const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending" };
       this.nextReloadId = id();
-      this.packageRemovals.set(receipt.id, { packageId, expectedRevision: await packages.revision(candidate.scope) });
+      this.packageRemovals.set(receipt.id, { packageId, expectedRevision: activeRevision });
       this.receipts.push(receipt); this.receipts = this.receipts.slice(-30);
       if (!this.busy) void this.reload(receipt);
       return receipt;
     });
   }
-  private async queueCandidate(resource: Resource, authorize: boolean, expectedSettings?: number): Promise<ReloadReceipt> {
+  private async queueCandidate(resource: Resource, authorize: boolean, expectedSettings?: number, expectedActiveRevision?: number, requireIdle = false): Promise<ReloadReceipt> {
     return this.exclusive(async () => {
+    if (requireIdle && this.busy) throw new Error('Target runtime is busy; delivery was not queued');
     if (this.receipts.some(r => r.status === "pending")) throw new Error("Another customization change is pending");
     const settings = await this.catalog.decisions();
-    if (expectedSettings !== undefined && settings.revision !== expectedSettings) throw new Error("Authorization revision conflict; inspect again");
+    if (expectedSettings !== undefined && settings.revision !== expectedSettings) throw new ApiError(409, "resource_settings_conflict", "Authorization revision conflict; inspect again");
     const prior = settings.entries[resource.id];
     const store = new Candidates(this.catalog.workspace);
+    const activeRevision = await store.revision();
+    if (expectedActiveRevision !== undefined && activeRevision !== expectedActiveRevision) throw new ApiError(409, "candidate_revision_conflict", "Active customization revision conflict; inspect again");
     const active = (await store.active()).find(r => r.resourceId === resource.id);
     const required = resource.manifest?.requiredCapabilities ?? [];
     const expanded = required.some(c => !(prior?.capabilities ?? active?.grantedCapabilities ?? []).includes(c));
@@ -237,16 +256,22 @@ export class CustomizationHost {
     resource.status = "enabled";
     const receipt: ReloadReceipt = { id: this.nextReloadId, status: "pending", resourceId:resource.id, resourceRevision:resource.hash };
     this.nextReloadId = id();
-    this.candidateCommits.set(receipt.id, { resource, grants: required, expectedRevision: await store.revision() });
+    this.candidateCommits.set(receipt.id, { resource, grants: required, expectedRevision: activeRevision });
     this.receipts.push(receipt);
     this.receipts = this.receipts.slice(-30);
     if (!this.busy) void this.reload(receipt);
     return receipt;
     });
   }
-  commands() { return commandCatalog(this.active); }
-  async describe() {
+  commands(mode: import("../shared/protocol.js").SessionMode = "work") { return commandCatalog(this.active, mode); }
+  async modelCatalog(builtinConfigured?:boolean) {
+    const resources=await this.catalog.discover(),store=new ProviderProfiles(this.catalog.home);
+    return modelCatalog(new ProviderRegistry(this.active?.extensions.flatMap(e=>e.providers)??[]),await store.list(),(await store.credentials()).entries,builtinConfigured??(await new ConfigStore(this.catalog.home).describe()).configured,resources);
+  }
+  async describe(builtinConfigured?: boolean) {
     const resources = await this.catalog.discover();
+    const profileStore=new ProviderProfiles(this.catalog.home),profiles=await profileStore.list();
+    const providers=await this.modelCatalog(builtinConfigured);
     return {
       version: 1,
       resources: resources.map(describe),
@@ -270,13 +295,15 @@ export class CustomizationHost {
       receipts: this.receipts,
       candidates: await new Candidates(this.catalog.workspace).list(),
       managed: await new Candidates(this.catalog.workspace).active(),
+      managedRevision: await new Candidates(this.catalog.workspace).revision(),
       packages: await new Packages(this.catalog.workspace, this.catalog.home).list(),
       packageCandidates: await new Packages(this.catalog.workspace, this.catalog.home).drafts(),
-      providers: new ProviderRegistry(this.active?.extensions.flatMap(e => e.providers) ?? []).catalog(),
-      providerProfiles: await new ProviderProfiles(this.catalog.home).list(),
+      packageRevisions: { project: await new Packages(this.catalog.workspace, this.catalog.home).revision("project"), user: await new Packages(this.catalog.workspace, this.catalog.home).revision("user") },
+      providers,
+      providerProfiles: profiles,
       panels: this.panels.catalog(),
       runtimeUi: await this.themes.describe(),
-      workflowDefinitions: this.active?.extensions.flatMap(e => e.workflows.map(w => ({ resourceId: e.resource.id, resourceName: e.resource.name, id: w.id, revision: e.resource.hash, schemaVersion: w.schemaVersion, entry: w.entry, steps: Object.keys(w.steps), inputSchema: w.inputSchema }))) ?? [],
+      workflowDefinitions: this.active?.extensions.flatMap(e => e.workflows.map(w => ({ resourceId: e.resource.id, resourceName: e.resource.name, id: w.id, revision: e.resource.hash, schemaVersion: w.schemaVersion, entry: w.entry, steps: Object.keys(w.steps), inputSchema: w.inputSchema, modes: w.modes }))) ?? [],
       workflows: (await this.workflows.list()).slice(-100).map(({ input, output, snapshot, ...state }) => ({ ...state, outputPreview: output === undefined ? undefined : JSON.stringify(output).slice(0, 2000) })),
     };
   }
@@ -379,7 +406,7 @@ export class CustomizationHost {
     if (failures.length)
       throw new AggregateError(failures, `Extension cleanup failed; restart required: ${failures.map(String).join("; ")}`);
   }
-  async trial(resourceId: string, candidate?: Resource) {
+  async trial(resourceId: string, candidate?: Resource, signal?: AbortSignal) {
     if (this.busy || this.active)
       throw new Error("Trial requires a fresh host");
     const resource = candidate ?? (await this.catalog.discover()).find(
@@ -393,9 +420,10 @@ export class CustomizationHost {
       throw new Error("Trial requires an explicitly enabled trusted extension");
     const grant = (await this.catalog.decisions()).entries[resourceId];
     if (!grant?.enabled || !grant.trusted || resource.id !== resourceId) throw new Error("Trial resource not authorized");
-    await this.activate([resource]);
+    signal?.throwIfAborted();
+    await this.activate([resource], undefined, signal);
   }
-  private async activate(selected?: Resource[], beforeSwitch?: () => Promise<void>) {
+  private async activate(selected?: Resource[], beforeSwitch?: () => Promise<void>, signal?: AbortSignal) {
     const resources = resolveResourcePrecedence(selected ?? (await this.catalog.discover()));
     const invalid = resources.filter((r) => r.status === "error");
     if (invalid.length)
@@ -418,11 +446,11 @@ export class CustomizationHost {
       for (const group of groups.values()) {
         for (const resource of group) {
           const grant = await this.catalog.grant(resource);
-          if (resource.manifest?.sdkVersion === 2 && resource.manifest.requiredCapabilities?.some(c => !grant?.capabilities?.includes(c)) && !beforeSwitch) throw new Error(`${resource.name}: 新增权限待确认，保留原活动版本`);
+          if (resource.manifest?.sdkVersion === 3 && resource.manifest.requiredCapabilities?.some(c => !grant?.capabilities?.includes(c)) && !beforeSwitch) throw new Error(`${resource.name}: 新增权限待确认，保留原活动版本`);
           const errors = await validateExtension(resource);
           if (errors.length) throw new Error(`${resource.source}: ${errors.join("\n")}`);
         }
-        candidate.extensions.push(...await new ExtensionProcess(group[0]!, this.catalog, group.slice(1)).start());
+        candidate.extensions.push(...await new ExtensionProcess(group[0]!, this.catalog, group.slice(1)).start(signal));
       }
       new ProviderRegistry(candidate.extensions.flatMap(e => e.providers));
       const panelIds = candidate.extensions.flatMap(e => e.panels.map(p => `${e.resource.id}:${p.id}`));
@@ -434,7 +462,7 @@ export class CustomizationHost {
       )) {
         const m = new McpConnection(r, this.catalog.workspace, this.oauth);
         candidate.mcp.push(m);
-        try { await m.connect(); }
+        try { if (m.exposure === "direct") await m.connect(); else if (m.exposure !== "hidden") void m.connect().catch(() => {}); }
         catch (e) { throw new Error(`${r.source}: ${String(e)}`); }
       }
       const schemas = candidate.mcp.map((m) => ({
@@ -445,6 +473,7 @@ export class CustomizationHost {
       }));
       candidate.revision = hash(JSON.stringify({ snapshot, schemas }));
       candidate.snapshot = { ...snapshot, revision: candidate.revision };
+      signal?.throwIfAborted();
       await beforeSwitch?.();
     } catch (e) {
       try {

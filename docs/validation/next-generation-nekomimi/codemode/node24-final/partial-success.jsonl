@@ -1,0 +1,6 @@
+{"seq":1,"type":"authorize","id":"child-1","parent":"script-1","allowed":true,"version":"fixture-v1","args":{"value":7}}
+{"seq":2,"type":"intent","id":"child-1","parent":"script-1"}
+{"seq":3,"type":"after-hook","id":"child-1","parent":"script-1"}
+{"seq":4,"type":"result","id":"child-1","parent":"script-1","isError":false,"result":{"content":[{"type":"text","text":"7"}],"structuredContent":{"value":7},"details":{"effect":1}}}
+{"seq":5,"type":"script.failed","error":{"kind":"script","name":"Error","message":"after effect","stack":"Error: after effect\n    at <anonymous> (codemode.js:1:85)"},"calls":[{"name":"effect","status":"ok","durationMs":16.393417}]}
+{"seq":6,"type":"probe.passed"}

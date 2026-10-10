@@ -1,3 +1,4 @@
+import { Button } from "../ui/Button";
 import { useEffect, useRef, useState } from "react";
 import { api } from "../api";
 interface Entry {
@@ -167,7 +168,7 @@ export function FileBrowser({
       role={depth ? "group" : "tree"}
       aria-label={depth ? undefined : "项目文件"}
     >
-      {!pages[path] && <p className="panel-muted">加载目录…</p>}
+      {!pages[path] && <p className="text-xs text-muted">加载目录…</p>}
       {pages[path]?.entries.map((e) => (
         <div key={e.path}>
           <button
@@ -176,7 +177,7 @@ export function FileBrowser({
             aria-expanded={
               e.type === "directory" ? expanded.has(e.path) : undefined
             }
-            className={`file-entry ${selected === e.path ? "selected" : ""}`}
+            className={`flex w-full items-center gap-2 rounded-sm py-1.5 text-left text-xs hover:bg-wash aria-selected:bg-wash [&_span:last-child]:break-all`}
             style={{ paddingLeft: 12 + depth * 16 }}
             title={e.path}
             onClick={() => {
@@ -244,18 +245,18 @@ export function FileBrowser({
         </div>
       ))}
       {pages[path]?.entries.length === 0 && (
-        <p className="panel-muted">空目录</p>
+        <p className="text-xs text-muted">空目录</p>
       )}
       {pages[path]?.next && (
-        <button onClick={() => void load(path, pages[path]?.next)}>
+        <Button size="sm" variant="outline" onClick={() => void load(path, pages[path]?.next)}>
           加载更多文件
-        </button>
+        </Button>
       )}
     </div>
   );
   return (
-    <section className="file-browser">
-      <div className="panel-toolbar">
+    <section aria-label="文件浏览" className="min-w-0 space-y-3">
+      <div className="flex flex-wrap items-center gap-2 text-xs">
         <label>
           <input
             type="checkbox"
@@ -264,16 +265,16 @@ export function FileBrowser({
           />
           显示隐藏文件
         </label>
-        <button onClick={() => setRefresh((n) => n + 1)}>刷新</button>
+        <Button size="sm" variant="outline" onClick={() => setRefresh((n) => n + 1)}>刷新文件</Button>
       </div>
-      <p className="panel-muted">双击文件，用本机默认程序打开</p>
+      <p className="text-xs text-muted">双击文件，用本机默认程序打开</p>
       {error && (
-        <p role="alert" className="error">
+        <p role="alert" className="break-words text-sm text-danger">
           {error}
         </p>
       )}
       {notice && (
-        <p role="status" className="panel-muted">
+        <p role="status" className="text-xs text-muted">
           {notice}
         </p>
       )}
@@ -282,11 +283,11 @@ export function FileBrowser({
         Object.values(pages).some((p) =>
           p.entries.some((e) => e.path === selected && e.type === "file"),
         ) && (
-          <footer className="file-selection">
+          <footer className="flex flex-wrap items-center gap-2 border-t border-line pt-2 text-xs [&_code]:break-all">
             <code>{selected}</code>
-            <button disabled={busy} onClick={() => void open(selected)}>
+            <Button size="sm" variant="outline" disabled={busy} onClick={() => void open(selected)}>
               {busy ? "打开中…" : "用默认程序打开"}
-            </button>
+            </Button>
           </footer>
         )}
     </section>

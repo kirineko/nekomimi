@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-07",
+  "scope": "bounded Durable admission slice; production migration pending",
+  "sourceSha256": {
+    "src/pi/journal-storage.ts": "f2da7a77c2052931040f35ca4ac7d8d14432d35b7b07a4ae73134b460003a1c4",
+    "src/pi/recovery.ts": "d7fbd71db8b9910f9080c53d73e8f8ec4b22bdace57edc059ad7fa6ed5c6ec34",
+    "src/pi/model-service.ts": "9a3b76d7f76e95e5ef444c3d1f20a5c138ece3f0f8cc998b53047eb6a8eeda1f",
+    "src/pi/task-context.ts": "ec20d5959c8a1d750d53e3bc31824fd6bcbf12d01a443744352064468060cee4",
+    "src/recorded-call.ts": "f3a85265075d4771c5ecf27ef06dc025e404edf39a4b9f015e9e19581a124754",
+    "src/journal.ts": "b1a3d480ed30f4e104ccd98a73a81873f45caed3c97cd8f6ce4c0dbdc0502107"
+  },
+  "unitTests": 28,
+  "modelRegressionTests": 45,
+  "network": [
+    "network-node22/results.json",
+    "network-node24/results.json"
+  ],
+  "intentFaults": [
+    "intent-node22-run/results.json",
+    "intent-node24-run/results.json"
+  ],
+  "crashRecovery": [
+    "production-node22/results.json",
+    "production-node24/results.json"
+  ],
+  "installedSlice": "packed-node22/results.json",
+  "limits": [
+    "macOS arm64 only; Linux pending",
+    "fake protocol/faux provider; no real model quality measurement",
+    "production CLI/Web still old loop; all production migration tasks pending",
+    "unverified custom task recovery rejected before scheduling"
+  ],
+  "intentFaultExitCodes": {
+    "22.19.0": 0,
+    "24.15.0": 0
+  },
+  "regression": {
+    "typecheckExitCode": 0,
+    "buildExitCode": 0,
+    "testFiles": 57,
+    "tests": 350,
+    "workers": 2,
+    "exitCode": 0,
+    "log": "gate-tests-workers2.log",
+    "specPassed": 43
+  }
+}

@@ -1,0 +1,50 @@
+
+Running 8 tests using 1 worker
+
+(node:71673) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (2.9s)
+  ✓  2 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (2.8s)
+  ✓  3 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.6s)
+  ✓  4 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (2.6s)
+  ✓  5 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.4s)
+  ✓  6 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.5s)
+  ✓  7 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.3s)
+  ✘  8 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (45.1s)
+
+
+  1) test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: '调用证据', exact: true }).getByRole('region', { name: '所选调用证据' }).getByText(/#\d+ · context.snapshot/)
+
+
+      60 |     const settings=await app.sessions.config.describe();await app.sessions.config.save('settings',{...settings,model:'new-current-model'});
+      61 |     await page.goto(`${app.origin}/v2/work/session/${work.id}#token=${app.token}`);await page.getByRole('button',{name:'调用证据',exact:true}).click();const inspection=page.getByRole('dialog',{name:'调用证据',exact:true});
+    > 62 |     await inspection.getByRole('button',{name:'work · 完成',exact:true}).click();const selected=inspection.getByRole('region',{name:'所选调用证据'});await selected.getByRole('combobox',{name:'证据分组',exact:true}).selectOption('sources');await selected.getByText(/#\d+ · context.snapshot/).click();await selected.getByRole('button',{name:'查看此请求的上下文',exact:true}).click();
+         |                                                                                                                                                                                                                                                                                        ^
+      63 |     const context=page.getByRole('dialog',{name:'上下文详情',exact:true});await expect(context.getByRole('combobox',{name:'请求快照',exact:true})).toHaveValue(captured.eventId);await expect(context.getByRole('region',{name:'当前上下文统计'})).toContainText('new-current-model');
+      64 |     const handoff=context.getByRole('region',{name:'此请求的交接来源'});await handoff.locator('summary').click();await expect(handoff.getByRole('link',{name:'查看交付版本 review',exact:true})).toHaveAttribute('href',new RegExp(candidate.id));await expect(handoff.getByRole('link',{name:'查看交接来源会话',exact:true})).toHaveAttribute('href',new RegExp(source.id));
+      65 |     await page.keyboard.press('Escape');await expect(inspection).toBeVisible();await app.sessions.remove(source.id);await selected.getByRole('button',{name:'查看此请求的上下文',exact:true}).click();await context.getByRole('region',{name:'此请求的交接来源'}).locator('summary').click();await expect(context).toContainText('来源会话已删除或不可回溯');await expect(context.getByRole('link',{name:'查看交接来源会话',exact:true})).toHaveCount(0);expect(calls).toBe(1);
+        at /Users/kirineko/Github/nekomimi/test/browser/inspection.spec.ts:62:280
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/inspection-10-6-historical-6b550-eleted-sources-stay-missing/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing 
+  7 passed (1.0m)

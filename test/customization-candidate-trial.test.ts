@@ -10,7 +10,7 @@ import { temporary, key, response, textItem } from "./helpers.js";
 it("keeps mock trials separate from explicitly activated real tool execution", async () => {
   const workspace = await temporary(), home = await temporary();
   const store = new Candidates(workspace), candidate = await store.scaffold("trial");
-  await writeFile(join(candidate.path, "extension.json"), JSON.stringify({ name: "trial", sdkVersion: 2, entry: "index.ts", requiredCapabilities: ["commands", "tools", "model"] }));
+  await writeFile(join(candidate.path, "extension.json"), JSON.stringify({ name: "trial", sdkVersion: 3, entry: "index.ts", requiredCapabilities: ["commands", "tools", "model"] }));
   await writeFile(join(candidate.path, "index.ts"), `import type {ExtensionFactory} from 'nekomimi/extensions'; export default ((api)=>{api.registerCommand('trial',{description:'trial',async handler(a,c){await c.callTool('write',{path:'effect.txt',content:'real'});return c.model('review')}})}) satisfies ExtensionFactory;`);
   const checked = (await store.inspect(candidate.id)).candidate;
   const trial = await trialCandidate(workspace, home, candidate.id, checked.contentHash, "/trial", true, { model: "mock answer", mockResults: { write: { content: [{ type: "text", text: "mock write" }] } } });
@@ -41,7 +41,7 @@ it("cancels a trial without changing active pointers and refuses newly requested
   try { await expect(trialCandidate(workspace, home, candidate.id, checked.contentHash, "/loop", true, { signal: controller.signal })).rejects.toThrow(); }
   finally { clearTimeout(timer); }
   expect(await store.active()).toEqual([]);
-  await writeFile(join(candidate.path, "extension.json"), JSON.stringify({ name: "loop", sdkVersion: 2, entry: "index.ts", requiredCapabilities: ["commands", "state"] }));
+  await writeFile(join(candidate.path, "extension.json"), JSON.stringify({ name: "loop", sdkVersion: 3, entry: "index.ts", requiredCapabilities: ["commands", "state"] }));
   const changed = (await store.inspect(candidate.id)).candidate;
   await expect(trialCandidate(workspace, home, candidate.id, changed.contentHash, "/loop")).rejects.toThrow("authorization");
 });

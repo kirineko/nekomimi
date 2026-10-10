@@ -1,0 +1,41 @@
+{
+  "tarball": "/tmp/nekomimi-final-clean-tar/nekomimi-0.2.1.tgz",
+  "sha256": "4e4e5a20223da0de09995ca59ccc615787620356f956fa71def84021acaa2135",
+  "build": {
+    "version": 1,
+    "sha256": "f7424580c8a12f881340ca43507c425c011e0f790cb7c566c67e0acf619eb2a3"
+  },
+  "distFileCount": 540,
+  "reason": "Removed raw HTTP debug error output; new privacy regression; all platform results below must use this fixed artifact",
+  "currentDistFilesVerified": 540,
+  "platforms": {
+    "macos": [
+      {
+        "platform": "macos",
+        "node": "24.15.0",
+        "exitCode": 0,
+        "log": "/tmp/nekomimi-clean-macos-24.15.0.log"
+      },
+      {
+        "platform": "macos",
+        "node": "22.19.0",
+        "exitCode": 0,
+        "log": "/tmp/nekomimi-clean-macos-22.19.0.log"
+      }
+    ],
+    "linux": [
+      {
+        "platform": "linux",
+        "node": "24.15.0",
+        "exitCode": 0,
+        "log": "/tmp/nekomimi-clean-linux-24.15.0.log"
+      },
+      {
+        "platform": "linux",
+        "node": "22.19.0",
+        "exitCode": 0,
+        "log": "/tmp/nekomimi-clean-linux-22.19.0.log"
+      }
+    ]
+  }
+}

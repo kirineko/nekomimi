@@ -1,4 +1,4 @@
-import type { ExtensionFactory2 } from "nekomimi/extensions";
+import type { ExtensionFactory3 } from "nekomimi/extensions";
 export default ((api) => {
   api.registerWorkflow({
     id: "durable-review", schemaVersion: 1,
@@ -21,4 +21,4 @@ export default ((api) => {
       },
     },
   });
-}) satisfies ExtensionFactory2;
+}) satisfies ExtensionFactory3;

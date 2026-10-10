@@ -1,0 +1,37 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/inspection.test.ts (2 tests | 2 failed) 2184ms
+   × keeps parent failure and child success separate, scopes attempts, and counts each usage owner once 397ms
+   × bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero 1786ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/inspection.test.ts > keeps parent failure and child success separate, scopes attempts, and counts each usage owner once
+TypeError: Cannot read properties of undefined (reading 'length')
+ ❯ clipped src/projection/session.ts:5:8
+      3| import type { SessionInfo, TimelineRow } from "../shared/protocol.js";
+      4| const clipped = (text: string) =>
+      5|   text.length > 24000
+       |        ^
+      6|     ? text.slice(0, 24000) + "\n[摘要已截断，请查看完整证据]"
+      7|     : text;
+ ❯ SessionProjection.apply src/projection/session.ts:190:18
+ ❯ SessionProjection.update src/projection/session.ts:36:18
+ ❯ src/server/sessions.ts:727:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/inspection.test.ts > bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero
+AssertionError: Target cannot be null or undefined.
+ ❯ test/inspection.test.ts:51:77
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  06:08:24
+   Duration  2.90s (transform 299ms, setup 0ms, import 658ms, tests 2.18s, environment 0ms)
+

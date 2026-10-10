@@ -1,0 +1,47 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+{"nekomimiDiagnostic":{"version":1,"id":"bc0d8eab-6343-4508-a229-b93bcfd76f4e","timestamp":"2026-10-06T23:52:05.921Z","sessionId":"b90fe185-76ac-41c8-bf48-a25eb5f2f9ea","runId":"9572b45d-af19-44da-9c50-3e95348d1095","seq":31,"durableSeq":31,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5af5af74-f933-4872-a627-b399829807bb","timestamp":"2026-10-06T23:52:06.728Z","sessionId":"ef3ad2b7-a70a-4d30-8904-02662e0c8747","runId":"2b903d4b-f788-4ad9-9bae-0619133c81a1","seq":32,"durableSeq":31,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"872a9784-6e57-4c01-9075-eeddc6f9d928","timestamp":"2026-10-06T23:52:07.434Z","sessionId":"ee7e9170-9ac9-4eda-b4e0-149d52aca34f","runId":"9a60866a-a91d-4314-b729-3a30ebadeae4","seq":32,"durableSeq":31,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4f7f66ad-19ab-431f-8f34-db5f79fbce8c","timestamp":"2026-10-06T23:52:08.264Z","sessionId":"55ac0d8c-6960-4b32-a008-78e87ce5cbba","runId":"abf542f1-0f1f-4b7a-8657-d64b3a0e482c","seq":32,"durableSeq":31,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"fed3f0c0-99d9-4a39-9ebc-7be0162e8977","timestamp":"2026-10-06T23:52:08.920Z","sessionId":"764adbc2-9fe6-4324-82f1-9145e0dbcc64","runId":"9472fa7f-76a7-41c1-b0d1-07b290e252ec","attemptId":"5872b00d-be41-4a19-b984-ac72809d9c67","seq":34,"durableSeq":34,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"90c97cab-0d85-48b6-aafb-883d6c4286e5","timestamp":"2026-10-06T23:52:09.782Z","sessionId":"f607ba0a-a7ca-4a06-b2cf-eede9df03d1d","runId":"ac004821-6989-4226-aeb8-862ff8e627a8","attemptId":"57772565-95c9-43e0-a3ca-9aad64f4e7e5","seq":35,"durableSeq":34,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"8e0a2606-c30f-4a06-a54e-05abc5936c4d","timestamp":"2026-10-06T23:52:10.670Z","sessionId":"f96581d1-f706-4298-8e1d-5ae3d3e91a2e","runId":"751e8f48-68d8-40b5-9682-0ab282357f2a","attemptId":"2017d39b-7fa3-4447-82b6-76b679738603","seq":35,"durableSeq":34,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"acda54b3-8602-4ff6-88ce-0c098466eeed","timestamp":"2026-10-06T23:52:11.737Z","sessionId":"628bfda8-e452-4838-b21c-e2f4030f9408","runId":"0e7ffc21-a9ef-4caa-977e-3987838ca6c7","attemptId":"0f18bcb8-7273-4967-87ce-954375cf70ea","seq":36,"durableSeq":35,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/context-runtime.test.ts (12 tests | 3 failed) 28173ms
+   × rejects a completed create summary after a late profile change and preserves its evidence 1213ms
+   × rejects a completed create summary after a late permission change and preserves its evidence 1188ms
+   × rejects a completed create summary after a late lifecycle change and preserves its evidence 1150ms
+{"nekomimiDiagnostic":{"version":1,"id":"21c00c7f-9eca-4fef-ba24-61be357832da","timestamp":"2026-10-06T23:52:26.852Z","sessionId":"b8ce4a3f-e51e-47da-974a-9f4e551f4111","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d4b97341-7779-437a-a9d0-e0576179d102","timestamp":"2026-10-06T23:52:31.053Z","sessionId":"036e5d78-479e-4504-b2a6-ba62fbc3c8c2","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"bea6f92f-92dd-4b5b-9a9e-3ddc75364178","timestamp":"2026-10-06T23:52:31.107Z","sessionId":"b7615fc9-7bf3-4291-9187-0aaaaa542c4e","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ec8431f4-784f-4d77-859c-d6e9d2575004","timestamp":"2026-10-06T23:52:31.197Z","sessionId":"af945f9a-d284-406f-a588-c3630681fc81","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4259484e-e37e-49a0-a7d1-23f990164a7e","timestamp":"2026-10-06T23:52:31.298Z","sessionId":"5f6f3716-1983-480a-bac3-d9f41e0101ad","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6b556ef9-04ce-4c7b-bce7-f5786285df9f","timestamp":"2026-10-06T23:52:31.481Z","sessionId":"25e46c30-3fd4-4928-a51e-0e8e6749c385","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0dcec8e9-9e23-4496-a1ad-520a019d74f6","timestamp":"2026-10-06T23:52:31.502Z","sessionId":"8a16b5fa-a436-43d5-b5b0-1479eccb8116","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"262e73fb-e312-4c22-84fe-fd834ac6599d","timestamp":"2026-10-06T23:52:31.506Z","sessionId":"8a16b5fa-a436-43d5-b5b0-1479eccb8116","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late profile change and preserves its evidence
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late permission change and preserves its evidence
+ FAIL  test/context-runtime.test.ts > rejects a completed create summary after a late lifecycle change and preserves its evidence
+Error: Resume requires the original workspace
+ ❯ src/runtime.ts:197:13
+    195|     const workspace = await realpath(options.workspace);
+    196|     if (existing && existing.workspace !== workspace)
+    197|       throw new Error("Resume requires the original workspace");
+       |             ^
+    198|     if (!existing)
+    199|       await journal.append("session.created", { workspace, ownerWorksp…
+ ❯ test/context-runtime.test.ts:60:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  3 failed | 71 passed (74)
+   Start at  07:51:57
+   Duration  34.38s (transform 473ms, setup 0ms, import 1.87s, tests 65.46s, environment 0ms)
+

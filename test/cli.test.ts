@@ -47,9 +47,10 @@ it.skipIf(process.platform==='win32')('web CLI opens actual URL once; opener fai
   const started=new Promise<string>(r=>child.stdout.on('data',x=>{output+=x;const match=output.match(/Web: (http:\/\/\S+)/);if(match)r(match[1]!);}));
   try{
    if(mode==='startup'){expect(await exited).not.toBe(0);await expect(readFile(record)).rejects.toMatchObject({code:'ENOENT'});continue;}
-   const url=await Promise.race([started,exited.then(()=>{throw new Error(stderr);})]);await expect.poll(async()=>{try{return await readFile(record,'utf8');}catch{return '';}}).toContain(url);
+   // The production opener allows 5s; a cold Node fixture may exceed Vitest's 1s polling default.
+   const url=await Promise.race([started,exited.then(()=>{throw new Error(stderr);})]);await expect.poll(async()=>{try{return await readFile(record,'utf8');}catch{return '';}},{timeout:5000}).toContain(url);
    expect((await readFile(record,'utf8')).trim().split('\n')).toEqual([JSON.stringify([url])]);expect((await fetch(url)).status).toBe(200);
-   if(mode==='failure')await expect.poll(()=>stderr).toContain('手动打开');child.kill('SIGINT');expect(await exited).toBe(0);
+   if(mode==='failure')await expect.poll(()=>stderr,{timeout:5000}).toContain('手动打开');child.kill('SIGINT');expect(await exited).toBe(0);
   }finally{child.kill('SIGKILL');}
  }
 },30000);

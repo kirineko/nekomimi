@@ -1,0 +1,20 @@
+
+Running 13 tests using 1 worker
+
+(node:62528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/candidate-management.spec.ts:13:1 › 10.4 candidate activation requires review and validation, reports actual loading and never installs in the work project (3.7s)
+  ✓   2 test/browser/candidate-management.spec.ts:31:1 › 10.4 export review is explicit, preserves the nonsecret path and refuses existing files (992ms)
+  ✓   3 test/browser/candidate-management.spec.ts:44:1 › 10.4 rollback reviews the immutable prior version and changed candidates cannot use old consent (5.2s)
+  ✓   4 test/browser/mcp-management.spec.ts:16:1 › 10.4 MCP browsing does not connect, consent starts OAuth and callback never enables the resource (2.2s)
+  ✓   5 test/browser/mcp-management.spec.ts:37:1 › 10.4 changed MCP configuration rejects stale consent without discovery or automatic retry (486ms)
+  ✓   6 test/browser/mcp-management.spec.ts:51:1 › 10.4 pending MCP authorization survives refresh without persisting its link or restarting automatically (734ms)
+  ✓   7 test/browser/package-management.spec.ts:17:1 › 10.4 package browse and cancelled install are read-only; reviewed install, export and uninstall stay target-scoped (2.5s)
+  ✓   8 test/browser/package-management.spec.ts:36:1 › 10.4 stale package review fails once without replacing the installed revision (974ms)
+  ✓   9 test/browser/package-management.spec.ts:48:1 › 10.4 package rollback requires inspecting the prior version and cache collection preserves referenced content (2.7s)
+  ✓  10 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.5s)
+  ✓  11 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (603ms)
+  ✓  12 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (652ms)
+  ✓  13 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.8s)
+
+  13 passed (25.4s)

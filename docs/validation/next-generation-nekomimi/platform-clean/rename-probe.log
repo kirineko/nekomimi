@@ -1,0 +1,2 @@
+{"base":"/shared/rename-probe-","renames":5000,"reads":63420,"errors":{"ENOENT":2219}}
+{"base":"/var/tmp/rename-probe-","renames":5000,"reads":90962,"errors":{}}

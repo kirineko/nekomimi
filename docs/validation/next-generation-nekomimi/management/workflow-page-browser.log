@@ -1,0 +1,99 @@
+
+Running 13 tests using 1 worker
+
+(node:63144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (536ms)
+  ✘   2 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (207ms)
+(node:63163) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (738ms)
+  ✓   4 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (230ms)
+  ✘   5 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (317ms)
+(node:63217) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (748ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (1.2s)
+  ✓   8 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (4.0s)
+  ✓   9 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (286ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (2.7s)
+  ✓  11 test/browser/workflow-management.spec.ts:22:1 › 10.4 durable workflow wait survives restart and only an explicit answer continues it (5.9s)
+  ✓  12 test/browser/workflow-management.spec.ts:39:1 › 10.4 unknown workflow reconciliation does not repeat external effects or resume on navigation (4.3s)
+  ✓  13 test/browser/workflow-management.spec.ts:52:1 › 10.4 definition version change is rejected and invalid input stays editable without automatic retry (1.7s)
+
+
+  1) test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 ─────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('link', { name: '工作' })
+    Expected: visible
+    Error: strict mode violation: getByRole('link', { name: '工作' }) resolved to 2 elements:
+        1) <a href="/v2/work" aria-current="page" data-status="active" class="rounded-md bg-wash px-6 py-1 font-semibold text-foreground active">工作</a> aka getByRole('link', { name: '工作', exact: true })
+        2) <a class="text-sm underline" href="/v2/work/workflows">持久工作流管理</a> aka getByRole('link', { name: '持久工作流管理' })
+
+    Call log:
+      - Expect "toBeVisible" getByRole('link', { name: '工作' }) with timeout 5000ms
+      - waiting for getByRole('link', { name: '工作' })
+
+
+      75 | test("9.1 主题：明暗 tokens 切换且焦点环使用品牌色", async ({ page }) => {
+      76 |   await page.goto(`${app.origin}/v2/work#token=${app.token}`);
+    > 77 |   await expect(page.getByRole("link", { name: "工作" })).toBeVisible();
+         |                                                        ^
+      78 |   const brand = () =>
+      79 |     page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--brand").trim());
+      80 |   await page.evaluate(() => localStorage.removeItem("v2-theme"));
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-workbench.spec.ts:77:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-1-主题：明暗-tokens-切换且焦点环使用品牌色/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-workbench-9-1-主题：明暗-tokens-切换且焦点环使用品牌色/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-1-主题：明暗-tokens-切换且焦点环使用品牌色/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-workbench-9-1-主题：明暗-tokens-切换且焦点环使用品牌色/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 ─────────────────────────────
+
+    Error: locator.click: Error: strict mode violation: getByRole('link', { name: '工作' }) resolved to 2 elements:
+        1) <a href="/v2/work" class="rounded-md px-6 py-1 text-muted">工作</a> aka getByRole('link', { name: '工作', exact: true })
+        2) <a class="text-sm underline" href="/v2/create/workflows">持久工作流管理</a> aka getByRole('link', { name: '持久工作流管理' })
+
+    Call log:
+      - waiting for getByRole('link', { name: '工作' })
+
+
+      135 |   await page.getByRole("link", { name: "创造" }).click();
+      136 |   await expect(page.getByRole("heading", { name: "为工作交付新能力" })).toBeVisible();
+    > 137 |   await page.getByRole("link", { name: "工作" }).click();
+          |                                                ^
+      138 |   await expect(page.getByRole("heading", { name: "专注当前项目" })).toBeVisible();
+      139 |   await page.goBack();
+      140 |   await expect(page.getByRole("heading", { name: "为工作交付新能力" })).toBeVisible();
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-workbench.spec.ts:137:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-2-模式导航不发写命令，历史返回不触发模型/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-workbench-9-2-模式导航不发写命令，历史返回不触发模型/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-2-模式导航不发写命令，历史返回不触发模型/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-workbench-9-2-模式导航不发写命令，历史返回不触发模型/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 ──────────────────────────
+    test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 ──────────────────────────────
+  11 passed (26.7s)

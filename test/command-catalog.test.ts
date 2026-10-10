@@ -12,7 +12,9 @@ it("matches catalogs and dispatch for duplicate commands, workflow aliases and s
   const activation = {revision:"r",extensions:[a,b],resources:[{id:"skill:one",name:"review",kind:"skill",status:"enabled"},{id:"skill:two",name:"review",kind:"skill",status:"enabled"}]} as unknown as Activation;
   expect(commandCatalog().ready).toBe(false);
   let catalog = commandCatalog(activation);
-  expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaining(["/compact","/reload","/a:moe","/b:moe","/skill:skill:one"]));
+  expect(catalog.commands.map(c=>c.name)).toEqual(expect.arrayContaining(["/compact","/a:moe","/b:moe","/skill:skill:one"]));
+  expect(catalog.commands.map(c=>c.name)).not.toContain("/reload");
+  expect(commandCatalog(activation,"create").commands.map(c=>c.name)).toContain("/reload");
   expect(catalog.commands.some(c=>c.name==="/moe")).toBe(false);
   expect(matchCommands(activation,"a:moe").candidates).toHaveLength(1);
   expect(matchSkills(activation,"review")).toHaveLength(2);
@@ -35,8 +37,8 @@ it("matches catalogs and dispatch for duplicate commands, workflow aliases and s
 it("provides authenticated, read-only active metadata before first execution and after restart", async () => {
   const workspace=await temporary(),home=await temporary(),root=join(workspace,".nekomimi/extensions/cat");
   await mkdir(root,{recursive:true});
-  await writeFile(join(root,"extension.json"),JSON.stringify({name:"cat",sdkVersion:1,entry:"index.ts"}));
-  const source=`import { appendFileSync } from 'node:fs'; export default api=>{appendFileSync(${JSON.stringify(join(workspace,"activations"))},'x');api.registerCommand('moe',{description:'猫咪问候',async handler(){appendFileSync(${JSON.stringify(join(workspace,"executions"))},'x');return '喵';}});}`;
+  await writeFile(join(root,"extension.json"),JSON.stringify({name:"cat",sdkVersion: 3, requiredCapabilities: ['commands'],entry:"index.ts"}));
+  const source=`import { appendFileSync } from 'node:fs'; export default (api: import('nekomimi/extensions').ExtensionAPI)=>{appendFileSync(${JSON.stringify(join(workspace,"activations"))},'x');api.registerCommand('moe',{description:'猫咪问候',async handler(){appendFileSync(${JSON.stringify(join(workspace,"executions"))},'x');return '喵';}});}`;
   await writeFile(join(root,"index.ts"),source);
   const options={workspace,home,apiKey:key,naming:false,runtime:{fetch:async()=>{throw new Error("unexpected model call");}}};
   let app=await startWeb(options);
@@ -47,7 +49,9 @@ it("provides authenticated, read-only active metadata before first execution and
     await until(async()=> (await (await req("/commands")).json()).ready);
     const initial=await(await req("/customization")).json(); expect(initial.receipts).toEqual([]); const resource=initial.resources.find((r:any)=>r.name==="cat");
     expect((await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe")).toBe(false);
-    await req("/customization",{action:"set",id:resource.id,enabled:true,trusted:true,revision:initial.settingsRevision});
+    expect((await req("/customization",{action:"set",id:resource.id,enabled:true,trusted:true,revision:initial.settingsRevision})).status).toBe(403);
+    await app.sessions.customization.catalog.decide(resource.id,true,true,initial.settingsRevision);
+    await app.sessions.customization.reload(app.sessions.customization.requestReload());
     await until(async()=> (await(await req("/commands")).json()).commands.some((c:any)=>c.name==="/moe"));
     const session=await app.sessions.create("catalog check");
     const journalPath=join(app.sessions.root,session.id,"journal.jsonl");

@@ -1,0 +1,24 @@
+SyntaxError: /Users/kirineko/Github/nekomimi/test/browser/workbench.spec.ts: Unexpected token (95:138)
+
+  93 | test('windows long history and pages context sources beyond a raw artifact page',async({page})=>{
+  94 |   const {Journal}=await import('../../src/journal.js');const session=await app.sessions.create('长历史验收'),entry=await app.sessions.entry(session.id),j=await Journal.open(entry.directory);
+> 95 |   try{for(let i=0;i<250;i++)await j.append('context.add',{source:'user',item:{role:'user',content:[{type:'input_text',text:`历史 ${i}`}] } ,{},false);}finally{await j.close();}
+     |                                                                                                                                           ^
+  96 |   // Capture a real request snapshot containing more than one artifact page.
+  97 |   await app.sessions.submit(session.id,{version:1,commandId:'long-history-request',prompt:'read saved history'});await app.sessions.activeFor(session.id)?.done;expect(calls).toBe(2);
+  98 |   await page.goto(`${app.origin}/v2/work/session/${session.id}#token=${app.token}`);await expect(page.locator('[data-row-id]')).toHaveCount(60);
+
+   at workbench.spec.ts:95
+
+  93 | test('windows long history and pages context sources beyond a raw artifact page',async({page})=>{
+  94 |   const {Journal}=await import('../../src/journal.js');const session=await app.sessions.create('长历史验收'),entry=await app.sessions.entry(session.id),j=await Journal.open(entry.directory);
+> 95 |   try{for(let i=0;i<250;i++)await j.append('context.add',{source:'user',item:{role:'user',content:[{type:'input_text',text:`历史 ${i}`}] } ,{},false);}finally{await j.close();}
+     |                                                                                                                                          ^
+  96 |   // Capture a real request snapshot containing more than one artifact page.
+  97 |   await app.sessions.submit(session.id,{version:1,commandId:'long-history-request',prompt:'read saved history'});await app.sessions.activeFor(session.id)?.done;expect(calls).toBe(2);
+  98 |   await page.goto(`${app.origin}/v2/work/session/${session.id}#token=${app.token}`);await expect(page.locator('[data-row-id]')).toHaveCount(60);
+    at eval (<anonymous>:1:1)
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+

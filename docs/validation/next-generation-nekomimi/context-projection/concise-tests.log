@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/prompt-contracts.test.ts (30 tests | 1 failed) 4466ms
+   × declares effective read limits and separate summaries without changing schema behavior 21ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/prompt-contracts.test.ts > declares effective read limits and separate summaries without changing schema behavior
+AssertionError: expected '{"type":"object","required":["path"],…' to contain 'Zero-based UTF-8 byte'
+
+Expected: "Zero-based UTF-8 byte"
+Received: "{"type":"object","required":["path"],"properties":{"path":{"type":"string","description":"Workspace path or artifact:<sha256>."},"imageIndex":{"type":"integer","minimum":0,"description":"Original image content index in an artifact:<sha256> tool result."},"offset":{"type":"integer","minimum":0,"description":"UTF-8 byte offset; default 0. Continue at nextOffset."},"limit":{"type":"integer","minimum":1,"description":"Byte limit; default 6000, cap 6000. Images remain attachments."}}}"
+
+ ❯ test/prompt-contracts.test.ts:36:47
+     34|  const read=defs.find(d=>d.tool.name==='read')!;
+     35|  expect(read.tool.description).toContain('6000');expect(read.snippet).…
+     36|  expect(JSON.stringify(read.tool.parameters)).toContain('Zero-based UT…
+       |                                               ^
+     37|  await writeFile(join(dir,'text'),'猫'.repeat(3000));const r=await read…
+     38|  const next=await read.tool.execute('next',{path:'text',offset:6000},n…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 52 passed (53)
+   Start at  07:26:37
+   Duration  20.06s (transform 322ms, setup 0ms, import 1.87s, tests 29.51s, environment 0ms)
+

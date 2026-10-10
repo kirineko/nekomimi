@@ -1,0 +1,49 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/model-operations.test.ts (4 tests | 4 failed) 1600ms
+   × calls the configured classifier through a native tool with one child charge 480ms
+   × calls the configured classifier through Codemode with one child charge 404ms
+   × returns image content and persistent attachment references through the tool 359ms
+   × rechecks credentials before dispatch without falling back to the main model 355ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/model-operations.test.ts > calls the configured classifier through a native tool with one child charge
+Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-rc26RH/.nekomimi/extensions/typed/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+ ❯ CustomizationHost.activate src/customization/host.ts:431:36
+
+ ❯ src/customization/host.ts:298:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/model-operations.test.ts > calls the configured classifier through Codemode with one child charge
+Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-wVGi9U/.nekomimi/extensions/typed/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+ ❯ CustomizationHost.activate src/customization/host.ts:431:36
+
+ ❯ src/customization/host.ts:298:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/model-operations.test.ts > returns image content and persistent attachment references through the tool
+Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-g7Pvzq/.nekomimi/extensions/typed/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+ ❯ CustomizationHost.activate src/customization/host.ts:431:36
+
+ ❯ src/customization/host.ts:298:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/model-operations.test.ts > rechecks credentials before dispatch without falling back to the main model
+Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-cQqqrX/.nekomimi/extensions/typed/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+ ❯ CustomizationHost.activate src/customization/host.ts:431:36
+
+ ❯ src/customization/host.ts:298:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  4 failed | 12 passed (16)
+   Start at  22:17:35
+   Duration  4.05s (transform 589ms, setup 0ms, import 1.58s, tests 6.33s, environment 0ms)
+

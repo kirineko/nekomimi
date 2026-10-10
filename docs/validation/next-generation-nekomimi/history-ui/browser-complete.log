@@ -1,0 +1,87 @@
+
+Running 39 tests using 1 worker
+
+(node:73827) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/chat-loading-focus.spec.ts:7:1 › optional features load on demand, cancel delayed load, retry network failure and keep draft (1.6s)
+  ✓   2 test/browser/chat-loading-focus.spec.ts:31:1 › submit restores focus for mouse and keyboard and failure retains draft (2.4s)
+  ✓   3 test/browser/chat-loading-focus.spec.ts:46:1 › late submit never steals focus or clears a new context draft (1.9s)
+  ✓   4 test/browser/chat-loading-focus.spec.ts:64:1 › latest follows new messages and delayed layout, while deliberate history reading stays anchored (1.9s)
+  ✓   5 test/browser/chat-loading-focus.spec.ts:90:1 › running task allows next draft without submitting it or clearing it at completion (1.2s)
+  ✓   6 test/browser/delivery-navigation.spec.ts:21:1 › 10.3 exact delivery deep link and explicit/native return preserve the card offset (1.6s)
+  ✓   7 test/browser/delivery-navigation.spec.ts:45:1 › 10.3 changed or unavailable candidate never masquerades as the delivered version (1.3s)
+  ✘   8 test/browser/history-navigation.spec.ts:7:1 › bounded history reaches earliest and returns to latest with unchanged cursor (45.1s)
+(node:73896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.4s)
+{"count":60,"p95":16.700000000000045,"longTasks":[],"metrics":{"LayoutDuration":0.000161,"RecalcStyleDuration":0.00018199999999999998,"ScriptDuration":0.005588},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+{"count":180,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0,"RecalcStyleDuration":0,"ScriptDuration":0.0026579999999999937},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓  10 test/browser/scrolling.spec.ts:5:1 › scroll trajectory and performance baseline (3.8s)
+{"height":762,"historyHeight":762,"remaining":30}
+  ✓  11 test/browser/scrolling.spec.ts:30:1 › bottom boundary and return control do not move the viewport (1.0s)
+  ✓  12 test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (2.9s)
+  ✓  13 test/browser/scrolling.spec.ts:68:1 › layout growth preserves the current anchor including movement in the same frame (1.0s)
+  ✓  14 test/browser/scrolling.spec.ts:94:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.5s)
+  ✓  15 test/browser/scrolling.spec.ts:117:1 › fixture supports a delayed panel and diff without model or tool execution (1.3s)
+  ✓  16 test/browser/scrolling.spec.ts:132:1 › narrow and zoomed return overlay stays bounded and transparent outside controls (1.3s)
+{"count":180,"streaming":true,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.000127,"RecalcStyleDuration":0.000057,"ScriptDuration":0.01938}}
+  ✓  17 test/browser/scrolling.spec.ts:152:1 › streaming history performance sample (3.2s)
+  ✓  18 test/browser/scrolling.spec.ts:168:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.3s)
+  ✓  19 test/browser/scrolling.spec.ts:206:1 › horizontal code scrolling does not leave latest mode (756ms)
+  ✓  20 test/browser/scrolling.spec.ts:219:1 › completion failure and cancellation do not pull history to the bottom (1.5s)
+  ✓  21 test/browser/scrolling.spec.ts:234:1 › new content is readable by scrolling, including a full historical window (2.2s)
+  ✓  22 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.1s)
+  ✓  23 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (884ms)
+  ✓  24 test/browser/v2-history.spec.ts:108:1 › 10.7 late history response cannot override latest or another session (953ms)
+  ✓  25 test/browser/v2-history.spec.ts:141:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (1.0s)
+  ✓  26 test/browser/v2-history.spec.ts:168:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.1s)
+  ✓  27 test/browser/v2-history.spec.ts:197:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (702ms)
+  ✓  28 test/browser/v2-history.spec.ts:217:1 › 10.7 create conversations share bounded pagination and keyboard reading (910ms)
+  ✓  29 test/browser/v2-history.spec.ts:234:1 › 10.7 panel proportions restore after reload without changing the session (623ms)
+  ✓  30 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (388ms)
+  ✓  31 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (276ms)
+  ✓  32 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (662ms)
+  ✓  33 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (255ms)
+  ✓  34 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (311ms)
+  ✓  35 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (466ms)
+  ✓  36 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (469ms)
+  ✓  37 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  38 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (297ms)
+  ✓  39 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.5s)
+
+
+  1) test/browser/history-navigation.spec.ts:7:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByText('长历史', { exact: true }).first()
+
+
+      13 |  const app=await startWeb({workspace,home,naming:false,staticDir:resolve('dist/web-dist')});
+      14 |  try {
+    > 15 |   await page.goto(app.url);await page.getByText('长历史',{exact:true}).first().click();
+         |                                                                             ^
+      16 |   await expect(page.getByText('历史记录 449',{exact:true})).toBeVisible();
+      17 |   await expect(page.getByRole('button',{name:'返回最新',exact:true})).toHaveCount(0);
+      18 |   await page.locator('.conversation').evaluate(el=>{el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,deltaY:-100}));el.scrollTop=100;});
+        at /Users/kirineko/Github/nekomimi/test/browser/history-navigation.spec.ts:15:77
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/history-navigation.spec.ts:7:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+  38 passed (1.7m)

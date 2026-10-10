@@ -1,0 +1,26 @@
+
+Running 17 tests using 2 workers
+
+(node:2390) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2391) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.8s)
+  ✓   3 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (682ms)
+  ✓   4 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (708ms)
+  ✓   5 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.9s)
+  ✓   1 test/browser/customization-lifecycle.spec.ts:7:1 › compact capability catalog, local feedback, permissions and theme preview (6.3s)
+  ✓   7 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.2s)
+  ✓   6 test/browser/runtime-ui.spec.ts:19:1 › applies a complete theme and shows user content with stable panel interaction and readable history (4.8s)
+  ✓   8 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.6s)
+  ✓  10 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.9s)
+  ✓  11 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.6s)
+  ✓   9 test/browser/runtime-ui.spec.ts:139:1 › combines ordered views, explicit renderers and pages, and releases subscriptions on close (4.2s)
+  ✓  12 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.1s)
+  ✓  13 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.7s)
+  ✓  14 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.8s)
+  ✓  15 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.5s)
+  ✓  16 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.0s)
+  ✓  17 test/browser/v2-runtime-slots.spec.ts:138:1 › 10.9 hiding extensions unmounts open slots and restoring visibility never remounts (1.8s)
+
+  17 passed (25.3s)

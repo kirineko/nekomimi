@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-10-06T22:18:20.425569+00:00",
+  "node": "v24.15.0",
+  "files": {
+    "build-complete.log": "b507315e266f4deabb0273031f5369e7b801cf6d0557ff2df969541ac33957f2",
+    "state-tests.log": "1757f58334a1a33c81da9044256b2d75dc9d545a2903334ff1094745fc7c9ea6",
+    "typecheck-complete.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "typecheck-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "tests-first.log": "099d3a359dfc47589bb908c6789bc9d6b3e70c4998b372fc59ea5b8772ab6488",
+    "pack-corrected.log": "3ba2829aae8f86aa1bff64b4b50caf6e0bbde853694b3ce1dd4fc1aafc3ed7a3",
+    "typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typecheck-encoding.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "build-final.log": "53d7f5e8ff196fe8339e68653557a5494791ee536288669b94d46f460750f7dc",
+    "build-encoding.log": "4f05db127ad30d72396c4ec18d7b4c992df3f411620a682cb4860b97bfcc0b9a",
+    "pack.log": "da829d64bf5fb11eadc60ca52d883e1c54fffbdb4e457147209c781e8bbe8e21",
+    "manual-gate-tests.log": "165df1dac25fe0bdd25738e7965fa25d182d0982867f305fe0375bd1292de8e7",
+    "typecheck-state.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "tests-final.log": "dca682fe63bb8fbb046f7f07bb6203a8710630e344bfd518636bcd421be87cf0",
+    "specs-complete.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "encoding-tests.log": "6e41e1f129f9c1d35cc4e8335c1c4dace74fa7a4ae321e9413b5b413fd8c3a37",
+    "build-state.log": "4f05db127ad30d72396c4ec18d7b4c992df3f411620a682cb4860b97bfcc0b9a",
+    "build.log": "3d4a3bcb3d16654c9860d155b3ae4103661e81e4cc5cbc69d3fdb78600e0cb49"
+  },
+  "sourceFiles": {
+    "src/context-policy.ts": "1e3be9a5eaee481b148229d89ce11859fe6139a84a123b8ddf8ba51211d00682",
+    "src/resource-context.ts": "14398951620e1ba31accdc525116826705aa232206ce58223585c488c6232b1e",
+    "src/context-snapshot.ts": "4af9a424dd379406defbe8babc38e1424ede9a8cd3e1f760c89639cb879ee039",
+    "src/runtime.ts": "40d09b98e2be6f11098a6fe9623e56a04543cdf450a8e792ee86bbd016d27359",
+    "src/customization/run.ts": "539fa6d3a020f063a62c6e117e8b1afee6685f4e794b7b3debf81959a468b4d4",
+    "src/customization/tool-contracts.ts": "a699b92bdd05657939f2454a6d3702ca2ab2bda07f8ae8a8ee938867880e58e1",
+    "test/resource-context.test.ts": "f8ccd170b4043153b353873bc30d05253a542c22d358faa7182bdc6bf2a708f6",
+    "test/mode-policy.test.ts": "d818f1b49712ed0c926fd07a677d8e8ed4661bc82c87f23e792b8b2461effb6f",
+    "test/customization-workflow.test.ts": "cfe3a4203647bb44f5bb5c221d8e63b324d4e0a11baef75ba8669ad120cc7abe",
+    "extension-docs/review-workflow.ts": "5521d6683dd83c4b5ba2dbc864168698e8d0635e649b4224df75cf2e42a0c63b",
+    "extension-docs/extensions.md": "bb0ebf05b986ada519f62fba5e01066ec75581eebb30647d4b1cdc96eab04065",
+    "scripts/pack-customization-fixture.mjs": "5f779b5e364c1c569e37258128974acf3b9e3fe3c9d68f5614827a9974e4689d"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "a125e55d7598520ed724ef3bd6f4951f4138bdf95a7b7698958283b268061d17"
+  },
+  "packValidation": {
+    "node": "v24.15.0",
+    "compiledBuild": {
+      "version": 1,
+      "sha256": "eda17239d10ea6ec94e1154e3b29e608d256988abdc1ae0ffc6078f01f8e81e9"
+    },
+    "tarball": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-pZ8KXN/nekomimi-0.2.1.tgz",
+    "tarballHash": "8db7a6fb3c24bb99a80238a6c6229bbf54cad288153a7a901e870a1c778550af",
+    "sourceNote": "Encoding build; final directory-rule state update is separately tested in state-tests.log"
+  }
+}

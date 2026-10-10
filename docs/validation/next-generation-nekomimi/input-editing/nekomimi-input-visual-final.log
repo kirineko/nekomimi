@@ -1,0 +1,57 @@
+
+Running 2 tests using 1 worker
+
+(node:82406) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/references.spec.ts:68:1 › query cancellation, IME, errors and responsive chips preserve the draft (5.9s)
+(node:82424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/references.spec.ts:137:1 › long mixed references and candidate controls fit a keyboard-sized viewport (971ms)
+
+
+  1) test/browser/references.spec.ts:68:1 › query cancellation, IME, errors and responsive chips preserve the draft 
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator:  getByRole('button', { name: '发送', exact: true })
+    Expected: in viewport
+    Received: viewport ratio 0.8444444537162781
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeInViewport" getByRole('button', { name: '发送', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '发送', exact: true })
+        - locator resolved to <button data-slot="button" data-size="default" data-send-task="true" data-variant="default" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 b…>发送</button>
+        - unexpected value "viewport ratio 0.8633937835693359"
+        - locator resolved to <button data-slot="button" data-size="default" data-send-task="true" data-variant="default" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 b…>发送</button>
+        - unexpected value "viewport ratio 0.8440654277801514"
+        12 × locator resolved to <button data-slot="button" data-size="default" data-send-task="true" data-variant="default" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 b…>发送</button>
+           - unexpected value "viewport ratio 0.8444444537162781"
+
+
+      75 |     await page.route('**/submit',r=>r.fulfill({status:503,json:{error:{message:'重试任务'}}}),{times:1});
+      76 |     await page.getByRole('button',{name:'发送',exact:true}).click();await expect(page.getByText(/重试任务/)).toBeVisible();await expect(page.locator('[data-reference-id]')).toHaveCount(1);await expect(f.input).toBeFocused();
+    > 77 |     for(const width of [390,900]) {await page.setViewportSize({width,height:800});await page.evaluate(()=>document.documentElement.style.fontSize='20px');await expect(page.getByRole('button',{name:'发送',exact:true})).toBeInViewport({ratio:1});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath(`references-${width}.png`)});}
+         |                                                                                                                                                                                                                         ^
+      78 |     const gate=new Promise<void>(r=>{release=r;});
+      79 |     await page.route('**/workspace/references?query=slow*',async r=>{await gate;await r.fulfill({json:{entries:[{path:'slow',name:'slow',kind:'file'}],revision:'old',limited:false}});});
+      80 |     await f.input.fill('@slow');await page.waitForTimeout(200);await f.input.fill('@src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();release();await page.waitForTimeout(100);await expect(page.getByRole('option',{name:/slow/})).toHaveCount(0);
+        at /Users/kirineko/Github/nekomimi/test/browser/references.spec.ts:77:217
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/nekomimi-input-visual/references-query-cancellat-fab2c-ve-chips-preserve-the-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/nekomimi-input-visual/references-query-cancellat-fab2c-ve-chips-preserve-the-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/nekomimi-input-visual/references-query-cancellat-fab2c-ve-chips-preserve-the-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../tmp/nekomimi-input-visual/references-query-cancellat-fab2c-ve-chips-preserve-the-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/references.spec.ts:68:1 › query cancellation, IME, errors and responsive chips preserve the draft 
+  1 passed (9.0s)

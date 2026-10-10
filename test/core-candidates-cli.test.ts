@@ -1,0 +1,33 @@
+import { expect, it } from 'vitest';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { temporary } from './helpers.js';
+
+it('keeps source preparation static and builds only after an explicit CLI input confirmation', async () => {
+  const root = await temporary(), source = join(root, 'source'), owner = join(root, 'owner'), home = join(root, 'home'), destination = join(root, 'candidate');
+  await mkdir(join(source, 'src'), { recursive: true }); await mkdir(owner);
+  const version = JSON.parse(await readFile(resolve('package.json'), 'utf8')).version;
+  await writeFile(join(source, 'package.json'), JSON.stringify({ name: 'nekomimi', version, scripts: { build: 'node -e "process.exit(99)"' } }));
+  await writeFile(join(source, 'package-lock.json'), JSON.stringify({ packages: { '': { name: 'nekomimi', version } } }));
+  await writeFile(join(source, 'src/cli.ts'), '// selected uncommitted source');
+  await writeFile(join(source, 'tsconfig.build.json'), '{}');
+  const cli = (action: string, input?: unknown) => JSON.parse(execFileSync(process.execPath, [resolve('dist/cli.js'), 'core', action, ...(input ? [JSON.stringify(input)] : []), '--workspace', owner, '--home', home], { encoding: 'utf8', timeout: 30000 }));
+  const preview = cli('preview', { source }); expect(preview.runsScripts).toBe(false);
+  const prepared = cli('prepare', { source, destination, sourceRevision: preview.source.revision, targetHostBuild: preview.targetHost.build });
+  expect(cli('list')).toEqual([prepared]);
+  expect(cli('inspect', { id: prepared.id })).toMatchObject({ changed: false, hostMatches: true, stage: 'source-prepared', built: false, applied: false });
+  await writeFile(join(destination, 'src/cli.ts'), '// edit candidate only');
+  expect(cli('inspect', { id: prepared.id }).changed).toBe(true);
+  expect(await readFile(join(source, 'src/cli.ts'), 'utf8')).toBe('// selected uncommitted source');
+  const journal = await readFile(join(home, 'core-candidates/journal/journal.jsonl'), 'utf8');
+  expect(journal).toContain('core.candidate.prepared'); expect(journal).not.toContain('request.dispatched');
+  await writeFile(join(destination, 'package.json'), JSON.stringify({ name: 'nekomimi', version, scripts: { build: 'node build.cjs' } }));
+  await writeFile(join(destination, 'package-lock.json'), JSON.stringify({ lockfileVersion: 3, packages: { '': { name: 'nekomimi', version } } }));
+  await writeFile(join(destination, 'build.cjs'), `const fs=require('node:fs');fs.mkdirSync('dist');fs.writeFileSync('dist/cli.js','console.log("built")');`);
+  const plan = cli('build-plan', { candidateId: prepared.id }); expect(plan.executesScripts).toBe(false);
+  expect(() => cli('build', { candidateId: prepared.id, inputHash: plan.inputHash, commandId: 'cli-build', authorize: false })).toThrow('authorization');
+  const built = cli('build', { candidateId: prepared.id, inputHash: plan.inputHash, commandId: 'cli-build', authorize: true });
+  expect(built).toMatchObject({ status: 'passed', hostIntegration: 'not_run', applied: false });
+  expect(cli('inspect-build', { buildId: built.buildId }).validForCurrent).toBe(true);
+}, 60000);

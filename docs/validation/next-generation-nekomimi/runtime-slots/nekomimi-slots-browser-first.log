@@ -1,0 +1,106 @@
+
+Running 13 tests using 1 worker
+
+(node:77442) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.3s)
+  ✘   2 test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (368ms)
+(node:77469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (568ms)
+(node:77490) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (446ms)
+  ✓   5 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (268ms)
+  ✓   6 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (703ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (262ms)
+  ✓   8 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (303ms)
+  ✓   9 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (483ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (429ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  12 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (272ms)
+  ✓  13 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+
+
+  1) test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount 
+
+    Error: Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-ZeOj8A/.nekomimi/extensions/slots/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+    panel.ts:1:23: type 7006: Parameter 'root' implicitly has an 'any' type.
+    panel.ts:1:28: type 7006: Parameter 'ctx' implicitly has an 'any' type.
+    panel.ts:4:32: type 7006: Parameter 's' implicitly has an 'any' type.
+    panel.ts:6:53: type 2322: Type 'string | { text: string; } | { viewId: string; }' is not assignable to type 'string | null'.
+      Type '{ text: string; }' is not assignable to type 'string'.
+    panel.ts:6:134: type 7006: Parameter 'e' implicitly has an 'any' type.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "activated"
+    Received: "failed"
+
+      29 |   const app=await startWeb({workspace,home,naming:false,staticDir:resolve('dist/web-dist'),runtime:{fetch:async()=>{throw new Error('No model calls allowed');}}});
+      30 |   const host=app.sessions.customization,resource=(await host.catalog.discover()).find(r=>r.name==='slots')!;
+    > 31 |   await host.catalog.decide(resource.id,true,true,0);const reload=host.requestReload();await host.reload(reload);expect(reload.status,reload.error).toBe('activated');
+         |                                                                                                                                                     ^
+      32 |   const session=await app.sessions.create('Slot task',{commandId:'slot-session',mode:'work'});
+      33 |   const entry=await app.sessions.entry(session.id),journal=await Journal.open(entry.directory);
+      34 |   await journal.append('context.add',{source:'user',item:{role:'user',content:[{type:'input_text',text:'Saved message remains readable'}]}});await journal.close();
+        at fixture (/Users/kirineko/Github/nekomimi/test/browser/v2-runtime-slots.spec.ts:31:149)
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-runtime-slots.spec.ts:39:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-runtime-slots-10-9-scop-3486d-bridge-and-explicit-remount/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls 
+
+    Error: Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-2pfwOQ/.nekomimi/extensions/slots/extension.json: index.ts:1:16: type 7006: Parameter 'api' implicitly has an 'any' type.
+    panel.ts:1:23: type 7006: Parameter 'root' implicitly has an 'any' type.
+    panel.ts:1:28: type 7006: Parameter 'ctx' implicitly has an 'any' type.
+    panel.ts:4:32: type 7006: Parameter 's' implicitly has an 'any' type.
+    panel.ts:6:53: type 2322: Type 'string | { text: string; } | { viewId: string; }' is not assignable to type 'string | null'.
+      Type '{ text: string; }' is not assignable to type 'string'.
+    panel.ts:6:134: type 7006: Parameter 'e' implicitly has an 'any' type.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "activated"
+    Received: "failed"
+
+      29 |   const app=await startWeb({workspace,home,naming:false,staticDir:resolve('dist/web-dist'),runtime:{fetch:async()=>{throw new Error('No model calls allowed');}}});
+      30 |   const host=app.sessions.customization,resource=(await host.catalog.discover()).find(r=>r.name==='slots')!;
+    > 31 |   await host.catalog.decide(resource.id,true,true,0);const reload=host.requestReload();await host.reload(reload);expect(reload.status,reload.error).toBe('activated');
+         |                                                                                                                                                     ^
+      32 |   const session=await app.sessions.create('Slot task',{commandId:'slot-session',mode:'work'});
+      33 |   const entry=await app.sessions.entry(session.id),journal=await Journal.open(entry.directory);
+      34 |   await journal.append('context.add',{source:'user',item:{role:'user',content:[{type:'input_text',text:'Saved message remains readable'}]}});await journal.close();
+        at fixture (/Users/kirineko/Github/nekomimi/test/browser/v2-runtime-slots.spec.ts:31:149)
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-runtime-slots.spec.ts:73:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-rend-317f1-tion-preserve-host-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-runtime-slots-10-9-rend-317f1-tion-preserve-host-controls/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-rend-317f1-tion-preserve-host-controls/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-runtime-slots-10-9-rend-317f1-tion-preserve-host-controls/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount 
+    test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls 
+  11 passed (14.4s)

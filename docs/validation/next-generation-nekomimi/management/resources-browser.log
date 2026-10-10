@@ -1,0 +1,60 @@
+
+Running 9 tests using 1 worker
+
+(node:60349) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/model-settings.spec.ts:22:1 › 10.4 purpose confirmation changes only create and distinguishes missing profile credentials (648ms)
+  ✓  2 test/browser/model-settings.spec.ts:43:1 › 10.4 stale purpose revision fails without automatic retry or changing another purpose (455ms)
+  ✓  3 test/browser/model-settings.spec.ts:58:1 › 10.4 profile conflict clears the secret and preserves nonsecret fields until explicit revision review (1.3s)
+  ✓  4 test/browser/model-settings.spec.ts:77:1 › 10.4 no custom provider and no builtin credentials stay explicit (311ms)
+  ✓  5 test/browser/model-settings.spec.ts:89:1 › 10.4 uncertain credential write is redacted and cannot be retried with an empty secret (1.2s)
+  ✓  6 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.5s)
+  ✓  7 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (601ms)
+  ✘  8 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (5.5s)
+(node:60398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  9 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.9s)
+
+
+  1) test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "conflict"
+    Received string:    "操作未确认：操作失败，请检查本地配置和数据完整性。请关闭后重新读取并审阅；不会自动重试。"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+        12 × locator resolved to <p role="alert" class="mt-3 text-sm text-danger">操作未确认：操作失败，请检查本地配置和数据完整性。请关闭后重新读取并审阅；不会自动重试。</p>
+           - unexpected value "操作未确认：操作失败，请检查本地配置和数据完整性。请关闭后重新读取并审阅；不会自动重试。"
+
+
+      60 |     page.on('request', request => { if (request.method() === 'POST' && request.url().endsWith('/customization')) posts++; });
+      61 |     await page.getByRole('button', { name: '确认允许用户目录写入', exact: true }).click();
+    > 62 |     await expect(page.getByRole('alert')).toContainText('conflict'); expect(posts).toBe(1); expect(await f.count()).toBe(0);
+         |                                           ^
+      63 |     await page.getByRole('button', { name: '取消操作', exact: true }).click(); await expect(page.getByRole('button', { name: '撤销用户目录写入', exact: true })).toBeVisible();
+      64 |     await page.getByRole('button', { name: '撤销用户目录写入', exact: true }).click(); await page.getByRole('button', { name: '确认撤销用户目录写入', exact: true }).click();
+      65 |     await expect(page.getByRole('dialog')).toHaveCount(0); expect((await f.app.sessions.describeCustomization(f.session.id)).userWrites).toBe(false);
+        at /Users/kirineko/Github/nekomimi/test/browser/resource-management.spec.ts:62:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/resource-management-10-4-s-3381e-ate-without-automatic-retry/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/resource-management-10-4-s-3381e-ate-without-automatic-retry/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/resource-management-10-4-s-3381e-ate-without-automatic-retry/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/resource-management-10-4-s-3381e-ate-without-automatic-retry/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry 
+  8 passed (15.5s)

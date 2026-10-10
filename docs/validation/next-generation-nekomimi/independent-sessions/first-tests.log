@@ -1,0 +1,57 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/independent-sessions.test.ts (7 tests | 2 failed) 6868ms
+   × a new task preempts only naming on its own target, without rerunning old naming 1842ms
+   × retains confirmed snapshots and independent development files when their source session is deleted 348ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/independent-sessions.test.ts > a new task preempts only naming on its own target, without rerunning old naming
+AssertionError: expected 'other' to be 'create' // Object.is equality
+
+Expected: "create"
+Received: "other"
+
+ ❯ test/independent-sessions.test.ts:99:57
+     97|   expect(f.pending).toHaveLength(2);
+     98|   await f.request(`/sessions/${f.create.id}/cancel`, { version: 1, run…
+     99|   expect((await f.snapshot(f.create.id)).session.title).toBe("create");
+       |                                                         ^
+    100|   const events = (await readSession(join(f.app.sessions.root, f.work.i…
+    101|   expect(events.filter(event => event.type === "session.naming.started…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/independent-sessions.test.ts > retains confirmed snapshots and independent development files when their source session is deleted
+AssertionError: expected { error: { code: 'not_found', …(1) } } to match object { busy: false, …(2) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "busy": false,
+-   "relations": [
+-     {
+-       "direction": "outgoing",
+-       "snapshotRetainedInOtherSession": true,
++   "error": {
++     "code": "not_found",
++     "message": "接口不存在",
+    },
+-   ],
+-   "sourceEvidenceAfterDelete": "unavailable",
+  }
+
+ ❯ test/independent-sessions.test.ts:111:18
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  04:59:13
+   Duration  7.53s (transform 253ms, setup 0ms, import 612ms, tests 6.87s, environment 0ms)
+

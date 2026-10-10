@@ -1,3 +1,4 @@
+import {prepareDataHome} from '../src/storage/format.js';
 import { expect,test } from 'vitest';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -6,7 +7,7 @@ import { CustomizationHost } from '../src/customization/host.js';
 import { sdkCatalog } from '../src/customization/sdk.js';
 test('lifecycle keeps missing theme permissions visible and binds evidence to revision',async()=>{
  const workspace=await temporary(),home=await temporary(),root=join(workspace,'.nekomimi/extensions/sample');await mkdir(root,{recursive:true});
- const manifest={name:'sample',entry:'index.ts',sdkVersion:2,requiredCapabilities:['commands']};
+ const manifest={name:'sample',entry:'index.ts',sdkVersion:3,requiredCapabilities:['commands']};
  await writeFile(join(root,'extension.json'),JSON.stringify(manifest));await writeFile(join(root,'index.ts'),'export default ()=>{}');
  let host=new CustomizationHost(workspace,home);
  try {
@@ -44,9 +45,10 @@ test('activated candidates appear once and permissions do not become user-facing
 
 test('loaded evidence excludes unauthorized, disabled and shadowed extensions', async () => {
  const workspace=await temporary(),home=await temporary(),host=new CustomizationHost(workspace,home);
+ await prepareDataHome(home);
  for(const [base,name] of [[join(workspace,'.nekomimi'),'pending'],[join(workspace,'.nekomimi'),'disabled'],[join(workspace,'.nekomimi'),'shared'],[home,'shared']]){
   const root=join(base!,'extensions',name!);await mkdir(root,{recursive:true});
-  await writeFile(join(root,'extension.json'),JSON.stringify({name,sdkVersion:1,entry:'index.ts'}));
+  await writeFile(join(root,'extension.json'),JSON.stringify({name,sdkVersion: 3, requiredCapabilities: ['commands'],entry:'index.ts'}));
   await writeFile(join(root,'index.ts'),'export default () => {}');
  }
  try {

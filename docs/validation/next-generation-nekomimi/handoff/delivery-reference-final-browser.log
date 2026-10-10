@@ -1,0 +1,27 @@
+
+Running 20 tests using 1 worker
+
+(node:57035) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.0s)
+  ✓   2 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (654ms)
+  ✓   3 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (1.9s)
+  ✓   4 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (839ms)
+  ✓   5 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.3s)
+  ✓   6 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.2s)
+  ✓   7 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.7s)
+  ✓   8 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (906ms)
+  ✓   9 test/browser/handoff-recovery.spec.ts:14:1 › 10.3 refresh observes a partial handoff and explicit recovery completes only its saved metadata (1.2s)
+  ✓  10 test/browser/handoff-recovery.spec.ts:49:1 › 10.3 deleted destination blocks explicit recovery and is never recreated (609ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (361ms)
+  ✓  12 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (270ms)
+  ✓  13 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (657ms)
+  ✓  14 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (237ms)
+  ✓  15 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (294ms)
+  ✓  16 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (461ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (470ms)
+  ✓  18 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  19 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (268ms)
+  ✓  20 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+
+  20 passed (19.4s)

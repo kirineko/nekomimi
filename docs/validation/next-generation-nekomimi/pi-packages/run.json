@@ -1,0 +1,123 @@
+{
+  "consumer": "[cleaned] /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc",
+  "installExitCode": 0,
+  "timestamp": "2026-10-06T14:53:32.225437+00:00",
+  "registry": "https://registry.npmjs.org",
+  "minimumNode": {
+    "path": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+    "version": "v22.19.0",
+    "url": "https://nodejs.org/dist/v22.19.0/node-v22.19.0-darwin-arm64.tar.gz",
+    "sha256": "c59006db713c770d6ec63ae16cb3edc11f49ee093b5c415d667bb4f436c6526d",
+    "checksumSource": "https://nodejs.org/dist/v22.19.0/SHASUMS256.txt"
+  },
+  "probes": [
+    {
+      "name": "runtime-node24",
+      "command": [
+        "node",
+        "probe.mjs"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-10-06T14:58:46.494885+00:00",
+      "durationSeconds": 0.139,
+      "log": "runtime-node24.log"
+    },
+    {
+      "name": "runtime-node22",
+      "command": [
+        "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+        "probe.mjs"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-10-06T14:58:46.633583+00:00",
+      "durationSeconds": 0.139,
+      "log": "runtime-node22.log"
+    },
+    {
+      "name": "types-strict",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--strict",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2022",
+        "probe.ts"
+      ],
+      "exitCode": 2,
+      "startedAt": "2026-10-06T14:58:46.772694+00:00",
+      "durationSeconds": 3.725,
+      "log": "types-strict.log"
+    },
+    {
+      "name": "runtime-node24-corrected",
+      "command": [
+        "node",
+        "probe.mjs"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-06T14:59:39.370119+00:00",
+      "durationSeconds": 0.183,
+      "log": "runtime-node24-corrected.log"
+    },
+    {
+      "name": "runtime-node22-corrected",
+      "command": [
+        "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+        "probe.mjs"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-06T14:59:39.552840+00:00",
+      "durationSeconds": 0.182,
+      "log": "runtime-node22-corrected.log"
+    },
+    {
+      "name": "types-strict-corrected",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--strict",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2023",
+        "probe.ts"
+      ],
+      "exitCode": 2,
+      "startedAt": "2026-10-06T14:59:39.735086+00:00",
+      "durationSeconds": 3.768,
+      "log": "types-strict-corrected.log"
+    },
+    {
+      "name": "types-project-options",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--strict",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2023",
+        "probe.ts",
+        "--skipLibCheck",
+        "--noUncheckedIndexedAccess"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-06T14:59:43.503019+00:00",
+      "durationSeconds": 0.52,
+      "log": "types-project-options.log"
+    }
+  ],
+  "cleanedAt": "2026-10-07T01:15:14.716713+08:00",
+  "cleanupNote": "Temporary npm consumer directory and extracted Node archive removed; evidence logs/README retained."
+}

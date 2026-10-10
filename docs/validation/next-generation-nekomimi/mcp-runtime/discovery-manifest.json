@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-10-07T14:35:47.447095+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/customization/mcp-discovery.ts": "2a81e6c6a28a5b5c6ad2f3a8b0a5a6a6fb9b27c114a2a927b07104af8751d2ab",
+    "src/customization/mcp.ts": "fe58eafe5627e2b5413c9f359f44018bf448986a33f4fc27260a23ecad3089a0",
+    "src/customization/host.ts": "9e2636e5e491581ed46ce0df1e36ace593168c1ab7b592cbde94b123c581a2d7",
+    "src/customization/resources.ts": "abc68de1b0bc995ad512ea74174a75609bfcbcab38b58a6e451d1819eed848a6",
+    "src/customization/run.ts": "0e6d9310042e2db699c96a8de85e9ed1b4d011f93e4aa8d00335ab09cd10aedb",
+    "test/mcp-discovery.test.ts": "e8cde9fa401ab0d8e451046f761c012548e731cf20e494ae1ff33e2139d50d27",
+    "test/mcp-demand.test.ts": "7f4c9f69f0e9c2d21ff974e1abf9fec8391dc2cdd4690c0086ca9ec8827bea6e",
+    "test/customization-workflow.test.ts": "a7e90a5de6c98fac38bab88f0b5b26438214a52fd8d20925c1e9dbe839cad86c",
+    "test/codemode-partial-failure.test.ts": "99d9701c02c8ecc60c7b26f87154b3417191bff9232d3f867e8f8f30180b5cca",
+    "extension-docs/platform.md": "53b3de0dbad88a4f355937fc188917d5cc34396c7afd33e0e7388ab045aad3b5",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "d5b19a21938d5db5506796fc80aff46731785da1c2f45cefaf43108ceda6493b",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery.md": "4a3883d7b3614700f11ccf73ed355df3fd6c0e2ea4811a6c58f9334334a38273",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery-first.log": "822b1ead0ef1ec276346692cfcafe213dec13fde18359d3ca2cba9fa26f761ea",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery-regression.log": "e42f887c16192ca418041efa82c3ea593b151e95a5239e8500c042093dee9a34",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery-build.log": "41727e1215f78647e681e7f75fa75678640a17d424d8f19dec368547c03dd545",
+    "docs/validation/next-generation-nekomimi/mcp-runtime/discovery-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4"
+  }
+}

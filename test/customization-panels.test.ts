@@ -16,7 +16,7 @@ import {exportSession,importBundle} from '../src/export.js';
 import {SessionProjection} from '../src/projection/session.js';
 async function fixture() {
  const workspace=await temporary(),home=await temporary(),root=join(workspace,'.nekomimi/extensions/panels');await mkdir(root,{recursive:true});
- await writeFile(join(root,'extension.json'),JSON.stringify({name:'panels',sdkVersion:2,entry:'index.ts',requiredCapabilities:['panels','commands','ui']}));
+ await writeFile(join(root,'extension.json'),JSON.stringify({name:'panels',sdkVersion:3,entry:'index.ts',requiredCapabilities:['panels','commands','ui']}));
  await copyFile(resolve('extension-docs/panel-extension.ts'),join(root,'index.ts'));await copyFile(resolve('extension-docs/review-panel.ts'),join(root,'review-panel.ts'));
  const host=new CustomizationHost(workspace,home),resource=(await host.catalog.discover()).find(r=>r.kind==='extension')!;
  await host.catalog.decide(resource.id,true,true,0);return {workspace,root,host,resource};
@@ -27,9 +27,9 @@ it('installs a TSX panel with exact isolated React dependencies and builds witho
   const root=dirname(require.resolve(name+'/package.json')),metadata=JSON.parse(await readFile(join(root,'package.json'),'utf8')),target=join(await temporary(),'package.tgz');
   await archive({cwd:root,file:target,gzip:true,portable:true,prefix:'package/'},(await readdir(root)).filter(n=>n!=='node_modules'));archives.set(name,{bytes:await readFile(target),version:metadata.version});
  }
- await writeFile(join(source,'nekomimi.json'),JSON.stringify({manifestVersion:1,name:'react-panel',version:'1.0.0',sdkVersion:2,requiredCapabilities:['panels'],dependencies:Object.fromEntries(['react','react-dom','@types/react'].map(name=>[name,archives.get(name)!.version])),files:['panel.tsx'],resources:[{kind:'panel',name:'react-panel',entry:'index.ts'}]}));
+ await writeFile(join(source,'nekomimi.json'),JSON.stringify({manifestVersion:1,name:'react-panel',version:'1.0.0',sdkVersion:3,requiredCapabilities:['panels'],dependencies:Object.fromEntries(['react','react-dom','@types/react'].map(name=>[name,archives.get(name)!.version])),files:['panel.tsx'],resources:[{kind:'panel',name:'react-panel',entry:'index.ts'}]}));
  await writeFile(join(source,'package.json'),JSON.stringify({name:'react-panel',version:'1.0.0'}));
- await writeFile(join(source,'index.ts'),`import type {ExtensionFactory2} from 'nekomimi/extensions';export default ((api)=>{api.registerPanel({id:'react-panel',uiVersion:1,entry:'panel.tsx',slot:'result',propsSchema:{type:'object'},actions:[],fallback:'React fallback'});}) satisfies ExtensionFactory2;`);
+ await writeFile(join(source,'index.ts'),`import type {ExtensionFactory3} from 'nekomimi/extensions';export default ((api)=>{api.registerPanel({id:'react-panel',title:'审查面板',uiVersion:1,contractVersion:3,modes:['work','create'],targetScope:'current',entry:'panel.tsx',slot:'tool-result',propsSchema:{type:'object'},actions:[],fallback:'React fallback'});}) satisfies ExtensionFactory3;`);
  await writeFile(join(source,'panel.tsx'),`import {createRoot} from 'react-dom/client';import type {PanelModule} from 'nekomimi/extensions';export default {mount(root){const react=createRoot(root);react.render(<button>Installed React panel</button>);return ()=>react.unmount();}} satisfies PanelModule;`);
  // react-dom/client declarations are a separate, explicit package dependency.
  const typesRoot=dirname(require.resolve('@types/react-dom/package.json')),types=JSON.parse(await readFile(join(typesRoot,'package.json'),'utf8')),typesTar=join(await temporary(),'types.tgz');await archive({cwd:typesRoot,file:typesTar,gzip:true,portable:true,prefix:'package/'},await readdir(typesRoot));archives.set('@types/react-dom',{bytes:await readFile(typesTar),version:types.version});
@@ -45,6 +45,13 @@ it('builds bounded immutable panel inputs without evaluating user config and bin
   await writeFile(join(f.root,'esbuild.config.js'),`throw new Error('config must not execute');`);
   const activation=await f.host.acquire(),panel=activation.extensions[0]!.panels[0]!;await f.host.release();
   expect(panel.bundleHash).toBe(hash(panel.bundle+'\n'+panel.css));
+  expect(panel.capability).toBe('panels');
+  expect(f.host.panels.catalog()[0]).toMatchObject({contractVersion:3,targetScope:'current',resourceRevision:panel.resource.hash});
+  for(const patch of [{contractVersion:undefined},{modes:[]},{modes:['other']},{modes:['work','work']},{targetScope:'any'},{slot:'result'},{slot:'sidebar'},{title:''}]) expect(()=>validatePanel({...panel,...patch} as any)).toThrow();
+  panel.modes=['create'];
+  await expect(f.host.panels.mount(panel.resource.id,panel.id,panel.resource.hash,{items:[]})).rejects.toThrow('模式');
+  panel.modes=['work','create'];
+
   const mounted=await f.host.panels.mount(panel.resource.id,panel.id,panel.resource.hash,{items:['safe']});
   expect((await f.host.panels.document(mounted.instanceId)).html).toContain("connect-src 'none'");expect((await f.host.panels.document(mounted.instanceId)).html).not.toContain('allow-same-origin');
   await expect(f.host.panels.action(mounted.instanceId,1,'workflow.answer',{decision:'approve'})).rejects.toThrow('unbound');
@@ -71,11 +78,14 @@ it('previews an explicitly authorized candidate factory without replacing regist
  try{
   await f.host.acquire();await f.host.release();const revision=f.host.active!.revision,decisions=await f.host.catalog.decisions();
   const {Candidates}=await import('../src/customization/candidates.js'),store=new Candidates(f.workspace),draft=await store.scaffold('preview-panel');
-  await writeFile(join(draft.path,'extension.json'),JSON.stringify({name:'preview-panel',sdkVersion:2,entry:'index.ts',requiredCapabilities:['panels','commands','ui']}));await copyFile(resolve('extension-docs/panel-extension.ts'),join(draft.path,'index.ts'));await copyFile(resolve('extension-docs/review-panel.ts'),join(draft.path,'review-panel.ts'));
+  await writeFile(join(draft.path,'extension.json'),JSON.stringify({name:'preview-panel',sdkVersion:3,entry:'index.ts',requiredCapabilities:['panels','commands','ui']}));await copyFile(resolve('extension-docs/panel-extension.ts'),join(draft.path,'index.ts'));await copyFile(resolve('extension-docs/review-panel.ts'),join(draft.path,'review-panel.ts'));
   const {candidate}=await store.inspect(draft.id);expect(candidate.report.passed).toBe(true);
   await expect(f.host.panels.previewCandidate(draft.id,candidate.contentHash,undefined,{items:[]},false)).rejects.toThrow('explicit');
   const preview=await f.host.panels.previewCandidate(draft.id,candidate.contentHash,undefined,{items:['candidate']},true);
   expect(preview.verification).toMatchObject({stage:'preview',hostIntegration:'not_run',resourceRevision:candidate.contentHash});
+  expect(preview.verification).toMatchObject({status:'passed',environment:{node:process.version,platform:process.platform,hostBuild:expect.any(String)}});
+  await expect(f.host.panels.previewCandidate(draft.id,candidate.contentHash,undefined,{oversized:'x'.repeat(32769)},true)).rejects.toThrow('schema invalid');
+  expect((await f.host.lifecycle.evidence()).findLast(e=>e.stage==='preview')?.verification).toMatchObject({status:'failed',hostIntegration:'not_run',resourceRevision:candidate.contentHash});
   expect((await f.host.panels.document(preview.frame.instanceId)).html).toContain('candidate');expect(f.host.active!.revision).toBe(revision);expect(await f.host.catalog.decisions()).toEqual(decisions);
   await expect(f.host.panels.action(preview.frame.instanceId,1,'workflow.answer',{decision:'approve'})).rejects.toThrow('not authorized');
  }finally{await f.host.close();}

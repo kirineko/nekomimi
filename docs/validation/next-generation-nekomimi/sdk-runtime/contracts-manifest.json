@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-07T14:57:54.401524+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "sha256": {
+    "src/extensions.ts": "1a84981acfa253e457efb21f278e7091dd54e94646064b0ccdb7841f4e7df6a4",
+    "src/customization/capabilities.ts": "0a124add1ff0fd61c297b31d12663133cc99b9920afc6af0ae486730643753c3",
+    "src/customization/sdk.ts": "37bc4feea4c03032e539b79af682e432ce17c670a0f8bfa795f4525373c760fd",
+    "src/customization/types.ts": "a9b2fc82fc72bd63790defe469f84a88ac0649348b87661ba99cdf659ad45587",
+    "test/sdk-v3-contract.test.ts": "d0c3012a6cf5e3094a94afd9665cae16e250a2ace7bad62583e6c74cad157835",
+    "test/customization-contracts.test.ts": "bb57d0e54b4d9b8425535449d1a38655263c3a874ebba5feed552fa0e49150a1",
+    "extension-docs/extensions.md": "ec8c96fb6e5eec56e4d985496958890a1d0607e9d93640a788a61e96e94d5798",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts.md": "1402e4096806e1a52428c426842c84c998cf927e21334fc0f0fdbc5224f51c8d",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "38f3c7d98b41ce037b7b58e0120b447042fb236b7c9067ebdbe1e7ae058d8177",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts-build.log": "4f05db127ad30d72396c4ec18d7b4c992df3f411620a682cb4860b97bfcc0b9a",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts-first.log": "611907f489c0b9ae2f473819142386e79c0ddb2b144097d478c044880395d989",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts-regression.log": "7a906de517714a4fede905f1c1a558d4512735ec55f6ceb5955dbf82eb0c5601",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/contracts-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  }
+}

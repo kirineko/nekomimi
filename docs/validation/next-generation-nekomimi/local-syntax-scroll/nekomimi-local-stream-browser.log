@@ -1,0 +1,21 @@
+
+Running 12 tests using 2 workers
+
+(node:98535) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/create-conversation.spec.ts:8:1 › 10.3 create input preserves independent drafts and explicitly runs against its own target (2.8s)
+  ✓   1 test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact (3.2s)
+  ✓   3 test/browser/create-conversation.spec.ts:39:1 › 10.3 create task stop is explicit and cancels only its active request (1.6s)
+  ✓   5 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.4s)
+  ✓   6 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (1.0s)
+  ✓   7 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (926ms)
+  ✓   8 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (1.0s)
+  ✓   4 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.1s)
+  ✓   9 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.3s)
+  ✓  10 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (743ms)
+  ✓  11 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (1.0s)
+  ✓  12 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (673ms)
+
+  12 passed (14.0s)

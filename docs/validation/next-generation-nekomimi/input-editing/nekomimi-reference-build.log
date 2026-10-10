@@ -1,0 +1,40 @@
+
+> nekomimi@0.2.1 build
+> node -e "require('node:fs').rmSync('dist', { recursive: true, force: true })" && tsc -p tsconfig.build.json && vite build && node scripts/build-identity.mjs
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 590 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web-dist/index.html                             0.44 kB │ gzip:   0.30 kB
+dist/web-dist/assets/nekomimi-CMII8_56.svg           0.44 kB │ gzip:   0.27 kB
+dist/web-dist/assets/diff-woXpYk--.js                2.56 kB
+dist/web-dist/assets/json-qhed-kSA.js                2.81 kB
+dist/web-dist/assets/asset-manifest.json             4.21 kB │ gzip:   0.77 kB
+dist/web-dist/assets/bash-CLZ0U2zV.js               41.47 kB
+dist/web-dist/assets/python-gzcpVVnB.js             69.94 kB
+dist/web-dist/assets/javascript-BgS3c2Ky.js        174.82 kB
+dist/web-dist/assets/syntax-worker-BYves5tC.js     175.30 kB
+dist/web-dist/assets/tsx-udAQXfEw.js               175.52 kB
+dist/web-dist/assets/typescript-bsJCZSQ-.js        181.07 kB
+dist/web-dist/assets/syntax-C5UQYBqG.css             0.78 kB │ gzip:   0.24 kB
+dist/web-dist/assets/navigation-D3FxwQTk.css         4.83 kB │ gzip:   1.51 kB
+dist/web-dist/assets/runtime-ui-DRJCx0_r.css        13.51 kB │ gzip:   3.19 kB
+dist/web-dist/assets/workbench-BGvF_I5F.css         18.40 kB │ gzip:   4.60 kB
+dist/web-dist/assets/styles-DE10EL1a.css            19.29 kB │ gzip:   5.28 kB
+dist/web-dist/assets/customization-DaOWJHL-.css     19.34 kB │ gzip:   3.86 kB
+dist/web-dist/assets/app-BZBDscFh.css               25.52 kB │ gzip:   5.88 kB
+dist/web-dist/assets/rolldown-runtime-hePW80VL.js    0.71 kB │ gzip:   0.42 kB
+dist/web-dist/assets/api-BzuM_hh1.js                 1.52 kB │ gzip:   0.89 kB
+dist/web-dist/assets/ExportDialog-BaUdMi7l.js        1.84 kB │ gzip:   0.96 kB
+dist/web-dist/assets/Changes-B5wt3GjP.js             2.36 kB │ gzip:   1.18 kB
+dist/web-dist/assets/FileBrowser-B-GoGX6G.js         5.11 kB │ gzip:   2.31 kB
+dist/web-dist/assets/Inspector-C06P9V-H.js          11.23 kB │ gzip:   3.46 kB
+dist/web-dist/assets/Customization-zk0FtESP.js      42.97 kB │ gzip:  12.86 kB
+dist/web-dist/assets/App-DF2DG1Fu.js                60.47 kB │ gzip:  18.93 kB
+dist/web-dist/assets/index-Dep_TxDt.js             222.05 kB │ gzip:  69.55 kB
+dist/web-dist/assets/command-input-DirCQNzH.js     233.40 kB │ gzip:  73.70 kB
+dist/web-dist/assets/app-C_OBna2S.js               468.04 kB │ gzip: 136.96 kB
+
+✓ built in 160ms

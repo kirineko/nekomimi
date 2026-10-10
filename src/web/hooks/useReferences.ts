@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import type { ReferencePage } from '../../shared/references';
-export function useReferences(query: string | undefined, enabled: boolean, context: number) {
+export function useReferences(query: string | undefined, enabled: boolean, context: number, sessionId?:string) {
   const [result, setResult] = useState<{key:string;page:ReferencePage}>(), [error, setError] = useState(''), [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(0), [cursor, setCursor] = useState<string>();
-  const generation = useRef(0), key = `${context}:${query ?? ''}`;
+  const generation = useRef(0), key = `${sessionId ?? 'host'}:${context}:${query ?? ''}`;
   const previousKey = useRef(key), refreshKey = useRef<string | undefined>(undefined);
   useEffect(() => { setCursor(undefined); }, [key, refresh]);
   useEffect(() => {
@@ -16,6 +16,7 @@ export function useReferences(query: string | undefined, enabled: boolean, conte
     setLoading(true); setError('');
     const timer = setTimeout(() => {
       const params = new URLSearchParams({ query });
+      if(sessionId)params.set("session",sessionId);
       if (next) params.set('cursor', next);
       if (refreshKey.current === key && !next) { params.set('refresh', 'true'); refreshKey.current = undefined; }
       void api<ReferencePage>(`/workspace/references?${params}`, undefined, abort.signal).then(value => {
@@ -24,7 +25,7 @@ export function useReferences(query: string | undefined, enabled: boolean, conte
       }).catch(e => { if (!abort.signal.aborted && generation.current === id) setError(String(e)); }).finally(() => { if (generation.current === id) setLoading(false); });
     }, 100);
     return () => { clearTimeout(timer); abort.abort(); };
-  }, [query, enabled, context, cursor, refresh]);
+  }, [query, enabled, context, cursor, refresh, sessionId]);
   const page = enabled && result?.key === key ? result.page : undefined;
   return { page, error, loading, refresh: () => { refreshKey.current = key; setCursor(undefined); setRefresh(n=>n+1); }, more: () => { if (!loading && page?.next) setCursor(page.next); } };
 }

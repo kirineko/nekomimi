@@ -7,16 +7,17 @@ import { createRequire } from "node:module";
 import { hash } from "../journal.js";
 import { safePath, LIMITS, type Resource } from "./resources.js";
 import type { PanelDefinition } from "./contracts.js";
-export interface BuiltPanel extends PanelDefinition { resource: Resource; bundle: string; css: string; bundleHash: string }
+export interface BuiltPanel extends PanelDefinition { resource: Resource; bundle: string; css: string; bundleHash: string; capability: "panels" | "views" }
 export function validatePanel(panel: PanelDefinition) {
-  if (!panel || !/^[a-z][a-z0-9_-]{0,47}$/.test(panel.id) || panel.uiVersion !== 1 || !["sidebar", "result", ...UI_SLOTS].includes(panel.slot) || typeof panel.entry !== "string" || !/\.[cm]?[jt]sx?$/.test(panel.entry) || !panel.propsSchema || panel.propsSchema.type !== "object" || !Array.isArray(panel.actions) || panel.actions.length > 9 || new Set(panel.actions).size !== panel.actions.length || panel.actions.some(a => !["workflow.state", "workflow.answer", "workflow.cancel", ...UI_ACTIONS].includes(a)) || typeof panel.fallback !== "string" || !panel.fallback.trim() || panel.fallback.length > 4000) throw new Error("Invalid panel descriptor");
-  if (panel.title !== undefined || UI_SLOTS.includes(panel.slot as any)) validateView(panel as any);
+  if (!panel || !/^[a-z][a-z0-9_-]{0,47}$/.test(panel.id) || panel.uiVersion !== 1 || !UI_SLOTS.includes(panel.slot) || typeof panel.entry !== "string" || !/\.[cm]?[jt]sx?$/.test(panel.entry) || !panel.propsSchema || panel.propsSchema.type !== "object" || !Array.isArray(panel.actions) || panel.actions.length > 9 || new Set(panel.actions).size !== panel.actions.length || panel.actions.some(a => !["workflow.state", "workflow.answer", "workflow.cancel", ...UI_ACTIONS].includes(a)) || typeof panel.fallback !== "string" || !panel.fallback.trim() || panel.fallback.length > 4000) throw new Error("Invalid panel descriptor");
+  if(panel.contractVersion!==3 || panel.targetScope!=="current" || !Array.isArray(panel.modes) || !panel.modes.length || panel.modes.length>2 || new Set(panel.modes).size!==panel.modes.length || panel.modes.some(mode=>mode!=="work"&&mode!=="create")) throw new Error("Invalid panel mode/target contract");
+  validateView(panel);
   if (panel.renderer !== undefined && !/^[a-z][a-z0-9_-]{0,79}$/.test(panel.renderer)) throw new Error("Invalid renderer tool name");
   if (panel.themes && (Object.keys(panel.themes).length > 8 || Object.keys(panel.themes).some(name=>!/^[a-z][a-z0-9-]{0,31}$/.test(name)))) throw new Error("Invalid panel theme choices");
   for (const tokens of [panel.theme, ...Object.values(panel.themes ?? {})]) if(tokens) for (const [name, value] of Object.entries(tokens)) try { if (!["background", "foreground", "accent", "border"].includes(name)) throw new Error(); normalizeColor(value); } catch { throw new Error("Invalid panel theme token"); }
 }
 /** Only the fixed esbuild API and immutable local inputs; no config files or hooks. */
-export async function buildPanel(resource: Resource, panel: PanelDefinition): Promise<BuiltPanel> {
+export async function buildPanel(resource: Resource, panel: PanelDefinition, capability: BuiltPanel["capability"] = "panels"): Promise<BuiltPanel> {
   validatePanel(panel);
   const root = await realpath(resource.root), entry = await safePath(root, panel.entry);
   let bytes = 0, count = 0;
@@ -46,5 +47,5 @@ export async function buildPanel(resource: Resource, panel: PanelDefinition): Pr
   }}]});
   const bundle = result.outputFiles.find(f=>f.path.endsWith('.js'))?.text ?? '', css = result.outputFiles.find(f=>f.path.endsWith('.css'))?.text ?? '';
   if (!bundle || Buffer.byteLength(bundle + css) > 2 * LIMITS.file) throw new Error('Panel bundle size limit');
-  return {...panel,resource,bundle,css,bundleHash:hash(bundle+'\n'+css)};
+  return {...panel,capability,resource,bundle,css,bundleHash:hash(bundle+'\n'+css)};
 }

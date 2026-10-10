@@ -1,0 +1,65 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/cli.test.ts (3 tests | 1 failed) 2976ms
+   × CLI SIGINT ends a blocked HTTP request with a durable cancelled run 397ms
+ ❯ test/local-experience.test.ts (10 tests | 1 failed) 2882ms
+   × uses canonical workspace partitions and rejects data directory links 30ms
+ ❯ test/server.test.ts (12 tests | 1 failed) 7611ms
+   × does not rerun a command after an actual killed tool write 4025ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/cli.test.ts > CLI SIGINT ends a blocked HTTP request with a durable cancelled run
+Error: CLI exited 1: auth.json 无法读取或版本不受支持
+
+ ❯ test/cli.test.ts:21:64
+     19|   const exited = new Promise<number | null>((r, reject) => { child.on(…
+     20|   try {
+     21|     await Promise.race([requested, exited.then(code => { throw new Err…
+       |                                                                ^
+     22|     expect(await exited).toBe(130); expect(JSON.parse(output).status).…
+     23|     expect((await readSession(join(dir, 's'))).events.at(-1)?.payload)…
+ ❯ test/cli.test.ts:21:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/local-experience.test.ts > uses canonical workspace partitions and rejects data directory links
+AssertionError: expected [Function] to throw error including 'symlink' but got '/var/folders/v9/tsjz4byn1mg90zhd5gn68…'
+
+Expected: "symlink"
+Received: "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-5cLU7c/home 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖"
+
+ ❯ test/local-experience.test.ts:61:47
+     59|   const bad = join(await temporary(), "home");
+     60|   await symlink(home, bad);
+     61|   await expect(workspacePaths(workspace, bad)).rejects.toThrow("symlin…
+       |                                               ^
+     62| });
+     63| it("migrates only verified matching sessions, preserves bytes, skips r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/server.test.ts > does not rerun a command after an actual killed tool write
+Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-1AHNSs/test-home 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖
+ ❯ inspectDataHome src/storage/format.ts:46:19
+     44|     const value = record(JSON.parse(await readFile(file, "utf8")));
+     45|     if (value?.product !== marker.product || value.formatVersion !== m…
+     46|   } catch { throw new IncompatibleFormatError(path); }
+       |                   ^
+     47|   return "supported";
+     48| }
+ ❯ prepareDataHome src/storage/format.ts:52:7
+ ❯ workspacePaths src/storage/paths.ts:15:16
+ ❯ Sessions.open src/server/sessions.ts:205:19
+ ❯ startWeb src/server/app.ts:32:20
+ ❯ test/server.test.ts:340:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 1 passed (4)
+      Tests  3 failed | 26 passed (29)
+   Start at  01:21:07
+   Duration  8.28s (transform 316ms, setup 0ms, import 983ms, tests 13.48s, environment 0ms)
+

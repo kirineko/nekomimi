@@ -1,3 +1,4 @@
+import { Button } from "../ui/Button";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../api";
 import { DiffView } from "./DiffView";
@@ -21,7 +22,7 @@ export function Changes({
   return sessionId ? (
     <SessionChanges key={sessionId} sessionId={sessionId} revision={revision} locate={locate} />
   ) : (
-    <p className="panel-empty">暂无已确认的文件修改</p>
+    <p className="text-sm text-muted">暂无已确认的文件修改</p>
   );
 }
 interface ChangePage {
@@ -96,17 +97,17 @@ function SessionChanges({ sessionId, revision, locate }: {
     }
   };
   return (
-    <section className="changes-list">
-      <p className="panel-muted">本会话 edit/write 的逐次修改</p>
+    <section aria-label="会话文件修改" className="min-w-0 space-y-4">
+      <p className="text-xs text-muted">本会话 edit/write 的逐次修改</p>
       {error && (
-        <p role="alert" className="error">
+        <p role="alert" className="break-words text-sm text-danger">
           {error}
         </p>
       )}
-      {!changes.length && <p className="panel-empty">暂无已确认的文件修改</p>}
+      {!changes.length && <p className="text-sm text-muted">暂无已确认的文件修改</p>}
       {changes.map((c) => (
         <article key={c.id}>
-          <p className="panel-muted">
+          <p className="text-xs text-muted">
             记录 {c.seq} · 轮次 {c.runId?.slice(0, 8) ?? "未知"}
           </p>
           {c.patch && sessionId ? (
@@ -122,7 +123,7 @@ function SessionChanges({ sessionId, revision, locate }: {
         </article>
       ))}
       {next !== undefined && (
-        <button disabled={loading} onClick={() => void loadOlder()}>{loading ? "加载中…" : "更早的修改"}</button>
+        <Button variant="outline" size="sm" disabled={loading} onClick={() => void loadOlder()}>{loading ? "加载中…" : "更早的修改"}</Button>
       )}
     </section>
   );

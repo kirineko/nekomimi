@@ -1,0 +1,35 @@
+
+Running 10 tests using 2 workers
+
+(node:43891) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.2s)
+  ✓   1 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.2s)
+(node:43929) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43931) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:43961) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:43963) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:43993) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:43995) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:44025) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+(node:44027) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+  ✓  10 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+
+  10 passed (15.4s)

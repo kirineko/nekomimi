@@ -18,25 +18,27 @@ for (const guide of installedGuides.guides) {
   const content = await sdkCatalog(guide.entry);
   if (!content.text || !content.hash) throw Error('Missing installed guide or content evidence: '+guide.entry);
 }
-if (SDK_VERSION !== 2) throw new Error("Missing public SDK");
+if (SDK_VERSION !== 3) throw new Error("Missing public SDK");
 const workspace = resolve("custom-workspace");
 const home = resolve("custom-home");
+const ownerWorkspace = resolve("owner-workspace");
 await mkdir(workspace);
 await mkdir(home);
+await mkdir(ownerWorkspace);
 const root = resolve(workspace, ".nekomimi/extensions/check");
 await mkdir(root, { recursive: true });
 await writeFile(
   resolve(root, "extension.json"),
   JSON.stringify({
     name: "check",
-    sdkVersion: 1,
+    sdkVersion: 3,
     entry: "index.ts",
     requiredCapabilities: ["commands", "tools"],
   }),
 );
 await writeFile(
   resolve(root, "index.ts"),
-  `import { SDK_VERSION } from 'nekomimi/extensions'; export default api => { api.registerCommand('check', {description:'Check installed SDK', async handler(_,ctx) { const list=await ctx.callTool('resource_list',{}); const doc=list.details.find(r=>r.kind==='doc'&&r.name==='README.md'); const result=await ctx.callTool('resource_read',{id:doc.id}); if(!result.content[0].text.includes('Nekomimi SDK')) throw Error('Missing installed docs'); return 'installed-sdk-'+SDK_VERSION; }}); };`,
+  `import { SDK_VERSION } from 'nekomimi/extensions'; export default (api: import('nekomimi/extensions').ExtensionAPI)=> { api.registerCommand('check', {description:'Check installed SDK', async handler(_,ctx) { let offset:number|undefined=0,revision:string|undefined,doc:{id:string;kind:string;name:string}|undefined; while(offset!==undefined&&!doc){const page=(await ctx.callTool('resource_list',{offset,...(revision?{revision}:{})})).details as {items:Array<{id:string;kind:string;name:string}>;next?:number;revision:string}; if(!Array.isArray(page.items)) throw Error('Invalid resource list'); doc=page.items.find(r=>r.kind==='doc'&&r.name==='README.md');offset=page.next;revision=page.revision;} if(!doc) throw Error('Missing SDK document'); const result=await ctx.callTool('resource_read',{id:doc.id}); if(!result.content.filter(c=>c.type==='text').map(c=>c.text).join('').includes('Nekomimi SDK')) throw Error('Missing installed docs'); return 'installed-sdk-'+SDK_VERSION; }}); };`,
 );
 await writeFile(
   resolve(workspace, "mcp.mjs"),
@@ -78,11 +80,14 @@ try {
     {},
     new AbortController().signal,
   );
-  if (result.content[0].text !== "pack-mcp") throw Error("MCP call failed");
+  if (result.content.filter(c=>c.type==='text').map(c=>c.text).join('') !== "pack-mcp") throw Error("MCP call failed");
   await host.release();
   const used = await run({
     workspace,
     home,
+    mode: "create",
+    ownerWorkspace,
+    target: { kind: "extension", root: workspace },
     customization: host,
     session: resolve("custom-session"),
     apiKey: "unused",
@@ -91,7 +96,7 @@ try {
       throw Error("Unexpected model call");
     },
   });
-  if (used.status !== "completed" || used.text !== "installed-sdk-2")
+  if (used.status !== "completed" || used.text !== "installed-sdk-3")
     throw Error(used.error ?? "Command failed");
   if (
     !(await readSession(used.session)).events.some(
@@ -113,8 +118,8 @@ try {
   const source=resolve(workspace,'installed-kit');await mkdir(source);
   const files=['durable-review.ts','panel-extension.ts','review-panel.ts','http-providers.ts'];
   for(const name of files)await writeFile(resolve(source,name),await readFile(resolve('node_modules/nekomimi/extension-docs',name),'utf8'));
-  await writeFile(resolve(source,'index.ts'),`import type {ExtensionFactory2} from 'nekomimi/extensions';import workflow from './durable-review';import panel from './panel-extension';export default (async api=>{await workflow(api);await panel(api);api.registerCommand('installed-model',{description:'Installed custom model',async handler(_args,ctx){return ctx.model('Installed auxiliary request');}});}) satisfies ExtensionFactory2;`);
-  await writeFile(resolve(source,'nekomimi.json'),JSON.stringify({manifestVersion:1,name:'installed-kit',version:'1.0.0',sdkVersion:2,requiredCapabilities:['commands','tools','ui','model','workflows','workspace-state','panels','providers'],dependencies:{},files,resources:[{kind:'extension',name:'installed-kit',entry:'index.ts'},{kind:'provider',name:'installed-provider',entry:'http-providers.ts'}]}));
+  await writeFile(resolve(source,'index.ts'),`import type {ExtensionFactory3} from 'nekomimi/extensions';import workflow from './durable-review';import panel from './panel-extension';export default (async api=>{await workflow(api);await panel(api);api.registerCommand('installed-model',{description:'Installed custom model',async handler(_args,ctx){return ctx.model('Installed auxiliary request');}});}) satisfies ExtensionFactory3;`);
+  await writeFile(resolve(source,'nekomimi.json'),JSON.stringify({manifestVersion:1,name:'installed-kit',version:'1.0.0',sdkVersion:3,requiredCapabilities:['commands','tools','ui','model','workflows','workspace-state','panels','providers'],dependencies:{},files,resources:[{kind:'extension',name:'installed-kit',entry:'index.ts'},{kind:'provider',name:'installed-provider',entry:'http-providers.ts'}]}));
   const packages=new Packages(workspace,home),pkg=await packages.prepare({kind:'local',path:source},'project');
   const checked=await packages.preview('project',pkg.id);if(!checked.passed)throw Error(JSON.stringify(checked.checks));
   const installed=await host.requestPackage(pkg.id,'project',true);await host.reload(installed);if(installed.status!=='activated')throw Error(installed.error);
@@ -149,7 +154,7 @@ try {
     if(!(await readFile(resolve(workspace,'review-result.json'),'utf8')).includes('approve'))throw Error('Installed review output missing');
   }finally{await oauth.close();}
   console.log(
-    "Installed unified SDK with legacy compatibility, package, Provider, durable workflow, static panel and stdio MCP verified on " +
+    "Installed SDK 3 with package, Provider, durable workflow, static panel and stdio MCP verified on " +
       process.version,
   );
 } finally {

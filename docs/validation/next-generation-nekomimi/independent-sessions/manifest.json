@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-10-06T21:07:43.908145+00:00",
+  "node": "v24.15.0",
+  "files": {
+    "browser.log": "24784472c7994e7521422087354e7838eba2bf977681557643b5313fa214c80f",
+    "first-tests.log": "a7328863a8c59c2adce010d8aececbfcfaedfc67de1aa186c0beedf5839517a1",
+    "second-tests.log": "6f91f5e1acecc19e41116c14af64d4edb6bd907ff45c95030f906dcad0270a30",
+    "admission-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "coordinated-regression.log": "f931ed2c6f1126a0527990e019dc18fc20ed6a47d1b9bd3329361d59e3c8e77a",
+    "browser-final.log": "c891078fa8bbfd13aa1c67857fd8f9d6ab15acf7e9d4dea850b933f3539903b7",
+    "first-regression.log": "b8d6eab7c072af57f6fc2297db3cd83cedf87ab0fc3e996203d232aaf7246116",
+    "browser-build.log": "8dc14d70d2bc61e516d6acb5ed15e13c040c8de0f2ad32e760500a0d4caa1747",
+    "final-regression.log": "4d56a7c0ab03348a48287c8a215c1e769e5a3a908d52daeb1c28519f8771e27b",
+    "workers2-regression.log": "e9c90b4981a150bad2e53ce4abfcd8876e0d82cc76d489b457bb9f923eaaa1f9",
+    "admission-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287"
+  },
+  "sourceFiles": {
+    "src/server/sessions.ts": "c248cc4e56dcc67ee0b8b96b7dd29bd7de77d338d3bbe7b42f8003927314c051",
+    "src/server/app.ts": "cbd5133d96c1919a6e3956457707aff1d6fc9682ea9fbedc9fd5da58320e5639",
+    "src/session/title.ts": "4b51a6d9debee79e13705f4dc025c9e7d94c4b92c976b3aef7059a47e1f2f93d",
+    "src/shared/protocol.ts": "a08abe6ab2ac59aacbdf6e647052ae238b15c75e651a32433189a5f29b88dbbc",
+    "src/web/components/DeleteSessionDialog.tsx": "d8e95a7673f180e894e088304a1325f03b20fc789b582382d3fd610727b10ae9",
+    "test/independent-sessions.test.ts": "007d0b19faa38ed562becaadccd225d973dc831ceeb957ea8d2a0aa9c156ade8",
+    "test/browser/session-navigation.spec.ts": "9a0481d4385635954aec905faaa2cee1674479f75cc2292a98425c083c985a43"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "b75aa2104891ee2b90ab96efac6ab5cb35f9712ad26dc2074d161e884b254e04"
+  }
+}

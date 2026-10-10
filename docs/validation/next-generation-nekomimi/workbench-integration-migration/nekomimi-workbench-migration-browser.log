@@ -1,0 +1,57 @@
+
+Running 5 tests using 1 worker
+
+(node:342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports (7.4s)
+(node:436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/workbench.spec.ts:88:1 › cancels and remains usable on a narrow viewport (2.8s)
+180-row input fill and assertion: 10ms
+  ✓  3 test/browser/workbench.spec.ts:93:1 › windows long history and pages context sources beyond a raw artifact page (3.3s)
+  ✓  4 test/browser/workbench.spec.ts:107:1 › compact layout preserves controls and inspector focus at all target sizes (2.6s)
+  ✓  5 test/browser/workbench.spec.ts:111:1 › shows and downloads diagnostics even when durable cursor and status do not change (753ms)
+
+
+  1) test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: '调用证据', exact: true }).getByRole('list', { name: '调用树', exact: true })
+    Expected substring: "write"
+    Received string:    "work · 完成展开子调用（1）#22 · deepseek-flashwork · 完成#48 · deepseek-flash"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: '调用证据', exact: true }).getByRole('list', { name: '调用树', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '调用证据', exact: true }).getByRole('list', { name: '调用树', exact: true })
+        13 × locator resolved to <ul aria-label="调用树" class="m-0 list-none space-y-3 pl-0">…</ul>
+           - unexpected value "work · 完成展开子调用（1）#22 · deepseek-flashwork · 完成#48 · deepseek-flash"
+
+
+      71 |   await page.getByRole('button',{name:/查看文件 diff/}).click();await expect(page.locator('[data-change-kind="add"]')).toContainText('hello browser');
+      72 |   await page.getByRole('button',{name:'调用证据',exact:true}).click();const inspection=page.getByRole('dialog',{name:'调用证据',exact:true});
+    > 73 |   await expect(inspection.getByRole('list',{name:'调用树',exact:true})).toContainText('write');
+         |                                                                      ^
+      74 |   await inspection.getByRole('button',{name:'write · 完成',exact:true}).click();const selected=inspection.getByRole('region',{name:'所选调用证据'});
+      75 |   await selected.getByText(/#\d+ · tool.result/).click();await expect(selected).toContainText('hello.txt');
+      76 |   await inspection.getByRole('button',{name:'work · 完成',exact:true}).last().click();
+        at /Users/kirineko/Github/nekomimi/test/browser/workbench.spec.ts:73:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workbench-submits-observes-a410f-loads-continues-and-exports/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/workbench.spec.ts:65:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+  4 passed (19.0s)

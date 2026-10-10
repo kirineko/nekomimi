@@ -15,8 +15,10 @@ async function fixture(page: Page) {
     const body=JSON.parse(String(init?.body));requests.push(body);
     return response(requests.length===1?[callItem('read',{path:'src/main.ts'})]:[textItem('已读取引用文件')]);
   }}});
-  await page.goto(app.url);await expect(page.getByText('已连接',{exact:true})).toBeVisible();
-  const input=page.getByRole('textbox',{name:'任务内容'});
+  const session=await app.sessions.create('引用测试', {mode:'work',commandId:'references'});
+  await page.goto(`${app.origin}/work/session/${session.id}#token=${app.token}`);
+  const input=page.getByRole('textbox',{name:'任务草稿'});
+  await expect(input).toBeVisible();
   return {app,workspace,input,requests};
 }
 test('reference chips choose files and whole directories, drill, edit and send path-only context',async({page})=>{
@@ -26,11 +28,11 @@ test('reference chips choose files and whole directories, drill, edit and send p
     await f.input.fill('查看 @src');
     await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();
     await f.input.press('ArrowRight');await expect(f.input).toHaveJSProperty('textContent','查看 @src/');await expect(page.getByRole('option',{name:/main.ts/})).toBeVisible();
-    await f.input.press('Enter');await expect(page.locator('.reference-chip')).toHaveCount(1);
-    await expect(page.locator('.reference-chip')).toHaveAttribute('data-path','src/main.ts');
+    await f.input.press('Enter');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
+    await expect(page.locator('[data-reference-id]')).toHaveAttribute('data-path','src/main.ts');
     await f.input.pressSequentially('以及 @src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();await f.input.press('Enter');
-    await expect(page.locator('.reference-chip')).toHaveCount(2);
-    await expect(page.locator('.reference-chip').last()).toHaveAttribute('aria-label','目录 src');
+    await expect(page.locator('[data-reference-id]')).toHaveCount(2);
+    await expect(page.locator('[data-reference-id]').last()).toHaveAttribute('aria-label','目录 src');
     expect(f.requests).toHaveLength(0);
     await f.input.press('Enter');await expect(page.getByText('已读取引用文件',{exact:true})).toBeVisible();
     expect(f.requests).toHaveLength(2);
@@ -46,18 +48,18 @@ test('clipboard preserves special paths, atomic deletion, undo and untrusted pas
   const f=await fixture(page);
   try {
     await f.input.fill('@"my docs/');await expect(page.getByRole('option',{name:/note/})).toBeVisible();await f.input.press('Enter');
-    await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.press('ControlOrMeta+a');
     const clip=await f.input.evaluate((el,mime)=>{const data=new DataTransfer();el.dispatchEvent(new ClipboardEvent('copy',{clipboardData:data,bubbles:true,cancelable:true}));return {text:data.getData('text/plain'),raw:data.getData(mime)};},mime);
     expect(clip.text).toBe('@"my docs/中文 \\"note\\".md" '.replaceAll('\\\\','\\'));
-    await f.input.press('Backspace');await expect(page.locator('.reference-chip')).toHaveCount(0);
-    await f.input.press('ControlOrMeta+z');await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await f.input.press('Backspace');await expect(page.locator('[data-reference-id]')).toHaveCount(0);
+    await f.input.press('ControlOrMeta+z');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.press('ControlOrMeta+a');
     await f.input.evaluate((el,{clip,mime})=>{const data=new DataTransfer();data.setData('text/plain',clip.text);data.setData(mime,clip.raw);el.dispatchEvent(new ClipboardEvent('paste',{clipboardData:data,bubbles:true,cancelable:true}));},{clip,mime});
-    await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.press('End');await f.input.pressSequentially(' 后面');
-    await page.getByRole('button',{name:/移除引用/}).click();await expect(page.locator('.reference-chip')).toHaveCount(0);await expect(f.input).toContainText('后面');
-    await f.input.press('ControlOrMeta+z');await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await page.getByRole('button',{name:/移除引用/}).click();await expect(page.locator('[data-reference-id]')).toHaveCount(0);await expect(f.input).toContainText('后面');
+    await f.input.press('ControlOrMeta+z');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.press('ControlOrMeta+a');
     await f.input.evaluate((el,mime)=>{const d=new DataTransfer();d.setData('text/plain','@../outside');d.setData('text/html','<img src=x onerror=alert(1)>');d.setData(mime,JSON.stringify({version:1,segments:[{type:'reference',path:'../outside',kind:'file'}]}));el.dispatchEvent(new ClipboardEvent('paste',{clipboardData:d,bubbles:true,cancelable:true}));},mime);
     await expect(f.input).toHaveJSProperty('textContent','@../outside');await expect(page.getByText('无法恢复引用块，已保留纯文本。')).toBeVisible();await expect(f.input.locator('img')).toHaveCount(0);
@@ -71,10 +73,10 @@ test('query cancellation, IME, errors and responsive chips preserve the draft',a
     await f.input.fill('@src');await f.input.dispatchEvent('compositionstart');await f.input.dispatchEvent('keydown',{key:'Enter',isComposing:true,keyCode:229});expect(f.requests).toHaveLength(0);await expect(f.input).toHaveJSProperty('textContent','@src');await f.input.dispatchEvent('compositionend');await page.waitForTimeout(80);
     await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();await f.input.press('Enter');
     await page.route('**/submit',r=>r.fulfill({status:503,json:{error:{message:'重试任务'}}}),{times:1});
-    await page.getByRole('button',{name:'发送任务'}).click();await expect(page.getByText(/重试任务/)).toBeVisible();await expect(page.locator('.reference-chip')).toHaveCount(1);await expect(f.input).toBeFocused();
-    for(const width of [390,900]) {await page.setViewportSize({width,height:800});await page.evaluate(()=>document.documentElement.style.fontSize='20px');await expect(page.getByRole('button',{name:'发送任务'})).toBeInViewport();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath(`references-${width}.png`)});}
+    await page.getByRole('button',{name:'发送',exact:true}).click();await expect(page.getByText(/重试任务/)).toBeVisible();await expect(page.locator('[data-reference-id]')).toHaveCount(1);await expect(f.input).toBeFocused();
+    for(const width of [390,900]) {await page.setViewportSize({width,height:800});await page.evaluate(()=>document.documentElement.style.fontSize='20px');await expect(page.getByRole('button',{name:'发送',exact:true})).toBeInViewport({ratio:1});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath(`references-${width}.png`)});}
     const gate=new Promise<void>(r=>{release=r;});
-    await page.route('**/workspace/references?query=slow',async r=>{await gate;await r.fulfill({json:{entries:[{path:'slow',name:'slow',kind:'file'}],revision:'old',limited:false}});});
+    await page.route('**/workspace/references?query=slow*',async r=>{await gate;await r.fulfill({json:{entries:[{path:'slow',name:'slow',kind:'file'}],revision:'old',limited:false}});});
     await f.input.fill('@slow');await page.waitForTimeout(200);await f.input.fill('@src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();release();await page.waitForTimeout(100);await expect(page.getByRole('option',{name:/slow/})).toHaveCount(0);
     await f.input.press('Escape');await expect(page.getByRole('listbox',{name:'文件与目录'})).toHaveCount(0);
   }finally{release();await f.app.close();}
@@ -105,14 +107,14 @@ test('native composition, adjacent chip deletion and cancelled selection preserv
     await expect(f.input).toHaveJSProperty('textContent','请 中文');expect(f.requests).toHaveLength(0);
     await f.input.press('ControlOrMeta+z');await expect(f.input).toHaveJSProperty('textContent','请 ');
     await f.input.pressSequentially('@src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();await f.input.press('Enter');
-    await expect(page.locator('.reference-chip')).toHaveCount(1);
-    await f.input.press('Backspace');await f.input.press('Backspace');await expect(page.locator('.reference-chip')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','请 ');
-    await f.input.press('ControlOrMeta+z');await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await expect(page.locator('[data-reference-id]')).toHaveCount(1);
+    await f.input.press('Backspace');await f.input.press('Backspace');await expect(page.locator('[data-reference-id]')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','请 ');
+    await f.input.press('ControlOrMeta+z');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.fill('@src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();
     const gate=new Promise<void>(r=>{release=r;});
-    await page.route('**/workspace/references?mode=resolve&path=src',async route=>{await gate;await route.fallback();},{times:1});
+    await page.route(url=>url.pathname.endsWith('/workspace/references')&&url.searchParams.get('mode')==='resolve'&&url.searchParams.get('path')==='src',async route=>{await gate;await route.fallback();},{times:1});
     await f.input.press('Enter');await f.input.press('Escape');release();await page.waitForTimeout(200);
-    await expect(page.locator('.reference-chip')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','@src');
+    await expect(page.locator('[data-reference-id]')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','@src');
   }finally{release();await f.app.close();}
 });
 
@@ -137,14 +139,14 @@ test('long mixed references and candidate controls fit a keyboard-sized viewport
   try {
     const name='长名称-'+ 'segment-'.repeat(20)+'.txt';await writeFile(join(f.workspace,name),'fixture');
     await page.setViewportSize({width:390,height:480});await page.evaluate(()=>document.documentElement.style.fontSize='20px');
-    await f.input.fill('@长名称');await expect(page.getByRole('option',{name:new RegExp(name)})).toBeVisible();await f.input.press('Enter');await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await f.input.fill('@长名称');await expect(page.getByRole('option',{name:new RegExp(name)})).toBeVisible();await f.input.press('Enter');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
     await f.input.pressSequentially(' @src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();
-    await expect(page.getByRole('button',{name:'发送任务'})).toBeInViewport();
-    const popup=await page.locator('.reference-popup').boundingBox();expect(popup!.y).toBeGreaterThanOrEqual(0);expect(popup!.x+popup!.width).toBeLessThanOrEqual(390);
+    await expect(page.getByRole('button',{name:'发送',exact:true})).toBeInViewport({ratio:1});
+    const popup=await page.locator('[data-reference-popup]').boundingBox();expect(popup!.y).toBeGreaterThanOrEqual(0);expect(popup!.x+popup!.width).toBeLessThanOrEqual(390);
     await page.screenshot({path:info.outputPath('references-long-narrow.png')});
-    await f.input.press('Enter');await expect(page.locator('.reference-chip')).toHaveCount(2);
+    await f.input.press('Enter');await expect(page.locator('[data-reference-id]')).toHaveCount(2);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-    await page.getByRole('button',{name:`移除引用 ${name}`,exact:true}).focus();await page.keyboard.press('Enter');await expect(page.locator('.reference-chip')).toHaveCount(1);
+    await page.getByRole('button',{name:`移除引用 ${name}`,exact:true}).focus();await page.keyboard.press('Enter');await expect(page.locator('[data-reference-id]')).toHaveCount(1);
   }finally{await f.app.close();}
 });
 
@@ -152,15 +154,15 @@ test('removing a chip after native IME insertion preserves adjacent prose and un
   const f=await fixture(page);
   try {
     await f.input.fill('前文 @src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();await f.input.press('Enter');
-    await expect(page.locator('.reference-chip')).toHaveCount(1);await f.input.pressSequentially('后文');
+    await expect(page.locator('[data-reference-id]')).toHaveCount(1);await f.input.pressSequentially('后文');
     await f.input.evaluate(el=>{const range=document.createRange();range.setStart(el.firstChild!,3);range.collapse(true);const selection=window.getSelection()!;selection.removeAllRanges();selection.addRange(range);});
     const cdp=await page.context().newCDPSession(page);
     await cdp.send('Input.imeSetComposition',{text:'新增中文',selectionStart:4,selectionEnd:4});
     await cdp.send('Input.insertText',{text:'新增中文'});
     await expect(f.input).toContainText('前文 新增中文');
     await page.getByRole('button',{name:'移除引用 src',exact:true}).click();
-    await expect(page.locator('.reference-chip')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','前文 新增中文 后文');
-    await f.input.press('ControlOrMeta+z');await expect(page.locator('.reference-chip')).toHaveCount(1);await expect(f.input).toContainText('前文 新增中文');await expect(f.input).toContainText('后文');
+    await expect(page.locator('[data-reference-id]')).toHaveCount(0);await expect(f.input).toHaveJSProperty('textContent','前文 新增中文 后文');
+    await f.input.press('ControlOrMeta+z');await expect(page.locator('[data-reference-id]')).toHaveCount(1);await expect(f.input).toContainText('前文 新增中文');await expect(f.input).toContainText('后文');
     await f.input.press('ControlOrMeta+Shift+z');await expect(f.input).toHaveJSProperty('textContent','前文 新增中文 后文');
   }finally{await f.app.close();}
 });
@@ -169,7 +171,7 @@ test('late clipboard validation cannot replace active native IME input',async({p
   const f=await fixture(page);let release=()=>{};
   try {
     const gate=new Promise<void>(r=>{release=r;});let started=()=>{};const requested=new Promise<void>(r=>{started=r;});
-    await page.route('**/workspace/references?mode=resolve&path=src',async route=>{started();await gate;await route.fulfill({json:{path:'src',name:'src',kind:'directory'}});});
+    await page.route(url=>url.pathname.endsWith('/workspace/references')&&url.searchParams.get('mode')==='resolve'&&url.searchParams.get('path')==='src',async route=>{started();await gate;await route.fulfill({json:{path:'src',name:'src',kind:'directory'}});});
     await f.input.fill('前文 ');
     await f.input.evaluate((el,mime)=>{const data=new DataTransfer();data.setData('text/plain','@src/ ');data.setData(mime,JSON.stringify({version:1,segments:[{type:'reference',path:'src',kind:'directory'},{type:'text',text:' '}]}));el.dispatchEvent(new ClipboardEvent('paste',{clipboardData:data,bubbles:true,cancelable:true}));},mime);
     await requested;
@@ -177,7 +179,7 @@ test('late clipboard validation cannot replace active native IME input',async({p
     await cdp.send('Input.imeSetComposition',{text:'中文',selectionStart:2,selectionEnd:2});
     await expect(f.input).toHaveJSProperty('textContent','前文 @src/ 中文');
     release();await page.waitForTimeout(200);
-    await expect(f.input).toHaveJSProperty('textContent','前文 @src/ 中文');await expect(page.locator('.reference-chip')).toHaveCount(0);
+    await expect(f.input).toHaveJSProperty('textContent','前文 @src/ 中文');await expect(page.locator('[data-reference-id]')).toHaveCount(0);
     await cdp.send('Input.insertText',{text:'中文'});
     await expect(f.input).toHaveJSProperty('textContent','前文 @src/ 中文');
     await expect(page.getByText('无法恢复引用块，已保留纯文本。')).toHaveCount(0);
@@ -185,4 +187,24 @@ test('late clipboard validation cannot replace active native IME input',async({p
     await f.input.press('ControlOrMeta+z');await expect(f.input).toHaveJSProperty('textContent','前文 ');
     expect(f.requests).toHaveLength(0);
   }finally{release();await f.app.close();}
+});
+
+test('work and create references use their own targets and retain chips across client navigation',async({page})=>{
+  const f=await fixture(page),development=await temporary();
+  try {
+    await writeFile(join(development,'create-only.txt'),'development content');
+    const create=await f.app.sessions.create('引用创造目标',{mode:'create',commandId:'reference-create',target:{kind:'extension',root:development}});
+    await f.input.fill('@src');await expect(page.getByRole('option',{name:'src/ 目录 src',exact:true})).toBeVisible();await f.input.press('Enter');
+    await page.getByRole('link',{name:'创造',exact:true}).click();
+    await page.locator(`a[href="/create/session/${create.id}"]`).click();
+    const input=page.getByRole('textbox',{name:'任务草稿'});
+    await input.fill('@src');await expect(page.getByText('没有匹配的文件或目录',{exact:true})).toBeVisible();
+    await input.fill('@create');await expect(page.getByRole('option',{name:/create-only.txt/})).toBeVisible();await input.press('Enter');
+    await expect(input.locator('[data-reference-id]')).toHaveAttribute('data-path','create-only.txt');
+    await page.getByRole('link',{name:'工作',exact:true}).click();await page.getByRole('link',{name:'引用测试',exact:true}).click();
+    await expect(input.locator('[data-reference-id]')).toHaveAttribute('data-path','src');
+    await page.getByRole('link',{name:'创造',exact:true}).click();await page.locator(`a[href="/create/session/${create.id}"]`).click();
+    await expect(input.locator('[data-reference-id]')).toHaveAttribute('data-path','create-only.txt');
+    expect(f.requests).toHaveLength(0);
+  }finally{await f.app.close();}
 });

@@ -1,24 +1,33 @@
+import { assertPhysicalRouting } from "./model-routing.js";
 import { envelopeKey, estimateTokens } from './context-meter.js';
-import { RecordedCall } from "./recorded-call.js";
+import { contextMeasurementIdentity } from './context-meta.js';
+import { RecordedCall, retryableModelStatus } from "./recorded-call.js";
 import {
   createAssistantMessageEventStream,
   type AssistantMessage,
   type Model,
+  normalizeContext,
 } from "@earendil-works/pi-ai";
 import { stream as responsesStream } from "@earendil-works/pi-ai/api/openai-responses";
-import type { StreamFn } from "@earendil-works/pi-agent-core";
+import type { RecordedModelStream as StreamFn } from "./pi/model-stream.js";
 import { Journal, type Links } from "./journal.js";
-import { contextView, type assemblePrompt, type WireItem } from "./context.js";
+import { type assemblePrompt, type WireItem } from "./context.js";
+import { canonicalContext, persistRequestContext, type PreparedRequestContext } from "./context-snapshot.js";
 
 export interface ProviderOptions {
+  routing?: "physical";
+  mode?: import("./shared/protocol.js").SessionMode;
   apiKey: string;
   providerProfile?: string;
   auxiliaryProfile?: string;
   namingProfile?: string;
   search?: import("./web-search.js").SearchSettings;
-  purpose?: "session-title" | "extension" | "compaction";
+  purpose?: "session-title" | "extension" | "compaction" | "handoff";
   autoCompact?: boolean;
   beforeRequest?: () => Promise<void>;
+  beforeDispatch?: (context?: PreparedRequestContext) => Promise<void>;
+  /** Read-only authority check; never invokes dispatch hooks or writes to the session Journal. */
+  revalidateConfiguration?: () => Promise<void>;
   contextEvents?: import("./journal.js").JournalEvent[];
   model?: string;
   baseUrl?: string;
@@ -35,12 +44,15 @@ export class ResponsesProvider {
   readonly protocol = "responses";
   lastOutcome = "completed";
   private callIds = new Map<string, string>();
+  private preparedModels = new WeakMap<PreparedRequestContext, Model<"openai-responses">>();
+  async validateConfiguration() { await this.settings.revalidateConfiguration?.(); }
   constructor(
     private journal: Journal,
     private links: Links,
     private prompt: ReturnType<typeof assemblePrompt>,
     private settings: ProviderOptions,
   ) {
+    assertPhysicalRouting(settings.routing);
     const url = new URL(settings.baseUrl ?? "https://api.deepseek.com");
     if (url.username || url.password || url.search || url.hash)
       throw new Error(
@@ -83,6 +95,20 @@ export class ResponsesProvider {
       timestamp: Date.now(),
     };
   }
+  async prepare(signal?: AbortSignal): Promise<PreparedRequestContext> {
+    if(!this.settings.apiKey.trim())throw new Error('Model credential is not configured');
+    this.journal.check(); signal?.throwIfAborted();
+    await this.settings.beforeRequest?.();
+    const model = canonicalContext(this.model);
+    const prepared = await persistRequestContext(this.journal, this.journal.links(this.links), {
+      prompt: this.prompt, contextEvents: this.settings.contextEvents, purpose: this.settings.purpose, runId: this.links.runId,
+      model: { id: model.id, provider: model.provider, protocol: this.protocol, contextWindow: model.contextWindow, maxTokens: model.maxTokens,
+        baseUrl: model.baseUrl, historyCompatibility: "deepseek-responses-v1" },
+    });
+    this.journal.check(); signal?.throwIfAborted();
+    this.preparedModels.set(prepared, model);
+    return prepared;
+  }
   readonly stream: StreamFn = (_model, piContext, options) => {
     const output = createAssistantMessageEventStream();
     void (async () => {
@@ -91,23 +117,18 @@ export class ResponsesProvider {
       try {
         this.journal.check();
         options?.signal?.throwIfAborted();
-        await this.settings.beforeRequest?.();
-        const view = contextView(
-          this.settings.contextEvents ?? this.journal.events,
-          this.prompt,
-        );
-        await this.journal.append(
-          "context.view",
-          {
-            revision: view.revision,
-            artifact: await this.journal.artifact(JSON.stringify(view)),
-          },
-          callLinks,
-        );
+        const prepared = piContext.productContext ?? await this.prepare(options?.signal);
+        const model = this.preparedModels.get(prepared);
+        if (!model) throw new Error("Request context was not prepared by this Provider or was already consumed");
+        this.preparedModels.delete(prepared);
+        const view = prepared.snapshot.view;
+        const auxiliary = !["work", "create"].includes(prepared.snapshot.purpose);
+        await this.journal.append("context.view", { revision: view.revision,
+          artifact: await this.journal.artifact(JSON.stringify(view)), contextSnapshot: prepared.reference }, callLinks);
         const attempts = this.settings.maxAttempts ?? 2;
         if (!Number.isInteger(attempts) || attempts < 1 || attempts > 10)
           throw new Error("maxAttempts must be 1..10");
-        const outputBudget=this.model.maxTokens;
+        const outputBudget=model.maxTokens;
         for (let attempt = 1; attempt <= attempts; attempt++) {
           this.journal.check();
           options?.signal?.throwIfAborted();
@@ -149,26 +170,27 @@ export class ResponsesProvider {
               throw new Error("SSE ended with an incomplete frame");
           };
           const recorded = await call.attempt(this.settings, {
-            purpose: this.settings.purpose ?? "task", protocol: "responses", attempt,
-            model: this.model.id, adapter: "pi-responses-0.85.1/harness-1",
+            purpose: prepared.snapshot.purpose, profile: view.prompt.profile, contextSnapshot: prepared.reference, protocol: "responses", attempt,
+            model: model.id, adapter: "pi-responses-1.0.4/journal-1",
           }, options?.signal, view.revision, parse);
           const { signal, timeout, links } = recorded;
+          recorded.projectContext(prepared, { kind: "responses", id: "pi-responses", revision: "1.0.4/journal-1" });
           const attemptId = links.attemptId!;
-          const inner = responsesStream(this.model, piContext, {
+          const inner = responsesStream(model, normalizeContext(piContext), {
             apiKey: this.settings.apiKey,
             signal,
             fetch: recorded.fetch,
             maxRetries: 0,
-            maxTokens: this.model.maxTokens,
+            maxTokens: model.maxTokens,
             onPayload: () => ({
-              model: this.model.id,
-              instructions: this.prompt.text,
+              model: model.id,
+              instructions: view.prompt.text,
               input: view.nodes.map((n) => n.item),
-              tools: this.prompt.schemas,
+              tools: view.prompt.schemas,
               tool_choice: "auto",
               stream: true,
               max_output_tokens: outputBudget,
-              ...(this.settings.purpose === "session-title"
+              ...(prepared.snapshot.purpose === "session-title"
                 ? { reasoning: { effort: "none" } }
                 : {}),
             }),
@@ -224,9 +246,10 @@ export class ResponsesProvider {
               costEstimateAvailable: false,
             },
           );
+          recorded.signal.throwIfAborted();
           if (completed) {
             const inputUsage=(terminal?.usage as any)?.input_tokens ?? (terminal?.usage as any)?.inputTokens;
-            if(!this.settings.purpose && Number.isSafeInteger(inputUsage) && inputUsage>0) await this.journal.append('context.usage',{key:envelopeKey(view,this.model),input:inputUsage,heuristic:estimateTokens(view.prompt.text)+estimateTokens(view.prompt.schemas)+estimateTokens(view.nodes.map(n=>n.item)),attemptId:attemptId},call.links);
+            if(!auxiliary && Number.isSafeInteger(inputUsage) && inputUsage>0) await this.journal.append('context.usage',{key:envelopeKey(view,model,contextMeasurementIdentity(view,[],prepared.snapshot)),purpose:prepared.snapshot.purpose,input:inputUsage,heuristic:estimateTokens(view.prompt.text)+estimateTokens(view.prompt.schemas)+estimateTokens(view.nodes.map(n=>n.item)),attemptId:attemptId},call.links);
 
             const items = (terminal!.output ?? []) as WireItem[];
             const calls = items.filter((i) => i.type === "function_call");
@@ -242,7 +265,7 @@ export class ResponsesProvider {
                 this.callIds.set(call.id, String(source.call_id));
               }
             await this.journal.append(
-              this.settings.purpose ? "auxiliary.response" : "context.add",
+              auxiliary ? "auxiliary.response" : "context.add",
               { items, source: `response:${attemptId}` },
               links,
             );
@@ -258,8 +281,7 @@ export class ResponsesProvider {
             !signal.aborted &&
             !streamError &&
             attempt < attempts &&
-            ([429, 500, 502, 503, 504].includes(status ?? 0) ||
-              (status === undefined && bytes === 0));
+            retryableModelStatus(status);
           if (retry) {
             await this.journal.append(
               "attempt.retry",

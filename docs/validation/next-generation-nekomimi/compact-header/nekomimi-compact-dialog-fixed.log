@@ -1,0 +1,16 @@
+
+Running 7 tests using 2 workers
+
+(node:96178) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:96179) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (2.2s)
+  ✓  2 test/browser/theme-management.spec.ts:17:1 › 10.4 theme preview cancels without writes; apply persists and recovery remains accessible (2.5s)
+  ✓  3 test/browser/header-recovery.spec.ts:34:1 › export is disabled without a session or while the durable run is active (1.5s)
+  ✓  4 test/browser/theme-management.spec.ts:34:1 › 10.4 theme revision conflict does not retry; revocation removes active stylesheet (1.7s)
+  ✓  5 test/browser/theme-management.spec.ts:49:1 › 10.4 create theme stays scoped; failed recovery uses persistent window fallback without false saved claim (1.9s)
+  ✓  6 test/browser/theme-management.spec.ts:60:1 › 10.4 project can explicitly follow user default; preview navigation cancels and bad font falls back (1.5s)
+  ✓  7 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (2.1s)
+
+  7 passed (11.1s)

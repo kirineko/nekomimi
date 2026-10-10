@@ -1,0 +1,51 @@
+{
+  "recordedAt": "2026-10-08T06:01:17.583914+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "progress": {
+    "total": 89,
+    "complete": 78,
+    "remaining": 11
+  },
+  "checks": {
+    "browserPassed": 20,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "fullBrowserSuite": false
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/studio-migration/narrow-workflows.png": "297416203820b08abcae84ac911c350c26b29210ffb8d29fcf1043327f3186f7",
+    "docs/validation/next-generation-nekomimi/studio-migration/mobile-resources.png": "8fba80c5a90650ed0de5509b91ccd9752d735aa0aa5ff60a6b78f7a2d06a9cc5",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-final.log": "b3e52a0c21b409638f0d17503da49486b68335d5af5b67998461bddda8f7d9ec",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-build.log": "8a679e87e9caf3f81a3a3ad839f8c5973670ecdca8854a10e333a3bf4e3bf17a",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-navigation.log": "50805dba8a384a5c49936635bf32eeb32fa458c6cda2afe0db48ddec24636302",
+    "docs/validation/next-generation-nekomimi/studio-migration/desktop-resources.png": "4c5dc66ee68574f196d56e64f811f26867ab95213112c84ad6a62042ab850091",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-migration.log": "c8f0f48909522cfd8d30356a7f86334e2b88952d955aada8e9953d3fd0b27688",
+    "docs/validation/next-generation-nekomimi/studio-migration/zoom-200-resources.png": "23d9cb01e7629717a720006978157b23a478c3d4d7bdf03d676eee346c5ee9fc",
+    "docs/validation/next-generation-nekomimi/studio-migration/strict.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/studio-migration/contrast.json": "66dd2d35d7568a01855cb18d399be04e1d0c070d14bcb2baf5e46fb8aad283a9",
+    "docs/validation/next-generation-nekomimi/studio-migration/desktop-editor.png": "61ba05e6abba3ec5e05d0b83f2296d7b6e59e6f03cef4085d53582e282471d46",
+    "docs/validation/next-generation-nekomimi/studio-migration/README.md": "9d5f78bec09da6bb8303d314762bd5a8eb9b20683d5c6b4853006b6232a7e9e1",
+    "docs/validation/next-generation-nekomimi/studio-migration/mobile-editor.png": "a01dc4212a4cceafbc361b3587754f7e46ebef4befff2d98282da10c1f2002ed",
+    "docs/validation/next-generation-nekomimi/studio-migration/narrow-models.png": "40a9fa42746d4476fe6229fe363fc6f418e5236f35c39a3f1c5bcbe328b47ddf",
+    "docs/validation/next-generation-nekomimi/studio-migration/desktop-workflows.png": "b449aaf60493a20bd8f7f19e54287fc202ca6dfc9b56c7e8e16f57184c80a721",
+    "docs/validation/next-generation-nekomimi/studio-migration/narrow-resources.png": "94b82a79f6c334ef588f788ad88322e7e0206c9601c1f0d8ab6cbb17b03dc280",
+    "docs/validation/next-generation-nekomimi/studio-migration/zoom-200-editor.png": "602d17b4be01721a3b3abbefd865fff2b74b23392c20c75e4f875d0a59e2f8bf",
+    "docs/validation/next-generation-nekomimi/studio-migration/mobile-workflows.png": "cbe60c75f3b6f9f01387e018b06844a177e43ea09d0067f86f976d0f80e67b8a",
+    "docs/validation/next-generation-nekomimi/studio-migration/zoom-200-models.png": "8b72273fa3d0d9df6f0dd3a4d1798695e632437cd85613951edf8f31ea445dbe",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/studio-migration/mobile-models.png": "239db92d31dc2dd84393c6b88ce98f4e81376904b8ee857395fc9d3441669830",
+    "docs/validation/next-generation-nekomimi/studio-migration/narrow-editor.png": "18002ad3633d4c5dc4befe414e7ebb61202a19d591622a365d0050bede0e0ba4",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-fixed.log": "4d8ee3b4e2d8320b6a3b773fb380153195f3f377e2514d0417ac56f0db42fe43",
+    "docs/validation/next-generation-nekomimi/studio-migration/zoom-200-workflows.png": "11c8b8c9a9cc0b6839531010eafd11fb1a522d7cd2f47f8cdeb1d4075ce1da43",
+    "docs/validation/next-generation-nekomimi/studio-migration/desktop-models.png": "089eda2b836cc01c1817735b9afe69c0f0c6049eeb82dd6308b0d2a7c706342a",
+    "docs/validation/next-generation-nekomimi/studio-migration/nekomimi-studio-synchronized.log": "14643f0395db7462702e274232a4984adff3aad90d11997a4df515500630e505",
+    "test/browser/customization-studio.spec.ts": "eecd2b2dcb4b93609ed4153ad52dfc660b5c3fa941fc6f520e804fcd1faae136",
+    "src/web/v2/routes/model-profile-editor.tsx": "1a0f4187caa842f6bf3803aec3f164714e4842356d2c2a037852ddd51948e340",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "e485622ba052cf9691711a71b81a1692b462d7739ccbe6bd780d5000e7785e7a"
+  }
+}

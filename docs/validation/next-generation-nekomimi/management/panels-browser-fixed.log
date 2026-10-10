@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+(node:65158) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (45.1s)
+
+
+  1) test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts 
+
+    Test timeout of 45000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/panel-management-10-4-boun-b83d2-rget-refresh-never-remounts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts 

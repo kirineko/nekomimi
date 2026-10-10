@@ -1,5 +1,6 @@
 /** Public, JSON-based contracts. No runtime/framework objects cross this boundary. */
-export const SDK_VERSION = 2 as const;
+import { SDK_CONTRACT_VERSION } from "../shared/versions.js";
+export const SDK_VERSION = SDK_CONTRACT_VERSION;
 import {SDK_CAPABILITIES} from "./capabilities.js";
 export const CAPABILITIES = SDK_CAPABILITIES;
 export type Json =
@@ -78,6 +79,7 @@ export interface ExtensionContext {
   reload(): { id: string; status: string };
 }
 export interface ExtensionTool {
+  modes?: import("../shared/protocol.js").SessionMode[];
   name: string;
   description: string;
   parameters: { type: "object" } & Record<string, Json>;
@@ -89,6 +91,7 @@ export interface ExtensionTool {
   ): Promise<ToolResult>;
 }
 export interface ExtensionCommand {
+  modes?: import("../shared/protocol.js").SessionMode[];
   description: string;
   handler(args: string, ctx: ExtensionContext): Promise<string | void>;
 }
@@ -122,10 +125,10 @@ export function checkManifest(value: unknown): ExtensionManifest {
     !m ||
     typeof m.name !== "string" ||
     !/^[a-z][a-z0-9-]{0,47}$/.test(m.name) ||
-    ![1, 2].includes(m.sdkVersion) ||
+    m.sdkVersion !== SDK_VERSION ||
     typeof m.entry !== "string"
   )
-    throw new Error("Invalid extension manifest or unsupported sdkVersion");
+    throw new Error(`Invalid extension manifest or unsupported sdkVersion; SDK ${SDK_VERSION} required. See customization_sdk guide:extensions.md (installed extension-docs/extensions.md)`);
   if (
     m.requiredCapabilities !== undefined &&
     (!Array.isArray(m.requiredCapabilities) ||

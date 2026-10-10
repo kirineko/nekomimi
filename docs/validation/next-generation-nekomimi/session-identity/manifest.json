@@ -1,0 +1,30 @@
+{
+  "baselineCommit": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "node": "24.15.0",
+  "platform": "darwin-arm64",
+  "task": "3.1",
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/session-identity/browser.log": "65f43c1c2e079469465cf00231c9818b758ff792716c69c008b51868a91ae302",
+    "docs/validation/next-generation-nekomimi/session-identity/first-tests-failure.log": "010692ac3dd6b1e625bc630fb13615a18de91519ce9838b99f5e68be89f915a4",
+    "docs/validation/next-generation-nekomimi/session-identity/related-regression.log": "d3bd7580e46d3f321db759ba0eb4837a14bb54e97f6b5b4943a00de4c43e30fe",
+    "docs/validation/next-generation-nekomimi/session-identity/receipt-secret-regression.log": "5e8775271586f97e9497814be3cff9ef851323c5c1e5ac91a9661eaee52a1970",
+    "docs/validation/next-generation-nekomimi/session-identity/typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/session-identity/submit-verification.log": "942b9e49008467cb07a8fa00d4c33bff5049f22d58fad3fc0c22191d6f4cf338",
+    "docs/validation/next-generation-nekomimi/session-identity/http-provider-regression.log": "b812b077a4c11f7cc8010c5f5718563035b0ca65e8e263fe643438f127aa5704",
+    "docs/validation/next-generation-nekomimi/session-identity/dispatch-verification.log": "3ff2206abf47d49c8119782741114708c36de351fa2a33867704698adaff3c0c",
+    "docs/validation/next-generation-nekomimi/session-identity/legacy-fixture-failure.log": "2f4acf106c89892b93856c8b4303226f9557ce498aec7b85e24ccc005ef51548",
+    "docs/validation/next-generation-nekomimi/session-identity/spec-validation.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/session-identity/build.log": "50ded5073f7a469dce753d7ee3fbd85caa0f6472bf94ecf198db9bbe39b4ceb6",
+    "docs/validation/next-generation-nekomimi/session-identity/README.md": "d443a56c6313d731f30daeca91e96fd00a2075b61dd67a65605071756f0db5d2",
+    "src/session/identity.ts": "0df9982b60420ddc3e40c5d86b1122621cd80a9da53256b156b109b8b28335b3",
+    "src/shared/protocol.ts": "c63b70911f30a75b673985a9b6c938b06bf39f77396a904f5f29df710201e924",
+    "src/server/sessions.ts": "61299c3677a7a30e5209353e8120fd954cea2ab9e0826aff50d0619fefdd24cb",
+    "src/runtime.ts": "097de6354c6431ab6db17f1f8277235097efedeec1ddf1556ec284f4c39cb686",
+    "src/customization/run.ts": "1d68a100c68b19ba8072b811b8048b9ddf272416f7dac155e296c131b871b8ec",
+    "src/pi/journal-storage.ts": "ac9fcf61f893208fe55bbc582776f26d77563ef7fa648b7e121638ba115de974",
+    "src/journal.ts": "8cdb13570d9f8d10d32a519f2e1929038a21debfe50319e342e52a24ec16d18c",
+    "src/customization/history-branch.ts": "1c50a79dc7ea2771a8b2f0ab8526ec1d74dedded5c9341147212b0b7cda5f7ec",
+    "src/web/v2/routes/work-nav.tsx": "150feabab8274633c5d5c49e61091efa871b596f9f62f12745c406f2eec95b18",
+    "test/session-identity.test.ts": "8babfdf0a904e5170ada17b6f1f436fd3b6f251de485826b53e9d6f2777d52d4"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-08T00:13:19.314827+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "browser": "Chrome 154.0.8037.98",
+  "task10.9": "in progress; catalog and candidate preview scope phase verified",
+  "overallProgress": {
+    "total": 89,
+    "complete": 77,
+    "remaining": 12
+  },
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "browserPassed": 48,
+    "browserFailed": 0,
+    "unitPassed": 11,
+    "unitFailed": 0
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-browser-second.log": "d90f2232a2dc98fb0eea3531be0975ae733f030bcacf9dfcc0c88a95d21f51f3",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-unit.log": "d0a0dda886013604b994870ebe0af37a7ae4a207f6f44cda6acfab49b99de39a",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-typecheck.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-browser-final.log": "ea3b9d7fd8feadbd0bd9d4cec3f1412c23b39cc4e87acc4d72810f069378fba2",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-browser.log": "7f9926b3764011a6e38aa33a91cf542ac01682380f7878db6017191f8f9cdb03",
+    "docs/validation/next-generation-nekomimi/session-catalog/README.md": "985f135fce34a475221f6be77272254d40c3a52b4acba157ce3a5b2885f18ef5",
+    "docs/validation/next-generation-nekomimi/session-catalog/nekomimi-catalog-build.log": "8b9743e20938350037a054e6b45a2e58a895c829e331e7df8dd2859dd4b0fb8d",
+    "src/web/v2/state/session-catalog.ts": "8e6a9533ed45ac3ffeabb33cb3327502ce0be9233d50f08b8bbe266c93ad6388",
+    "src/web/v2/state/create.ts": "7a003652f2b72d5596313a96ab4603591f3bd8ffba2bcabcc918a3b8bd174294",
+    "src/web/v2/routes/session-catalog.tsx": "eb52aa8eb933c7987bf9b92c67ac22d70b99b2a97559e78bc8caa460c0114d1c",
+    "src/web/v2/routes/session-delete.tsx": "9fd11adc030bfb25e924258634c677d950711b6f891139761fb0a3f4b02408a2",
+    "src/web/v2/routes/work-nav.tsx": "d97133dd9a750c77dfb5bf4e289e623cbf7a8e3c5c9ee155a70a29f73597c0ec",
+    "src/web/v2/routes/work-session.tsx": "7321a3dbb68cfa86f0bfe80d0aae7373b168c1f3211f43746fbe0c327c43f57f",
+    "src/web/v2/routes/create.tsx": "44f338ba4957f96540187552521aebb69a04f1ba9ee744f7875e0b0e4a1b8c86",
+    "src/web/ui/Menu.tsx": "bbd846c28dacc057bbcd86920c42c3f3f55a51ae5304e44c4016c28e12a8743d",
+    "src/customization/panels.ts": "8b1a05bfb34694bd66b217ff9f2cdbf375e7c3f43e502f92b018e2f10f3da21a",
+    "src/server/sessions.ts": "6c81f3a1e5520e4c73f8b506ba5fe9af8266599d6127f7a338f7183bedb04c4b",
+    "test/candidate-executions.test.ts": "2b9fae947ce3ec23dca877b07959e47367354625c7ef8a5a571ace1d8075e1f9",
+    "test/browser/v2-session-catalog.spec.ts": "3ab7cf7e558be5d77386ab6f52dca7045131d70fabd84b2d977348e4ca7e4840",
+    "test/browser/references.spec.ts": "585f5565bfed2664cffde7b7ac9c865438fd824b7dd46f7651d591c0e9e606ff",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "d94bef92d1079f9f9b67f542d1d690921d01316db66a9b007b2bc67f063a2f98"
+  }
+}

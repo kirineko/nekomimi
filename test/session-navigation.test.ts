@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { Sessions } from "../src/server/sessions.js";
 import { SessionProjection } from "../src/projection/session.js";
 import { Journal, type JournalEvent } from "../src/journal.js";
+import { inspectJournalFormat } from "../src/pi/journal-storage.js";
 import { temporary } from "./helpers.js";
 import { sessionTime } from "../src/web/session-time.js";
 import { commandWord, completeCommand, matchingCommands } from "../src/web/command-input.js";
@@ -23,7 +24,7 @@ it("derives activity from task boundaries without changing journal evidence", as
   } finally { await j.close(); }
 });
 it("sorts before pagination and rejects changed versions while ignoring corrupt directories", async () => {
-  const service = await Sessions.open({ workspace: await temporary(), home: await temporary(), naming: false });
+  let service = await Sessions.open({ workspace: await temporary(), home: await temporary(), naming: false });
   try {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(new Date("2026-09-28T10:00:00Z"));
@@ -47,7 +48,11 @@ it("sorts before pagination and rejects changed versions while ignoring corrupt 
     // A missing stream artifact must not be opened by the metadata-only list path.
     await renamed.append("response.chunk", { artifact: { kind: "artifact", sha256: "a".repeat(64), bytes: 10 } });
     await renamed.close();
+    // A cold metadata reader must have the same pagination identity as a cached reader.
+    await service.close();
+    service = await Sessions.open({ workspace: service.workspace, home: service.paths.home, naming: false });
     expect((await service.list(0, 10)).listRevision).toBe(changed.listRevision);
+    await expect(inspectJournalFormat(join(service.root, ids[0]!), service.workspace)).rejects.toMatchObject({ code: "ENOENT" });
     vi.setSystemTime(new Date("2026-09-30T10:00:00Z"));
     const added = await service.create("newest");
     expect((await service.list(0, 1)).sessions[0]!.id).toBe(added.id);

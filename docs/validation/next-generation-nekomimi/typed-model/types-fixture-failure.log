@@ -1,0 +1,5 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+test/model-operations.test.ts(73,226): error TS2339: Property 'state' does not exist on type 'Resources'.

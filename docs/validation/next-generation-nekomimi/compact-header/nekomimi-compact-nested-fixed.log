@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+(node:96018) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first (6.8s)
+
+
+  1) test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: '外观', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: '外观', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '外观', exact: true })
+
+
+      92 |       await expect(page.getByLabel('主题应用范围',{exact:true})).not.toBeVisible();
+      93 |       await page.getByRole('button',{name:'应用已审阅风格',exact:true}).click();await expect(page.getByRole('dialog',{name:'应用已审阅风格',exact:true})).toBeVisible();await expect(page.getByRole('button',{name:'取消操作',exact:true})).toBeFocused();await page.keyboard.press('Escape');
+    > 94 |       await expect(page.getByRole('dialog',{name:'外观',exact:true})).toBeVisible();await expect(page.locator('html')).toHaveAttribute('data-workbench-theme','fixture');
+         |                                                                     ^
+      95 |       if(dismissal==='escape')await page.keyboard.press('Escape');else await page.mouse.click(2,2);
+      96 |       await expect(page.getByRole('dialog')).toHaveCount(0);await expect(more).toBeFocused();await expect(page.locator('html')).not.toHaveAttribute('data-workbench-theme');
+      97 |     }
+        at /Users/kirineko/Github/nekomimi/test/browser/theme-management.spec.ts:94:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-management-10-9-appe-2d10d-d-confirmation-closes-first/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/theme-management.spec.ts:81:1 › 10.9 appearance previews cancel on Escape or outside and nested confirmation closes first 

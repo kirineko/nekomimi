@@ -1,0 +1,486 @@
+{
+  "node": "v24.15.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "packages": [
+    {
+      "name": "@earendil-works/pi-agent-core",
+      "version": "1.0.4",
+      "engines": {
+        "node": ">=22.19.0"
+      },
+      "checkedTargets": [
+        {
+          "entry": ".",
+          "condition": "types",
+          "target": "./dist/index.d.ts"
+        },
+        {
+          "entry": ".",
+          "condition": "import",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": "./package.json",
+          "condition": "default",
+          "target": "./package.json"
+        }
+      ],
+      "sourceConditionsNotUsed": []
+    },
+    {
+      "name": "@earendil-works/pi-ai",
+      "version": "1.0.4",
+      "engines": {
+        "node": ">=22.19.0"
+      },
+      "checkedTargets": [
+        {
+          "entry": ".",
+          "condition": "types",
+          "target": "./dist/index.d.ts"
+        },
+        {
+          "entry": ".",
+          "condition": "import",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": "./models",
+          "condition": "types",
+          "target": "./dist/models.d.ts"
+        },
+        {
+          "entry": "./models",
+          "condition": "import",
+          "target": "./dist/models.js"
+        },
+        {
+          "entry": "./compat",
+          "condition": "types",
+          "target": "./dist/compat.d.ts"
+        },
+        {
+          "entry": "./compat",
+          "condition": "import",
+          "target": "./dist/compat.js"
+        },
+        {
+          "entry": "./oauth",
+          "condition": "types",
+          "target": "./dist/oauth.d.ts"
+        },
+        {
+          "entry": "./oauth",
+          "condition": "import",
+          "target": "./dist/oauth.js"
+        },
+        {
+          "entry": "./bedrock-provider",
+          "condition": "types",
+          "target": "./dist/bedrock-provider.d.ts"
+        },
+        {
+          "entry": "./bedrock-provider",
+          "condition": "import",
+          "target": "./dist/bedrock-provider.js"
+        },
+        {
+          "entry": "./bun-oauth",
+          "condition": "types",
+          "target": "./dist/bun-oauth.d.ts"
+        },
+        {
+          "entry": "./bun-oauth",
+          "condition": "import",
+          "target": "./dist/bun-oauth.js"
+        }
+      ],
+      "sourceConditionsNotUsed": []
+    },
+    {
+      "name": "@earendil-works/pi-codemode",
+      "version": "1.0.4",
+      "engines": {
+        "node": ">=22.19.0"
+      },
+      "checkedTargets": [
+        {
+          "entry": ".",
+          "condition": "types",
+          "target": "./dist/index.d.ts"
+        },
+        {
+          "entry": ".",
+          "condition": "import",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": "./declarations",
+          "condition": "types",
+          "target": "./dist/declarations.d.ts"
+        },
+        {
+          "entry": "./declarations",
+          "condition": "import",
+          "target": "./dist/declarations.js"
+        },
+        {
+          "entry": "./source",
+          "condition": "types",
+          "target": "./dist/source.d.ts"
+        },
+        {
+          "entry": "./source",
+          "condition": "import",
+          "target": "./dist/source.js"
+        },
+        {
+          "entry": "./worker",
+          "condition": "types",
+          "target": "./dist/runtime/worker.d.ts"
+        },
+        {
+          "entry": "./worker",
+          "condition": "import",
+          "target": "./dist/runtime/worker.js"
+        }
+      ],
+      "sourceConditionsNotUsed": [
+        {
+          "entry": ".",
+          "target": "./src/index.ts"
+        },
+        {
+          "entry": "./declarations",
+          "target": "./src/declarations.ts"
+        },
+        {
+          "entry": "./source",
+          "target": "./src/source.ts"
+        },
+        {
+          "entry": "./worker",
+          "target": "./src/runtime/worker.ts"
+        }
+      ]
+    },
+    {
+      "name": "@earendil-works/pi-durable",
+      "version": "1.0.4",
+      "engines": {
+        "node": ">=22.19.0"
+      },
+      "checkedTargets": [
+        {
+          "entry": ".",
+          "condition": "types",
+          "target": "./dist/index.d.ts"
+        },
+        {
+          "entry": ".",
+          "condition": "import",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": ".",
+          "condition": "default",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": "./env",
+          "condition": "types",
+          "target": "./dist/env/index.d.ts"
+        },
+        {
+          "entry": "./env",
+          "condition": "import",
+          "target": "./dist/env/index.js"
+        },
+        {
+          "entry": "./env",
+          "condition": "default",
+          "target": "./dist/env/index.js"
+        },
+        {
+          "entry": "./env/node",
+          "condition": "types",
+          "target": "./dist/env/node.d.ts"
+        },
+        {
+          "entry": "./env/node",
+          "condition": "import",
+          "target": "./dist/env/node.js"
+        },
+        {
+          "entry": "./env/node",
+          "condition": "default",
+          "target": "./dist/env/node.js"
+        },
+        {
+          "entry": "./tools",
+          "condition": "types",
+          "target": "./dist/tools/index.d.ts"
+        },
+        {
+          "entry": "./tools",
+          "condition": "import",
+          "target": "./dist/tools/index.js"
+        },
+        {
+          "entry": "./tools",
+          "condition": "default",
+          "target": "./dist/tools/index.js"
+        },
+        {
+          "entry": "./storage/memory",
+          "condition": "types",
+          "target": "./dist/storage/memory.d.ts"
+        },
+        {
+          "entry": "./storage/memory",
+          "condition": "import",
+          "target": "./dist/storage/memory.js"
+        },
+        {
+          "entry": "./storage/memory",
+          "condition": "default",
+          "target": "./dist/storage/memory.js"
+        },
+        {
+          "entry": "./storage/jsonl",
+          "condition": "types",
+          "target": "./dist/storage/jsonl/index.d.ts"
+        },
+        {
+          "entry": "./storage/jsonl",
+          "condition": "import",
+          "target": "./dist/storage/jsonl/index.js"
+        },
+        {
+          "entry": "./storage/jsonl",
+          "condition": "default",
+          "target": "./dist/storage/jsonl/index.js"
+        },
+        {
+          "entry": "./storage/jsonl/node",
+          "condition": "types",
+          "target": "./dist/storage/jsonl/node.d.ts"
+        },
+        {
+          "entry": "./storage/jsonl/node",
+          "condition": "import",
+          "target": "./dist/storage/jsonl/node.js"
+        },
+        {
+          "entry": "./storage/jsonl/node",
+          "condition": "default",
+          "target": "./dist/storage/jsonl/node.js"
+        },
+        {
+          "entry": "./storage/sqlite",
+          "condition": "types",
+          "target": "./dist/storage/sqlite/index.d.ts"
+        },
+        {
+          "entry": "./storage/sqlite",
+          "condition": "import",
+          "target": "./dist/storage/sqlite/index.js"
+        },
+        {
+          "entry": "./storage/sqlite",
+          "condition": "default",
+          "target": "./dist/storage/sqlite/index.js"
+        },
+        {
+          "entry": "./storage/sqlite/node",
+          "condition": "types",
+          "target": "./dist/storage/sqlite/node.d.ts"
+        },
+        {
+          "entry": "./storage/sqlite/node",
+          "condition": "import",
+          "target": "./dist/storage/sqlite/node.js"
+        },
+        {
+          "entry": "./storage/sqlite/node",
+          "condition": "default",
+          "target": "./dist/storage/sqlite/node.js"
+        },
+        {
+          "entry": "./testing",
+          "condition": "types",
+          "target": "./dist/testing/index.d.ts"
+        },
+        {
+          "entry": "./testing",
+          "condition": "import",
+          "target": "./dist/testing/index.js"
+        },
+        {
+          "entry": "./testing",
+          "condition": "default",
+          "target": "./dist/testing/index.js"
+        },
+        {
+          "entry": "./package.json",
+          "condition": "default",
+          "target": "./package.json"
+        }
+      ],
+      "sourceConditionsNotUsed": [
+        {
+          "entry": ".",
+          "target": "./src/index.ts"
+        },
+        {
+          "entry": "./env",
+          "target": "./src/env/index.ts"
+        },
+        {
+          "entry": "./env/node",
+          "target": "./src/env/node.ts"
+        },
+        {
+          "entry": "./tools",
+          "target": "./src/tools/index.ts"
+        },
+        {
+          "entry": "./storage/memory",
+          "target": "./src/storage/memory.ts"
+        },
+        {
+          "entry": "./storage/jsonl",
+          "target": "./src/storage/jsonl/index.ts"
+        },
+        {
+          "entry": "./storage/jsonl/node",
+          "target": "./src/storage/jsonl/node.ts"
+        },
+        {
+          "entry": "./storage/sqlite",
+          "target": "./src/storage/sqlite/index.ts"
+        },
+        {
+          "entry": "./storage/sqlite/node",
+          "target": "./src/storage/sqlite/node.ts"
+        },
+        {
+          "entry": "./testing",
+          "target": "./src/testing/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "@earendil-works/pi-mcp",
+      "version": "1.0.4",
+      "engines": {
+        "node": ">=22.19.0"
+      },
+      "checkedTargets": [
+        {
+          "entry": ".",
+          "condition": "types",
+          "target": "./dist/index.d.ts"
+        },
+        {
+          "entry": ".",
+          "condition": "import",
+          "target": "./dist/index.js"
+        },
+        {
+          "entry": "./oauth",
+          "condition": "types",
+          "target": "./dist/oauth/index.d.ts"
+        },
+        {
+          "entry": "./oauth",
+          "condition": "import",
+          "target": "./dist/oauth/index.js"
+        },
+        {
+          "entry": "./testing",
+          "condition": "types",
+          "target": "./dist/testing/index.d.ts"
+        },
+        {
+          "entry": "./testing",
+          "condition": "import",
+          "target": "./dist/testing/index.js"
+        }
+      ],
+      "sourceConditionsNotUsed": [
+        {
+          "entry": ".",
+          "target": "./src/index.ts"
+        },
+        {
+          "entry": "./oauth",
+          "target": "./src/oauth/index.ts"
+        },
+        {
+          "entry": "./testing",
+          "target": "./src/testing/index.ts"
+        }
+      ]
+    }
+  ],
+  "imports": [
+    {
+      "entry": "@earendil-works/pi-ai/api/openai-responses",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-ai/dist/api/openai-responses.js"
+    },
+    {
+      "entry": "@earendil-works/pi-ai/utils/event-stream",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-ai/dist/utils/event-stream.js"
+    },
+    {
+      "entry": "@earendil-works/pi-ai/models",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-ai/dist/models.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/env",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/env/index.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/env/node",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/env/node.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/storage/memory",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/storage/memory.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/storage/jsonl",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/storage/jsonl/index.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/storage/jsonl/node",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/storage/jsonl/node.js"
+    },
+    {
+      "entry": "@earendil-works/pi-durable/storage/sqlite/node",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-durable/dist/storage/sqlite/node.js"
+    },
+    {
+      "entry": "@earendil-works/pi-mcp/oauth",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-mcp/dist/oauth/index.js"
+    },
+    {
+      "entry": "@earendil-works/pi-mcp/testing",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-mcp/dist/testing/index.js"
+    },
+    {
+      "entry": "@earendil-works/pi-codemode/source",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-codemode/dist/source.js"
+    },
+    {
+      "entry": "@earendil-works/pi-codemode/declarations",
+      "resolved": "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node_modules/@earendil-works/pi-codemode/dist/declarations.js"
+    }
+  ],
+  "checks": [
+    "public exported constructors/functions present",
+    "published worker + QuickJS WASM execute a host tool and return 42"
+  ]
+}

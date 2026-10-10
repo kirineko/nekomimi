@@ -1,0 +1,199 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-v2-composite.test.ts (1 test | 1 failed) 6171ms
+   × generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers 6170ms
+ ❯ test/customization-durable-workflows.test.ts (14 tests | 5 failed) 23561ms
+   × persists waiting identity, resumes the original revision after restart/update, and deduplicates answers 2427ms
+   × marks an effect without a completed step unknown and requires explicit reconciliation instead of rerun 3740ms
+   × does not rerun a completed step after a checkpoint crash and blocks revoked pinned definitions 2320ms
+   × requires an explicit retry attempt, validates transitions and preserves the old state when migration fails 3705ms
+   × deduplicates confirmed triggers, serializes execution and blocks causal cycles 2140ms
+{"nekomimiDiagnostic":{"version":1,"id":"2bc16847-3526-44fa-8859-77a13f17d674","timestamp":"2026-10-06T22:37:08.723Z","sessionId":"d2c14077e37f5b3283b9fa06cba6dd52f8d29c03a658e595a8f9333bb8afb1c9","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"04aa9237-6788-4cb1-8f4e-adf9948bc9b7","timestamp":"2026-10-06T22:37:09.025Z","sessionId":"f0428fdefa7fd575adbe069aeef59116fb90695d7cb348fac8838e45ba662c9e","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ef02a94d-51a5-4d3e-aecb-37c39a23b2a5","timestamp":"2026-10-06T22:37:09.684Z","sessionId":"961b13513344682e3e4d686dacc64e668e2ac168ca158565e1ed9d2acd14f8c3","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a3665e9a-91ea-46b4-989a-e5857895e302","timestamp":"2026-10-06T22:37:10.113Z","sessionId":"017389546f9a6e07b60d55a45d0aa30a7984c7df094a898ded6262a97c035a2e","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"48b0f88e-2c0c-4914-9fcd-abe275073f57","timestamp":"2026-10-06T22:37:10.845Z","sessionId":"37c996b9c18860554a83bb813859c7c3b8423f7caf17c6fb9cc1e4590f8bacab","seq":3,"durableSeq":3,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"392a5bc4-2750-4a94-acf5-4ef8c9500f9b","timestamp":"2026-10-06T22:37:11.304Z","sessionId":"c1ae89a637e8e7208d51460beaa59e3a2620953bb8ede62b1dae4429584b994f","seq":4,"durableSeq":3,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"674576c8-1880-49eb-8824-58f890029b6d","timestamp":"2026-10-06T22:37:11.816Z","sessionId":"bad593d0a6d352e1d6500759752346e22ff8e61dddc20ee9e133207bedb6ebd5","seq":4,"durableSeq":3,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"cd2418ed-ee88-47b5-98dc-b59acf9a2a5d","timestamp":"2026-10-06T22:37:12.436Z","sessionId":"7021edc1fbe6c1f1bd496caacb7b3ae9242e8200f3b9f6a86701245cf81b592a","seq":4,"durableSeq":3,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"512254b1-48f1-4af1-984b-a466fcccbd60","timestamp":"2026-10-06T22:37:12.899Z","sessionId":"fbbd80f8495ecd423b3bed9c826220827a783d8ddc4f2bf4c3979fa2be4cde75","seq":4,"durableSeq":4,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"5baa24eb-9954-4d99-a3a8-a64bc3812957","timestamp":"2026-10-06T22:37:13.525Z","sessionId":"4ff6a923c6c509771c9913c91f0970dd62fbed38720be178b7b1f838cca1a00e","seq":5,"durableSeq":4,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3c971771-025c-4184-8881-38e545a6777d","timestamp":"2026-10-06T22:37:13.849Z","sessionId":"c8f536563e1c1194e23cebfb51eccfe919366059e98baf305eb32572d49820a3","seq":5,"durableSeq":4,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"f50c60fa-e9b3-42fa-ae78-beca648630a7","timestamp":"2026-10-06T22:37:14.230Z","sessionId":"2c00e21283ab070fa57be591864b58dc4c193589e8164a8f44fd99a514c970ef","seq":5,"durableSeq":4,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"353b05b8-d332-491c-82f6-ca9e8bd21b4a","timestamp":"2026-10-06T22:38:20.011Z","sessionId":"71857be4-efc2-45c2-91e8-7e7731aabbba","runId":"a4f2949b-d0bb-470b-b7f3-1f036cc90376","seq":31,"durableSeq":31,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"9ac8f41e-2dd0-4d72-b0ce-283c9dfdb9fa","timestamp":"2026-10-06T22:38:21.678Z","sessionId":"ca9f82a4-ae2e-4253-a1c2-e75c6dc2e7ab","runId":"ade9c5be-b9fd-4fab-8172-d09d6858f850","seq":33,"durableSeq":32,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"cd53480b-b8f3-43fe-ba35-83ae467bac85","timestamp":"2026-10-06T22:38:22.899Z","sessionId":"4fa45094-5a3f-41dd-8e96-425179d1a881","runId":"6375e2b0-a6fa-40e4-9ea3-074908635e02","seq":32,"durableSeq":31,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1a7e5eb4-0a12-4c8e-9359-58fb35d2143b","timestamp":"2026-10-06T22:38:24.144Z","sessionId":"c0cb1422-cb94-40ae-a15a-c77a391f4c63","runId":"2beb9871-fbfc-40e1-aa0a-63f3addc47b3","seq":33,"durableSeq":32,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"dcebd3e3-1829-4d9f-b752-ba449e80f8ae","timestamp":"2026-10-06T22:38:25.619Z","sessionId":"027ce341-dd86-4097-9c04-40f30a8bd8b3","runId":"6650ef9d-66ee-4717-995f-347cbc056f6e","attemptId":"36990a8b-4d79-490c-bd1a-b9ecb5edfc81","seq":35,"durableSeq":35,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3249ffed-a5b3-4b09-ac11-1df5ae53276e","timestamp":"2026-10-06T22:38:27.653Z","sessionId":"27e0d297-b309-4569-9e98-6e9c8fbdf934","runId":"876cc27c-cd21-4e77-a53b-674df28736c2","attemptId":"651a60d1-8c41-4f52-b87a-da4206848a94","seq":36,"durableSeq":35,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"ab1fc200-beab-45a7-bd13-29d8731ea17a","timestamp":"2026-10-06T22:38:29.040Z","sessionId":"59fc5c79-f40e-4d31-8810-40f89182d66c","runId":"4dbdec90-7548-4f22-8330-7d696b61767a","attemptId":"f6bddbc8-af1e-4a5e-ab72-c0901dd1a912","seq":36,"durableSeq":35,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"95dd3754-d516-44aa-aa76-5e7d7321217d","timestamp":"2026-10-06T22:38:30.238Z","sessionId":"7377c09b-d5c9-455f-8cec-56d85d63282e","runId":"83090608-8024-484d-80be-e966ab9db2f4","attemptId":"969558f3-e14a-4862-8cec-caa12a1410d1","seq":36,"durableSeq":35,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"8f4a63e1-090f-4bc8-9f8c-b349a11073cb","timestamp":"2026-10-06T22:38:40.372Z","sessionId":"8a5caf1b-7687-4fc9-9b95-4a2a906631b4","runId":"da7dc88d-0a52-420e-8458-e6ed28fc285a","attemptId":"11a82f01-15a5-4c39-a064-2cba9f26919a","seq":32,"durableSeq":32,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"b39014bd-50d7-485a-82cd-5216b0e6cffe","timestamp":"2026-10-06T22:38:41.388Z","sessionId":"3848bb0f-2577-4533-ab2a-4e2416a5967a","runId":"3faadecb-5f58-45c1-96dc-559d3e330dbb","attemptId":"0f7d6f85-5db9-463a-ac59-6a8edcdaff52","seq":34,"durableSeq":33,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d1e2bdeb-3b7b-4db8-a4fd-802f889fc6e6","timestamp":"2026-10-06T22:38:42.469Z","sessionId":"e01f9ffb-44ac-4913-81ef-4ce710066a6d","runId":"aec431b0-b0e0-476e-a1b3-da2a004c762e","attemptId":"ed4cf1e6-d22a-470b-ae7f-6e24ef3300db","seq":34,"durableSeq":33,"operation":"watermark.write","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"504965a8-a2f7-45f7-a50c-fc9b09473a3d","timestamp":"2026-10-06T22:38:43.573Z","sessionId":"25e20607-a68e-4bd7-bf41-a463ee1e7baf","runId":"0158a6d5-b822-4bd0-a663-b194e4de9183","attemptId":"65ba9eb1-b900-4473-ac86-b55f006613a9","seq":33,"durableSeq":32,"operation":"watermark.rename","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d2424696-51bc-4bd7-a726-8af6d9d3f7d2","timestamp":"2026-10-06T22:38:56.160Z","sessionId":"9c71ea79-a0a8-4803-abc4-a5cbf1044e5f","runId":"df8c98c4-03cb-420a-af09-1343faa26c55","attemptId":"a0110100-b044-4b81-8155-248a462459d4","seq":24,"durableSeq":23,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-candidate-trial.test.ts (2 tests | 1 failed) 2668ms
+   × keeps mock trials separate from explicitly activated real tool execution 1262ms
+{"nekomimiDiagnostic":{"version":1,"id":"8b9c835c-26ec-4f27-a9bc-77c86e6be6f7","timestamp":"2026-10-06T22:39:17.190Z","sessionId":"6d2279db-7a15-4a3a-a2e7-633f2ef4720a","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-mcp-content.test.ts (5 tests | 1 failed) 5991ms
+   × rechecks grants before explicit prompt retrieval and retains earlier content after revocation 2757ms
+{"nekomimiDiagnostic":{"version":1,"id":"4d3542b7-49ba-42d4-9ce6-a04ecb3cdbf6","timestamp":"2026-10-06T22:39:39.583Z","sessionId":"c2a2196b-b9ec-4fca-b56e-6f7d3d21fe6f","seq":0,"durableSeq":0,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"74ec4ee5-8a3f-4c86-87d3-cbf10d527930","timestamp":"2026-10-06T22:39:40.765Z","sessionId":"2e79e0cc-22e4-4b50-8495-3bdc72cb501a","runId":"71a9c9f2-1220-489b-9518-22a6a3602a42","attemptId":"64c93716-f21e-47e1-98d0-7ff7d5fb0825","seq":23,"durableSeq":23,"operation":"journal.lock","code":"ECOMPROMISED","syscall":"stat","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3e849cdb-64ed-4d32-9b32-caf09824c6c3","timestamp":"2026-10-06T22:39:57.872Z","sessionId":"1f7a3d19-fb75-4bda-bc98-e60cf913b318","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"b39964e2-15da-4ac1-9887-9344b4e29e54","timestamp":"2026-10-06T22:39:57.988Z","sessionId":"e009f64a-5567-4658-96c0-538a8477910b","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"04250886-6b0a-4bca-a5de-a52e7ac85c03","timestamp":"2026-10-06T22:39:58.094Z","sessionId":"9e28738e-90eb-4f77-9beb-ca4fb869649e","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"49ce64c9-263a-426c-9de4-d3818caa9018","timestamp":"2026-10-06T22:39:58.179Z","sessionId":"140006cf-c7ff-479f-b65c-88c08c6ed917","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"2a9866c3-a094-4913-9f6f-08040d227f16","timestamp":"2026-10-06T22:39:58.349Z","sessionId":"ef1e7249-b06d-4a6c-a299-0f79b9af5f63","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"77b1a426-cbcb-47ab-93c7-18d939465751","timestamp":"2026-10-06T22:39:58.364Z","sessionId":"f237d624-3ddd-4c5c-a39a-1e3fa0bfa2f4","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"1673f08e-1644-444d-93f8-088b9d9bf834","timestamp":"2026-10-06T22:39:58.365Z","sessionId":"f237d624-3ddd-4c5c-a39a-1e3fa0bfa2f4","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0403a998-c586-444e-a243-675f1fca1d88","timestamp":"2026-10-06T22:40:02.012Z","sessionId":"cd11ab26-9341-4faf-a015-a7b57b46671b","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization-candidate-trial.test.ts > keeps mock trials separate from explicitly activated real tool execution
+Error: Resource authorization or scope revoked, or source missing: extension:e1174fef7015f650a326 (unavailable)
+ ❯ ResourceAccess.assert src/customization/resource-access.ts:61:29
+     59|     for(const id of selected)if(!this.captured.has(id))throw new Error…
+     60|     const states=await this.inspect(selected),blocked=states.filter(st…
+     61|     if(blocked.length)throw new Error(`Resource authorization or scope…
+       |                             ^
+     62|   }
+     63| }
+ ❯ CustomRun.assertResources src/customization/run.ts:77:58
+ ❯ CustomRun.command src/customization/run.ts:962:5
+ ❯ trialExtension src/customization/trial.ts:74:20
+ ❯ test/customization-candidate-trial.test.ts:16:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  test/customization-durable-workflows.test.ts > persists waiting identity, resumes the original revision after restart/update, and deduplicates answers
+AssertionError: expected 'unknown' to be 'waiting' // Object.is equality
+
+Expected: "waiting"
+Received: "unknown"
+
+ ❯ test/customization-durable-workflows.test.ts:22:77
+     20|     const flows = new Workflows(host, { apiKey: key }); const activati…
+     21|     const created = await flows.create(f.resource.id, "review", {}, ac…
+     22|     const waiting = await flows.advance(created.id); expect(waiting.st…
+       |                                                                             ^
+     23|     expect(await readFile(join(f.workspace, "effect.txt"), "utf8")).to…
+     24|     await host.close(); await writeFile(join(f.root, "index.ts"), defi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  test/customization-durable-workflows.test.ts > marks an effect without a completed step unknown and requires explicit reconciliation instead of rerun
+AssertionError: expected 'unknown' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "unknown"
+
+ ❯ test/customization-durable-workflows.test.ts:49:56
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  test/customization-durable-workflows.test.ts > does not rerun a completed step after a checkpoint crash and blocks revoked pinned definitions
+AssertionError: promise resolved "{ mode: 'work', …(13) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "attemptId": "ab2bbffe-ceb9-4f94-85f7-7a0879a00787",
++   "definitionId": "review",
++   "definitionRevision": "94fa01e53dad2d2415360caf476709a1a02042006aa705e52abd58f22227bb23",
++   "error": "Error: Error: Error: Resource authorization or scope revoked, or source missing: extension:d4b4a906e83885460388 (scope-changed)",
++   "id": "314025c8-611a-4d56-aa57-d12e919c32f8",
++   "input": {},
++   "mode": "work",
++   "resourceId": "extension:d4b4a906e83885460388",
++   "revision": 19,
++   "schemaVersion": 1,
++   "snapshot": {
++     "bytes": 2045,
++     "kind": "artifact",
++     "sha256": "a29a073bcb093e09ce3ab0722a14a669ed808c2d44e42b5ea7959fb7c6cd3ecc",
++   },
++   "status": "unknown",
++   "step": "prepare",
++   "steps": 1,
+  }
+
+ ❯ test/customization-durable-workflows.test.ts:59:44
+     57|     const crash = new Workflows(f.host, { apiKey: key }, stage => { if…
+     58|     const activation = await f.host.acquire(), created = await crash.c…
+     59|     await expect(crash.advance(created.id)).rejects.toThrow("checkpoin…
+       |                                            ^
+     60|     const recovered = new Workflows(f.host, { apiKey: key }); expect((…
+     61|     await f.host.catalog.decide(f.resource.id, false, false, (await f.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  test/customization-durable-workflows.test.ts > requires an explicit retry attempt, validates transitions and preserves the old state when migration fails
+AssertionError: expected 'unknown' to be 'waiting' // Object.is equality
+
+Expected: "waiting"
+Received: "unknown"
+
+ ❯ test/customization-durable-workflows.test.ts:91:131
+     89|     await expect(manager.resolveUnknown(created.id, unknown.revision, …
+     90|     const retry = await manager.resolveUnknown(created.id, unknown.rev…
+     91|     const normal = new Workflows(f.host, { apiKey: key }); const waiti…
+       |                                                                                                                                   ^
+     92|     const events = (await readSession(join(f.workspace, ".nekomimi/wor…
+     93|     const attempts = events.filter(e => e.type === "workflow.step.star…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  test/customization-durable-workflows.test.ts > deduplicates confirmed triggers, serializes execution and blocks causal cycles
+AssertionError: expected 'unknown' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "unknown"
+
+ ❯ test/customization-durable-workflows.test.ts:130:77
+    128|     expect((await f.host.workflows.list())[0]!.status).toBe('queued');
+    129|     await f.host.release();
+    130|     const state = (await f.host.workflows.list())[0]!; expect(state.st…
+       |                                                                             ^
+    131|     expect(await readFile(join(f.workspace, 'triggered.txt'), 'utf8'))…
+    132|     const events = (await readSession(join(f.workspace, '.nekomimi/wor…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  test/customization-mcp-content.test.ts > rechecks grants before explicit prompt retrieval and retains earlier content after revocation
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/customization-mcp-content.test.ts:99:267
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  test/customization-v2-composite.test.ts > generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers
+AssertionError: Connection error.: expected 'failed' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "failed"
+
+ ❯ test/customization-v2-composite.test.ts:32:44
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  4 failed | 75 passed (79)
+      Tests  8 failed | 536 passed (544)
+   Start at  06:35:21
+   Duration  282.28s (transform 959ms, setup 0ms, import 20.25s, tests 539.67s, environment 3ms)
+

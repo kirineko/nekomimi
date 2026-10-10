@@ -1,0 +1,50 @@
+
+Running 7 tests using 1 worker
+
+(node:60895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/candidate-management.spec.ts:13:1 › 10.4 candidate activation requires review and validation, reports actual loading and never installs in the work project (2.6s)
+(node:60947) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/candidate-management.spec.ts:31:1 › 10.4 export review is explicit, preserves the nonsecret path and refuses existing files (1.6s)
+  ✓  3 test/browser/candidate-management.spec.ts:44:1 › 10.4 rollback reviews the immutable prior version and changed candidates cannot use old consent (5.2s)
+  ✓  4 test/browser/resource-management.spec.ts:17:1 › 10.4 resource navigation and cancelled consent are read-only, explicit enable and revoke target only the bound project (1.5s)
+  ✓  5 test/browser/resource-management.spec.ts:38:1 › 10.4 changed resource content cannot inherit consent from an open review (555ms)
+  ✓  6 test/browser/resource-management.spec.ts:53:1 › 10.4 stale settings revision blocks a permission update without automatic retry (649ms)
+  ✓  7 test/browser/resource-management.spec.ts:68:1 › 10.4 filters and invalid targets do not redirect writes to the current project (1.8s)
+
+
+  1) test/browser/candidate-management.spec.ts:13:1 › 10.4 candidate activation requires review and validation, reports actual loading and never installs in the work project 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      24 |     await page.getByRole('button', { name: '授权并启用候选', exact: true }).click(); await page.getByRole('button', { name: '确认授权并启用候选', exact: true }).click();
+      25 |     await expect(page.getByRole('dialog')).toHaveCount(0); await expect(page.getByRole('region', { name: '候选加载收据', exact: true })).toContainText('加载完成', { timeout: 15000 });
+    > 26 |     expect(await f.store.active()).toHaveLength(1); expect((await f.app.sessions.describeCustomization()).managed).toHaveLength(0);
+         |                                    ^
+      27 |     expect(actions.filter(action => action === 'candidate-activate')).toHaveLength(1);
+      28 |     await page.reload(); await page.getByRole('tab', { name: '启用与导出', exact: true }).click(); expect(actions.filter(action => action === 'candidate-activate')).toHaveLength(1);
+      29 |   } finally { await f.app.close(); }
+        at /Users/kirineko/Github/nekomimi/test/browser/candidate-management.spec.ts:26:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/candidate-management-10-4--6ba13-nstalls-in-the-work-project/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/candidate-management-10-4--6ba13-nstalls-in-the-work-project/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/candidate-management-10-4--6ba13-nstalls-in-the-work-project/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/candidate-management-10-4--6ba13-nstalls-in-the-work-project/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/candidate-management.spec.ts:13:1 › 10.4 candidate activation requires review and validation, reports actual loading and never installs in the work project 
+  6 passed (16.3s)

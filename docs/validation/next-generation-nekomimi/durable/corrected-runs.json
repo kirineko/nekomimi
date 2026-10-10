@@ -1,0 +1,26 @@
+[
+  {
+    "node": "node24-corrected",
+    "command": [
+      "node",
+      "durable-probe.mjs",
+      "run",
+      "/Users/kirineko/Github/nekomimi/docs/validation/next-generation-nekomimi/durable/node24-corrected"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-06T15:22:22.388570+00:00",
+    "seconds": 0.717179
+  },
+  {
+    "node": "node22-corrected",
+    "command": [
+      "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/node-v22.19.0-darwin-arm64/bin/node",
+      "durable-probe.mjs",
+      "run",
+      "/Users/kirineko/Github/nekomimi/docs/validation/next-generation-nekomimi/durable/node22-corrected"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-06T15:22:23.106151+00:00",
+    "seconds": 0.725205
+  }
+]

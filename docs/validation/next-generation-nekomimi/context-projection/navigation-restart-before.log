@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/session-navigation.test.ts (4 tests | 1 failed) 3963ms
+   × sorts before pagination and rejects changed versions while ignoring corrupt directories 3854ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/session-navigation.test.ts > sorts before pagination and rejects changed versions while ignoring corrupt directories
+AssertionError: expected 'edf2dd8c5966413b92bc94813124f2ba55fa1…' to be 'c22d0f1ff09c547161dd39d22d6f37f51e99c…' // Object.is equality
+
+Expected: "c22d0f1ff09c547161dd39d22d6f37f51e99c6889a857bcca9cf3b9b7366693f"
+Received: "edf2dd8c5966413b92bc94813124f2ba55fa14da1a6415ee87b580e94082c66f"
+
+ ❯ test/session-navigation.test.ts:53:54
+     51|     await service.close();
+     52|     service = await Sessions.open({ workspace: service.workspace, home…
+     53|     expect((await service.list(0, 10)).listRevision).toBe(changed.list…
+       |                                                      ^
+     54|     vi.setSystemTime(new Date("2026-09-30T10:00:00Z"));
+     55|     const added = await service.create("newest");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  07:37:45
+   Duration  4.58s (transform 237ms, setup 0ms, import 563ms, tests 3.96s, environment 0ms)
+

@@ -1,0 +1,35 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/sdk-admission.test.ts (5 tests | 1 failed) 220ms
+   × refuses copied old candidate recovery records without a writer or metadata replay 37ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/sdk-admission.test.ts > refuses copied old candidate recovery records without a writer or metadata replay
+AssertionError: promise resolved "[]" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+[]
+
+ ❯ test/sdk-admission.test.ts:94:31
+     92|   await journal.close();
+     93|   const before = await treeDigest(store.base);
+     94|   await expect(store.active()).rejects.toThrow("格式不受支持");
+       |                               ^
+     95|   expect(await treeDigest(store.base)).toBe(before);
+     96| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 22 passed (23)
+   Start at  01:41:41
+   Duration  7.76s (transform 397ms, setup 0ms, import 1.37s, tests 13.63s, environment 0ms)
+

@@ -1,0 +1,67 @@
+
+Running 25 tests using 1 worker
+
+(node:79268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (3.3s)
+  ✓   2 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✘   3 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (1.5s)
+(node:79325) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.2s)
+  ✓   5 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (1.0s)
+  ✓   6 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (924ms)
+  ✓   7 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (951ms)
+  ✓   8 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.0s)
+  ✓   9 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (700ms)
+  ✓  10 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (942ms)
+  ✓  11 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (662ms)
+  ✓  12 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.8s)
+  ✓  13 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.7s)
+  ✓  14 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.4s)
+  ✓  15 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.0s)
+  ✓  16 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (401ms)
+  ✓  17 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (301ms)
+  ✓  18 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (690ms)
+  ✓  19 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (280ms)
+  ✓  20 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (307ms)
+  ✓  21 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (482ms)
+  ✓  22 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (473ms)
+  ✓  23 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  24 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (272ms)
+  ✓  25 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.5s)
+
+
+  1) test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      80 |     const bundleDownload=page.waitForEvent('download');await page.getByRole('button',{name:'下载诊断包',exact:true}).click();
+      81 |     const file=(await (await bundleDownload).path())!,entries:string[]=[];
+    > 82 |     const {list}=await import('tar');await list({file,onReadEntry:entry=>{entries.push(entry.path);}});expect(entries.some(path=>path.endsWith('journal.jsonl'))).toBe(true);
+         |                                                                                                                                                                   ^
+      83 |     expect(await readFile(join(f.entry.directory,'journal.jsonl'),'utf8')).toBe(before);
+      84 |     await page.getByRole('button',{name:'完成',exact:true}).click();await expect(page.getByRole('button',{name:'导出会话',exact:true})).toBeFocused();
+      85 |     await page.getByRole('button',{name:'导出会话',exact:true}).click();await page.getByText('隐私与脱敏',{exact:true}).click();await expect(page.getByLabel('需要脱敏的文本（每行一项）',{exact:true})).toHaveValue('');
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-content-files.spec.ts:82:163
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-expl-22fe5-l-and-redact-requested-text/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-content-files-10-9-expl-22fe5-l-and-redact-requested-text/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-content-files-10-9-expl-22fe5-l-and-redact-requested-text/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-content-files-10-9-expl-22fe5-l-and-redact-requested-text/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text 
+  24 passed (31.0s)

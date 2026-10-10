@@ -1,0 +1,58 @@
+
+Running 41 tests using 2 workers
+
+(node:99760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:99761) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/create-conversation.spec.ts:8:1 › 10.3 create input preserves independent drafts and explicitly runs against its own target (2.8s)
+  ✓   1 test/browser/context-meter.spec.ts:5:1 › context detail follows theme, supports keyboard/outside dismissal and keeps drafts across compact (3.3s)
+  ✓   3 test/browser/create-conversation.spec.ts:39:1 › 10.3 create task stop is explicit and cancels only its active request (1.6s)
+  ✓   4 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.2s)
+  ✓   5 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (853ms)
+  ✓   6 test/browser/header-recovery.spec.ts:5:1 › keeps failure readable, continues through draft, and uses compact dismissible header controls (2.3s)
+  ✓   7 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (2.2s)
+  ✓   9 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (1.1s)
+  ✓   8 test/browser/header-recovery.spec.ts:36:1 › export is disabled without a session or while the durable run is active (2.5s)
+  ✓  10 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.3s)
+  ✓  11 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.6s)
+  ✓  12 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.2s)
+  ✓  13 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.8s)
+  ✓  14 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (2.1s)
+  ✓  15 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.1s)
+  ✓  16 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (1.2s)
+  ✓  17 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (2.1s)
+{"count":60,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.000945,"RecalcStyleDuration":0.00047799999999999996,"ScriptDuration":0.029484999999999997},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+{"count":180,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.0012270000000000007,"RecalcStyleDuration":0.0005279999999999998,"ScriptDuration":0.028029},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓  19 test/browser/scrolling.spec.ts:4:1 › scroll trajectory and performance sample (3.6s)
+  ✓  18 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.2s)
+{"height":696,"historyHeight":696,"remaining":30}
+  ✓  20 test/browser/scrolling.spec.ts:29:1 › bottom boundary and return control do not move the viewport (1.2s)
+{"browser":"","cacheViewMs":832,"workerJobs":2}
+  ✓  21 test/browser/syntax.spec.ts:10:1 › production CSP highlights Markdown and historical diff; exported HTML works offline (3.5s)
+  ✓  22 test/browser/scrolling.spec.ts:47:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (3.6s)
+  ✓  24 test/browser/scrolling.spec.ts:73:1 › layout growth preserves the current anchor including movement in the same frame (1.4s)
+{"browser":"","first100LinesMs":802,"inputFillDuringStreamMs":15}
+  ✓  25 test/browser/scrolling.spec.ts:99:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.8s)
+  ✓  26 test/browser/scrolling.spec.ts:122:1 › fixture supports a delayed panel and diff without model or tool execution (1.5s)
+  ✓  27 test/browser/scrolling.spec.ts:137:1 › narrow and zoomed history controls stay bounded without overlapping the reading surface (1.9s)
+  ✓  23 test/browser/syntax.spec.ts:74:1 › streaming code stays interactive and stale highlighting cannot cross sessions (7.6s)
+  ✓  29 test/browser/v2-history.spec.ts:48:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.2s)
+  ✓  30 test/browser/v2-history.spec.ts:75:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (967ms)
+{"count":180,"streaming":true,"p95":16.799999999999955,"longTasks":[],"metrics":{"LayoutDuration":0.001138,"RecalcStyleDuration":0.000623,"ScriptDuration":0.053303}}
+  ✓  28 test/browser/scrolling.spec.ts:155:1 › streaming history performance sample (3.2s)
+  ✓  31 test/browser/v2-history.spec.ts:109:1 › 10.7 late history response cannot override latest or another session (953ms)
+  ✓  33 test/browser/v2-history.spec.ts:142:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (1.1s)
+  ✓  32 test/browser/scrolling.spec.ts:171:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.5s)
+  ✓  34 test/browser/v2-history.spec.ts:169:1 › 10.7 delayed image and font metrics preserve the current manual anchor (1.2s)
+  ✓  35 test/browser/scrolling.spec.ts:209:1 › horizontal code scrolling does not leave latest mode (1.0s)
+  ✓  36 test/browser/v2-history.spec.ts:198:1 › 10.7 historical panel data stays read-only through virtual unmount and remount (701ms)
+  ✓  38 test/browser/v2-history.spec.ts:218:1 › 10.7 create conversations share bounded pagination and keyboard reading (1.0s)
+  ✓  37 test/browser/scrolling.spec.ts:222:1 › completion failure and cancellation do not pull history to the bottom (1.8s)
+  ✓  39 test/browser/v2-history.spec.ts:235:1 › 10.7 panel proportions restore after reload without changing the session (647ms)
+(node:99925) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  40 test/browser/scrolling.spec.ts:237:1 › new content is readable by scrolling, including a full historical window (2.0s)
+  ✓  41 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.7s)
+
+  41 passed (45.8s)

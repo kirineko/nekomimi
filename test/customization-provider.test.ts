@@ -11,7 +11,7 @@ import { ConfigStore } from "../src/config/store.js";
 async function fixture(protocol: "responses" | "chat-completions") {
   const workspace = await temporary(), home = await temporary(), root = join(workspace, ".nekomimi/extensions/providers");
   await mkdir(root, { recursive: true });
-  await writeFile(join(root, "extension.json"), JSON.stringify({ name: "providers", sdkVersion: 2, entry: "index.ts", requiredCapabilities: ["providers"] }));
+  await writeFile(join(root, "extension.json"), JSON.stringify({ name: "providers", sdkVersion: 3, entry: "index.ts", requiredCapabilities: ["providers"] }));
   await copyFile(resolve("extension-docs/http-providers.ts"), join(root, "index.ts"));
   const host = new CustomizationHost(workspace, home), resource = (await host.catalog.discover()).find(r => r.kind === "extension")!;
   await host.catalog.decide(resource.id, true, true, 0);
@@ -21,6 +21,27 @@ async function fixture(protocol: "responses" | "chat-completions") {
   await profiles.select("main", "fixture", 1);
   return { workspace, home, root, host, profiles };
 }
+it("does not publish a custom provider value cancelled during the completed attempt commit", async () => {
+  const f = await fixture("responses"), controller = new AbortController();
+  const session = join(f.workspace, "late-completion"); let cancelled = false;
+  try {
+    const result = await run({ ...f, customization: f.host, apiKey: key, session, prompt: "write", signal: controller.signal,
+      fetch: async () => Response.json({ status: "completed", output: [callItem("write", { path: "never", content: "late" })] }),
+      journalOptions: { beforeIO: async operation => {
+        if (cancelled || operation !== "sync") return;
+        const raw = await readFile(join(session, "journal.jsonl"), "utf8").catch(() => "");
+        const line = raw.trim().split("\n").at(-1); if (!line) return;
+        const event = JSON.parse(line);
+        if (event.type === "attempt.finished" && event.payload.status === "completed") { cancelled = true; controller.abort(); }
+      } },
+    });
+    expect(cancelled).toBe(true); expect(result.status).toBe("cancelled");
+    const snapshot = await readSession(session);
+    expect(snapshot.events.filter(event => event.type === "attempt.finished")).toHaveLength(1);
+    expect(snapshot.events.find(event => event.type === "attempt.finished")?.payload).toMatchObject({ status: "completed" });
+    expect(snapshot.events.some(event => event.type === "tool.intent" || (event.type === "context.add" && String((event.payload as any).source).startsWith("response:")))).toBe(false);
+  } finally { await f.host.close(); }
+});
 for (const protocol of ["responses", "chat-completions"] as const) for (const sse of [false, true]) it(`runs a ${protocol} ${sse ? "SSE" : "JSON"} adapter in a child with native request/tool evidence`, async () => {
   const f = await fixture(protocol); await writeFile(join(f.workspace, "source.txt"), "read evidence");
   let calls = 0; const requests: string[] = [];
@@ -41,6 +62,19 @@ for (const protocol of ["responses", "chat-completions"] as const) for (const ss
     const session = await readSession(result.session), dispatched = session.events.filter(e => e.type === "request.dispatched");
     expect(dispatched).toHaveLength(2);
     for (let i = 0; i < 2; i++) expect((await readArtifact(result.session, (dispatched[i]!.payload as any).body)).toString()).toBe(requests[i]);
+    const transforms = session.events.filter(event => event.type === "request.transform");
+    expect(transforms).toHaveLength(2);
+    for (let i = 0; i < transforms.length; i++) {
+      const transform = transforms[i]!.payload as any;
+      const snapshot = JSON.parse((await readArtifact(result.session, transform.contextSnapshot.artifact)).toString());
+      const input = JSON.parse((await readArtifact(result.session, transform.input)).toString());
+      expect(transform).toMatchObject({ projector: { kind: "provider" }, outputHash: (dispatched[i]!.payload as any).bodyHash });
+      expect(input.history).toEqual(snapshot.view.nodes.map((node: any) => node.item));
+      expect(input.instructions).toBe(snapshot.view.prompt.text); expect(input.tools).toEqual(snapshot.view.prompt.schemas);
+      expect(input.model.id).toBe(snapshot.model.id); expect(snapshot.model.providerRevision).toBe(transform.projector.revision);
+      const ids = new Set(snapshot.selection.map((item: any) => item.id));
+      expect(transform.mapping[0].inputs.every((id: string) => ids.has(id))).toBe(true);
+    }
     expect(session.events.filter(e => e.type === "tool.intent" && (e.payload as any).name === "read")).toHaveLength(1);
     expect(JSON.stringify(session.events)).not.toContain("provider-secret-fixture");
     expect(JSON.parse(requests[1]!)[protocol === "responses" ? "input" : "messages"]).toEqual(expect.arrayContaining([expect.objectContaining(protocol === "responses" ? { type: "function_call_output", call_id: "adapter-call" } : { role: "tool", tool_call_id: "adapter-call" })]));
@@ -109,7 +143,7 @@ it('keeps auxiliary and naming profiles separate from the main provider and give
  const f=await fixture('responses');
  try{
   const manifest=JSON.parse(await readFile(join(f.root,'extension.json'),'utf8'));manifest.requiredCapabilities.push('commands','model');await writeFile(join(f.root,'extension.json'),JSON.stringify(manifest));
-  await writeFile(join(f.root,'index.ts'),(await readFile(join(f.root,'index.ts'),'utf8')).replace('}) satisfies ExtensionFactory2;',`api.registerCommand('aux',{description:'aux',async handler(_a,ctx){return await ctx.model('Only auxiliary input');}});}) satisfies ExtensionFactory2;`));
+  await writeFile(join(f.root,'index.ts'),(await readFile(join(f.root,'index.ts'),'utf8')).replace('}) satisfies ExtensionFactory3;',`api.registerCommand('aux',{description:'aux',async handler(_a,ctx){return await ctx.model('Only auxiliary input');}});}) satisfies ExtensionFactory3;`));
   const resource=(await f.host.catalog.discover()).find(r=>r.kind==='extension')!;await f.host.catalog.decide(resource.id,true,true,(await f.host.catalog.decisions()).revision);
   let profiles=await f.profiles.list();await f.profiles.save({...profiles.entries.fixture!,id:'aux',providerId:'example-chat',paths:['/chat/completions']},profiles.revision);
   profiles=await f.profiles.list();await f.profiles.select('auxiliary','aux',profiles.revision);profiles=await f.profiles.list();await f.profiles.select('naming','aux',profiles.revision);
@@ -176,7 +210,7 @@ it('does not forward profile credentials across HTTP redirects',async()=>{
 });
 it('supports an arbitrary JSON protocol with explicit native tool evidence pointers',async()=>{
  const f=await fixture('responses');await writeFile(join(f.workspace,'custom.txt'),'custom protocol');let calls=0;
- const source=`import type {ExtensionFactory2,ProviderOutput} from 'nekomimi/extensions';export default ((api)=>{let body='';api.registerProvider({id:'example-responses',models:[{id:'fixture-model',name:'Custom',protocol:'custom-json-v1',historyCompatibility:'custom-v1',contextWindow:128000,maxOutputTokens:4096,capabilities:{tools:true,images:false,reasoning:false}}],async serialize(input){return {path:'/responses',body:{dialogue:input.history}};},async parse(input):Promise<ProviderOutput|null>{if(input.sequence===1)body='';body+=input.chunk;if(!input.final)return null;const native=JSON.parse(body);if(native.invoke)return {terminal:'completed',rawItems:[native],contextItems:[{type:'function_call',call_id:native.invoke.id,name:native.invoke.tool,arguments:JSON.stringify(native.invoke.args)}],projection:{content:[{type:'toolCall',id:native.invoke.id,name:native.invoke.tool,arguments:native.invoke.args}]},toolEvidence:{[native.invoke.id]:{itemIndex:0,callIdPath:'/invoke/id',namePath:'/invoke/tool',argumentsPath:'/invoke/args'}}};return {terminal:'completed',rawItems:[native],contextItems:[{type:'message',role:'assistant',content:[{type:'output_text',text:native.answer}]}],projection:{content:[{type:'text',text:native.answer}]}};}});}) satisfies ExtensionFactory2;`;
+ const source=`import type {ExtensionFactory3,ProviderOutput} from 'nekomimi/extensions';export default ((api)=>{let body='';api.registerProvider({id:'example-responses',models:[{id:'fixture-model',name:'Custom',protocol:'custom-json-v1',historyCompatibility:'custom-v1',contextWindow:128000,maxOutputTokens:4096,capabilities:{tools:true,images:false,reasoning:false}}],async serialize(input){return {path:'/responses',body:{dialogue:input.history}};},async parse(input):Promise<ProviderOutput|null>{if(input.sequence===1)body='';body+=input.chunk;if(!input.final)return null;const native=JSON.parse(body);if(native.invoke)return {terminal:'completed',rawItems:[native],contextItems:[{type:'function_call',call_id:native.invoke.id,name:native.invoke.tool,arguments:JSON.stringify(native.invoke.args)}],projection:{content:[{type:'toolCall',id:native.invoke.id,name:native.invoke.tool,arguments:native.invoke.args}]},toolEvidence:{[native.invoke.id]:{itemIndex:0,callIdPath:'/invoke/id',namePath:'/invoke/tool',argumentsPath:'/invoke/args'}}};return {terminal:'completed',rawItems:[native],contextItems:[{type:'message',role:'assistant',content:[{type:'output_text',text:native.answer}]}],projection:{content:[{type:'text',text:native.answer}]}};}});}) satisfies ExtensionFactory3;`;
  try{
   await writeFile(join(f.root,'index.ts'),source);
   const result=await run({...f,customization:f.host,apiKey:key,session:join(f.workspace,'custom-protocol'),prompt:'read',fetch:async()=>Response.json(++calls===1?{invoke:{id:'custom-call',tool:'read',args:{path:'custom.txt'}}}:{answer:'Custom protocol done'})});
@@ -188,4 +222,19 @@ it.each(['backup-written','credential-written'])('keeps original settings usable
  await expect(profiles.migrateLegacy(0,stage=>{if(stage===phase)throw new Error('interrupted migration');})).rejects.toThrow('interrupted migration');
  expect((await profiles.list()).entries).toEqual({});expect((await config.snapshot()).apiKey).toBe('original-migration-key');
  expect((await profiles.migrateLegacy(0)).selection.main).toBe('legacy-deepseek');expect((await profiles.resolve('main'))?.apiKey).toBe('original-migration-key');
+});
+
+
+it('does not retry an adapter request of unknown network outcome', async()=>{
+ const f=await fixture('responses');let calls=0;
+ try{const result=await run({...f,customization:f.host,apiKey:key,session:join(f.workspace,'unknown-network'),prompt:'go',maxAttempts:3,fetch:async()=>{calls++;throw new Error('network ECONNRESET after dispatch');}});expect(result.status).toBe('failed');expect(calls).toBe(1);}finally{await f.host.close();}
+});
+
+it('migration preserves existing independent purpose choices', async () => {
+  const home = await temporary(), profiles = new ProviderProfiles(home);
+  const saved = await profiles.save({ id:'custom',providerId:'deepseek',resourceId:'builtin:deepseek',model:'deepseek-v4-pro',baseUrl:'https://api.deepseek.com',paths:['/responses'] },0);
+  let state = saved;
+  for (const purpose of ['work','create','auxiliary','session-title','compaction','handoff'] as const) state = await profiles.select(purpose,'custom',state.revision);
+  const result = await profiles.migrateLegacy(state.revision);
+  expect(result.selection).toMatchObject(state.selection);expect(result.selection.main).toBe('legacy-deepseek');
 });

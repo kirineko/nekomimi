@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "scope": "task 1.4 partial apply slice; not production admission",
+  "consumer": "published pi-durable 1.0.4 via isolated consumer",
+  "journalModule": "dist/journal.js",
+  "journalModuleSha256": "465811a4abfe3cd80199cf7961ead7d9e23d19b9a51cf8751f47fd4b723e3cfa",
+  "files": {
+    "journal-storage.mjs": "876e7aad60644c66de41d2496f0f289d798233ed4d74c6951be07ef673081f38",
+    "journal-storage-probe.mjs": "b95e22531361326b440b5778e66542c15461f5b7982e1338b065c10b074d4aa8"
+  },
+  "runs": [
+    {
+      "node": "22",
+      "output": "journal-node22/results.json",
+      "exitCode": 0
+    },
+    {
+      "node": "24",
+      "output": "journal-node24/results.json",
+      "exitCode": 0
+    }
+  ],
+  "probeCorrections": [
+    "assert.rejects wrapped synchronous poisoned guard in async function",
+    "stale test child lease wait increased to 4 seconds to account for filesystem mtime precision; lock not deleted"
+  ]
+}

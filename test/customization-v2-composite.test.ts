@@ -11,13 +11,13 @@ import {ProviderProfiles} from '../src/customization/provider-profiles.js';
 import {run} from '../src/runtime.js';
 import {readSession,readArtifact,id} from '../src/journal.js';
 it('generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers',async()=>{
- const workspace=await realpath(await temporary()),home=await temporary(),oauth=await oauthFixture(true),source=join(workspace,'review-kit');
+ const workspace=await realpath(await temporary()),ownerWorkspace=await temporary(),home=await temporary(),oauth=await oauthFixture(true),source=join(workspace,'review-kit');
  const files=await reviewPackageFiles(oauth.resource.config!);await mkdir(join(workspace,'src'));await writeFile(join(workspace,'src/change.diff'),'diff --git a/src/a.ts b/src/a.ts\n-const x = 1;\n+const x = 2;\n');
  const requests:any[]=[];const model=createServer(async(req,res)=>{let raw='';for await(const chunk of req)raw+=chunk;requests.push(JSON.parse(raw));res.setHeader('content-type','application/json');res.end(JSON.stringify({choices:[{message:{role:'assistant',content:'Observed synthetic diff: x changes from 1 to 2.'},finish_reason:'stop'}]}));});
  await new Promise<void>(r=>model.listen(0,'127.0.0.1',r));
  let host=new CustomizationHost(workspace,home);const store=new Packages(workspace,home);let phase=0,brokenId='',fixedId='';
  try{
-  const generated=await run({workspace,home,customization:host,session:join(workspace,'generation'),apiKey:key,prompt:'Build and validate a complete /review capability package using the installed SDK.',maxTurns:16,fetch:async()=>{
+  const generated=await run({workspace,ownerWorkspace,mode:'create',target:{kind:'extension',root:workspace},home,customization:host,session:join(workspace,'generation'),apiKey:key,prompt:'Build and validate a complete /review capability package using the installed SDK.',maxTurns:16,fetch:async()=>{
    switch(phase++){
     case 0:return response([callItem('customization_sdk',{entry:'contracts'},'sdk')]);
     case 1:return response(Object.entries(files).map(([path,content],i)=>callItem('write',{path:'review-kit/'+path,content:path==='index.ts'?'export default !!!':content},'file-'+i)));

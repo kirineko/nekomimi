@@ -1,7 +1,7 @@
 import { isAbsolute } from "node:path";
 import type { PackageManifest } from "./contracts.js";
 import { requireCapabilities } from "./contracts.js";
-import { CAPABILITIES } from "./types.js";
+import { CAPABILITIES, SDK_VERSION } from "./types.js";
 
 export function packagePath(path: unknown): asserts path is string {
   if (typeof path !== "string" || !path || isAbsolute(path) || path.includes("\\") || path.split("/").some(p => !p || p === "." || p === ".." || /[:\x00-\x1f]/.test(p))) throw new Error("Invalid package-relative path");
@@ -10,7 +10,7 @@ export function packagePath(path: unknown): asserts path is string {
 }
 export function checkPackageManifest(value: unknown, available: readonly string[] = CAPABILITIES): PackageManifest {
   const m = value as PackageManifest;
-  if (!m || m.manifestVersion !== 1 || !/^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z][a-z0-9._-]{0,63}$/.test(m.name) || typeof m.version !== "string" || !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?$/.test(m.version) || ![1, 2].includes(m.sdkVersion) || !Array.isArray(m.resources) || m.resources.length < 1 || m.resources.length > 128 || !Array.isArray(m.requiredCapabilities)) throw new Error("Invalid package manifest or unsupported version");
+  if (!m || m.manifestVersion !== 1 || !/^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z][a-z0-9._-]{0,63}$/.test(m.name) || typeof m.version !== "string" || !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?$/.test(m.version) || m.sdkVersion !== SDK_VERSION || !Array.isArray(m.resources) || m.resources.length < 1 || m.resources.length > 128 || !Array.isArray(m.requiredCapabilities)) throw new Error("Invalid package manifest or unsupported version");
   requireCapabilities(m.requiredCapabilities, available);
   const names = new Set<string>();
   for (const r of m.resources) {

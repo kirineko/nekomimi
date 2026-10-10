@@ -2,6 +2,7 @@ import { diagnostic, saveDiagnostic, observeIO, OperationError } from "./diagnos
 import { atomicRename } from "./atomic-rename.js";
 import type { Diagnostic } from "./shared/protocol.js";
 import { createHash, randomUUID } from "node:crypto";
+import { AsyncLocalStorage } from "node:async_hooks";
 import {
   mkdir,
   open,
@@ -25,6 +26,16 @@ export interface Artifact {
   redacted?: boolean;
 }
 export interface Links {
+  mode?: "work" | "create";
+  targetId?: string;
+  parentToolCallId?: string;
+  parentModelCallId?: string;
+  parentAttemptId?: string;
+  frameworkTaskId?: number;
+  conversationId?: number;
+  handoffId?: string;
+  candidateId?: string;
+  validationTaskId?: string;
   runId?: string;
   modelCallId?: string;
   attemptId?: string;
@@ -58,6 +69,8 @@ export interface SessionSnapshot {
   tentativeEvents: number;
 }
 export interface JournalOptions {
+  /** Product session creation may bind the transport identity before event 1. */
+  sessionId?: string;
   secrets?: string[];
   onDiagnostic?: (value: Diagnostic) => void;
   diagnosticRunId?: string;
@@ -220,10 +233,12 @@ export class Journal {
   readonly sessionId: string;
   durableSeq: number;
   private tail: Promise<unknown> = Promise.resolve();
+  private readonly linkScope = new AsyncLocalStorage<Readonly<Links>>();
   private fault?: Error;
   private timer: NodeJS.Timeout;
   private pendingBytes = 0;
   private closed = false;
+  private leaseLost = false;
   private constructor(
     readonly directory: string,
     private handle: Awaited<ReturnType<typeof open>>,
@@ -232,7 +247,7 @@ export class Journal {
     private options: JournalOptions,
   ) {
     this.events = snapshot.events.slice(0, snapshot.durableSeq);
-    this.sessionId = this.events[0]?.sessionId ?? id();
+    this.sessionId = this.events[0]?.sessionId ?? options.sessionId ?? id();
     this.durableSeq = snapshot.durableSeq;
     this.timer = setInterval(() => {
       if (this.pendingBytes) void this.flush().catch(() => {});
@@ -243,6 +258,7 @@ export class Journal {
     directory: string,
     options: JournalOptions = {},
   ): Promise<Journal> {
+    if (options.sessionId !== undefined && !/^[a-zA-Z0-9_-]{1,80}$/.test(options.sessionId)) throw new Error("Invalid session identity");
     await mkdir(directory, { recursive: true, mode: 0o700 });
     directory = await realpath(directory);
     let compromised: Error | undefined;
@@ -254,7 +270,7 @@ export class Journal {
         retries: 0,
         onCompromised: (e) => {
           compromised = e;
-          instance?.fail(new OperationError("journal.lock", e));
+          if (instance) { instance.leaseLost = true; instance.fail(new OperationError("journal.lock", e)); }
         },
       });
     } catch (error) {
@@ -268,6 +284,7 @@ export class Journal {
         mode: 0o700,
       });
       const snapshot = await observeIO("journal.recovery-read", () => readSession(directory));
+      if (options.sessionId && snapshot.events[0] && snapshot.events[0].sessionId !== options.sessionId) throw new Error("Session identity mismatch");
       let quarantined: Buffer | undefined;
       if (snapshot.tornBytes || snapshot.tentativeEvents) {
         const raw = await readFile(join(directory, "journal.jsonl"));
@@ -288,7 +305,7 @@ export class Journal {
       }
       const handle = await observeIO("journal.open", () => open(join(directory, "journal.jsonl"), "a", 0o600));
       instance = new Journal(directory, handle, release, snapshot, options);
-      if (compromised) instance.fail(new OperationError("journal.lock", compromised));
+      if (compromised) { instance.leaseLost = true; instance.fail(new OperationError("journal.lock", compromised)); }
       if (quarantined)
         await instance.append("journal.recovered", {
           artifact: await instance.artifact(quarantined),
@@ -355,17 +372,34 @@ export class Journal {
     this.durableSeq = last?.seq ?? 0;
     this.pendingBytes = 0;
   }
+  /** Capture causal identity before crossing a queue, stream, or process callback. */
+  links(overrides: Links = {}): Links {
+    const parent = this.linkScope.getStore() ?? {};
+    const links: Links = { ...parent, ...overrides };
+    if (overrides.toolCallId && parent.toolCallId && overrides.toolCallId !== parent.toolCallId)
+      links.parentToolCallId = overrides.parentToolCallId ?? parent.toolCallId;
+    return links;
+  }
+  /** Each Journal owns its async scope; concurrent executions cannot change one another's identity. */
+  withLinks<T>(links: Links, operation: () => T): T {
+    return this.linkScope.run(Object.freeze(this.links(links)), operation);
+  }
   append(
     type: string,
     payload: unknown,
     links: Links = {},
     durable = true,
   ): Promise<JournalEvent> {
-    return this.enqueue(() => this.writeEvent(type, payload, links, durable));
+    const captured = this.links(links);
+    return this.enqueue(() => this.writeEvent(type, payload, captured, durable));
   }
-  /** Compare the source projection inside the writer queue, immediately before commit. */
-  appendIf(type: string, payload: unknown, condition: () => boolean, links: Links = {}): Promise<JournalEvent | undefined> {
-    return this.enqueue(() => condition() ? this.writeEvent(type, payload, links, true) : Promise.resolve(undefined));
+  /** Compare inside the writer queue, immediately before commit. Async predicates must be read-only. */
+  appendIf(type: string, payload: unknown, condition: () => boolean | Promise<boolean>, links: Links = {}, commitGuard?: () => boolean): Promise<JournalEvent | undefined> {
+    const captured = this.links(links);
+    return this.enqueue(async () => {
+      const result = condition(), accepted = typeof result === 'boolean' ? result : await result;
+      return accepted && (!commitGuard || commitGuard()) ? this.writeEvent(type, payload, captured, true) : undefined;
+    });
   }
   private async writeEvent(type: string, payload: unknown, links: Links, durable: boolean): Promise<JournalEvent> {
       const body = {
@@ -439,7 +473,11 @@ export class Journal {
       await this.diagnosticDone;
       this.closed = true;
       await this.handle.close();
-      await this.release();
+      try { await this.release(); }
+      catch (error) {
+        // proper-lockfile already relinquishes a compromised lease; never remove a replacement owner.
+        if (!this.leaseLost || (error as NodeJS.ErrnoException).code !== "ERELEASED") throw error;
+      }
     }
   }
 }

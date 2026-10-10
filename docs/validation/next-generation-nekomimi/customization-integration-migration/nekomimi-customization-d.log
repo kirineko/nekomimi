@@ -1,0 +1,85 @@
+
+Running 3 tests using 1 worker
+
+(node:4517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/customization.spec.ts:98:1 › configures a custom Provider without a default key, selects it and executes a recorded tool round (4.4s)
+  ✘  2 test/browser/customization.spec.ts:172:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history (3.7s)
+(node:4541) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 test/browser/customization.spec.ts:215:1 › enable extension, use form, reload a changed command and retain history (20.5s)
+
+
+  1) test/browser/customization.spec.ts:172:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 202
+    Received: 422
+
+      193 |       await page.getByLabel('任务草稿',{exact:true}).fill('/candidate-review');
+      194 |       const accepted=page.waitForResponse(r=>r.request().method()==='POST' && r.url().endsWith('/submit'));
+    > 195 |       await page.getByRole('button',{name:'发送',exact:true}).click(); expect((await accepted).status()).toBe(202);
+          |                                                                                                        ^
+      196 |       await expect(page.getByText('completed',{exact:true})).toBeVisible();
+      197 |       const {readSession}=await import('../../src/journal.js');
+      198 |       runs++;
+        at command (/Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:195:104)
+        at /Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:202:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-checks-candi-9e471-back-without-losing-history/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-checks-candi-9e471-back-without-losing-history/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-checks-candi-9e471-back-without-losing-history/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-checks-candi-9e471-back-without-losing-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/customization.spec.ts:215:1 › enable extension, use form, reload a changed command and retain history 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - activated
+    + Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-qCkWya/.nekomimi/extensions/review/extension.json: index.ts:1:318: type 18047: 'a' is possibly 'null'.
+    + index.ts:1:320: type 2339: Property 'scope' does not exist on type 'string | number | boolean | Json[] | { [key: string]: Json; }'.
+    +   Property 'scope' does not exist on type 'string'.
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      243 |     const path=`/v2/create/session/${session.id}`;
+      244 |     await page.goto(app.origin+path+'/resources#token='+app.token);
+    > 245 |     await expect(page.getByRole('article',{name:'资源 review',exact:true})).toContainText('待授权');
+          |                                                                                                ^
+      246 |     const activation=await confirm(page,'授权并启用资源');
+      247 |     await expect.poll(async()=>{const receipt=(await app.sessions.describeCustomization(session.id)).receipts.find(item=>item.id===activation.id);return receipt?.status==='failed'?receipt.error:receipt?.status;}).toBe('activated');
+      248 |     await page.getByRole('link',{name:'返回开发目标',exact:true}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/customization.spec.ts:245:214
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/customization-enable-exten-f7fe3--command-and-retain-history/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/customization-enable-exten-f7fe3--command-and-retain-history/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/customization-enable-exten-f7fe3--command-and-retain-history/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/customization-enable-exten-f7fe3--command-and-retain-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/customization.spec.ts:172:1 › checks candidate diagnostics, activates an approved hash and rolls back without losing history 
+    test/browser/customization.spec.ts:215:1 › enable extension, use form, reload a changed command and retain history 
+  1 passed (30.8s)

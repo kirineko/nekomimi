@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/handoff-preparation.test.ts (7 tests | 1 failed) 8606ms
+   × redacts credentials from selected text, transmitted body and prepared summary evidence 1173ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/handoff-preparation.test.ts > redacts credentials from selected text, transmitted body and prepared summary evidence
+AssertionError: expected 422 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 422
+
+ ❯ test/handoff-preparation.test.ts:72:81
+     70|   f.draft.summary = "Never transfer " + key;
+     71|   const preview = await f.preview(); expect(JSON.stringify(preview)).n…
+     72|   const prepared = await f.prepare("summary", preview); expect(prepare…
+       |                                                                                 ^
+     73|   expect(JSON.stringify(f.body())).not.toContain(key); expect(JSON.str…
+     74|   const stored = await readSession(f.preparation()); expect(JSON.strin…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 75 passed (76)
+   Start at  03:51:31
+   Duration  18.20s (transform 1.54s, setup 0ms, import 3.37s, tests 50.62s, environment 0ms)
+

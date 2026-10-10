@@ -3,10 +3,10 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import { join } from "node:path";
 import { chmod } from "node:fs/promises";
 import lockfile from "proper-lockfile";
-import { discoverOAuthProtectedResourceMetadata, discoverAuthorizationServerMetadata, startAuthorization, exchangeAuthorization, refreshAuthorization, registerClient } from "@modelcontextprotocol/sdk/client/auth.js";
-import type { AuthorizationServerMetadata, OAuthTokens } from "@modelcontextprotocol/sdk/shared/auth.js";
+import { discoverProtectedResourceMetadata, discoverAuthorizationServerMetadata, startAuthorization, exchangeAuthorizationCode, refreshAuthorization, registerClient, type AuthorizationServerMetadata, type OAuthTokens } from "@earendil-works/pi-mcp/oauth";
 import { atomicFile, hash } from "../journal.js";
 import { directory } from "../storage/paths.js";
+import { prepareDataHome } from "../storage/format.js";
 import { boundedRead, exists, safePath, type Resource } from "./resources.js";
 
 export interface McpOAuthConfig { issuer: string; clientId?: string; dynamicRegistration?: boolean; redirectPort?: number; scope?: string }
@@ -33,7 +33,7 @@ export class McpOAuth {
     return { config, server, issuer, binding };
   }
   private async storage(resource: Resource) {
-    const bound = this.binding(resource), home = await directory(this.home), root = await directory(await safePath(home, join(home, "mcp-auth")));
+    const bound = this.binding(resource), home = await prepareDataHome(this.home), root = await directory(await safePath(home, join(home, "mcp-auth")));
     return { ...bound, root, file: await safePath(root, bound.binding + ".json") };
   }
   private async read(file: string, binding: string): Promise<Stored> {
@@ -81,9 +81,9 @@ export class McpOAuth {
   private async start(resource: Resource, bound: Awaited<ReturnType<McpOAuth["storage"]>>) {
     const generation = this.generations.get(bound.binding) ?? 0;
     const current = () => { this.closed.signal.throwIfAborted(); if ((this.generations.get(bound.binding) ?? 0) !== generation) throw new Error("OAuth authorization cancelled"); };
-    const protectedMetadata = await discoverOAuthProtectedResourceMetadata(bound.server, undefined, this.fetch([bound.server.origin]));
+    const protectedMetadata = await discoverProtectedResourceMetadata(bound.server, {fetch:this.fetch([bound.server.origin])});
     if (protectedMetadata.resource !== bound.server.href || !protectedMetadata.authorization_servers?.includes(bound.issuer.href)) throw new Error("OAuth resource/issuer discovery mismatch");
-    const metadata = this.validate(await discoverAuthorizationServerMetadata(bound.issuer, { fetchFn: this.fetch([bound.issuer.origin]) }), bound.issuer);
+    const metadata = this.validate(await discoverAuthorizationServerMetadata(bound.issuer, { fetch: this.fetch([bound.issuer.origin]) }), bound.issuer);
     current();
     const state = randomBytes(32).toString("base64url"), path = "/oauth/callback";
     let clientId = bound.config.clientId ?? "";
@@ -95,9 +95,11 @@ export class McpOAuth {
         if (req.method !== "GET" || req.headers.host !== new URL(redirectUri).host || !req.url || req.url.length > 8192) throw new Error();
         const url = new URL(req.url, redirectUri), supplied = Buffer.from(url.searchParams.get("state") ?? "");
         if (url.pathname !== path || used || Date.now() >= expires || supplied.length !== state.length || !timingSafeEqual(supplied, Buffer.from(state)) || url.searchParams.getAll("state").length !== 1 || url.searchParams.getAll("code").length !== 1 || url.searchParams.has("error")) throw new Error();
+        const returnedIssuer=url.searchParams.get("iss");
+        if(url.searchParams.getAll("iss").length>1 || returnedIssuer!==null&&endpoint(returnedIssuer).href!==bound.issuer.href || metadata.authorization_response_iss_parameter_supported&&returnedIssuer===null)throw new Error();
         current(); used = true;
         await this.exclusive(resource, async storage => {
-          const tokens = await exchangeAuthorization(bound.issuer, { metadata, clientInformation: { client_id: clientId }, authorizationCode: url.searchParams.get("code")!, codeVerifier: verifier, redirectUri, resource: bound.server, fetchFn: this.fetch([bound.issuer.origin], metadata.token_endpoint) });
+          const tokens = await exchangeAuthorizationCode(bound.issuer, { metadata, clientInformation: { client_id: clientId }, code: url.searchParams.get("code")!, codeVerifier: verifier, redirectUrl: redirectUri, resource: bound.server.href, fetch: this.fetch([bound.issuer.origin], metadata.token_endpoint) });
           current(); this.validateTokens(tokens);
           await this.write(storage.file, { version: 1, binding: storage.binding, status: "authorized", metadata, clientId, tokens, expiresAt: Date.now() + (tokens.expires_in ?? 3600) * 1000 });
         });
@@ -114,12 +116,12 @@ export class McpOAuth {
       current();
       if (bound.config.dynamicRegistration) {
         if (!metadata.registration_endpoint || endpoint(metadata.registration_endpoint).origin !== bound.issuer.origin) throw new Error("OAuth dynamic registration unavailable or outside authorized issuer");
-        const registered = await registerClient(bound.issuer, { metadata, clientMetadata: { client_name: "Nekomimi", redirect_uris: [redirectUri], token_endpoint_auth_method: "none", grant_types: ["authorization_code", "refresh_token"], response_types: ["code"] }, scope: bound.config.scope, fetchFn: this.fetch([bound.issuer.origin], metadata.registration_endpoint) });
+        const registered = await registerClient(bound.issuer, { metadata, clientMetadata: { client_name: "Nekomimi", redirect_uris: [redirectUri], token_endpoint_auth_method: "none", grant_types: ["authorization_code", "refresh_token"], response_types: ["code"] }, scope: bound.config.scope, fetch: this.fetch([bound.issuer.origin], metadata.registration_endpoint) });
         current();
         if (registered.client_secret || registered.token_endpoint_auth_method !== "none" || !registered.client_id || registered.client_id.length > 1024 || !registered.redirect_uris.includes(redirectUri)) throw new Error("OAuth registration must return the requested public client binding");
         clientId = registered.client_id;
       }
-      const authorization = await startAuthorization(bound.issuer, { metadata, clientInformation: { client_id: clientId }, redirectUrl: redirectUri, scope: bound.config.scope, state, resource: bound.server });
+      const authorization = await startAuthorization(bound.issuer, { metadata, clientInformation: { client_id: clientId }, redirectUrl: redirectUri, scope: bound.config.scope, state, resource: bound.server.href });
       current(); verifier = authorization.codeVerifier;
       const timer = setTimeout(() => stop(), expires - Date.now()); timer.unref();
       const stop = () => { used = true; verifier = ""; clearTimeout(timer); this.pending.delete(bound.binding); server.close(); server.closeIdleConnections(); };
@@ -130,19 +132,26 @@ export class McpOAuth {
   private validateTokens(tokens: OAuthTokens) {
     if (tokens.token_type.toLowerCase() !== "bearer" || !tokens.access_token || tokens.access_token.length > 16384 || (tokens.expires_in !== undefined && (!Number.isFinite(tokens.expires_in) || tokens.expires_in <= 0))) throw new Error("Unsupported OAuth token response");
   }
-  async token(resource: Resource): Promise<string> {
-    return this.exclusive(resource, async (storage, state) => {
+  async token(resource: Resource, signal?:AbortSignal): Promise<string> {
+    signal?.throwIfAborted();
+    const binding=this.binding(resource).binding,generation=this.generations.get(binding)??0;
+    const token=await this.exclusive(resource, async (storage, state) => {
       if (!state.tokens || state.status !== "authorized") throw new Error("MCP OAuth authorization required");
       if ((state.expiresAt ?? 0) > Date.now() + 30_000) return state.tokens.access_token;
       if (!state.tokens.refresh_token) { await this.write(storage.file, { version: 1, binding: storage.binding, status: "reauthorize" }); throw new Error("MCP OAuth reauthorization required"); }
       try {
         const metadata = this.validate(state.metadata, storage.issuer);
-        const tokens = await refreshAuthorization(storage.issuer, { metadata, clientInformation: { client_id: state.clientId ?? storage.config.clientId! }, refreshToken: state.tokens.refresh_token, resource: storage.server, fetchFn: this.fetch([storage.issuer.origin], metadata.token_endpoint) });
+        const refreshed = await refreshAuthorization(storage.issuer, { metadata, clientInformation: { client_id: state.clientId ?? storage.config.clientId! }, refreshToken: state.tokens.refresh_token, resource: storage.server.href, fetch: this.fetch([storage.issuer.origin], metadata.token_endpoint) });
+        const tokens={...refreshed,refresh_token:refreshed.refresh_token??state.tokens.refresh_token};
         this.validateTokens(tokens);
         await this.write(storage.file, { ...state, tokens, expiresAt: Date.now() + (tokens.expires_in ?? 3600) * 1000 });
         return tokens.access_token;
       } catch { await this.write(storage.file, { version: 1, binding: storage.binding, status: "reauthorize" }); throw new Error("MCP OAuth refresh failed; reauthorization required"); }
     });
+    // Refresh and persistence finish independently of business cancellation. Never put an old rotating token back.
+    signal?.throwIfAborted();
+    if((this.generations.get(binding)??0)!==generation)throw new Error('MCP OAuth authorization revoked');
+    return token;
   }
   async disconnect(resource: Resource, invalid = false) {
     const binding = this.binding(resource).binding; this.generations.set(binding, (this.generations.get(binding) ?? 0) + 1); this.pending.get(binding)?.stop();

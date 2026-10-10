@@ -1,0 +1,10 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+Explicit trusted build authorization is required, including dependency and package lifecycle scripts
+
+ Test Files  5 passed (5)
+      Tests  24 passed (24)
+   Start at  23:58:24
+   Duration  11.30s (transform 778ms, setup 0ms, import 1.54s, tests 22.62s, environment 0ms)
+

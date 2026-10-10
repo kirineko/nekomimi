@@ -1,0 +1,71 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/context-runtime.test.ts (9 tests | 1 failed) 14236ms
+   × selected built-in profile auto-compacts and sends the exact effective projection 147ms
+ ❯ test/server.test.ts (12 tests | 1 failed) 9689ms
+   × enforces root lease, recovers managed listing and refuses foreign workspace metadata 131ms
+ ❯ test/diagnostics.test.ts (9 tests | 1 failed) 915ms
+   × shares a single Entry during concurrent first access 80ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > selected built-in profile auto-compacts and sends the exact effective projection
+Error: Unsupported session format; 请选择独立的新Durable目录，原文件不会迁移或覆盖
+ ❯ checkFormat src/pi/journal-storage.ts:42:11
+     40|   if (!events.length) return;
+     41|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     42|     throw new ApiError(422, "incompatible_format", "Unsupported sessio…
+       |           ^
+     43|   let previousSeq = 0;
+     44|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:80:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:56:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/diagnostics.test.ts > shares a single Entry during concurrent first access
+AssertionError: expected 8 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 8
+
+ ❯ test/diagnostics.test.ts:70:35
+     68|     app.sessions.entries.delete(session.id);
+     69|     const entries = await Promise.all(Array.from({length:8}, () => app…
+     70|     expect(new Set(entries).size).toBe(1);
+       |                                   ^
+     71|     const value=diagnostic(new Error("fixture"),{sessionId:session.id}…
+     72|     entries[0]!.diagnostics.push(value);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/server.test.ts > enforces root lease, recovers managed listing and refuses foreign workspace metadata
+AssertionError: expected 422 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 422
+
+ ❯ test/server.test.ts:373:64
+    371|   await j.append("session.created", { workspace: "/different-workspace…
+    372|   await j.close();
+    373|   expect((await request("/sessions/foreign/snapshot")).status).toBe(40…
+       |                                                                ^
+    374|   await app.close();
+    375|   apps.splice(apps.indexOf(app), 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 8 passed (11)
+      Tests  3 failed | 69 passed (72)
+   Start at  01:38:04
+   Duration  48.46s (transform 450ms, setup 0ms, import 3.44s, tests 92.34s, environment 0ms)
+

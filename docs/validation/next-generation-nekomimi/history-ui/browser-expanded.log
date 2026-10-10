@@ -1,0 +1,168 @@
+
+Running 8 tests using 1 worker
+
+(node:73492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/delivery-navigation.spec.ts:21:1 › 10.3 exact delivery deep link and explicit/native return preserve the card offset (1.6s)
+  ✓  2 test/browser/delivery-navigation.spec.ts:45:1 › 10.3 changed or unavailable candidate never masquerades as the delivered version (1.3s)
+  ✓  3 test/browser/panel-management.spec.ts:7:1 › 10.4 bound panel actions, frame and cleanup stay in the create target; refresh never remounts (3.2s)
+  ✓  4 test/browser/v2-history.spec.ts:37:1 › 10.7 bounded virtual history preserves prepend, failure and latest navigation (1.2s)
+  ✘  5 test/browser/v2-history.spec.ts:64:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft (5.6s)
+(node:73531) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 test/browser/v2-history.spec.ts:97:1 › 10.7 late history response cannot override latest or another session (45.1s)
+(node:73566) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  7 test/browser/v2-history.spec.ts:130:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest (5.7s)
+(node:73589) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  8 test/browser/v2-history.spec.ts:157:1 › 10.7 delayed image and font metrics preserve the current manual anchor (5.7s)
+
+
+  1) test/browser/v2-history.spec.ts:64:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   630.171875
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      32 |     const row = [...el.querySelectorAll<HTMLElement>('[data-row-id]')].find(row => row.dataset.rowId === saved.id);
+      33 |     return row ? Math.abs(row.getBoundingClientRect().top - el.getBoundingClientRect().top - saved.offset) : Infinity;
+    > 34 |   }, saved)).toBeLessThan(3);
+         |              ^
+      35 | }
+      36 |
+      37 | test('10.7 bounded virtual history preserves prepend, failure and latest navigation', async ({ page }) => {
+        at expectAnchor (/Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:34:14)
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:79:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-selection--a7a19-e-reading-surface-and-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-history-10-7-selection--a7a19-e-reading-surface-and-draft/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-selection--a7a19-e-reading-surface-and-draft/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-history-10-7-selection--a7a19-e-reading-surface-and-draft/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/v2-history.spec.ts:97:1 › 10.7 late history response cannot override latest or another session 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: '新的空会话' })
+
+
+      121 |   // Client-side navigation retains the controller lifetime rather than cancelling via a document reload.
+      122 |   await page.getByRole('link', { name: '工作', exact: true }).click();
+    > 123 |   await page.getByRole('link', { name: '新的空会话', exact: false }).click();
+          |                                                                 ^
+      124 |   await expect(page).toHaveURL(new RegExp(next.id));
+      125 |   releaseNext(); await nextFinished;
+      126 |   await expect(surface(page).locator('[data-row-id]')).toHaveCount(0);
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:123:65
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-late-histo-f97f3-e-latest-or-another-session/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-history-10-7-late-histo-f97f3-e-latest-or-another-session/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-late-histo-f97f3-e-latest-or-another-session/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-history-10-7-late-histo-f97f3-e-latest-or-another-session/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) test/browser/v2-history.spec.ts:130:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('timeline').locator('[data-row-id]')
+    Expected: 61
+    Received: 62
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByTestId('timeline').locator('[data-row-id]') with timeout 5000ms
+      - waiting for getByTestId('timeline').locator('[data-row-id]')
+        3 × locator resolved to 60 elements
+          - unexpected value "60"
+        11 × locator resolved to 62 elements
+           - unexpected value "62"
+
+
+      140 |   await journal.append('run.finished', {status:'completed'}, {runId:'terminal-fixture'});
+      141 |   await journal.close();
+    > 142 |   await expect(timeline.locator('[data-row-id]')).toHaveCount(61);
+          |                                                   ^
+      143 |   await expectAnchor(page, saved);
+      144 |   await page.getByRole('button', { name: '查看更早', exact: true }).click();
+      145 |   await expect(timeline.locator('[data-row-id]')).toHaveCount(121);
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:142:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-streamed-a-92400-nward-paging-resumes-latest/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-history-10-7-streamed-a-92400-nward-paging-resumes-latest/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-streamed-a-92400-nward-paging-resumes-latest/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-history-10-7-streamed-a-92400-nward-paging-resumes-latest/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) test/browser/v2-history.spec.ts:157:1 › 10.7 delayed image and font metrics preserve the current manual anchor 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   49
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      32 |     const row = [...el.querySelectorAll<HTMLElement>('[data-row-id]')].find(row => row.dataset.rowId === saved.id);
+      33 |     return row ? Math.abs(row.getBoundingClientRect().top - el.getBoundingClientRect().top - saved.offset) : Infinity;
+    > 34 |   }, saved)).toBeLessThan(3);
+         |              ^
+      35 | }
+      36 |
+      37 | test('10.7 bounded virtual history preserves prepend, failure and latest navigation', async ({ page }) => {
+        at expectAnchor (/Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:34:14)
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-history.spec.ts:176:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-delayed-im-46b8c-e-the-current-manual-anchor/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-history-10-7-delayed-im-46b8c-e-the-current-manual-anchor/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-history-10-7-delayed-im-46b8c-e-the-current-manual-anchor/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-history-10-7-delayed-im-46b8c-e-the-current-manual-anchor/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    test/browser/v2-history.spec.ts:64:1 › 10.7 selection, keyboard and responsive layout keep the same reading surface and draft 
+    test/browser/v2-history.spec.ts:97:1 › 10.7 late history response cannot override latest or another session 
+    test/browser/v2-history.spec.ts:130:1 › 10.7 streamed and terminal updates respect browsing; downward paging resumes latest 
+    test/browser/v2-history.spec.ts:157:1 › 10.7 delayed image and font metrics preserve the current manual anchor 
+  4 passed (1.2m)

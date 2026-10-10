@@ -1,6 +1,9 @@
+import {openJournalStorage} from '../src/pi/journal-storage.js';
+import {BACKGROUND_CONTEXT} from '@earendil-works/chord/context';
 import { it, expect, afterEach } from "vitest";
 import { join, resolve } from "node:path";
 import { writeFile, symlink, readFile } from "node:fs/promises";
+import { readdirSync } from "node:fs";
 import { startWeb } from "../src/server/app.js";
 import { Journal, hash } from "../src/journal.js";
 import {
@@ -367,7 +370,8 @@ it("enforces root lease, recovers managed listing and refuses foreign workspace 
   const { id } = await create();
   await expect(startWeb({ workspace, home: join(workspace,"test-home"), naming:false })).rejects.toThrow();
   const other = join(app.sessions.root, "foreign");
-  const j = await Journal.open(other);
+  const foreign = await openJournalStorage(other, BACKGROUND_CONTEXT, {}, { workspace: "/different-workspace" });
+  const j = foreign.journal;
   await j.append("session.created", { workspace: "/different-workspace" });
   await j.close();
   expect((await request("/sessions/foreign/snapshot")).status).toBe(403);
@@ -454,4 +458,40 @@ it("pages the full run trace independently of the visible history and includes r
     (await request(`/sessions/${id}/trace?run=long-run&offset=-1`)).status,
   ).toBe(400);
   expect((await request(`/sessions/${id}/trace`)).status).toBe(400);
+});
+
+it("static pages get a per-response style nonce in CSP and HTML; assets stay byte-identical", async () => {
+  const { app } = await setup();
+  const get = (path: string) => globalThis.fetch(app.origin + path);
+  const first = await get("/work");
+  const second = await get("/work");
+  expect(first.status).toBe(200);
+  const cspA = first.headers.get("content-security-policy") ?? "";
+  const cspB = second.headers.get("content-security-policy") ?? "";
+  expect(cspA).toContain("script-src 'self'");
+  expect(cspA).toContain("worker-src 'self'");
+  expect(cspA).not.toContain("unsafe-inline");
+  expect(cspA).not.toContain("unsafe-eval");
+  const nonceOf = (csp: string) => /style-src 'self' 'nonce-([A-Za-z0-9+/=]{16,})'/.exec(csp)?.[1];
+  const nonceA = nonceOf(cspA);
+  const nonceB = nonceOf(cspB);
+  expect(nonceA).toBeTruthy();
+  expect(nonceB).toBeTruthy();
+  expect(nonceA).not.toBe(nonceB);
+  const htmlA = await first.text();
+  const htmlB = await second.text();
+  expect(htmlA).toContain(`content="${nonceA}"`);
+  expect(htmlB).toContain(`content="${nonceB}"`);
+  expect(htmlA).not.toContain("__CSP_NONCE__");
+
+  const cssName = readdirSync(resolve("dist/web-dist/assets")).find(name => name.endsWith(".css"));
+  expect(cssName).toBeTruthy();
+  const htmlAsset = await get(`/assets/${cssName}`);
+  expect(htmlAsset.headers.get("content-security-policy")).toContain("style-src 'self';");
+  expect(nonceOf(htmlAsset.headers.get("content-security-policy") ?? "")).toBeUndefined();
+});
+
+it("built index.html keeps the CSP nonce placeholder", async () => {
+  const html = await readFile(resolve("dist/web-dist/index.html"), "utf8");
+  expect(html).toContain('content="__CSP_NONCE__"');
 });

@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:62755) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/package-management.spec.ts:17:1 › 10.4 package browse and cancelled install are read-only; reviewed install, export and uninstall stay target-scoped (3.9s)
+  ✓  2 test/browser/package-management.spec.ts:36:1 › 10.4 stale package review fails once without replacing the installed revision (1.0s)
+  ✓  3 test/browser/package-management.spec.ts:48:1 › 10.4 package rollback requires inspecting the prior version and cache collection preserves referenced content (2.7s)
+
+  3 passed (8.9s)

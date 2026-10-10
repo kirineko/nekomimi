@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-10-06T22:54:25.611500+00:00",
+  "node": "v24.15.0",
+  "platform": "macOS arm64",
+  "files": {
+    "build-complete.log": "ba1e15c6c8ac867ace6805acd23eb6985c39c95e0efadde7be0a24b64ae1e06b",
+    "regression.log": "326098d0d50545949362e9459da8b605d6ccb9817c165431357a57d6310b504d",
+    "types-tests.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "types-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "tests-first.log": "cd3264c401ecb83a28515958456f89d1e4fc9cf2984022dca1510e811b31c006",
+    "tests-fixed.log": "277c4d065e3a9c65ced3669086b5b6a34da4b3ec5ef0836bbb732bc6ab3d077c",
+    "types-complete-final.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "types-complete.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "build-final.log": "c8a1e501491efa34889138a268f95ecefe9c6f284aa3d675afac5a82b9ec897f",
+    "build-fixed.log": "ba1e15c6c8ac867ace6805acd23eb6985c39c95e0efadde7be0a24b64ae1e06b",
+    "build-first.log": "53d7f5e8ff196fe8339e68653557a5494791ee536288669b94d46f460750f7dc",
+    "integrated-tests.log": "dbff4802e4a5bdb24ded8f7dd58f2df0fb16fa4c6954685d58fd0bbf4c345a01",
+    "types-integrated.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "regression-final.log": "0341b4ac8782a97becb6372eb880ead185259718d78e500837e975ecfba05edb",
+    "types-first.log": "74ecc740672206cb44c7d0f0e776fd464433da81ff0689674acf31d56e45469e",
+    "types-fixed.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "specs-complete.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "build-pinned.log": "53d7f5e8ff196fe8339e68653557a5494791ee536288669b94d46f460750f7dc",
+    "tests-targeted.log": "bef25473cf8b7c7c9cd1f25abdcc3b77d6a879fca25ca0b6a88d782eb98a5cb6",
+    "build-integrated.log": "4f05db127ad30d72396c4ec18d7b4c992df3f411620a682cb4860b97bfcc0b9a"
+  },
+  "sourceFiles": {
+    "src/customization/resource-access.ts": "1b4208a50890312c32f9935cfcc3cf85918aefbd8eb39c897ff80c236ee30eed",
+    "src/customization/resources.ts": "10b0d683ed3d193af9e8067b6f8879bd9ad8a8f1a4cbe296522a166ff0aaaf2a",
+    "src/customization/workflows.ts": "9a38d49f7251d44a873bf9a28e87090e19f30ca08fbbf83d3c63ac316b59ed9e",
+    "src/customization/run.ts": "48bf2e0fb7b12d8c96fd3b2eb2fdb0d679c2041ba3b07024a151aa77653a2038",
+    "src/customization/execution.ts": "7503c7dcb4606768fdc6a9b166617d613de45a066e3ab1c8fd856d8381e7659a",
+    "src/customization/adapter-provider.ts": "59d50ea2e82eecaecfa7b5c9fb31b81cbd70954463bced2fb59501c22d762e14",
+    "src/context-snapshot.ts": "0d0a30efe6dbd762a207995b54b51b5733886de368ad01861897619860c85d99",
+    "src/recorded-call.ts": "a8caf8f809dbeec5de97b22d1cb6d7a4046e488f043045ce46da1da21540d538",
+    "src/runtime.ts": "42c90ba60c3b6c09f4e80a620a2b7d3a5f843a5d9763201a11dc3d64e5bfdf16",
+    "src/provider.ts": "80fccbd79973d3b73ad3ade0546ed1628d491da016a38bd41c0ef0f1b9ca2011",
+    "src/resource-context.ts": "e0b7261f2df8254069f2a63fcaa554f0904c7d107462b72563044b9a115bc014",
+    "test/context-revalidation.test.ts": "d606ca9281f11f3696a4a25aaad52c70e99226d545cd7e49972049b88cf02625",
+    "test/customization-mcp-content.test.ts": "7b883a8366733ae2094f22e821b40a613ed11c216bcb4a5e2a9b46985a673928",
+    "test/customization-v2-composite.test.ts": "fa020017cad6e824b39424353b408da3faf17287ce1817a7c24c4e33b2d53302"
+  },
+  "compiledBuild": {
+    "version": 1,
+    "sha256": "5eccac53ed6b2c2e5e00408655fe481078ed74d01947eeaf4098b5e1670c6aaa"
+  },
+  "finalChecks": {
+    "unitFiles": 79,
+    "unitTests": 544,
+    "typecheck": 0,
+    "build": 0,
+    "strictSpecs": 43,
+    "realModelQuality": "not_run",
+    "allChangeTasks": "in_progress"
+  }
+}

@@ -1,0 +1,63 @@
+
+Running 14 tests using 1 worker
+
+(node:63469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (465ms)
+  ✓   2 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (282ms)
+  ✓   3 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (667ms)
+  ✓   4 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (238ms)
+  ✓   5 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (312ms)
+  ✓   6 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (462ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (430ms)
+  ✓   8 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓   9 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (260ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+  ✓  11 test/browser/workflow-management.spec.ts:22:1 › 10.4 durable workflow wait survives restart and only an explicit answer continues it (4.8s)
+  ✓  12 test/browser/workflow-management.spec.ts:39:1 › 10.4 unknown workflow reconciliation does not repeat external effects or resume on navigation (3.6s)
+  ✓  13 test/browser/workflow-management.spec.ts:52:1 › 10.4 definition version change is rejected and invalid input stays editable without automatic retry (1.6s)
+  ✘  14 test/browser/workflow-management.spec.ts:68:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation (8.5s)
+
+
+  1) test/browser/workflow-management.spec.ts:68:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('form', { name: '审查确认' })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('form', { name: '审查确认' }) with timeout 5000ms
+      - waiting for getByRole('form', { name: '审查确认' })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      81 |     await page.getByText('显式迁移工作流定义',{exact:true}).click(); await page.getByLabel('迁移目标',{exact:true}).selectOption({index:1}); await page.getByLabel('目标步骤',{exact:true}).fill('finish');
+      82 |     await page.getByLabel('迁移输入',{exact:true}).fill('{"target":"review.txt"}'); await page.getByLabel('迁移说明',{exact:true}).fill('已核对，迁移到结束步骤'); await page.getByRole('button',{name:'检查并迁移',exact:true}).click();
+    > 83 |     await expect(page.getByRole('form',{name:'审查确认'})).toHaveCount(0); await expect(page.getByRole('article',{name:'工作流 durable-review',exact:true})).toContainText('可继续');
+         |                                                        ^
+      84 |     const [flow] = (await f.app.sessions.describeCustomization(session.id)).workflows; expect(flow?.mode).toBe('create'); expect(flow?.status).toBe('ready');
+      85 |     await page.reload(); await expect(page.getByRole('button',{name:'继续工作流',exact:true})).toBeVisible();
+      86 |     await page.getByRole('button',{name:'继续工作流',exact:true}).click(); await expect(page.getByRole('article',{name:'工作流 durable-review',exact:true})).toContainText('已完成');
+        at /Users/kirineko/Github/nekomimi/test/browser/workflow-management.spec.ts:83:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workflow-management-10-4-c-2f251-uires-explicit-continuation/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workflow-management-10-4-c-2f251-uires-explicit-continuation/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workflow-management-10-4-c-2f251-uires-explicit-continuation/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workflow-management-10-4-c-2f251-uires-explicit-continuation/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/workflow-management.spec.ts:68:1 › 10.4 create-target workflow migration invalidates the old wait and requires explicit continuation 
+  13 passed (26.9s)

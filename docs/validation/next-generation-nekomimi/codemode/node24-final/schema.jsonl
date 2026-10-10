@@ -1,0 +1,2 @@
+{"seq":1,"type":"result","id":"child-1","parent":"script-1","isError":true,"result":{"content":[{"type":"text","text":"Validation failed for tool \"effect\":\n  - value: must be number\n\nReceived arguments:\n{\n  \"value\": \"bad\"\n}"}],"details":{}}}
+{"seq":2,"type":"probe.passed"}

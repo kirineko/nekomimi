@@ -1,0 +1,117 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/data-format.test.ts (6 tests | 1 failed) 42ms
+   × rejects old and future config, candidate and SDK contracts before consumers can execute them 2ms
+{"nekomimiDiagnostic":{"version":1,"id":"8ceccd2d-b81c-4e1c-bd52-8fa6bab13279","timestamp":"2026-10-06T17:29:40.413Z","sessionId":"c2368889-caa8-4ff5-9883-22a054861ed5","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/runtime-ui-contracts.test.ts (7 tests | 1 failed) 4015ms
+   × registers themes and views with explicit capabilities and rejects duplicate or undeclared registration 2218ms
+{"nekomimiDiagnostic":{"version":1,"id":"4845ebbc-1447-44af-98bd-ca5ab345d13c","timestamp":"2026-10-06T17:29:53.183Z","sessionId":"127b6cd1-6fb4-491d-aeab-805aa4148a75","runId":"25e5c234-e82f-4faf-a215-caad5fb4d165","attemptId":"c9b1bfdb-5608-4d2c-9c1a-a812d0e7fc1b","seq":11,"durableSeq":10,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"bccc060c-2327-4f5d-9abb-aed6b4e2308f","timestamp":"2026-10-06T17:30:38.111Z","sessionId":"3b6dc258-30d0-4038-a8b4-b39b17f43afc","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"4744bf56-7afb-43aa-8935-165e76ca8652","timestamp":"2026-10-06T17:30:38.179Z","sessionId":"d6ca98f1-f00e-4a3c-98e2-13b7d26b269b","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3b2c0d25-a0bb-4442-b543-7a4f82a0c2c8","timestamp":"2026-10-06T17:30:38.415Z","sessionId":"34c77a3f-f0fd-4245-8f68-8a05f1b888ed","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"d7326435-1e90-4c11-9b37-5ffa5c63306a","timestamp":"2026-10-06T17:30:38.684Z","sessionId":"fe0b142e-d4d8-4faf-b223-768f9458a266","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"9db4eee9-31df-4cfc-95c6-bac748d38795","timestamp":"2026-10-06T17:30:39.100Z","sessionId":"f538b42d-183e-4536-9014-1032ccf4d2f5","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"87827270-e56d-40a6-b4d6-74eae64444c4","timestamp":"2026-10-06T17:30:39.142Z","sessionId":"f6901083-fd2b-44ad-b95b-f379a545e72a","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"af5e04f0-cede-457b-9a79-a340b70b09e1","timestamp":"2026-10-06T17:30:39.159Z","sessionId":"f6901083-fd2b-44ad-b95b-f379a545e72a","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+ ❯ test/diagnostics.test.ts (9 tests | 2 failed) 1072ms
+   × retains accepted-task storage failures in Web and across service restarts 437ms
+   × downloads diagnostics with a damaged watermark while enforcing auth and workspace identity 220ms
+{"nekomimiDiagnostic":{"version":1,"id":"f800a56f-94eb-4cfd-bd50-da6cafc7acd4","timestamp":"2026-10-06T17:30:41.806Z","sessionId":"c66d653b-13e6-4a8b-ae6d-528493dd750c","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/sdk-admission.test.ts (4 tests | 1 failed) 822ms
+   × refuses an old session before loading an authorized factory or importing into a new destination 779ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/data-format.test.ts > rejects old and future config, candidate and SDK contracts before consumers can execute them
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/data-format.test.ts:43:64
+     41|   for (const kind of ["config", "candidate", "extension"] as const) {
+     42|     for (const value of [null, {}, { version: 1, sdkVersion: 1 }, { ve…
+     43|       expect(() => requireNewContract(value, kind, "fixture")).toThrow…
+       |                                                                ^
+     44|     expect(() => requireNewContract(kind === "extension" ? { sdkVersio…
+     45|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  test/diagnostics.test.ts > retains accepted-task storage failures in Web and across service restarts
+AssertionError: expected 403 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 403
+
+ ❯ test/diagnostics.test.ts:54:57
+     52|     expect(app.sessions.info(session.id,entry).diagnostic).toMatchObje…
+     53|     const request=()=>fetch(`${app.origin}/api/v1/sessions/${session.i…
+     54|     const result=await request(); expect(result.status).toBe(200);
+       |                                                         ^
+     55|     expect(await result.json()).toMatchObject({authoritative:false,dia…
+     56|     await app.close();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  test/diagnostics.test.ts > downloads diagnostics with a damaged watermark while enforcing auth and workspace identity
+AssertionError: expected 403 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 403
+
+ ❯ test/diagnostics.test.ts:93:29
+     91|     const headers={authorization:`Bearer ${app.token}`};
+     92|     const response=await fetch(url,{headers});
+     93|     expect(response.status).toBe(200);
+       |                             ^
+     94|     expect((await response.json()).diagnostics).toHaveLength(1);
+     95|     expect((await fetch(url.replace("/diagnostics","/snapshot"),{heade…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  test/runtime-ui-contracts.test.ts > registers themes and views with explicit capabilities and rejects duplicate or undeclared registration
+Error: Error: Invalid extension manifest or unsupported sdkVersion
+ ❯ Resources.decide src/customization/resources.ts:148:62
+    146|       throw new Error("Unknown resource");
+    147|     const selected = candidate ?? resources.find(r => r.id === id)!;
+    148|     if (selected.error || selected.status === "error") throw new Error…
+       |                                                              ^
+    149|     await mkdir(this.home, { recursive: true, mode: 0o700 });
+    150|     const release = await lockfile.lock(this.home, { retries: 3 });
+ ❯ test/runtime-ui-contracts.test.ts:36:86
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  test/sdk-admission.test.ts > refuses an old session before loading an authorized factory or importing into a new destination
+AssertionError: expected [Function] to throw error including 'Unsupported session format' but got 'Resume requires the original workspace'
+
+Expected: "Unsupported session format"
+Received: "Resume requires the original workspace"
+
+ ❯ test/sdk-admission.test.ts:38:8
+     36|     await expect(run({ workspace, home, session, customization: host, …
+     37|       fetch: async () => { calls++; throw new Error("Must not dispatch…
+     38|     })).rejects.toThrow("Unsupported session format");
+       |        ^
+     39|     expect(calls).toBe(0);
+     40|     await expect(readFile(join(workspace, "factory-ran"))).rejects.toM…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  4 failed | 55 passed (59)
+      Tests  5 failed | 355 passed (360)
+   Start at  01:27:31
+   Duration  192.29s (transform 766ms, setup 0ms, import 12.64s, tests 368.14s, environment 2ms)
+

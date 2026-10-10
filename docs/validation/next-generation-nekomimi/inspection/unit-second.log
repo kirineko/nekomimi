@@ -1,0 +1,42 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/inspection.test.ts (2 tests | 2 failed) 2129ms
+   × keeps parent failure and child success separate, scopes attempts, and counts each usage owner once 412ms
+   × bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero 1716ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/inspection.test.ts > keeps parent failure and child success separate, scopes attempts, and counts each usage owner once
+AssertionError: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}: expected undefined to match object [ { id: 'tool:script', …(2) } ]
+
+- Expected:
+[
+  {
+    "children": 3,
+    "id": "tool:script",
+    "status": "failed",
+  },
+]
+
++ Received:
+undefined
+
+ ❯ test/inspection.test.ts:32:45
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/inspection.test.ts > bounds tree and event pages, preserves malformed parent diagnostics and never presents unverified cost as zero
+AssertionError: Target cannot be null or undefined.
+ ❯ test/inspection.test.ts:49:77
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  06:07:54
+   Duration  2.85s (transform 299ms, setup 0ms, import 657ms, tests 2.13s, environment 0ms)
+

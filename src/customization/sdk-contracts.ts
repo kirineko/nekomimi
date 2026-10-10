@@ -18,7 +18,7 @@ export interface PackageManifest {
   manifestVersion: 1;
   name: string;
   version: string;
-  sdkVersion: 1 | 2;
+  sdkVersion: 3;
   requiredCapabilities: Capability[];
   resources: PackageResource[];
   files?: string[];
@@ -42,10 +42,17 @@ export interface PackageLock {
   ruleBindings: Record<string, { workspace: string; root: string; include: string[] }>;
 }
 export interface ModelDefinition {
+  /** Omitted means physical. Experimental routing is not supported by this build. */
+  routing?: "physical";
+  /** Omitted means chat. The operation is part of the model identity. */
+  operation?: "chat" | "classifier" | "image";
+  /** True requires a configured credential reference; otherwise this adapter permits credentialless calls. */
+  credentialRequired?: boolean;
   id: string;
   name: string;
   protocol: "responses" | "chat-completions" | string;
   historyCompatibility: string;
+  /** Zero means unknown or not applicable; never invent a capacity. */
   contextWindow: number;
   maxOutputTokens: number;
   capabilities: { tools: boolean; images: boolean; reasoning: boolean };
@@ -70,6 +77,7 @@ export interface WorkflowContext extends ExtensionContext {
   };
 }
 export interface WorkflowDefinition {
+  modes?: import("../shared/protocol.js").SessionMode[];
   id: string;
   schemaVersion: number;
   inputSchema: Record<string, Json>;
@@ -81,8 +89,11 @@ export interface PanelDefinition {
   id: string;
   uiVersion: 1;
   entry: string;
-  slot: "sidebar" | "result" | UiSlot;
-  title?: string;
+  contractVersion: 3;
+  modes: import("../shared/protocol.js").SessionMode[];
+  targetScope: "current";
+  slot: UiSlot;
+  title: string;
   order?: number;
   match?: ViewOptions["match"];
   propsSchema: Record<string, Json>;
@@ -100,14 +111,14 @@ export interface PanelContext {
 }
 export interface PanelModule { mount(root: HTMLElement, context: PanelContext): void | (() => void) | Promise<void | (() => void)>;
 }
-export interface ExtensionAPI2 extends ExtensionAPI {
+export interface ExtensionAPI3 extends ExtensionAPI {
   registerProvider(provider: ProviderDefinition): void;
   registerWorkflow(workflow: WorkflowDefinition): void;
   registerPanel(panel: PanelDefinition): void;
   registerTheme(theme: ThemeDefinition): void;
   registerView(view: PanelDefinition & ViewOptions): void;
 }
-export type ExtensionFactory2 = (api: ExtensionAPI2) => void | Promise<void>;
+export type ExtensionFactory3 = (api: ExtensionAPI3) => void | Promise<void>;
 export interface RpcIdentity {
   protocolVersion: 1;
   instanceId: string;

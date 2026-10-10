@@ -1,0 +1,20 @@
+
+Running 13 tests using 1 worker
+
+(node:57429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (1.0s)
+  ✓   2 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (669ms)
+  ✓   3 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (1.9s)
+  ✓   4 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (1.0s)
+  ✓   5 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.4s)
+  ✓   6 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.5s)
+  ✓   7 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.7s)
+  ✓   8 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (888ms)
+  ✓   9 test/browser/handoff-summary.spec.ts:22:1 › 10.3 explicit summary is separately reviewed and never confirms the handoff (1.5s)
+  ✓  10 test/browser/handoff-summary.spec.ts:43:1 › 10.3 explicit summary cancellation records its terminal and retry does not call the model again (1.4s)
+  ✓  11 test/browser/handoff-summary.spec.ts:61:1 › 10.3 changing preview input aborts summary and preserves the new draft (1.2s)
+  ✓  12 test/browser/handoff-summary.spec.ts:74:1 › 10.3 a changed source revision rejects the completed summary (1.4s)
+  ✓  13 test/browser/handoff-summary.spec.ts:88:1 › 10.3 missing summary credentials show a local error without a model call (926ms)
+
+  13 passed (18.1s)

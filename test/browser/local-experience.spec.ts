@@ -1,9 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page, type Request } from "@playwright/test";
 import { startWeb } from "../../src/server/app.js";
 import { temporary, response, textItem, key } from "../helpers.js";
+import { createTask } from "./fixtures/workbench.js";
 import { resolve, join } from "node:path";
 import { Journal } from "../../src/journal.js";
 import { readFile, realpath } from "node:fs/promises";
+function trackStreams(page:Page) {
+  const active=new Set<Request>();
+  page.on('request',request=>{if(/\/events\?/.test(request.url()))active.add(request);});
+  page.on('requestfinished',request=>active.delete(request));page.on('requestfailed',request=>active.delete(request));
+  return active;
+}
 test("configures, sends with Enter, names, exports offline and deletes across windows", async ({
   page,
   context,
@@ -39,21 +46,16 @@ test("configures, sends with Enter, names, exports offline and deletes across wi
       },
     },
   });
+  const firstStreams=trackStreams(page);
   try {
-    await page.goto(app.url);
-    await page.getByRole("button", { name: "设置", exact: true }).click();
-    await page.getByRole("textbox", { name: "API key", exact: true }).fill(key);
-    await page
-      .getByRole("button", { name: "保存 API key", exact: true })
-      .click();
-    await expect(
-      page.getByText("已配置", { exact: true }),
-    ).toBeVisible();
-    expect(await readFile(join(home, "auth.json"), "utf8")).toContain(key);
-    await expect(page.getByRole("dialog")).not.toContainText("迁移");
-    await page.getByRole("button", { name: "关闭设置" }).click();
-    await page.getByRole("button", { name: "新建会话", exact: false }).click();
-    const input = page.getByRole("textbox", { name: "任务内容" });
+    await page.goto(`${app.origin}/work/settings#token=${app.token}`);
+    await page.getByLabel('默认 DeepSeek API key',{exact:true}).fill(key);
+    await page.getByRole('button',{name:'保存默认凭证',exact:true}).click();
+    await expect(page.getByRole('region',{name:'默认模型凭证'})).toContainText('本地保存：已配置');
+    expect(await readFile(join(home,'auth.json'),'utf8')).toContain(key);
+    await expect(page.getByRole('main')).not.toContainText('迁移');
+    await createTask(page);
+    const input=page.getByLabel('任务草稿',{exact:true});
     await input.fill("你好");
     await input.dispatchEvent("compositionstart");
     await input.press("Enter");
@@ -66,22 +68,25 @@ test("configures, sends with Enter, names, exports offline and deletes across wi
     await input.press("Shift+Enter");
     await expect(input).toHaveJSProperty('textContent', "你好\n");
     await input.press("Enter");
-    await expect(page.locator(".conversation-heading h1")).toHaveText(
+    await expect(page.getByRole('heading',{level:1,exact:true,name:'猫咪问候'})).toHaveText(
       "猫咪问候",
     );
     expect(titleCalls).toBe(1);
-    const second = await context.newPage();
+    await expect.poll(()=>firstStreams.size).toBe(1);
+    const second = await context.newPage(),secondStreams=trackStreams(second);
     await second.goto(page.url());
-    await expect(second.locator(".conversation-heading h1")).toHaveText(
+    await expect(second.getByRole('heading',{level:1,exact:true,name:'猫咪问候'})).toHaveText(
       "猫咪问候",
     );
-    await input.fill("继续");
+    await expect.poll(()=>secondStreams.size).toBe(1);
+    await page.bringToFront();await input.fill("继续");
+    await expect(page.getByRole("button",{name:"发送",exact:true})).toBeEnabled();
     await input.press("Enter");
     await expect.poll(() => taskCalls).toBe(2);
     expect(titleCalls).toBe(1);
-    await expect(page.locator(".conversation-heading")).toContainText("已完成");
-    await page.getByRole('button',{name:'更多操作'}).click();
-  await page.getByRole('button',{name:'导出',exact:true}).click();
+    await expect(page.getByRole('button',{name:'停止',exact:true})).toHaveCount(0);
+    await page.getByRole('button',{name:'设置',exact:true}).click();
+  await page.getByRole('menuitem',{name:'导出当前会话',exact:true}).click();
     const downloadEvent = page.waitForEvent("download");
     await page.getByRole("button", { name: "下载 HTML" }).click();
     const download = await downloadEvent;
@@ -110,25 +115,21 @@ test("configures, sends with Enter, names, exports offline and deletes across wi
     ).toBe(true);
     await page.getByLabel("会话操作 猫咪问候", { exact: true }).click();
     await page
-      .getByRole("button", { name: "删除会话 猫咪问候", exact: true })
+      .getByRole("menuitem", { name: "删除会话 猫咪问候", exact: true })
       .click();
-    await page.getByRole("button", { name: "保留会话" }).click();
-    await expect(page.locator(".conversation-heading h1")).toHaveText(
+    await page.getByRole("button", { name: "取消",exact:true }).click();
+    await expect(page.getByRole('heading',{level:1,exact:true,name:'猫咪问候'})).toHaveText(
       "猫咪问候",
     );
     await page.getByLabel("会话操作 猫咪问候", { exact: true }).click();
     await page
-      .getByRole("button", { name: "删除会话 猫咪问候", exact: true })
+      .getByRole("menuitem", { name: "删除会话 猫咪问候", exact: true })
       .click();
     await page.getByRole("button", { name: "确认删除" }).click();
-    await expect(page.locator(".conversation-heading h1")).toHaveText(
-      "今天想做什么？",
-    );
-    await expect(second.locator(".conversation-heading h1")).toHaveText(
-      "今天想做什么？",
-    );
+    await expect(page.getByRole('heading',{name:'开始一个任务',exact:true})).toBeVisible();
+    await expect(second.getByRole('heading',{name:'会话已删除',exact:true})).toBeVisible();await expect(second.getByLabel('任务草稿',{exact:true})).toHaveCount(0);
     await page.reload();
-    await expect(page.getByRole("navigation")).not.toContainText("猫咪问候");
+    await expect(page.getByRole('navigation',{name:'项目与会话'})).not.toContainText("猫咪问候");
   } finally {
     await app.close();
   }

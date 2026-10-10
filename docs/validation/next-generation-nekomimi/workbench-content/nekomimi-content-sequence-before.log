@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+(node:78844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (6.5s)
+
+
+  1) test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('iframe[title="面板 Work toolbar"]').contentFrame().getByText('Concurrent success', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('iframe[title="面板 Work toolbar"]').contentFrame().getByText('Concurrent success', { exact: true }) with timeout 5000ms
+      - waiting for locator('iframe[title="面板 Work toolbar"]').contentFrame().getByText('Concurrent success', { exact: true })
+
+
+      131 |     });
+      132 |     await frame.getByRole('button',{name:'并发请求',exact:true}).click();
+    > 133 |     await expect(frame.getByText('Concurrent success',{exact:true})).toBeVisible();
+          |                                                                      ^
+      134 |     await expect(page.getByLabel('任务草稿',{exact:true})).toHaveValue('Concurrent draft');
+      135 |   } finally {await app.close();}
+      136 | });
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-runtime-slots.spec.ts:133:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-brid-ccc5b-under-delayed-HTTP-delivery/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-runtime-slots-10-9-brid-ccc5b-under-delayed-HTTP-delivery/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-runtime-slots-10-9-brid-ccc5b-under-delayed-HTTP-delivery/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-runtime-slots-10-9-brid-ccc5b-under-delayed-HTTP-delivery/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery 

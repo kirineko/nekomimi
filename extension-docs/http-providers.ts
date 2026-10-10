@@ -1,4 +1,4 @@
-import type { ExtensionFactory2, ProviderDefinition, ProviderInput, ProviderOutput, Json } from "nekomimi/extensions";
+import type { ExtensionFactory3, ProviderDefinition, ProviderInput, ProviderOutput, Json } from "nekomimi/extensions";
 
 /** HTTP stays in the host. This example only maps JSON/SSE and holds bounded parser state. */
 function adapter(protocol: "responses" | "chat-completions"): ProviderDefinition {
@@ -90,4 +90,4 @@ function adapter(protocol: "responses" | "chat-completions"): ProviderDefinition
 export default ((api) => {
   api.registerProvider(adapter("responses"));
   api.registerProvider(adapter("chat-completions"));
-}) satisfies ExtensionFactory2;
+}) satisfies ExtensionFactory3;

@@ -1,0 +1,17 @@
+pack-smoke: npm pack 
+pack-smoke: tar 
+pack-smoke: npm install 
+pack-smoke: npm install (global)
+pack-smoke: nekomimi 
+pack-smoke: node 
+{"globalCli":true,"webAssets":true,"fileConfiguration":true,"workspaceIsolation":true,"canonicalPath":true,"calls":3}
+pack-smoke: node 
+pack-smoke: nekomimi 
+pack-smoke: node 
+pack-smoke: node 
+Installed unified SDK with legacy compatibility, package, Provider, durable workflow, static panel and stdio MCP verified on v24.15.0
+installed runtime UI docs, complete types and theme assets verified
+installed candidate binary assets, expanded grants, application and rollback verified
+pack-smoke: node 
+{"node":"v24.15.0","platform":"darwin","entry":"file:///var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-pZ8KXN/node_modules/nekomimi/dist/index.js","directory":"/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-pZ8KXN/durable-runtime","wireBytesAndHash":true,"reasoningAndToolPair":true,"durableCrashNoReplay":true}
+{"directory":"/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-pZ8KXN","tarball":"nekomimi-0.2.1.tgz","installed":true,"cli":true,"offlineExportImport":true,"webStaticCommandExport":true}

@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/runtime.test.ts (13 tests | 1 failed) 46658ms
+   × retains a completed network attempt but does not publish a value cancelled during its commit 509ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/runtime.test.ts > retains a completed network attempt but does not publish a value cancelled during its commit
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/runtime.test.ts:132:143
+    130|  const snapshot=await readSession(session);expect(snapshot.events.filt…
+    131|  expect(snapshot.events.find(e=>e.type==='attempt.finished')?.payload)…
+    132|  expect(snapshot.events.some(e=>e.type==='tool.intent'||(e.type==='con…
+       |                                                                                                                                               ^
+    133| });
+    134|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 39 passed (40)
+   Start at  02:28:26
+   Duration  47.36s (transform 431ms, setup 0ms, import 1.22s, tests 91.62s, environment 0ms)
+

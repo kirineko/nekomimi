@@ -1,0 +1,14 @@
+
+Running 7 tests using 1 worker
+
+(node:32390) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (666ms)
+  ✓  2 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (604ms)
+  ✓  3 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (787ms)
+  ✓  4 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (482ms)
+  ✓  5 test/browser/v2-feature-loading.spec.ts:110:1 › 10.9 host recovery stays available when appearance code cannot load (523ms)
+  ✓  6 test/browser/v2-feature-loading.spec.ts:126:1 › 11.6 closing the delayed dialog shell preserves the draft and focus after its response (490ms)
+  ✓  7 test/browser/v2-feature-loading.spec.ts:141:1 › 11.6 context details and recovery dialogs load only on demand and retry locally (640ms)
+
+  7 passed (5.5s)

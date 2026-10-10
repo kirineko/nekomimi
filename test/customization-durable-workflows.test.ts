@@ -6,10 +6,10 @@ import { Workflows } from "../src/customization/workflows.js";
 import { WorkspaceState } from "../src/customization/workspace-state.js";
 import { Journal, id, readSession } from "../src/journal.js";
 import { temporary, key } from "./helpers.js";
-const definition = `import type {ExtensionFactory2} from 'nekomimi/extensions'; export default ((api)=>{api.registerWorkflow({id:'review',schemaVersion:1,inputSchema:{type:'object'},entry:'prepare',steps:{prepare:{transitions:['finish'],async execute(input,ctx){const old=await ctx.workspaceState.get('count',1);await ctx.workspaceState.set('count',1,old?.revision??0,Number(old?.value??0)+1);await ctx.callTool('write',{path:'effect.txt',content:'first effect'});return {kind:'wait',step:'finish',input,form:{kind:'form',title:'Review approval',fields:[{name:'decision',label:'Decision',required:true,options:['approve','reject']}]}};}},finish:{transitions:[],async execute(input,ctx){await ctx.callTool('write',{path:'finished.txt',content:'original revision'});return {kind:'complete',output:input};}}}});}) satisfies ExtensionFactory2;`;
+const definition = `import type {ExtensionFactory3} from 'nekomimi/extensions'; export default ((api)=>{api.registerWorkflow({id:'review',schemaVersion:1,inputSchema:{type:'object'},entry:'prepare',steps:{prepare:{transitions:['finish'],async execute(input,ctx){const old=await ctx.workspaceState.get('count',1);await ctx.workspaceState.set('count',1,old?.revision??0,Number(old?.value??0)+1);await ctx.callTool('write',{path:'effect.txt',content:'first effect'});return {kind:'wait',step:'finish',input,form:{kind:'form',title:'Review approval',fields:[{name:'decision',label:'Decision',required:true,options:['approve','reject']}]}};}},finish:{transitions:[],async execute(input,ctx){await ctx.callTool('write',{path:'finished.txt',content:'original revision'});return {kind:'complete',output:input};}}}});}) satisfies ExtensionFactory3;`;
 async function fixture() {
   const workspace = await realpath(await temporary()), home = await temporary(), root = join(workspace, ".nekomimi/extensions/durable");
-  await mkdir(root, { recursive: true }); await writeFile(join(root, "extension.json"), JSON.stringify({ name: "durable", sdkVersion: 2, entry: "index.ts", requiredCapabilities: ["workflows", "workspace-state", "tools"] })); await writeFile(join(root, "index.ts"), definition);
+  await mkdir(root, { recursive: true }); await writeFile(join(root, "extension.json"), JSON.stringify({ name: "durable", sdkVersion: 3, entry: "index.ts", requiredCapabilities: ["workflows", "workspace-state", "tools"] })); await writeFile(join(root, "index.ts"), definition);
   const host = new CustomizationHost(workspace, home), resource = (await host.catalog.discover()).find(r => r.kind === "extension")!;
   await host.catalog.decide(resource.id, true, true, 0);
   return { workspace, home, root, host, resource };
@@ -104,7 +104,7 @@ it("requires an explicit retry attempt, validates transitions and preserves the 
   } finally { await f.host.close(); }
 }, 60_000);
 
-const triggered = `import type {ExtensionFactory2} from 'nekomimi/extensions'; export default ((api)=>{api.registerWorkflow({id:'observer',schemaVersion:1,inputSchema:{type:'object'},triggers:[{kind:'tool-completed',name:'read'},{kind:'run-completed'}],entry:'finish',steps:{finish:{transitions:[],async execute(input,ctx){await ctx.callTool('write',{path:'triggered.txt',content:'ran'});return {kind:'complete',output:input};}}}});}) satisfies ExtensionFactory2;`;
+const triggered = `import type {ExtensionFactory3} from 'nekomimi/extensions'; export default ((api)=>{api.registerWorkflow({id:'observer',schemaVersion:1,inputSchema:{type:'object'},triggers:[{kind:'tool-completed',name:'read'},{kind:'run-completed'}],entry:'finish',steps:{finish:{transitions:[],async execute(input,ctx){await ctx.callTool('write',{path:'triggered.txt',content:'ran'});return {kind:'complete',output:input};}}}});}) satisfies ExtensionFactory3;`;
 it('bounds pending workflows and refuses a trigger beyond the causal depth without running its effects',async()=>{
  const f=await fixture(),source=await Journal.open(join(f.workspace,'depth-source'));
  try{

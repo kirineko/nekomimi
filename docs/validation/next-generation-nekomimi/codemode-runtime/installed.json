@@ -1,0 +1,2083 @@
+{
+  "directory": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-codemode-installed-vldxmze5",
+  "tarball": {
+    "id": "nekomimi@0.2.1",
+    "name": "nekomimi",
+    "version": "0.2.1",
+    "size": 889911,
+    "unpackedSize": 3874594,
+    "shasum": "c08bd733b1f5d646998e476ec6a8f5b6718432ad",
+    "integrity": "sha512-Uj13dxalxUZrnuqMdvDnLUlQ3jI/no71ERJxqoYRFWdIdD7aRDJStb7AzxzB2njgj8IONLJUN7dkokZf92s+kg==",
+    "filename": "nekomimi-0.2.1.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1065,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 6930,
+        "mode": 420
+      },
+      {
+        "path": "dist/atomic-rename.d.ts",
+        "size": 190,
+        "mode": 420
+      },
+      {
+        "path": "dist/atomic-rename.js",
+        "size": 1044,
+        "mode": 420
+      },
+      {
+        "path": "dist/atomic-rename.js.map",
+        "size": 987,
+        "mode": 420
+      },
+      {
+        "path": "dist/browser-open.d.ts",
+        "size": 395,
+        "mode": 420
+      },
+      {
+        "path": "dist/browser-open.js",
+        "size": 1199,
+        "mode": 420
+      },
+      {
+        "path": "dist/browser-open.js.map",
+        "size": 1504,
+        "mode": 420
+      },
+      {
+        "path": "dist/build-identity.json",
+        "size": 89,
+        "mode": 420
+      },
+      {
+        "path": "dist/cli.d.ts",
+        "size": 31,
+        "mode": 420
+      },
+      {
+        "path": "dist/cli.js",
+        "size": 22608,
+        "mode": 420
+      },
+      {
+        "path": "dist/cli.js.map",
+        "size": 22551,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction-state.d.ts",
+        "size": 1595,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction-state.js",
+        "size": 2986,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction-state.js.map",
+        "size": 3176,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction.d.ts",
+        "size": 1558,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction.js",
+        "size": 9872,
+        "mode": 420
+      },
+      {
+        "path": "dist/compaction.js.map",
+        "size": 10159,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/interactive.d.ts",
+        "size": 112,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/interactive.js",
+        "size": 1837,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/interactive.js.map",
+        "size": 2054,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/store.d.ts",
+        "size": 1467,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/store.js",
+        "size": 5787,
+        "mode": 420
+      },
+      {
+        "path": "dist/config/store.js.map",
+        "size": 5744,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-budget.d.ts",
+        "size": 367,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-budget.js",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-budget.js.map",
+        "size": 498,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meta.d.ts",
+        "size": 715,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meta.js",
+        "size": 1656,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meta.js.map",
+        "size": 2091,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meter.d.ts",
+        "size": 1164,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meter.js",
+        "size": 9555,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-meter.js.map",
+        "size": 11807,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-policy.d.ts",
+        "size": 1428,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-policy.js",
+        "size": 2930,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-policy.js.map",
+        "size": 3409,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-snapshot.d.ts",
+        "size": 2967,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-snapshot.js",
+        "size": 12565,
+        "mode": 420
+      },
+      {
+        "path": "dist/context-snapshot.js.map",
+        "size": 13807,
+        "mode": 420
+      },
+      {
+        "path": "dist/context.d.ts",
+        "size": 2801,
+        "mode": 420
+      },
+      {
+        "path": "dist/context.js",
+        "size": 8220,
+        "mode": 420
+      },
+      {
+        "path": "dist/context.js.map",
+        "size": 10434,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/adapter-provider.d.ts",
+        "size": 1813,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/adapter-provider.js",
+        "size": 22895,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/adapter-provider.js.map",
+        "size": 22862,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/asset.d.ts",
+        "size": 156,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/asset.js",
+        "size": 910,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/asset.js.map",
+        "size": 1300,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/candidates.d.ts",
+        "size": 2500,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/candidates.js",
+        "size": 18011,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/candidates.js.map",
+        "size": 18599,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/capabilities.d.ts",
+        "size": 592,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/capabilities.js",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/capabilities.js.map",
+        "size": 402,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/commands.d.ts",
+        "size": 951,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/commands.js",
+        "size": 3594,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/commands.js.map",
+        "size": 4699,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/contracts.d.ts",
+        "size": 689,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/contracts.js",
+        "size": 967,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/contracts.js.map",
+        "size": 1129,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/execution.d.ts",
+        "size": 1378,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/execution.js",
+        "size": 7637,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/execution.js.map",
+        "size": 6762,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/history-branch.d.ts",
+        "size": 333,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/history-branch.js",
+        "size": 4964,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/history-branch.js.map",
+        "size": 5044,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/host.d.ts",
+        "size": 13591,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/host.js",
+        "size": 23287,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/host.js.map",
+        "size": 25410,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/interactions.d.ts",
+        "size": 599,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/interactions.js",
+        "size": 3568,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/interactions.js.map",
+        "size": 3328,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/lifecycle.d.ts",
+        "size": 790,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/lifecycle.js",
+        "size": 7170,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/lifecycle.js.map",
+        "size": 9430,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp-oauth.d.ts",
+        "size": 1180,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp-oauth.js",
+        "size": 14556,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp-oauth.js.map",
+        "size": 15058,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp.d.ts",
+        "size": 5808,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp.js",
+        "size": 17561,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/mcp.js.map",
+        "size": 18381,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-management.d.ts",
+        "size": 1306,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-management.js",
+        "size": 3912,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-management.js.map",
+        "size": 4445,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-manifest.d.ts",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-manifest.js",
+        "size": 3386,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-manifest.js.map",
+        "size": 3664,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-source.d.ts",
+        "size": 2112,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-source.js",
+        "size": 15101,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/package-source.js.map",
+        "size": 16360,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/packages.d.ts",
+        "size": 3142,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/packages.js",
+        "size": 28286,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/packages.js.map",
+        "size": 29688,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-build.d.ts",
+        "size": 502,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-build.js",
+        "size": 5957,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-build.js.map",
+        "size": 6275,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-document.d.ts",
+        "size": 218,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-document.js",
+        "size": 6892,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panel-document.js.map",
+        "size": 6706,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panels.d.ts",
+        "size": 3608,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panels.js",
+        "size": 10551,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/panels.js.map",
+        "size": 11769,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/process.d.ts",
+        "size": 1200,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/process.js",
+        "size": 20768,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/process.js.map",
+        "size": 20719,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-profiles.d.ts",
+        "size": 1383,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-profiles.js",
+        "size": 7212,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-profiles.js.map",
+        "size": 7747,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-registry.d.ts",
+        "size": 1185,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-registry.js",
+        "size": 2131,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/provider-registry.js.map",
+        "size": 2556,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resource-access.d.ts",
+        "size": 922,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resource-access.js",
+        "size": 7081,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resource-access.js.map",
+        "size": 7197,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resources.d.ts",
+        "size": 2864,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resources.js",
+        "size": 21644,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/resources.js.map",
+        "size": 21418,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/rpc.d.ts",
+        "size": 1540,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/rpc.js",
+        "size": 7439,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/rpc.js.map",
+        "size": 7982,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/run.d.ts",
+        "size": 3287,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/run.js",
+        "size": 56506,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/run.js.map",
+        "size": 59716,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk-contracts.d.ts",
+        "size": 6030,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk-contracts.js",
+        "size": 52,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk-contracts.js.map",
+        "size": 135,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk.d.ts",
+        "size": 11348,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk.js",
+        "size": 7020,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/sdk.js.map",
+        "size": 7075,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/theme-build.d.ts",
+        "size": 410,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/theme-build.js",
+        "size": 1172,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/theme-build.js.map",
+        "size": 1261,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/themes.d.ts",
+        "size": 4937,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/themes.js",
+        "size": 3318,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/themes.js.map",
+        "size": 3803,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/tool-contracts.d.ts",
+        "size": 246,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/tool-contracts.js",
+        "size": 7869,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/tool-contracts.js.map",
+        "size": 5245,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/trial.d.ts",
+        "size": 1204,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/trial.js",
+        "size": 4194,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/trial.js.map",
+        "size": 4250,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/types.d.ts",
+        "size": 3895,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/types.js",
+        "size": 938,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/types.js.map",
+        "size": 916,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/ui-contract.d.ts",
+        "size": 2272,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/ui-contract.js",
+        "size": 5071,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/ui-contract.js.map",
+        "size": 6171,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/validation.d.ts",
+        "size": 831,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/validation.js",
+        "size": 3906,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/validation.js.map",
+        "size": 4853,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/worker.d.ts",
+        "size": 11,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/worker.js",
+        "size": 7914,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/worker.js.map",
+        "size": 8255,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflow-contract.d.ts",
+        "size": 648,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflow-contract.js",
+        "size": 1255,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflow-contract.js.map",
+        "size": 1694,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflows.d.ts",
+        "size": 4038,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflows.js",
+        "size": 30240,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workflows.js.map",
+        "size": 32738,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workspace-state.d.ts",
+        "size": 929,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workspace-state.js",
+        "size": 5561,
+        "mode": 420
+      },
+      {
+        "path": "dist/customization/workspace-state.js.map",
+        "size": 5771,
+        "mode": 420
+      },
+      {
+        "path": "dist/diagnostics.d.ts",
+        "size": 814,
+        "mode": 420
+      },
+      {
+        "path": "dist/diagnostics.js",
+        "size": 3618,
+        "mode": 420
+      },
+      {
+        "path": "dist/diagnostics.js.map",
+        "size": 3910,
+        "mode": 420
+      },
+      {
+        "path": "dist/export.d.ts",
+        "size": 731,
+        "mode": 420
+      },
+      {
+        "path": "dist/export.js",
+        "size": 6585,
+        "mode": 420
+      },
+      {
+        "path": "dist/export.js.map",
+        "size": 7032,
+        "mode": 420
+      },
+      {
+        "path": "dist/export/html.d.ts",
+        "size": 207,
+        "mode": 420
+      },
+      {
+        "path": "dist/export/html.js",
+        "size": 10378,
+        "mode": 420
+      },
+      {
+        "path": "dist/export/html.js.map",
+        "size": 8343,
+        "mode": 420
+      },
+      {
+        "path": "dist/extensions.d.ts",
+        "size": 863,
+        "mode": 420
+      },
+      {
+        "path": "dist/extensions.js",
+        "size": 174,
+        "mode": 420
+      },
+      {
+        "path": "dist/extensions.js.map",
+        "size": 208,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 989,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 590,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 549,
+        "mode": 420
+      },
+      {
+        "path": "dist/journal.d.ts",
+        "size": 3925,
+        "mode": 420
+      },
+      {
+        "path": "dist/journal.js",
+        "size": 16057,
+        "mode": 420
+      },
+      {
+        "path": "dist/journal.js.map",
+        "size": 16833,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/codemode.d.ts",
+        "size": 865,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/codemode.js",
+        "size": 2296,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/codemode.js.map",
+        "size": 1987,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/durable-loop.d.ts",
+        "size": 2124,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/durable-loop.js",
+        "size": 10983,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/durable-loop.js.map",
+        "size": 10165,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/journal-storage.d.ts",
+        "size": 1356,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/journal-storage.js",
+        "size": 8846,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/journal-storage.js.map",
+        "size": 7912,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-service.d.ts",
+        "size": 1337,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-service.js",
+        "size": 4752,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-service.js.map",
+        "size": 4505,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-stream.d.ts",
+        "size": 524,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-stream.js",
+        "size": 51,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/model-stream.js.map",
+        "size": 122,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/recovery.d.ts",
+        "size": 990,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/recovery.js",
+        "size": 3187,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/recovery.js.map",
+        "size": 3041,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/task-context.d.ts",
+        "size": 294,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/task-context.js",
+        "size": 425,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/task-context.js.map",
+        "size": 473,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/tool-adapter.d.ts",
+        "size": 465,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/tool-adapter.js",
+        "size": 3384,
+        "mode": 420
+      },
+      {
+        "path": "dist/pi/tool-adapter.js.map",
+        "size": 3345,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/content.d.ts",
+        "size": 115,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/content.js",
+        "size": 419,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/content.js.map",
+        "size": 739,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/diff.d.ts",
+        "size": 508,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/diff.js",
+        "size": 1925,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/diff.js.map",
+        "size": 2335,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/markdown.d.ts",
+        "size": 492,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/markdown.js",
+        "size": 1720,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/markdown.js.map",
+        "size": 2298,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/artifact.d.ts",
+        "size": 221,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/artifact.js",
+        "size": 593,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/artifact.js.map",
+        "size": 748,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/core.d.ts",
+        "size": 317,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/core.js",
+        "size": 4348,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/core.js.map",
+        "size": 5660,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/diff.d.ts",
+        "size": 195,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/diff.js",
+        "size": 785,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/diff.js.map",
+        "size": 1206,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/markdown.d.ts",
+        "size": 84,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/markdown.js",
+        "size": 936,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/markdown.js.map",
+        "size": 1181,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node-worker.d.ts",
+        "size": 11,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node-worker.js",
+        "size": 458,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node-worker.js.map",
+        "size": 648,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node.d.ts",
+        "size": 85,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node.js",
+        "size": 526,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/node.js.map",
+        "size": 752,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/palette.d.ts",
+        "size": 909,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/palette.js",
+        "size": 1129,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/palette.js.map",
+        "size": 349,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/pool.d.ts",
+        "size": 1295,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/pool.js",
+        "size": 5910,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/pool.js.map",
+        "size": 6898,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/types.d.ts",
+        "size": 579,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/types.js",
+        "size": 1296,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/types.js.map",
+        "size": 1810,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/view.d.ts",
+        "size": 229,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/view.js",
+        "size": 268,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation/syntax/view.js.map",
+        "size": 461,
+        "mode": 420
+      },
+      {
+        "path": "dist/projection/session.d.ts",
+        "size": 864,
+        "mode": 420
+      },
+      {
+        "path": "dist/projection/session.js",
+        "size": 11006,
+        "mode": 420
+      },
+      {
+        "path": "dist/projection/session.js.map",
+        "size": 12174,
+        "mode": 420
+      },
+      {
+        "path": "dist/prompts.d.ts",
+        "size": 522,
+        "mode": 420
+      },
+      {
+        "path": "dist/prompts.js",
+        "size": 4324,
+        "mode": 420
+      },
+      {
+        "path": "dist/prompts.js.map",
+        "size": 837,
+        "mode": 420
+      },
+      {
+        "path": "dist/provider.d.ts",
+        "size": 1836,
+        "mode": 420
+      },
+      {
+        "path": "dist/provider.js",
+        "size": 14742,
+        "mode": 420
+      },
+      {
+        "path": "dist/provider.js.map",
+        "size": 12004,
+        "mode": 420
+      },
+      {
+        "path": "dist/recorded-call.d.ts",
+        "size": 2016,
+        "mode": 420
+      },
+      {
+        "path": "dist/recorded-call.js",
+        "size": 11816,
+        "mode": 420
+      },
+      {
+        "path": "dist/recorded-call.js.map",
+        "size": 11504,
+        "mode": 420
+      },
+      {
+        "path": "dist/redaction.d.ts",
+        "size": 322,
+        "mode": 420
+      },
+      {
+        "path": "dist/redaction.js",
+        "size": 1926,
+        "mode": 420
+      },
+      {
+        "path": "dist/redaction.js.map",
+        "size": 2055,
+        "mode": 420
+      },
+      {
+        "path": "dist/resource-context.d.ts",
+        "size": 1516,
+        "mode": 420
+      },
+      {
+        "path": "dist/resource-context.js",
+        "size": 3686,
+        "mode": 420
+      },
+      {
+        "path": "dist/resource-context.js.map",
+        "size": 4168,
+        "mode": 420
+      },
+      {
+        "path": "dist/runtime.d.ts",
+        "size": 1974,
+        "mode": 420
+      },
+      {
+        "path": "dist/runtime.js",
+        "size": 30118,
+        "mode": 420
+      },
+      {
+        "path": "dist/runtime.js.map",
+        "size": 27325,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/app.d.ts",
+        "size": 341,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/app.js",
+        "size": 20915,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/app.js.map",
+        "size": 19012,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/changes.d.ts",
+        "size": 931,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/changes.js",
+        "size": 2462,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/changes.js.map",
+        "size": 2809,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/evidence.d.ts",
+        "size": 1144,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/evidence.js",
+        "size": 5760,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/evidence.js.map",
+        "size": 6075,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/http.d.ts",
+        "size": 391,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/http.js",
+        "size": 2576,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/http.js.map",
+        "size": 3008,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/journal-reader.d.ts",
+        "size": 524,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/journal-reader.js",
+        "size": 4007,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/journal-reader.js.map",
+        "size": 4358,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/references.d.ts",
+        "size": 676,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/references.js",
+        "size": 9177,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/references.js.map",
+        "size": 10604,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/resource-path.d.ts",
+        "size": 369,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/resource-path.js",
+        "size": 705,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/resource-path.js.map",
+        "size": 787,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/sessions.d.ts",
+        "size": 25404,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/sessions.js",
+        "size": 72979,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/sessions.js.map",
+        "size": 72676,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/stream.d.ts",
+        "size": 359,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/stream.js",
+        "size": 2853,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/stream.js.map",
+        "size": 3089,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/workspace.d.ts",
+        "size": 946,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/workspace.js",
+        "size": 6656,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/workspace.js.map",
+        "size": 7092,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/delivery.d.ts",
+        "size": 1517,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/delivery.js",
+        "size": 13412,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/delivery.js.map",
+        "size": 15449,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-context.d.ts",
+        "size": 1290,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-context.js",
+        "size": 12952,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-context.js.map",
+        "size": 13156,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-transfer.d.ts",
+        "size": 1834,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-transfer.js",
+        "size": 11659,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff-transfer.js.map",
+        "size": 11087,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff.d.ts",
+        "size": 1732,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff.js",
+        "size": 10519,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/handoff.js.map",
+        "size": 10995,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/identity.d.ts",
+        "size": 1173,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/identity.js",
+        "size": 10554,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/identity.js.map",
+        "size": 11248,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/target.d.ts",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/target.js",
+        "size": 3542,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/target.js.map",
+        "size": 3526,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/title.d.ts",
+        "size": 362,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/title.js",
+        "size": 3946,
+        "mode": 420
+      },
+      {
+        "path": "dist/session/title.js.map",
+        "size": 4105,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/color.d.ts",
+        "size": 161,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/color.js",
+        "size": 2106,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/color.js.map",
+        "size": 3379,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/customization-lifecycle.d.ts",
+        "size": 869,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/customization-lifecycle.js",
+        "size": 62,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/customization-lifecycle.js.map",
+        "size": 148,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/mode-policy.d.ts",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/mode-policy.js",
+        "size": 1068,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/mode-policy.js.map",
+        "size": 1112,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/protocol.d.ts",
+        "size": 7853,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/protocol.js",
+        "size": 2119,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/protocol.js.map",
+        "size": 2327,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/references.d.ts",
+        "size": 1534,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/references.js",
+        "size": 5948,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/references.js.map",
+        "size": 6963,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/ui-content.d.ts",
+        "size": 231,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/ui-content.js",
+        "size": 1204,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/ui-content.js.map",
+        "size": 1470,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/versions.d.ts",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/versions.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "dist/shared/versions.js.map",
+        "size": 215,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/format.d.ts",
+        "size": 1021,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/format.js",
+        "size": 4250,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/format.js.map",
+        "size": 3995,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/migrate.d.ts",
+        "size": 354,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/migrate.js",
+        "size": 5733,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/migrate.js.map",
+        "size": 5428,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/paths.d.ts",
+        "size": 315,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/paths.js",
+        "size": 1578,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage/paths.js.map",
+        "size": 1816,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-contracts.d.ts",
+        "size": 1133,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-contracts.js",
+        "size": 53,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-contracts.js.map",
+        "size": 120,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-result-projection.d.ts",
+        "size": 1519,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-result-projection.js",
+        "size": 5132,
+        "mode": 420
+      },
+      {
+        "path": "dist/tool-result-projection.js.map",
+        "size": 6102,
+        "mode": 420
+      },
+      {
+        "path": "dist/tools.d.ts",
+        "size": 1031,
+        "mode": 420
+      },
+      {
+        "path": "dist/tools.js",
+        "size": 24968,
+        "mode": 420
+      },
+      {
+        "path": "dist/tools.js.map",
+        "size": 22391,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/api-BzuM_hh1.js",
+        "size": 1521,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/app-BSTUWl2p.js",
+        "size": 256375,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/app-DCkKrFrT.css",
+        "size": 17575,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/App-DgwpkJzP.js",
+        "size": 243433,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/asset-manifest.json",
+        "size": 4354,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/bash-CLZ0U2zV.js",
+        "size": 41472,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/Changes-CxNu4wxY.js",
+        "size": 2242,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/command-input-D95I5UPS.js",
+        "size": 10983,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/customization-DaOWJHL-.css",
+        "size": 19344,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/Customization-DtpLtBRR.js",
+        "size": 42437,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/diff-woXpYk--.js",
+        "size": 2562,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/DiffView-Cn6S_AnJ.js",
+        "size": 3427,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/ExportDialog-CsUTe-Xn.js",
+        "size": 1845,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/FileBrowser-q1v_H3fz.js",
+        "size": 4718,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/index-BRndMiLh.js",
+        "size": 222089,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/Inspector-DYUxaxII.js",
+        "size": 11192,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/javascript-BgS3c2Ky.js",
+        "size": 174820,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/json-qhed-kSA.js",
+        "size": 2817,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/navigation-D3FxwQTk.css",
+        "size": 4837,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/nekomimi-CMII8_56.svg",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/python-gzcpVVnB.js",
+        "size": 69945,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/rolldown-runtime-hePW80VL.js",
+        "size": 716,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/runtime-ui-DRJCx0_r.css",
+        "size": 13518,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/styles-DE10EL1a.css",
+        "size": 19293,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/syntax-C5UQYBqG.css",
+        "size": 787,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/syntax-worker-BYves5tC.js",
+        "size": 175303,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/tsx-udAQXfEw.js",
+        "size": 175529,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/typescript-bsJCZSQ-.js",
+        "size": 181073,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/assets/workbench-BGvF_I5F.css",
+        "size": 18400,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-dist/index.html",
+        "size": 440,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-search.d.ts",
+        "size": 977,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-search.js",
+        "size": 6253,
+        "mode": 420
+      },
+      {
+        "path": "dist/web-search.js.map",
+        "size": 6029,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/context.md",
+        "size": 7891,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/customization-lifecycle.md",
+        "size": 3825,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/durable-review.ts",
+        "size": 1299,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/example.ts",
+        "size": 1377,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/demo.woff",
+        "size": 38456,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/extension.json",
+        "size": 148,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/FONT-LICENSE.txt",
+        "size": 5949,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/index.ts",
+        "size": 1480,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/nekomimi.json",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/panel.ts",
+        "size": 1615,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/README.md",
+        "size": 1280,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/examples/sakura/sakura.png",
+        "size": 377,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/extensions.md",
+        "size": 4984,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/http-providers.ts",
+        "size": 7241,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/panel-extension.ts",
+        "size": 899,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/platform.md",
+        "size": 6953,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/README.md",
+        "size": 4461,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/review-panel.ts",
+        "size": 1437,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/review-workflow.ts",
+        "size": 3278,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/runtime-ui.md",
+        "size": 3616,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/scopes.md",
+        "size": 4048,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/skills-rules-mcp.md",
+        "size": 2017,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/tool-prompts.md",
+        "size": 3872,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/v2.md",
+        "size": 245,
+        "mode": 420
+      },
+      {
+        "path": "extension-docs/validation.md",
+        "size": 1627,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 3116,
+        "mode": 420
+      }
+    ],
+    "entryCount": 413,
+    "bundled": []
+  },
+  "passed": true
+}

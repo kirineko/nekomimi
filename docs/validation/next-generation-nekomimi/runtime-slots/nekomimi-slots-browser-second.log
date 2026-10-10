@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:77578) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/v2-runtime-slots.spec.ts:38:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (1.9s)
+  ✓  2 test/browser/v2-runtime-slots.spec.ts:72:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.8s)
+
+  2 passed (5.9s)

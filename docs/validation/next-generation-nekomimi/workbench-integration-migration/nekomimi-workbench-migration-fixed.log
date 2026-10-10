@@ -1,0 +1,58 @@
+
+Running 9 tests using 2 workers
+
+(node:1062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1061) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/workbench-upgrade.spec.ts:80:1 › search, diff, locate, open and reload preserve evidence and draft (4.5s)
+  ✓  3 test/browser/workbench-upgrade.spec.ts:136:1 › workspace API authentication and side effect boundary (58ms)
+  ✓  4 test/browser/workbench-upgrade.spec.ts:161:1 › files and settings remain usable at all viewports (1.3s)
+  ✘  2 test/browser/workbench.spec.ts:66:1 › submits, observes tool diff, inspects request, reloads, continues and exports (5.9s)
+(node:1127) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 test/browser/workbench-upgrade.spec.ts:174:1 › changes keep expanded history while new journal events arrive (3.7s)
+  ✓  6 test/browser/workbench.spec.ts:90:1 › cancels and remains usable on a narrow viewport (3.4s)
+180-row input fill and assertion: 9ms
+  ✓  7 test/browser/workbench.spec.ts:95:1 › windows long history and pages context sources beyond a raw artifact page (3.2s)
+  ✓  8 test/browser/workbench.spec.ts:109:1 › compact layout preserves controls and inspector focus at all target sizes (2.7s)
+  ✓  9 test/browser/workbench.spec.ts:113:1 › shows and downloads diagnostics even when durable cursor and status do not change (748ms)
+
+
+  1) test/browser/workbench.spec.ts:66:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "session.html"
+    Received: "session-03de3ee5d9ca848371739cf2a2aa086962712b9155c220ee191d60458797b541.html"
+
+      85 |   const second=await context.newPage();await second.goto(page.url());await expect(second.getByText('completed',{exact:true})).toBeVisible();expect(calls).toBe(2);await page.bringToFront();
+      86 |   await page.getByLabel('任务草稿',{exact:true}).fill('continue');await page.getByRole('button',{name:'发送',exact:true}).click();await expect.poll(()=>calls).toBe(3);await expect(page.getByText('completed',{exact:true})).toBeVisible();expect(await page.evaluate(()=>(window as any).hacked)).toBeUndefined();
+    > 87 |   await page.getByRole('button',{name:'更多操作'}).click();await page.getByRole('menuitem',{name:'导出会话',exact:true}).click();const downloading=page.waitForEvent('download');await page.getByRole('button',{name:'下载 HTML'}).click();expect((await downloading).suggestedFilename()).toBe('session.html');await page.getByRole('button',{name:'关闭导出'}).click();
+         |                                                                                                                                                                                                                                                                                  ^
+      88 |   await page.getByRole('button',{name:'调用证据',exact:true}).click();await expect(inspection.getByRole('list',{name:'调用树',exact:true})).toContainText('work');await page.screenshot({path:info.outputPath('workbench.png')});expect(errors).toEqual([]);
+      89 | });
+      90 | test('cancels and remains usable on a narrow viewport',async({page},info)=>{
+        at /Users/kirineko/Github/nekomimi/test/browser/workbench.spec.ts:87:274
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workbench-submits-observes-a410f-loads-continues-and-exports/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/workbench-submits-observes-a410f-loads-continues-and-exports/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/workbench.spec.ts:66:1 › submits, observes tool diff, inspects request, reloads, continues and exports 
+  8 passed (18.5s)

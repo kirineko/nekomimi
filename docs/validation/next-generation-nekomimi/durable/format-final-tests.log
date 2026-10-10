@@ -1,0 +1,210 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization-provider.test.ts (18 tests | 2 failed) 32661ms
+   × branches native reasoning with explicit consent, preserves source artifacts and keeps tool pairs without replay 1850ms
+   × preserves image and multiple tool pairs in explicit protocol branches without replaying effects 3021ms
+ ❯ test/context-runtime.test.ts (9 tests | 8 failed) 2809ms
+   × auto + manual responses share projection, shrink wire input and retain raw evidence 305ms
+   × auto + manual chat-completions share projection, shrink wire input and retain raw evidence 369ms
+   × automatic gate runs after tool results without executing any tool twice 261ms
+   × summary tools preserves context and cannot execute effects 318ms
+   × summary incomplete preserves context and cannot execute effects 279ms
+   × summary cancel preserves context and cannot execute effects 423ms
+   × summary disabled preserves context and cannot execute effects 600ms
+   × selected built-in profile auto-compacts and sends the exact effective projection 107ms
+ ❯ test/customization-v2-composite.test.ts (1 test | 1 failed) 5987ms
+   × generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers 5987ms
+{"nekomimiDiagnostic":{"version":1,"id":"64e8c40f-a8cb-4644-b973-5b6358d69056","timestamp":"2026-10-06T17:34:09.075Z","sessionId":"2cb0d68e-adb9-4e3a-8feb-f589f4704450","runId":"6ff40b56-6b12-42cf-b0c7-6a2f4776f5e9","attemptId":"540cb228-936c-4b32-a206-7fc45e86cc91","seq":12,"durableSeq":11,"operation":"journal.sync","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-packages.test.ts (5 tests | 1 failed) 5879ms
+   × keeps project overrides and rejects private source files and same-scope collisions 167ms
+{"nekomimiDiagnostic":{"version":1,"id":"22c50327-97dc-4803-b461-cb157e9fed63","timestamp":"2026-10-06T17:34:49.134Z","sessionId":"53440ca9-0a09-4012-870f-bf668e602bcc","seq":1,"durableSeq":1,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"6db00598-40e1-4426-a4ba-524f87461110","timestamp":"2026-10-06T17:35:02.463Z","sessionId":"970cbdaa-6a8a-4d96-b5b1-7f18ef652973","seq":2,"durableSeq":2,"operation":"journal.append","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"25d77c9d-5ca1-4993-8102-34ff75e8d1d5","timestamp":"2026-10-06T17:35:02.504Z","sessionId":"7c439ba0-cb50-409a-a1ca-e037d1c1b81b","seq":3,"durableSeq":2,"operation":"journal.sync","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"3dc867bd-507b-402c-bd45-98f0936fa092","timestamp":"2026-10-06T17:35:02.575Z","sessionId":"3612923a-17e6-4a3e-bab1-b822e8e4dd92","seq":3,"durableSeq":2,"operation":"watermark.write","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"195c52ec-ec5f-4642-9b12-556da19dd7c0","timestamp":"2026-10-06T17:35:02.667Z","sessionId":"d59c66c7-7ba7-45fc-846b-7942b0dd3e36","seq":3,"durableSeq":2,"operation":"watermark.rename","code":"ENOSPC","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+{"nekomimiDiagnostic":{"version":1,"id":"0cc3e165-287d-4bd0-8e07-f6c66015362a","timestamp":"2026-10-06T17:35:02.904Z","sessionId":"b8460010-0acc-479e-b2ef-f461ad8711c9","seq":2,"durableSeq":2,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"e4ebec16-09e3-4b49-a2cd-5bfe59ae1a1f","timestamp":"2026-10-06T17:35:02.936Z","sessionId":"b35d622d-5493-467d-9f92-11de9b153d8d","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+{"nekomimiDiagnostic":{"version":1,"id":"a5e4c464-dd6f-4eb1-8c36-056964d2d1f2","timestamp":"2026-10-06T17:35:02.942Z","sessionId":"b35d622d-5493-467d-9f92-11de9b153d8d","seq":1,"durableSeq":1,"operation":"journal.failure","platform":"darwin","nodeVersion":"v24.15.0","category":"background"}}
+ ❯ test/retired-web-fetch.test.ts (3 tests | 1 failed) 1229ms
+   × keeps old fetch statuses and artifacts readable through replay and export/import 501ms
+ ❯ test/customization-lifecycle.test.ts (3 tests | 1 failed) 1580ms
+   × loaded evidence excludes unauthorized, disabled and shadowed extensions 38ms
+{"nekomimiDiagnostic":{"version":1,"id":"7901c3fc-570b-4265-9441-5576d8c5a6e3","timestamp":"2026-10-06T17:35:12.330Z","sessionId":"8db643b3-ed04-4834-a015-408b7a871c66","seq":0,"durableSeq":0,"operation":"journal.append","platform":"darwin","nodeVersion":"v24.15.0","category":"storage"}}
+ ❯ test/customization-scopes.test.ts (1 test | 1 failed) 49ms
+   × resource writes default to project and explicit user writes share across workspaces with precedence 49ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/context-runtime.test.ts > auto + manual responses share projection, shrink wire input and retain raw evidence
+ FAIL  test/context-runtime.test.ts > auto + manual chat-completions share projection, shrink wire input and retain raw evidence
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:24:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  test/context-runtime.test.ts > automatic gate runs after tool results without executing any tool twice
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:37:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  test/context-runtime.test.ts > summary tools preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary incomplete preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary cancel preserves context and cannot execute effects
+ FAIL  test/context-runtime.test.ts > summary disabled preserves context and cannot execute effects
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:45:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  test/context-runtime.test.ts > selected built-in profile auto-compacts and sends the exact effective projection
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/context-runtime.test.ts:54:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  test/customization-lifecycle.test.ts > loaded evidence excludes unauthorized, disabled and shadowed extensions
+Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-zASqrN 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖
+ ❯ inspectDataHome src/storage/format.ts:47:19
+     45|     const value = record(JSON.parse(await readFile(file, "utf8")));
+     46|     if (value?.product !== marker.product || value.formatVersion !== m…
+     47|   } catch { throw new IncompatibleFormatError(path); }
+       |                   ^
+     48|   return "supported";
+     49| }
+ ❯ Resources.decisions src/customization/resources.ts:120:5
+ ❯ Resources.discover src/customization/resources.ts:199:22
+ ❯ test/customization-lifecycle.test.ts:53:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  test/customization-packages.test.ts > keeps project overrides and rejects private source files and same-scope collisions
+Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-wUh90x 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖
+ ❯ inspectDataHome src/storage/format.ts:47:19
+     45|     const value = record(JSON.parse(await readFile(file, "utf8")));
+     46|     if (value?.product !== marker.product || value.formatVersion !== m…
+     47|   } catch { throw new IncompatibleFormatError(path); }
+       |                   ^
+     48|   return "supported";
+     49| }
+ ❯ Resources.decisions src/customization/resources.ts:120:5
+ ❯ Resources.discover src/customization/resources.ts:199:22
+ ❯ test/customization-packages.test.ts:59:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  test/customization-provider.test.ts > branches native reasoning with explicit consent, preserves source artifacts and keeps tool pairs without replay
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/customization-provider.test.ts:82:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  test/customization-provider.test.ts > preserves image and multiple tool pairs in explicit protocol branches without replaying effects
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ run src/runtime.ts:58:3
+ ❯ test/customization-provider.test.ts:151:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  test/customization-scopes.test.ts > resource writes default to project and explicit user writes share across workspaces with precedence
+AssertionError: expected '/private/var/folders/v9/tsjz4byn1mg90…' to be '/var/folders/v9/tsjz4byn1mg90zhd5gn68…' // Object.is equality
+
+Expected: "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-QualEw/skills/shared/SKILL.md"
+Received: "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-QualEw/skills/shared/SKILL.md"
+
+ ❯ test/customization-scopes.test.ts:18:56
+     16|  await a.allowUserWrites(true,0);
+     17|  const shared=await a.write('skill','shared','SKILL.md',text,null,'use…
+     18|  expect(shared.scope).toBe('user');expect(shared.path).toBe(join(a.hom…
+       |                                                        ^
+     19|  const both=(await a.discover()).filter(r=>r.name==='shared');expect(b…
+     20|  expect((await b.discover()).find(r=>r.name==='shared')?.scope).toBe('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  test/customization-v2-composite.test.ts > generates, repairs and uses a complete review package through recorded tools, OAuth, custom models and durable panel answers
+AssertionError: Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-hoUwrx 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖: expected 'failed' to be 'activated' // Object.is equality
+
+Expected: "activated"
+Received: "failed"
+
+ ❯ test/customization-v2-composite.test.ts:35:131
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  test/retired-web-fetch.test.ts > keeps old fetch statuses and artifacts readable through replay and export/import
+Error: Unsupported session format; select a new independent Durable directory
+ ❯ checkFormat src/pi/journal-storage.ts:41:11
+     39|   if (!events.length) return;
+     40|   if (events[0]?.type !== "durable.session" || !isFormat(events[0].pay…
+     41|     throw new Error("Unsupported session format; select a new independ…
+       |           ^
+     42|   let previousSeq = 0;
+     43|   for (const event of events) {
+ ❯ inspectJournalFormat src/pi/journal-storage.ts:79:15
+ ❯ importBundle src/export.ts:192:3
+ ❯ test/retired-web-fetch.test.ts:55:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+
+ Test Files  7 failed | 52 passed (59)
+      Tests  15 failed | 346 passed (361)
+   Start at  01:33:03
+   Duration  129.69s (transform 721ms, setup 0ms, import 12.45s, tests 243.47s, environment 2ms)
+

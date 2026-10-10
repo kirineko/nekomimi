@@ -15,6 +15,8 @@ describe('core tools', () => {
     try {
       await expect(call('write', { path: '.nekomimi/content/revision/index.ts', content: 'tampered' })).rejects.toThrow('read-only');
       await expect(call('write', { path: '.nekomimi/packages.json', content: '{}' })).rejects.toThrow('read-only');
+      await expect(call('write', { path: '.nekomimi/v2/content/revision/index.ts', content: 'tampered' })).rejects.toThrow('read-only');
+      await expect(call('write', { path: '.nekomimi/v2/nekomimi-format.json', content: '{}' })).rejects.toThrow('read-only');
       await expect(call('write', { path: '.nekomimi/candidates/example/index.ts', content: 'export default () => {}' })).resolves.toBeDefined();
     } finally { await j.close(); }
   });

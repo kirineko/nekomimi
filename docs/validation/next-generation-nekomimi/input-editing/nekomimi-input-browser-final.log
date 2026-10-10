@@ -1,0 +1,126 @@
+
+Running 35 tests using 1 worker
+
+(node:81491) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/create-conversation.spec.ts:8:1 › 10.3 create input preserves independent drafts and explicitly runs against its own target (2.6s)
+  ✓   2 test/browser/create-conversation.spec.ts:39:1 › 10.3 create task stop is explicit and cancels only its active request (1.7s)
+  ✓   3 test/browser/handoff-cards.spec.ts:24:1 › 10.3 delivery cards distinguish saved facts from changed versions and unavailable sources without execution (967ms)
+  ✓   4 test/browser/handoff-cards.spec.ts:55:1 › 10.3 a failed relations read is local and delivery facts remain visible (661ms)
+  ✓   5 test/browser/handoff-cards.spec.ts:67:1 › 10.3 preview and cancellation preserve drafts and new target is created only after confirmation (1.9s)
+  ✓   6 test/browser/handoff-cards.spec.ts:101:1 › 10.3 stale candidate cannot be confirmed as the previewed delivery (824ms)
+  ✓   7 test/browser/handoff-cards.spec.ts:120:1 › 10.3 lost confirmation response retries the same command without a duplicate handoff (1.2s)
+  ✓   8 test/browser/handoff-cards.spec.ts:142:1 › 10.3 cancelled late preview does not restore the confirmation control (1.2s)
+  ✓   9 test/browser/handoff-cards.spec.ts:162:1 › 10.3 selected delivery references reach the actual work request only after explicit submit (1.7s)
+  ✓  10 test/browser/handoff-cards.spec.ts:185:1 › 10.3 a late work receipt preserves a newer draft after navigating away and back (969ms)
+  ✓  11 test/browser/references.spec.ts:24:1 › reference chips choose files and whole directories, drill, edit and send path-only context (2.4s)
+  ✓  12 test/browser/references.spec.ts:47:1 › clipboard preserves special paths, atomic deletion, undo and untrusted paste fallback (902ms)
+  ✓  13 test/browser/references.spec.ts:68:1 › query cancellation, IME, errors and responsive chips preserve the draft (1.2s)
+  ✓  14 test/browser/references.spec.ts:84:1 › reference APIs authenticate, bound directories and reject external symlinks (783ms)
+  ✓  15 test/browser/references.spec.ts:99:1 › native composition, adjacent chip deletion and cancelled selection preserve editing (1.0s)
+{"referenceSearch":{"cold":{"duration":10.699999988079071,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}},"warm":{"duration":2.899999976158142,"page":{"entries":[{"path":"bench-0/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-1/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-2/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-3/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-4/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-5/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-6/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-7/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-8/record-499.txt","name":"record-499.txt","kind":"file"},{"path":"bench-9/record-499.txt","name":"record-499.txt","kind":"file"}],"revision":"a9250ba7c133ca1d4d1aaad004d3be7999912164f5d57efd8df593169fd9bcae","limited":false}}},"inputMs":11,"browser":"154.0.8037.98"}
+  ✓  16 test/browser/references.spec.ts:121:1 › large workspace discovery is bounded and input stays responsive during lookup (557ms)
+  ✓  17 test/browser/references.spec.ts:137:1 › long mixed references and candidate controls fit a keyboard-sized viewport (905ms)
+  ✓  18 test/browser/references.spec.ts:153:1 › removing a chip after native IME insertion preserves adjacent prose and undo (651ms)
+  ✓  19 test/browser/references.spec.ts:170:1 › late clipboard validation cannot replace active native IME input (582ms)
+  ✓  20 test/browser/references.spec.ts:192:1 › work and create references use their own targets and retain chips across client navigation (1.3s)
+  ✘  21 test/browser/v2-interactions.spec.ts:8:1 › an extension form survives reload, isolates sessions and retries the same explicit answer (506ms)
+(node:81575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  22 test/browser/v2-runtime-slots.spec.ts:39:1 › 10.9 scoped slots support draft conflicts, page bridge and explicit remount (2.0s)
+  ✓  23 test/browser/v2-runtime-slots.spec.ts:73:1 › 10.9 renderers remain opt-in and exclusive; crashes and target navigation preserve host controls (2.8s)
+  ✓  24 test/browser/v2-runtime-slots.spec.ts:104:1 › 10.9 leaving a pending draft conflict cancels the old instance without changing either session draft (1.4s)
+  ✓  25 test/browser/v2-runtime-slots.spec.ts:121:1 › 10.9 bridge requests retain instance sequence under delayed HTTP delivery (2.0s)
+  ✓  26 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (413ms)
+  ✓  27 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (301ms)
+  ✘  28 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (612ms)
+(node:81623) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  29 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (347ms)
+  ✓  30 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (395ms)
+  ✓  31 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (488ms)
+  ✓  32 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (506ms)
+  ✓  33 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  34 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (292ms)
+  ✓  35 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.5s)
+
+
+  1) test/browser/v2-interactions.spec.ts:8:1 › an extension form survives reload, isolates sessions and retries the same explicit answer 
+
+    Error: Error: /private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-PLffBs/.nekomimi/extensions/form/extension.json: index.ts:1:342: type 18047: 'answer' is possibly 'null'.
+    index.ts:1:349: type 2339: Property 'scope' does not exist on type 'string | number | boolean | Json[] | { [key: string]: Json; }'.
+      Property 'scope' does not exist on type 'string'.
+    index.ts:1:359: type 18047: 'answer' is possibly 'null'.
+    index.ts:1:366: type 2339: Property 'note' does not exist on type 'string | number | boolean | Json[] | { [key: string]: Json; }'.
+      Property 'note' does not exist on type 'string'.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "activated"
+    Received: "failed"
+
+      14 |   try{
+      15 |     const host=app.sessions.customization,resource=(await host.catalog.discover()).find(r=>r.name==='form')!;
+    > 16 |     await host.catalog.decide(resource.id,true,true,0);const reload=host.requestReload();await host.reload(reload);expect(reload.status,reload.error).toBe('activated');
+         |                                                                                                                                                       ^
+      17 |     const session=await app.sessions.create('表单会话',{mode:'work',commandId:'form'}),other=await app.sessions.create('另一个会话',{mode:'work',commandId:'other'});
+      18 |     await page.goto(`${app.origin}/v2/work/session/${session.id}#token=${app.token}`);
+      19 |     await page.getByLabel('任务草稿',{exact:true}).fill('/inspect');await page.getByRole('button',{name:'发送',exact:true}).click();
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-interactions.spec.ts:16:151
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-interactions-an-extensi-d54d3-es-the-same-explicit-answer/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-interactions-an-extensi-d54d3-es-the-same-explicit-answer/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-interactions-an-extensi-d54d3-es-the-same-explicit-answer/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-interactions-an-extensi-d54d3-es-the-same-explicit-answer/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 ──────────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "会话已删除"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" class="px-4 py-12 text-center text-muted">…</div> aka getByText('会话已删除该会话不再可用，未执行任何操作。')
+        2) <p role="alert">Error: 会话不存在</p> aka getByText('Error: 会话不存在')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+       98 |   // 不存在但格式合法的会话：明确诊断，不回退到其它会话
+       99 |   await page.goto(`${app.origin}/v2/work/session/doesnotexist#token=${app.token}`);
+    > 100 |   await expect(page.getByRole("alert")).toContainText("会话已删除");
+          |                                         ^
+      101 |   await expect(page.getByRole("heading", { name: "路由验证" })).not.toBeVisible();
+      102 |
+      103 |   // 未知路由：明确 404 视图
+        at /Users/kirineko/Github/nekomimi/test/browser/v2-workbench.spec.ts:100:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-2-路由：深链接刷新恢复同会话，无效目标不回退执行/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/v2-workbench-9-2-路由：深链接刷新恢复同会话，无效目标不回退执行/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/v2-workbench-9-2-路由：深链接刷新恢复同会话，无效目标不回退执行/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/v2-workbench-9-2-路由：深链接刷新恢复同会话，无效目标不回退执行/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    test/browser/v2-interactions.spec.ts:8:1 › an extension form survives reload, isolates sessions and retries the same explicit answer 
+    test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 ───────────────────────────
+  33 passed (43.1s)

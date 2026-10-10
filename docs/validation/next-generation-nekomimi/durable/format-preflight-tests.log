@@ -1,0 +1,29 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/customization.test.ts (7 tests | 1 failed) 4745ms
+     × discovers skills with override and rejects outside root reads 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/customization.test.ts > customization lifecycle > discovers skills with override and rejects outside root reads
+Error: /var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-vh6CnT 格式不受支持；请选择独立的新数据目录，旧文件不会迁移或覆盖
+ ❯ inspectDataHome src/storage/format.ts:47:19
+     45|     const value = record(JSON.parse(await readFile(file, "utf8")));
+     46|     if (value?.product !== marker.product || value.formatVersion !== m…
+     47|   } catch { throw new IncompatibleFormatError(path); }
+       |                   ^
+     48|   return "supported";
+     49| }
+ ❯ Resources.decisions src/customization/resources.ts:120:5
+ ❯ Resources.discover src/customization/resources.ts:199:22
+ ❯ test/customization.test.ts:165:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 38 passed (39)
+   Start at  01:31:22
+   Duration  13.12s (transform 409ms, setup 0ms, import 2.09s, tests 22.34s, environment 0ms)
+

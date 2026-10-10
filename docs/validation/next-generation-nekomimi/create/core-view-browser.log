@@ -1,0 +1,55 @@
+
+Running 6 tests using 1 worker
+
+(node:48466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes (6.1s)
+(node:48847) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/create-candidates.spec.ts:14:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (1.4s)
+  ✓  3 test/browser/create-candidates.spec.ts:29:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (1.7s)
+  ✓  4 test/browser/create-candidates.spec.ts:43:1 › 10.2 target creation and candidate loading failures remain distinct (517ms)
+  ✓  5 test/browser/create-candidates.spec.ts:51:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.5s)
+  ✓  6 test/browser/create-candidates.spec.ts:72:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (1.5s)
+
+
+  1) test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('export const baseline = "saved baseline";', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('export const baseline = "saved baseline";', { exact: true }) with timeout 5000ms
+      - waiting for getByText('export const baseline = "saved baseline";', { exact: true })
+
+
+      17 |     await expect(page.getByRole('heading', { name: '核心源码候选' })).toBeVisible();
+      18 |     await page.getByText('修改 · src/cli.ts', { exact: true }).click();
+    > 19 |     await expect(page.getByText('export const baseline = "saved baseline";', { exact: true })).toBeVisible();
+         |                                                                                                ^
+      20 |     await expect(page.getByText('export const current = "edited candidate";', { exact: true })).toBeVisible();
+      21 |     await page.getByRole('tab', { name: '构建与验证记录' }).click();
+      22 |     await expect(page.getByRole('heading', { name: '可信构建 · 失败', exact: true })).toBeVisible();
+        at /Users/kirineko/Github/nekomimi/test/browser/core-candidate.spec.ts:19:96
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes 
+  5 passed (15.4s)

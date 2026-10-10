@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-10-07T21:37:45.785572+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "task10.4": "complete",
+  "overallProgress": {
+    "complete": 73,
+    "total": 89
+  },
+  "checks": {
+    "fullTypecheck": 0,
+    "build": 0,
+    "managementBrowser": 45,
+    "themeUnit": 13,
+    "strictSpecs": 43
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/management/theme-types-verified.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/theme-unit-final.log": "89e0450452fb87a371d969d7761127558930df16ab5aed06083722abf365a42a",
+    "docs/validation/next-generation-nekomimi/management/theme-types-complete.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/theme-build-final.log": "1506e5ca2bd60c8819cde570e1427d0750e34392a52a5db28475fa9b559ce081",
+    "docs/validation/next-generation-nekomimi/management/theme-build.log": "102ce6ea430b0e10ef5f6db8834a9102baf4028414c17547baeacdff0e3e8489",
+    "docs/validation/next-generation-nekomimi/management/theme-build-verified.log": "6b435ee46eaa83015048a9e6d2aeffcf0602e84f9fd8f492f5295805bb632206",
+    "docs/validation/next-generation-nekomimi/management/theme-types-final.log": "23d2fab3f1c7bea7da2c044c83151a9c25ca6f342ed850b5fa67b9ee05ab73d2",
+    "docs/validation/next-generation-nekomimi/management/theme-unit.log": "e839240f981d29e27b79a766371f99d2ffd75d0a9d7ea25a12c33243cc0ace62",
+    "docs/validation/next-generation-nekomimi/management/theme-browser.log": "868fbb8430c1404bfa3a252ac54c23957c69beadbc147f95f1ae997b8a102f42",
+    "docs/validation/next-generation-nekomimi/management/theme-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/management/theme-spec.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/management-browser-final.log": "5ad49443cac499de5b69f49c59c71e94a7657341ca7492dd38ee67f9cec6ac64",
+    "docs/validation/next-generation-nekomimi/management/management-spec-final.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/management/completion.md": "7788f04535517428201ac12c2eed238acbcfaa88ab2576111d66bb0fd355c5d0",
+    "docs/validation/next-generation-nekomimi/management/themes-progress.md": "6c14d922a3f9459640070639372a81f45321659cce5849619b490cd24ca77b2a",
+    "src/server/app.ts": "1ad3baacbefe8915c6a61188d9eec3dca787696f27cb33d7e1c0d6ea4b42b538",
+    "src/server/sessions.ts": "1e64199fd2b8036e65401111cf6006655018a9bc2ee0a9f5b84db0894cd5811e",
+    "src/customization/themes.ts": "d54d7e62374bd70169a20eb4b46a200efac4540f24ca5a3e6537d452884fd9b2",
+    "src/web/v2/theme.tsx": "a917258aabd94f340f4deb935974aa2b2ba11636b6a88489dcb2308777d02487",
+    "src/web/v2/theme-css.ts": "322c7a8a6e3ed760184364da17684ba3255219b829e9beec32be3d8ffe9b891e",
+    "src/web/v2/routes/themes.tsx": "ce9b4952ff5c9ddb328ed877849858957b12e52bd073b169295ac1ebd05c5b49",
+    "src/web/v2/shell.tsx": "d17cd559690756613be1fa24871aa2f87333e618a272bd24613faf81b5ab63af",
+    "src/web/v2/router.tsx": "ddb91edd0355241c8762bd27a3ec187b5433faa9048a7ba80f2c589c3da19a12",
+    "src/web/v2/routes/create.tsx": "b2d4034daad5a864ab84e9586b48d64b4c18aa0d45cb1aa61be286806bb385f2",
+    "src/web/v2/routes/work-nav.tsx": "b80e4bab19b3d292945166b16ce589f10619fe8afcfcfa309acccd461318e3f5",
+    "src/web/v2/routes/work-session.tsx": "896e8f5bc133388980091f9edc157037e66017166c08eb5015fd61576e32dbc6",
+    "src/web/v2/routes/create-conversation.tsx": "6476b4130a89df780f6bb5e84a0e9f7793dbaca65ea7d0f1755a0aed5d325aa6",
+    "test/v2-theme.test.ts": "00ea873b3fba27e8050367d7247d7c6d4d59fa28876a3f8d393333f28b88d73a",
+    "test/browser/theme-management.spec.ts": "7450b899ed67e551e338f9b2218794618f681d8958a3d6bb8dbd4730e2eeab26",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "e124798913b8a349460865f2b691ccee5b523c4fe33019382cf948c18b7cbc34",
+    "openspec/changes/next-generation-nekomimi/design.md": "1c6a69834e9ffb16baf700706c68cd262d0421fa489430f1da644e4f186ffc71",
+    "openspec/changes/next-generation-nekomimi/specs/runtime-ui-extensions/spec.md": "e265d5472d80f9643ace4a0dec2aa07944254f97a1a2de34786c389853924359"
+  }
+}

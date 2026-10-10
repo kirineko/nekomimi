@@ -1,0 +1,67 @@
+pack-smoke: tar 
+pack-smoke: npm install 
+pack-smoke: npm install (global)
+pack-smoke: nekomimi 
+pack-smoke: node 
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /usr/local/bin/node /harness/scripts/global-web-smoke.mjs /tmp/harness-pack-ByngRK/global/bin/nekomimi /tmp/harness-pack-ByngRK
+file:///harness/scripts/global-web-smoke.mjs:37
+    if(!r.ok)throw new Error(`${path}: ${await r.text()}\nInstalled service output:\n${output}`); return r.json();
+                   ^
+
+Error: /sessions/d0e023b69c382d7323ffe5cd11360c5a631c46647d5c58085142a72b6585815c/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}
+Installed service output:
+Web: http://127.0.0.1:34995/#token=a46bdb72c79f40b76163d9b60663c30607b75ba79eead3413687c539e4455755
+
+    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///harness/scripts/global-web-smoke.mjs:63:38
+
+Node.js v24.15.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at invoke (file:///harness/scripts/pack-smoke.mjs:15:10)
+    at file:///harness/scripts/pack-smoke.mjs:40:13 {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'file:///harness/scripts/global-web-smoke.mjs:37\n' +
+      '    if(!r.ok)throw new Error(`${path}: ${await r.text()}\\nInstalled service output:\\n${output}`); return r.json();\n' +
+      '                   ^\n' +
+      '\n' +
+      'Error: /sessions/d0e023b69c382d7323ffe5cd11360c5a631c46647d5c58085142a72b6585815c/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}\n' +
+      'Installed service output:\n' +
+      'Web: http://127.0.0.1:34995/#token=a46bdb72c79f40b76163d9b60663c30607b75ba79eead3413687c539e4455755\n' +
+      '\n' +
+      '    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+      '    at async file:///harness/scripts/global-web-smoke.mjs:63:38\n' +
+      '\n' +
+      'Node.js v24.15.0\n'
+  ],
+  pid: 51,
+  stdout: '',
+  stderr: 'file:///harness/scripts/global-web-smoke.mjs:37\n' +
+    '    if(!r.ok)throw new Error(`${path}: ${await r.text()}\\nInstalled service output:\\n${output}`); return r.json();\n' +
+    '                   ^\n' +
+    '\n' +
+    'Error: /sessions/d0e023b69c382d7323ffe5cd11360c5a631c46647d5c58085142a72b6585815c/snapshot: {"error":{"code":"internal","message":"操作失败，请检查本地配置和数据完整性"}}\n' +
+    'Installed service output:\n' +
+    'Web: http://127.0.0.1:34995/#token=a46bdb72c79f40b76163d9b60663c30607b75ba79eead3413687c539e4455755\n' +
+    '\n' +
+    '    at Object.request (file:///harness/scripts/global-web-smoke.mjs:37:20)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+    '    at async file:///harness/scripts/global-web-smoke.mjs:63:38\n' +
+    '\n' +
+    'Node.js v24.15.0\n'
+}
+
+Node.js v24.15.0

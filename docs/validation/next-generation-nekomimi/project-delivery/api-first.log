@@ -1,0 +1,30 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/project-delivery.test.ts (3 tests | 1 failed) 1873ms
+   × requires the committed project delivery and explicit reviewed authorization; duplicate application never reloads a factory 722ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/project-delivery.test.ts > requires the committed project delivery and explicit reviewed authorization; duplicate application never reloads a factory
+AssertionError: expected '/private/var/folders/v9/tsjz4byn1mg90…' to be '/var/folders/v9/tsjz4byn1mg90zhd5gn68…' // Object.is equality
+
+Expected: "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-Vi5YBo"
+Received: "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-Vi5YBo"
+
+ ❯ test/project-delivery.test.ts:40:34
+     38|   const noHandoff=await f.request({...f.input,action:'candidate-delive…
+     39|   const preview=await f.request({...f.input,action:'candidate-delivery…
+     40|   expect(preview.data.appliesTo).toBe(f.workspace);expect(preview.data…
+       |                                  ^
+     41|   expect(await new Candidates(f.workspace).active()).toEqual([]);await…
+     42|   const apply={...f.input,action:'candidate-delivery-apply',planHash:p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:48:50
+   Duration  2.59s (transform 308ms, setup 0ms, import 671ms, tests 1.87s, environment 0ms)
+

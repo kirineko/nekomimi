@@ -1,0 +1,33 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/data-format.test.ts (6 tests | 1 failed) 26ms
+   × rejects old and future config, candidate and SDK contracts before consumers can execute them 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/data-format.test.ts > rejects old and future config, candidate and SDK contracts before consumers can execute them
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/data-format.test.ts:43:64
+     41|   for (const kind of ["config", "candidate", "extension"] as const) {
+     42|     for (const value of [null, {}, { version: 1, sdkVersion: 3 }, { fo…
+     43|       expect(() => requireNewContract(value, kind, "fixture")).toThrow…
+       |                                                                ^
+     44|     expect(() => requireNewContract(kind === "extension" ? { sdkVersio…
+     45|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 19 passed (20)
+   Start at  01:27:07
+   Duration  11.73s (transform 219ms, setup 0ms, import 816ms, tests 11.29s, environment 0ms)
+

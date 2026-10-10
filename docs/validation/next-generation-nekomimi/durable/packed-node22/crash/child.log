@@ -1,0 +1,6 @@
+Warning: Detected unsettled top-level await at file:///private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/nekomimi-pi-1.0.4-rwf7pifc/journal-production-probe.mjs:62
+  await (await root.submit({ type: 'input', content: 'kill fixture', requestId: 'original' }, context)).wait(context);
+  ^
+
+
+

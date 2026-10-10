@@ -1,0 +1,26 @@
+
+Running 13 tests using 2 workers
+
+(node:99612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:99611) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"count":60,"p95":16.700000000000045,"longTasks":[],"metrics":{"LayoutDuration":0.000881,"RecalcStyleDuration":0.000455,"ScriptDuration":0.027634000000000002},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+{"count":180,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.0011669999999999996,"RecalcStyleDuration":0.00047599999999999986,"ScriptDuration":0.02599},"browser":"154.0.8037.98","viewport":{"width":1440,"height":1000}}
+  ✓   2 test/browser/scrolling.spec.ts:5:1 › scroll trajectory and performance baseline (3.9s)
+  ✓   1 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.9s)
+{"height":696,"historyHeight":696,"remaining":30}
+  ✓   3 test/browser/scrolling.spec.ts:30:1 › bottom boundary and return control do not move the viewport (1.3s)
+  ✓   4 test/browser/scrolling.spec.ts:48:1 › repeated wheel reversals preserve the current position and keyboard can reach latest (3.5s)
+  ✓   5 test/browser/scrolling.spec.ts:74:1 › layout growth preserves the current anchor including movement in the same frame (1.5s)
+  ✓   6 test/browser/scrolling.spec.ts:100:1 › new manual browsing cancels a delayed return-to-latest and retry keeps its position (1.7s)
+  ✓   7 test/browser/scrolling.spec.ts:123:1 › fixture supports a delayed panel and diff without model or tool execution (1.4s)
+  ✓   8 test/browser/scrolling.spec.ts:138:1 › narrow and zoomed history controls stay bounded without overlapping the reading surface (1.7s)
+{"count":180,"streaming":true,"p95":16.700000000000273,"longTasks":[],"metrics":{"LayoutDuration":0.001556,"RecalcStyleDuration":0.000842,"ScriptDuration":0.105221}}
+  ✓   9 test/browser/scrolling.spec.ts:156:1 › streaming history performance sample (3.2s)
+  ✓  10 test/browser/scrolling.spec.ts:172:1 › pagination keeps surviving anchors, old window bottom stays historical, and session switch clears pending navigation (2.4s)
+  ✓  11 test/browser/scrolling.spec.ts:210:1 › horizontal code scrolling does not leave latest mode (1.0s)
+  ✓  12 test/browser/scrolling.spec.ts:223:1 › completion failure and cancellation do not pull history to the bottom (1.8s)
+  ✓  13 test/browser/scrolling.spec.ts:238:1 › new content is readable by scrolling, including a full historical window (2.0s)
+
+  13 passed (26.9s)

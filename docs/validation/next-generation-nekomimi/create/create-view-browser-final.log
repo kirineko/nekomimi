@@ -1,0 +1,21 @@
+
+Running 14 tests using 1 worker
+
+(node:46036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/create-candidates.spec.ts:14:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (1.1s)
+  ✓   2 test/browser/create-candidates.spec.ts:29:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (1.6s)
+  ✓   3 test/browser/create-candidates.spec.ts:43:1 › 10.2 target creation and candidate loading failures remain distinct (531ms)
+  ✓   4 test/browser/create-candidates.spec.ts:51:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.5s)
+  ✓   5 test/browser/v2-workbench.spec.ts:32:1 › 9.1 控件：状态、键盘可访问名称与焦点恢复 (394ms)
+  ✓   6 test/browser/v2-workbench.spec.ts:75:1 › 9.1 主题：明暗 tokens 切换且焦点环使用品牌色 (301ms)
+  ✓   7 test/browser/v2-workbench.spec.ts:87:1 › 9.2 路由：深链接刷新恢复同会话，无效目标不回退执行 (671ms)
+  ✓   8 test/browser/v2-workbench.spec.ts:112:1 › 9.5 200% CSS 缩放实验：输入与模式导航可用（自动化缩放实验，不冒充原生 zoom 验收） (253ms)
+  ✓   9 test/browser/v2-workbench.spec.ts:126:1 › 9.2 模式导航不发写命令，历史返回不触发模型 (325ms)
+  ✓  10 test/browser/v2-workbench.spec.ts:144:1 › 9.3 草稿按模式隔离，导航不清空 (477ms)
+  ✓  11 test/browser/v2-workbench.spec.ts:156:1 › 9.5 分栏键盘可调，360px 窄屏模式/返回可达 (448ms)
+  ✓  12 test/browser/v2-workbench.spec.ts:180:1 › 10.1 输入：IME 组合不提交、命令补全、提交去重、删除与焦点 (2.4s)
+  ✓  13 test/browser/v2-workbench.spec.ts:231:1 › 9.6 扩展 slot：旧契约拒绝、跨模式不挂载 (261ms)
+  ✓  14 test/browser/v2-workbench.spec.ts:261:1 › 工作会话：提交后经 SSE 出现模型回复，断线重连不重复计数 (1.4s)
+
+  14 passed (13.0s)

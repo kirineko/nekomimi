@@ -1,0 +1,15 @@
+
+Running 8 tests using 1 worker
+
+(node:71954) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (3.0s)
+  ✓  2 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (2.8s)
+  ✓  3 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.6s)
+  ✓  4 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (2.5s)
+  ✓  5 test/browser/inspection.spec.ts:28:46 › 10.6 work nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.4s)
+  ✓  6 test/browser/inspection.spec.ts:28:46 › 10.6 create nested statuses, typed results, images, raw attempts and partial usage remain readonly (1.5s)
+  ✓  7 test/browser/inspection.spec.ts:42:1 › 10.6 missing attachments are explicit and 360px inspection remains reachable (1.2s)
+  ✓  8 test/browser/inspection.spec.ts:52:1 › 10.6 historical request opens its exact context and delivery version; deleted sources stay missing (1.7s)
+
+  8 passed (18.0s)

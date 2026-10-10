@@ -1,0 +1,58 @@
+
+Running 14 tests using 2 workers
+
+(node:31269) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/context-details.spec.ts:28:46 › 10.5 work current projection, pinned selection, compaction sources and readonly attachments (3.9s)
+  ✓   1 test/browser/local-experience.spec.ts:13:1 › configures, sends with Enter, names, exports offline and deletes across windows (6.5s)
+  ✓   3 test/browser/context-details.spec.ts:28:46 › 10.5 create current projection, pinned selection, compaction sources and readonly attachments (2.8s)
+  ✓   4 test/browser/v2-content-files.spec.ts:26:1 › 10.9 rich history and file diff remain readable without legacy styles or replay (2.0s)
+  ✓   5 test/browser/context-details.spec.ts:50:1 › 10.5 unknown capacity at 360px, outside close, refresh and missing historical artifact diagnostics (2.9s)
+  ✓   6 test/browser/v2-content-files.spec.ts:54:1 › 10.9 historical panel opens only its saved revision and props, and reload returns to saved text (1.4s)
+  ✓   8 test/browser/v2-content-files.spec.ts:66:1 › 10.9 explicit HTML and diagnostic exports preserve journal and redact requested text (2.1s)
+  ✓   7 test/browser/context-details.spec.ts:69:1 › 10.5 late detail reads cannot replace another session projection (2.8s)
+  ✓   9 test/browser/v2-feature-loading.spec.ts:18:1 › 10.9 optional chunks load on demand, failed import retries without losing draft (572ms)
+(node:31329) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 test/browser/v2-feature-loading.spec.ts:47:1 › 10.9 closing pending export prevents late reopen and focus theft (568ms)
+  ✓  12 test/browser/v2-feature-loading.spec.ts:71:1 › 10.9 files and management failures stay local and can close or retry (845ms)
+  ✓  13 test/browser/v2-feature-loading.spec.ts:94:1 › 10.9 a broken optional component is contained and explicit retry replaces it (513ms)
+  ✓  14 test/browser/v2-feature-loading.spec.ts:110:1 › 10.9 host recovery stays available when appearance code cannot load (535ms)
+  ✘  11 test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms (3.8s)
+
+
+  1) test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    375
+
+      38 |     await expect(page.getByRole('button',{name:/^(返回最新|重试返回最新)$/})).toBeVisible();
+      39 |     const top=await conversation.evaluate(el=>el.scrollTop);await page.waitForTimeout(250);
+    > 40 |     expect(Math.abs(await conversation.evaluate(el=>el.scrollTop)-top)).toBeLessThanOrEqual(2);
+         |                                                                         ^
+      41 |   }finally{await fixture.app.close();}
+      42 | });
+      43 |
+        at /Users/kirineko/Github/nekomimi/test/browser/scrolling-native.spec.ts:40:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/scrolling-native-touch-ine-33e9a--remain-manual-beyond-600ms/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/scrolling-native.spec.ts:4:1 › touch inertia and a held native scrollbar remain manual beyond 600ms 
+  13 passed (18.4s)

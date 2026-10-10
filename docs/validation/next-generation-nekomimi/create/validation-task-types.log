@@ -1,0 +1,182 @@
+
+> nekomimi@0.2.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.web.json --noEmit
+
+src/atomic-rename.ts(1,24): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/atomic-rename.ts(4,79): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/atomic-rename.ts(16,67): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/core/candidates.ts(1,27): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+src/core/candidates.ts(2,72): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/core/candidates.ts(3,62): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/core/candidates.ts(42,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/core/candidates.ts(50,36): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/core/candidates.ts(61,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/core/candidates.ts(143,42): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/customization/asset.ts(1,25): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/asset.ts(3,48): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/asset.ts(6,163): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(3,72): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/candidates.ts(4,41): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/candidates.ts(5,30): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+src/customization/candidates.ts(34,133): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(37,37): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(57,16): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(181,278): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(202,225): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/candidates.ts(217,37): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/candidates.ts(240,37): error TS2550: Property 'findLast' does not exist on type 'JournalEvent[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2023' or later.
+src/customization/candidates.ts(240,46): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/customization/contracts.ts(1,26): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/customization/mcp-oauth.ts(1,43): error TS2307: Cannot find module 'node:http' or its corresponding type declarations.
+src/customization/mcp-oauth.ts(2,46): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/customization/mcp-oauth.ts(3,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/mcp-oauth.ts(4,23): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/mcp-oauth.ts(61,27): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/mcp-oauth.ts(92,40): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/customization/mcp-oauth.ts(92,45): error TS7006: Parameter 'res' implicitly has an 'any' type.
+src/customization/mcp-oauth.ts(96,63): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/mcp-oauth.ts(97,134): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/mcp-oauth.ts(126,75): error TS2339: Property 'unref' does not exist on type 'number'.
+src/customization/package-manifest.ts(1,28): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/package-source.ts(1,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/customization/package-source.ts(2,28): error TS2307: Cannot find module 'node:zlib' or its corresponding type declarations.
+src/customization/package-source.ts(3,83): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/package-source.ts(4,34): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/package-source.ts(5,24): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/customization/package-source.ts(6,23): error TS2307: Cannot find module 'node:child_process' or its corresponding type declarations.
+src/customization/package-source.ts(7,31): error TS2307: Cannot find module 'node:module' or its corresponding type declarations.
+src/customization/package-source.ts(18,114): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(31,10): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(33,40): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(37,37): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(40,12): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(59,12): error TS2339: Property 'on' does not exist on type 'Parser'.
+src/customization/package-source.ts(59,40): error TS2339: Property 'on' does not exist on type 'Parser'.
+src/customization/package-source.ts(67,12): error TS2339: Property 'on' does not exist on type 'Unpack'.
+src/customization/package-source.ts(67,40): error TS2339: Property 'on' does not exist on type 'Unpack'.
+src/customization/package-source.ts(95,30): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(95,71): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(107,36): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(107,81): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(150,101): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/customization/package-source.ts(162,25): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(162,55): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(165,50): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(165,64): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(166,207): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(167,21): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(167,37): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(168,34): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(168,72): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(169,33): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(169,48): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(170,41): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(170,100): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(171,28): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/customization/package-source.ts(172,28): error TS7006: Parameter 'code' implicitly has an 'any' type.
+src/customization/package-source.ts(172,33): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+src/customization/package-source.ts(173,29): error TS7006: Parameter 'code' implicitly has an 'any' type.
+src/customization/package-source.ts(173,152): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/package-source.ts(173,178): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/packages.ts(1,92): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/packages.ts(2,50): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/packages.ts(3,42): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+src/customization/packages.ts(4,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/customization/packages.ts(154,11): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/packages.ts(234,11): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/packages.ts(242,35): error TS2550: Property 'findLast' does not exist on type 'JournalEvent[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2023' or later.
+src/customization/packages.ts(242,44): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/customization/resources.ts(1,42): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+src/customization/resources.ts(2,59): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/resources.ts(3,67): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/resources.ts(4,25): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/customization/resources.ts(5,31): error TS2307: Cannot find module 'node:url' or its corresponding type declarations.
+src/customization/resources.ts(49,24): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/customization/resources.ts(61,7): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/resources.ts(70,22): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/customization/resources.ts(87,32): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/resources.ts(283,28): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/resources.ts(462,7): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/sdk.ts(1,23): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/customization/sdk.ts(3,31): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/sdk.ts(5,45): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/customization/sdk.ts(6,31): error TS2307: Cannot find module 'node:url' or its corresponding type declarations.
+src/customization/sdk.ts(37,131): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/customization/sdk.ts(37,133): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/customization/sdk.ts(41,170): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/validation.ts(4,44): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/customization/validation.ts(5,31): error TS2307: Cannot find module 'node:url' or its corresponding type declarations.
+src/customization/validation.ts(6,28): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+src/customization/validation.ts(7,31): error TS2307: Cannot find module 'node:module' or its corresponding type declarations.
+src/customization/validation.ts(29,88): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/validation.ts(30,201): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/validation.ts(37,186): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/validation.ts(37,211): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/customization/validation.ts(37,233): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/diagnostics.ts(1,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/diagnostics.ts(2,60): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/diagnostics.ts(3,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/diagnostics.ts(12,37): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/diagnostics.ts(13,40): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/diagnostics.ts(22,87): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/diagnostics.ts(28,15): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/diagnostics.ts(28,46): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/diagnostics.ts(33,9): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/diagnostics.ts(43,87): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/diagnostics.ts(50,50): error TS7006: Parameter 'name' implicitly has an 'any' type.
+src/diagnostics.ts(63,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/diagnostics.ts(64,82): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/journal.ts(4,40): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+src/journal.ts(5,35): error TS2307: Cannot find module 'node:async_hooks' or its corresponding type declarations.
+src/journal.ts(14,8): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/journal.ts(15,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/journal.ts(91,12): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(108,7): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(126,31): error TS18046: 'handle' is of type 'unknown'.
+src/journal.ts(127,30): error TS18046: 'handle' is of type 'unknown'.
+src/journal.ts(129,11): error TS18046: 'handle' is of type 'unknown'.
+src/journal.ts(163,13): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(167,22): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/journal.ts(168,12): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(210,22): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/journal.ts(238,25): error TS2694: Namespace 'global.NodeJS' has no exported member 'Timeout'.
+src/journal.ts(288,24): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(295,36): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(303,11): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(420,28): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(430,36): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(430,56): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(434,38): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(435,19): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/journal.ts(450,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/journal.ts(479,49): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/redaction.ts(3,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(3,29): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(4,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(7,19): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(11,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(30,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(35,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(46,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(51,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/redaction.ts(52,21): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/session/identity.ts(1,32): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/session/identity.ts(2,62): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/session/identity.ts(107,28): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/session/target.ts(1,42): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/session/target.ts(2,62): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/session/target.ts(3,25): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/session/target.ts(19,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/storage/format.ts(1,55): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/storage/format.ts(2,31): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/storage/format.ts(3,25): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+src/storage/format.ts(36,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/storage/format.ts(75,26): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/storage/paths.ts(1,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+src/storage/paths.ts(2,50): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+src/storage/paths.ts(25,22): error TS2694: Namespace 'global.NodeJS' has no exported member 'ErrnoException'.
+src/web/v2/routes/create.tsx(62,74): error TS18046: 'query.data' is of type 'unknown'.
+src/web/v2/routes/create.tsx(62,100): error TS18046: 'query.data' is of type 'unknown'.
+src/web/v2/routes/create.tsx(62,125): error TS2322: Type 'unknown' is not assignable to type 'CandidateView'.
+src/web/v2/state/create.ts(27,49): error TS2339: Property 'validationTasks' does not exist on type '{}'.
+src/web/v2/state/create.ts(27,70): error TS7006: Parameter 'task' implicitly has an 'any' type.

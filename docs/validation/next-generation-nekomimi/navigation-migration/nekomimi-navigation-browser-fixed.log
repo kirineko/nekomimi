@@ -1,0 +1,62 @@
+
+Running 11 tests using 2 workers
+
+(node:97695) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:97694) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 test/browser/chat-loading-focus.spec.ts:13:1 › optional features load on demand, cancel delayed load, retry network failure and keep draft (1.9s)
+  ✓   3 test/browser/chat-loading-focus.spec.ts:38:1 › submit restores focus for mouse and keyboard and failure retains draft (2.2s)
+  ✓   4 test/browser/chat-loading-focus.spec.ts:53:1 › late submit never steals focus or clears a new context draft (871ms)
+  ✘   2 test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor (6.5s)
+(node:97734) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 test/browser/chat-loading-focus.spec.ts:76:1 › latest follows new messages and delayed layout, while deliberate history reading stays anchored (2.5s)
+  ✓   7 test/browser/chat-loading-focus.spec.ts:102:1 › running task allows next draft without submitting it or clearing it at completion (1.4s)
+  ✓   6 test/browser/session-navigation.spec.ts:22:1 › discovers a real /moe extension before execution and completes navigation/delete loop (7.2s)
+  ✓   8 test/browser/session-navigation.spec.ts:65:1 › compact sidebar menus, confirmation dismissal, busy/failure and paginated refresh preserve draft (4.5s)
+  ✓   9 test/browser/session-navigation.spec.ts:116:1 › command keyboard, IME, parameters, errors, reload and responsive presentation (1.4s)
+  ✓  10 test/browser/session-navigation.spec.ts:157:1 › late command responses cannot replace a new catalog and failed submission retains draft (528ms)
+  ✓  11 test/browser/session-navigation.spec.ts:183:1 › date groups and long titles stay compact across midnight and list revision conflicts (6.0s)
+
+
+  1) test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: getByText('历史记录 239', { exact: true })
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeAttached" getByText('历史记录 239', { exact: true }) with timeout 5000ms
+      - waiting for getByText('历史记录 239', { exact: true })
+
+
+      30 |   await page.getByTestId('timeline').evaluate(el=>{el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,deltaY:100}));el.scrollTop=el.scrollHeight;});
+      31 |   await expect(page.getByRole('button',{name:'返回最新',exact:true})).toHaveCount(1);
+    > 32 |   await expect(page.getByText('历史记录 239',{exact:true})).toBeAttached();
+         |                                                         ^
+      33 |   await expect(page.getByRole('button',{name:'查看较新',exact:true})).toBeAttached();
+      34 |   await page.screenshot({path:'output/playwright/history-single-navigation.png'});
+      35 |   // Reduced CSS viewport exercises narrow/short layout; this is not native zoom evidence.
+        at /Users/kirineko/Github/nekomimi/test/browser/history-navigation.spec.ts:32:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/history-navigation-bounded-8bc1d-atest-with-unchanged-cursor/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/history-navigation.spec.ts:6:1 › bounded history reaches earliest and returns to latest with unchanged cursor 
+  10 passed (28.4s)

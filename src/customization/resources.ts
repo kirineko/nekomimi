@@ -9,6 +9,8 @@ import { Candidates } from "./candidates.js";
 import { Packages } from "./packages.js";
 import { atomicFile, hash } from "../journal.js";
 import { userHome } from "../storage/paths.js";
+import { inspectDataHome, prepareDataHome } from "../storage/format.js";
+import { ApiError } from "../shared/protocol.js";
 import {
   checkManifest,
   type ExtensionManifest,
@@ -71,6 +73,8 @@ export async function exists(path: string) {
   }
 }
 export interface Resource extends ResourceDescriptor {
+  /** Logical authorization location retained when workflow code is copied. */
+  authorityLocation?: { root: string; path: string };
   fileHashes?: Record<string, string>;
   precedenceBase?: { status: ResourceDescriptor["status"]; error?: string };
   packageId?: string;
@@ -85,6 +89,7 @@ export interface Resource extends ResourceDescriptor {
   config?: McpConfig;
 }
 export interface McpConfig {
+  exposure?: "direct" | "deferred" | "codemode" | "hidden";
   transport: "stdio" | "http";
   command?: string;
   args?: string[];
@@ -101,6 +106,7 @@ interface Decisions {
 }
 export class Resources {
   readonly home: string;
+  private readonly selectedHome: string;
   readonly decisionsPath: string;
   constructor(
     readonly workspace: string,
@@ -108,9 +114,8 @@ export class Resources {
   ) {
     this.workspace = realpathSync.native(workspace);
     const configuredHome = userHome(home);
-    this.home = existsSync(configuredHome)
-      ? realpathSync.native(configuredHome)
-      : configuredHome;
+    this.selectedHome = configuredHome;
+    this.home = existsSync(configuredHome) ? realpathSync.native(configuredHome) : configuredHome;
     this.decisionsPath = join(
       this.home,
       "customization",
@@ -118,6 +123,7 @@ export class Resources {
     );
   }
   async decisions(): Promise<Decisions> {
+    await inspectDataHome(this.selectedHome);
     if (!(await exists(this.decisionsPath)))
       return { version: 1, revision: 0, entries: {} };
     const path = await safePath(this.home, this.decisionsPath);
@@ -142,17 +148,19 @@ export class Resources {
     expectedHash?: string,
   ) {
     const resources = await this.discover();
-    if (!resources.some((r) => r.id === id) && !(candidate?.id === id && candidate.source === join(this.workspace, ".nekomimi", "managed", candidate.name, "extension.json")))
+    if (!resources.some((r) => r.id === id) && !(candidate?.id === id && candidate.source === join(this.workspace, ".nekomimi", "v2", "managed", candidate.name, "extension.json")))
       throw new Error("Unknown resource");
-    await mkdir(this.home, { recursive: true, mode: 0o700 });
+    const selected = candidate ?? resources.find(r => r.id === id)!;
+    if (selected.error || selected.status === "error") throw new Error(selected.error ?? "Invalid resource contract");
+    await prepareDataHome(this.home);
     const release = await lockfile.lock(this.home, { retries: 3 });
     try {
       const settings = await this.decisions();
       if (settings.revision !== revision)
-        throw new Error("Resource settings conflict; reload");
+        throw new ApiError(409, "resource_settings_conflict", "Resource settings conflict; reload");
       const target = candidate ?? (await this.discover()).find(r => r.id === id)!;
-      if (!target || expectedHash !== undefined && target.hash !== expectedHash) throw new Error('Resource content conflict; inspect again');
-      settings.entries[id] = { enabled, trusted, ...(target.manifest?.sdkVersion === 2 ? { capabilities: target.manifest.requiredCapabilities ?? [] } : {}) };
+      if (!target || expectedHash !== undefined && target.hash !== expectedHash) throw new ApiError(409, 'resource_conflict', 'Resource content conflict; inspect again');
+      settings.entries[id] = { enabled, trusted, ...(target.manifest?.sdkVersion === 3 ? { capabilities: target.manifest.requiredCapabilities ?? [] } : {}) };
       settings.revision++;
       const folder = await safePath(this.home, dirname(this.decisionsPath));
       await mkdir(folder, { recursive: true, mode: 0o700 });
@@ -166,12 +174,12 @@ export class Resources {
     }
   }
   async allowUserWrites(enabled: boolean, revision: number) {
-    await mkdir(this.home, { recursive: true, mode: 0o700 });
+    await prepareDataHome(this.home);
     const release = await lockfile.lock(this.home, { retries: 3 });
     try {
       const settings = await this.decisions();
       if (settings.revision !== revision)
-        throw new Error("Resource settings conflict; reload");
+        throw new ApiError(409, "resource_settings_conflict", "Resource settings conflict; reload");
       settings.userWrites = enabled;
       settings.revision++;
       const folder = await safePath(this.home, dirname(this.decisionsPath));

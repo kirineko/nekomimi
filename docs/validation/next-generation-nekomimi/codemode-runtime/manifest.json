@@ -1,0 +1,23 @@
+{
+  "task": "5.1",
+  "head": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "workingTree": "uncommitted",
+  "checks": {
+    "typecheck": 0,
+    "build": 0,
+    "sandboxTests": 3,
+    "installedWorkerWasm": true,
+    "strictSpecs": 0
+  },
+  "sha256": {
+    "docs/validation/next-generation-nekomimi/codemode-runtime/installed.log": "adc39c2177dfa9918eafc3acceef5534200a8b50099bdf1155a0d1146dfbf842",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/sandbox-first.log": "c69fa3e4d7e55f85c0262b2d07f2435e59beef93f0c3381004e7892dd19f40ce",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/build-first.log": "41727e1215f78647e681e7f75fa75678640a17d424d8f19dec368547c03dd545",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/types-first.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/codemode-runtime/specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "src/pi/codemode.ts": "067971910b21e4c14870af132e1b7892781b27456c7a6c3431b2de455d4eb2b2",
+    "test/codemode-sandbox.test.ts": "c4a7515a82bf3d14c65519ed7b3ac25034ef825c58151b7ad2016219c412a478",
+    "scripts/pack-codemode-fixture.mjs": "06c1f1cfdc657cdce8bb191c86f230668e2481ddbc1035a23f93af623dbc98d0",
+    "package-lock.json": "5296804e86a5b29c403546a1c541dcce7ceeceb874e2839569463ca67bafaf2b"
+  }
+}

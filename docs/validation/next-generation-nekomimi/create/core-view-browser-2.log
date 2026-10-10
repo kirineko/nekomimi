@@ -1,0 +1,53 @@
+
+Running 6 tests using 1 worker
+
+(node:49267) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes (1.0s)
+(node:49282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 test/browser/create-candidates.spec.ts:14:1 › 10.2 scoped differences and saved validation survive navigation without automatic validation (2.0s)
+  ✓  3 test/browser/create-candidates.spec.ts:29:1 › 10.2 panel preview needs explicit authorization and resolves the selected target frame (1.8s)
+  ✓  4 test/browser/create-candidates.spec.ts:43:1 › 10.2 target creation and candidate loading failures remain distinct (537ms)
+  ✓  5 test/browser/create-candidates.spec.ts:51:1 › 10.2 delayed reads show loading and a preview response arriving after navigation does not reopen the frame (1.5s)
+  ✓  6 test/browser/create-candidates.spec.ts:72:1 › 10.2 background validation exposes its durable identity and acknowledges cancellation (1.5s)
+
+
+  1) test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "http://127.0.0.1:60745/api/v1/connect",
+    + ]
+
+      27 |     await page.screenshot({ path: '/tmp/nekomimi-core-candidate-view.png', fullPage: true });
+      28 |     await page.setViewportSize({ width: 360, height: 760 }); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    > 29 |     expect(writes).toEqual([]);
+         |                    ^
+      30 |   } finally { await app.close(); }
+      31 | });
+      32 |
+        at /Users/kirineko/Github/nekomimi/test/browser/core-candidate.spec.ts:29:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/core-candidate-10-2-core-c-3ac6b-d-validation-without-writes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    test/browser/core-candidate.spec.ts:7:1 › 10.2 core candidate deep links show immutable baseline differences and recorded validation without writes 
+  5 passed (10.6s)

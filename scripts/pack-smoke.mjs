@@ -1,7 +1,7 @@
 import { tmpdir } from "node:os";
 import { mkdtemp, writeFile, readFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import ts from 'typescript';
 const dir = await mkdtemp(join(tmpdir(), "harness-pack-"));
@@ -38,12 +38,25 @@ if (process.platform === 'win32') {
 }
 if (!runCli(['--help']).includes('Nekomimi')) throw new Error('Missing CLI');
 console.log(invoke(process.execPath, [fileURLToPath(new URL('./global-web-smoke.mjs', import.meta.url)), cli, dir]).trim());
-await writeFile(join(dir, 'smoke.mjs'), `import {Journal, exportSession, inspectBundle, importBundle} from 'nekomimi'; import {nodeSyntax} from './node_modules/nekomimi/dist/presentation/syntax/node.js'; const tokens=await nodeSyntax.run('const ready = true;', 'ts'); if(!tokens?.flat().some(t=>t.className)) throw Error('Installed syntax worker failed'); nodeSyntax.dispose(); const j=await Journal.open('./session'); await j.append('fixture',{artifact:await j.artifact('offline pack fixture')}); await j.close(); await exportSession('./session',{format:'html',output:'./view.html'}); await exportSession('./session',{format:'bundle',output:'./bundle'}); await inspectBundle('./bundle'); await importBundle('./bundle','./imported');`);
+await writeFile(join(dir, 'smoke.mjs'), `import {exportSession, inspectBundle, importBundle} from 'nekomimi'; import {openJournalStorage} from './node_modules/nekomimi/dist/pi/journal-storage.js'; import {BACKGROUND_CONTEXT} from '@earendil-works/chord/context'; import {nodeSyntax} from './node_modules/nekomimi/dist/presentation/syntax/node.js'; const tokens=await nodeSyntax.run('const ready = true;', 'ts'); if(!tokens?.flat().some(t=>t.className)) throw Error('Installed syntax worker failed'); nodeSyntax.dispose(); const mapped=await openJournalStorage('./session',BACKGROUND_CONTEXT); const j=mapped.journal; await j.append('fixture',{artifact:await j.artifact('offline pack fixture')}); await mapped.storage.close(BACKGROUND_CONTEXT); await exportSession('./session',{format:'html',output:'./view.html'}); await exportSession('./session',{format:'bundle',output:'./bundle'}); await inspectBundle('./bundle'); await importBundle('./bundle','./imported');`);
 invoke(process.execPath, ['smoke.mjs']);
+console.log(invoke(process.execPath, [fileURLToPath(new URL('./pack-codemode-fixture.mjs',import.meta.url)),join(dir,'node_modules/nekomimi/dist/pi/codemode.js')]).trim());
 JSON.parse(runCli(['replay', join(dir, 'imported')]));
 await writeFile(join(dir, 'web-smoke.mjs'), await readFile(new URL('./pack-web-fixture.mjs', import.meta.url)));
 invoke(process.execPath, ['web-smoke.mjs']);
+await writeFile(join(dir, 'sdk-guide-smoke.mjs'), await readFile(new URL('./pack-sdk-guide-fixture.mjs', import.meta.url)));
+console.log(invoke(process.execPath, ['sdk-guide-smoke.mjs']).trim());
 await writeFile(join(dir, 'customization-smoke.mjs'), await readFile(new URL('./pack-customization-fixture.mjs', import.meta.url)));
 for(const [source,target] of [['oauth-server','oauth-fixture'],['review-package','review-package-fixture']])await writeFile(join(dir,target+'.mjs'),ts.transpileModule(await readFile(new URL('../test/fixtures/'+source+'.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2023,module:ts.ModuleKind.ESNext}}).outputText);
 console.log(invoke(process.execPath, ['customization-smoke.mjs']).trim());
+console.log(invoke(process.execPath, [
+  fileURLToPath(new URL('./pack-project-delivery-fixture.mjs', import.meta.url)),
+  pathToFileURL(join(dir, 'node_modules/nekomimi/dist/index.js')).href,
+  join(dir, 'project-delivery-roundtrip'),
+]).trim());
+if (process.platform !== 'win32') console.log(invoke(process.execPath, [
+  fileURLToPath(new URL('./pack-durable-fixture.mjs', import.meta.url)),
+  pathToFileURL(join(dir, 'node_modules/nekomimi/dist/index.js')).href,
+  join(dir, 'durable-runtime'),
+]).trim());
 console.log(JSON.stringify({ directory: dir, tarball: packed.filename, installed: true, cli: true, offlineExportImport: true, webStaticCommandExport: true }));

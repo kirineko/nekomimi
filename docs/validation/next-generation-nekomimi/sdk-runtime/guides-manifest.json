@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-07T15:36:33.854968+00:00",
+  "baselineHead": "be50c5a8a1557ef160056b964cd29e65b395685d",
+  "snapshot": "uncommitted working tree",
+  "node": "v24.15.0",
+  "platform": "darwin arm64",
+  "packExitCode": 0,
+  "archive": {
+    "path": "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-pack-Rfgy6C/nekomimi-0.2.1.tgz",
+    "sha256": "cbde3c3511df5b9a4d0e0715e063cc1c8e51f27c62861258d246c00527579d9d"
+  },
+  "sha256": {
+    "src/cli.ts": "663d29b031471aea48af077f7ac8c89bd6f8666b0171fba861df19c92148e76a",
+    "src/customization/sdk.ts": "7f5ccc35a65a4dc1b5de586b15f56f4d214f1c03633be47a819c037f9ba32ebc",
+    "extension-docs/README.md": "5baf9488682a08f46ce2b935cf1ecf2433e10267e2f47e4ff4279ec5398a7200",
+    "extension-docs/cli.md": "8da513b67c04c6af8c8a10ee8d1b0e43b901eeb6afb3f3845f0a61e5da8335cc",
+    "extension-docs/extensions.md": "2fb44e15ddc8f1281d0a5c3301787ade111dd8b2469363fc931ef773191f3a7f",
+    "extension-docs/skills-rules-mcp.md": "27b7b749707ed26d2aea6ce42f47278740017bb320e384921daae88bb6dec409",
+    "extension-docs/examples/review-checklist/SKILL.md": "bc842e40f088a5bbd724f5c16194c7e1aafcca1c012b8013a5cf97732eacbe73",
+    "scripts/pack-sdk-guide-fixture.mjs": "1bca1f17fb269c43085812ff32beff1f6c65f279c9308a0a430ec349590508a6",
+    "scripts/pack-smoke.mjs": "85515092cecc1bd903c03d8a1464057522ad38c1194543a62647fa9fafc0e9cb",
+    "scripts/pack-customization-fixture.mjs": "23a7800c0e159ea23c1c1552250a23fbe39ea9bf553540effc235f155158c48e",
+    "openspec/changes/next-generation-nekomimi/tasks.md": "42882968b9f24d5bf660780eeba7afb1906d984d16937a0eeadb0bbb8cb7d819",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides.md": "82d37c01ca98c600b1023a8f7f8ae8fbae23ccd4aac4212fdec5728ba5d085ca",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-pack-verified.log": "cb039dc134c577481b0b36003966fc03f1475f91dfe0d15155d0c7d9061559c3",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-pack-complete.log": "c61f0e262cee85ee8ab9baacd7107c2b9ed5b78cc71aaf08ee8eb4f2f0909c00",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-types.log": "54a6ebd5f7e94485f1d427321ebff176b76bbb941916b58f4e3b27843c7ff287",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-pack-final.log": "fba7b4019d45fecf147597f32f1e2b83b45f90a63e1c71d7b0b6957875f23819",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-pack-first.log": "6582b940386ef1334864c6900d6b055db6068a6f26645117e4765ea4c003d570",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-specs.log": "ca2090cecb64895dd22a8e143c092eab1c83b38cbce0959fadb4e0a2e98afba4",
+    "docs/validation/next-generation-nekomimi/sdk-runtime/guides-regression.log": "479d9a893e6dfb94f8bc39ab4f0efba2ea4e32018d59aa285ae67f317a16c60f"
+  }
+}

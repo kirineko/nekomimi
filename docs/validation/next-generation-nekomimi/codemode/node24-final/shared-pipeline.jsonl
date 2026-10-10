@@ -1,0 +1,9 @@
+{"seq":1,"type":"authorize","id":"child-1","parent":null,"allowed":true,"version":"fixture-v1","args":{"value":1}}
+{"seq":2,"type":"intent","id":"child-1","parent":null}
+{"seq":3,"type":"after-hook","id":"child-1","parent":null}
+{"seq":4,"type":"result","id":"child-1","parent":null,"isError":false,"result":{"content":[{"type":"text","text":"1"}],"structuredContent":{"value":1},"details":{"effect":1}}}
+{"seq":5,"type":"authorize","id":"child-2","parent":"script-1","allowed":true,"version":"fixture-v1","args":{"value":2}}
+{"seq":6,"type":"intent","id":"child-2","parent":"script-1"}
+{"seq":7,"type":"after-hook","id":"child-2","parent":"script-1"}
+{"seq":8,"type":"result","id":"child-2","parent":"script-1","isError":false,"result":{"content":[{"type":"text","text":"2"}],"structuredContent":{"value":2},"details":{"effect":2}}}
+{"seq":9,"type":"probe.passed"}

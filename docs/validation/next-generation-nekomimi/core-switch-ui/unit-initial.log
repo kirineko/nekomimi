@@ -1,0 +1,40 @@
+
+ RUN  v4.1.9 /Users/kirineko/Github/nekomimi
+
+ ❯ test/core-control-view.test.ts (2 tests | 1 failed) 445ms
+   × binds read-only launch instructions to the session candidate and verifies the selected build before returning argv 348ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/core-control-view.test.ts > binds read-only launch instructions to the session candidate and verifies the selected build before returning argv
+AssertionError: expected { …(9) } to match object { buildId: 'display-build', …(5) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+@@ -6,11 +6,11 @@
+    "manual": {
+      "args": [
+        "/Users/kirineko/Github/nekomimi/dist/cli.js",
+        "web",
+        "--workspace",
+-       "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-6H0w9d",
++       "/private/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-6H0w9d",
+        "--home",
+        "/var/folders/v9/tsjz4byn1mg90zhd5gn680bm0000gn/T/harness-test-4lg6S2",
+        "--no-open",
+      ],
+      "executable": "/Users/kirineko/.local/share/fnm/node-versions/v24.15.0/installation/bin/node",
+
+ ❯ test/core-control-view.test.ts:50:35
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  1 failed | 31 passed (32)
+   Start at  07:00:50
+   Duration  10.48s (transform 618ms, setup 0ms, import 2.90s, tests 14.65s, environment 0ms)
+

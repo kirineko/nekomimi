@@ -3,10 +3,12 @@ import { readFile, lstat, chmod } from "node:fs/promises";
 import { join } from "node:path";
 import lockfile from "proper-lockfile";
 import { atomicFile } from "../journal.js";
-import { directory, userHome } from "../storage/paths.js";
+import { userHome } from "../storage/paths.js";
 import { ApiError } from "../shared/protocol.js";
+import { inspectDataHome, prepareDataHome, DATA_FORMAT_VERSION, requireNewContract } from "../storage/format.js";
 export interface Settings {
-  version: 1;
+  version: 2;
+  formatVersion: 2;
   revision: number;
   model: string;
   baseUrl: string;
@@ -14,12 +16,14 @@ export interface Settings {
   autoCompact?: boolean;
 }
 interface Auth {
-  version: 1;
+  version: 2;
+  formatVersion: 2;
   revision: number;
   apiKey?: string;
 }
 const defaults: Settings = {
-  version: 1,
+  version: 2,
+  formatVersion: DATA_FORMAT_VERSION,
   revision: 0,
   model: "deepseek-flash",
   baseUrl: "https://api.deepseek.com",
@@ -30,12 +34,14 @@ export class ConfigStore {
     this.home = userHome(home);
   }
   private async read<T>(name: string, fallback: T): Promise<T> {
+    await inspectDataHome(this.home);
     try {
       const path = join(this.home, name);
       if ((await lstat(path)).isSymbolicLink()) throw new Error();
       const v = JSON.parse(await readFile(path, "utf8"));
+      requireNewContract(v, "config", path);
       if (
-        v.version !== 1 ||
+        v.version !== 2 ||
         !Number.isSafeInteger(v.revision) ||
         v.revision < 0
       )
@@ -55,7 +61,7 @@ export class ConfigStore {
     if (v.autoCompact !== undefined && typeof v.autoCompact !== "boolean") throw new ApiError(400, "config", "自动压缩配置无效");
     if (v.search !== undefined) {
       if (!v.search || typeof v.search.enabled !== "boolean") throw new ApiError(400, "config", "搜索配置无效");
-      this.validate({ version: 1, revision: 0, model: v.search.model, baseUrl: v.search.baseUrl });
+      this.validate({ version: 2, formatVersion: DATA_FORMAT_VERSION, revision: 0, model: v.search.model, baseUrl: v.search.baseUrl });
     }
     if (
       typeof v.model !== "string" ||
@@ -87,7 +93,7 @@ export class ConfigStore {
     }
   }
   private async auth() {
-    const a = await this.read<Auth>("auth.json", { version: 1, revision: 0 });
+    const a = await this.read<Auth>("auth.json", { version: 2, formatVersion: DATA_FORMAT_VERSION, revision: 0 });
     if (
       a.apiKey !== undefined &&
       (typeof a.apiKey !== "string" ||
@@ -106,7 +112,9 @@ export class ConfigStore {
     return { ...s, authRevision: a.revision, configured: !!a.apiKey };
   }
   async save(kind: "settings" | "auth", value: Record<string, unknown>) {
-    const home = await directory(this.home);
+    // Validate both persisted contracts before creating a marker or writer lease.
+    await this.snapshot();
+    const home = await prepareDataHome(this.home);
     const release = await lockfile.lock(home, {
       retries: { retries: 10, minTimeout: 20, maxTimeout: 100 },
     });
@@ -118,7 +126,8 @@ export class ConfigStore {
       let next: Settings | Auth;
       if (kind === "settings") {
         next = {
-          version: 1,
+          version: 2,
+          formatVersion: DATA_FORMAT_VERSION,
           revision: old.revision + 1,
           model: value.model as string,
           baseUrl: value.baseUrl as string,
@@ -140,7 +149,8 @@ export class ConfigStore {
             "请输入有效 API key，清除请使用清除操作",
           );
         next = {
-          version: 1,
+          version: 2,
+          formatVersion: DATA_FORMAT_VERSION,
           revision: old.revision + 1,
           ...(value.apiKey === null
             ? {}
